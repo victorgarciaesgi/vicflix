@@ -1,0 +1,76 @@
+div.input-box {
+  flex-flow: column wrap;
+  flex: 0 1 auto;
+  min-width: 120px;
+  margin: 0 10px 10px 10px;
+
+  label {
+    display: block;
+    font-weight: bold;
+    font-size: 12px;
+    color: $w120;
+    margin-bottom: 3px;
+    text-align: left;
+  }
+
+  &.noMargin {
+    margin: 0;
+  }
+
+  &.halfWidth {
+    flex-basis: 50%;
+  }
+
+  div.input-container {
+    display: flex;
+    flex-flow: row nowrap;
+    border-radius: 5px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+
+    &.disabled {
+      background-color: $w240;
+    }
+
+    &.select {
+      height: 40px;
+    }
+
+    div.icon {
+      flex: 0 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+      margin-left: 5px;
+    }
+
+    input {
+      border: none;
+      height: 40px;
+      color: $g40;
+      line-height: 36px;
+      font-size: 14px;
+      outline: none;
+      width: 100%;
+      background: none;
+      padding: 0 10px 0 5px;
+    }
+
+    textarea {
+      @extend input;
+      height: 100px;
+      resize: none;
+      line-height: 24px;
+      padding-top: 10px;
+    }
+
+    &.formError:not(.select) input {
+      color: $red1;
+    }
+
+    &.formValid:not(.select) input {
+      color: $primary;
+    }
+  }
+}

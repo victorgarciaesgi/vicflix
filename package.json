@@ -1,0 +1,66 @@
+{
+  "name": "vicflix",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "pm2 flush && pm2 startOrRestart pm2.production.json",
+    "dev": "vue-cli-service serve",
+    "production": "cross-env NODE_ENV=production vue-cli-service build --mode production && npm run serve"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "date-fns": "^1.30.1",
+    "es6-shim": "^0.35.5",
+    "localforage": "^1.7.3",
+    "lodash": "^4.17.11",
+    "register-service-worker": "^1.6.2",
+    "shortid": "2.2.14",
+    "uuid": "3.3.2",
+    "vue": "^2.6.10",
+    "vue-i18n": "^8.0.0",
+    "vue-infinite-scroll": "^2.0.2",
+    "vue-property-decorator": "8.1.0",
+    "vue-router": "^3.0.2",
+    "vuelidate": "^0.7.4",
+    "vuex": "^3.1.0",
+    "vuex-router-sync": "5.0.0",
+    "webpack-bundle-analyzer": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/cleave.js": "^1.4.0",
+    "@types/node": "11.11.7",
+    "@types/webpack": "^4.4.0",
+    "@vue/cli-plugin-babel": "^3.5.3",
+    "@vue/cli-plugin-e2e-cypress": "^3.5.1",
+    "@vue/cli-plugin-pwa": "^3.5.1",
+    "@vue/cli-plugin-typescript": "^3.5.3",
+    "@vue/cli-service": "^3.5.3",
+    "compression-webpack-plugin": "^2.0.0",
+    "cross-env": "^5.2.0",
+    "favicons-webpack-plugin": "^0.0.9",
+    "lint-staged": "^8.1.5",
+    "morgan": "^1.9.1",
+    "pm2": "^3.4.0",
+    "sass": "^1.17.3",
+    "sass-loader": "^7.1.0",
+    "terser-webpack-plugin": "^1.2.3",
+    "ts-optchain": "^0.1.3",
+    "typescript": "^3.3.4000",
+    "vue-cli-plugin-i18n": "^0.5.2",
+    "vue-mixin-decorator": "^1.0.0",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "vue-cli-service lint",
+      "git add"
+    ],
+    "*.vue": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  }
+}

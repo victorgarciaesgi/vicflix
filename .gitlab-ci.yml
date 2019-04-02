@@ -1,0 +1,13 @@
+# before_script:
+#   - apt-get update -qq && apt-get install -y -qq nodejs yarn
+#   - yarn
+
+# launch_staging:
+#   script:
+#     - yarn staging
+# launch_preprod:
+#   script:
+#     - yarn preprod
+# launch_production:
+#   script:
+#     - yarn production

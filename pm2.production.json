@@ -1,0 +1,18 @@
+{
+  "apps": [
+    {
+      "name": "vicflix",
+      "script": "ProdServer.js",
+      "watch": false,
+      "out_file": "/dev/null",
+      "exec_mode": "cluster",
+      "instances": "2",
+
+      "error_file": "/dev/null",
+      "ignore_watch": [".git", "envs", "scripts", ".env"],
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}

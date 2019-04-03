@@ -24,15 +24,11 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { IProfil } from '../models';
-import { UserModule } from '../store';
+import { UserModule, profilList } from '../store';
 
 @Component({})
 export default class WhoAmI extends Vue {
-  private profilList: IProfil[] = [
-    { name: 'Recruteur', avatar: require('@images/profils/recruiter.png') },
-    { name: 'Redditor', avatar: require('@images/profils/redditor.png') },
-    { name: 'Github user', avatar: require('@images/profils/github.png') },
-  ];
+  private profilList = profilList;
 
   connectUser(profil: IProfil) {
     UserModule.actions.connectUser(profil);

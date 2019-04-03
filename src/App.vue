@@ -3,7 +3,6 @@
     <transition name="bounce">
       <Alerts v-if="alertState" />
     </transition>
-    <ProgressBar />
     <Notifications />
     <div class="rootView">
       <transition name="fade" mode="out-in">
@@ -21,13 +20,12 @@ import Vue from 'vue';
 import { Store } from 'vuex';
 import { Component, Prop } from 'vue-property-decorator';
 import { EventBus, Events } from '@services';
-import { Alerts, ProgressBar, Notifications } from '@components';
-import { NotificationsModule, AlertsModule, ProgressBarModule } from '@store';
+import { Alerts, Notifications } from '@components';
+import { NotificationsModule, AlertsModule, GlobalModule } from '@store';
 
 @Component({
   components: {
     Alerts,
-    ProgressBar,
     Notifications,
   },
 })
@@ -36,10 +34,24 @@ export default class App extends Vue {
     return AlertsModule.state.alertShow;
   }
 
+  checkMobile() {
+    if (window.innerWidth < 480 && !GlobalModule.state.mobile) {
+      GlobalModule.mutations.updateGlobalState({
+        mobile: true,
+      });
+    } else if (window.innerWidth >= 480 && GlobalModule.state.mobile) {
+      GlobalModule.mutations.updateGlobalState({
+        mobile: false,
+      });
+    }
+  }
+
   created() {
     window.addEventListener('resize', () => {
       EventBus.$emit(Events.CLOSE_POPUPS);
+      this.checkMobile();
     });
+    this.checkMobile();
   }
 
   closePopups() {

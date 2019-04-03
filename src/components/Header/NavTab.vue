@@ -41,15 +41,19 @@ export default class NavTab extends Vue {
 a.link {
   align-items: center;
   justify-content: center;
-  color: white;
+  color: $w240;
   height: 35px;
-  padding: 8px 20px 8px 20px;
+  padding: 8px 3px 8px 3px;
   margin: 0 10px 0 10px;
   font-size: 14px;
   flex: 0 0 auto;
-  transition: opacity 0.2s;
+  transition: opacity 0.3s;
 
-  &:hover {
+  span {
+    transition: transform 0.2s, font-weight 0.3s;
+  }
+
+  &:hover:not(.router-link-active) {
     opacity: 0.8;
   }
 
@@ -59,7 +63,12 @@ a.link {
 
   &.button {
     &.router-link-active {
-      font-weight: bold;
+      span {
+        transform: scale(1.1);
+        color: white;
+        font-weight: bold;
+        cursor: default;
+      }
     }
   }
 
@@ -70,7 +79,7 @@ a.link {
     height: 40px;
 
     &:not(:last-child) {
-      border-bottom: 1px solid $w230;
+      // border-bottom: 1px solid $w230;
     }
     &.router-link-active {
       font-weight: bold;

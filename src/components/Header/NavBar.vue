@@ -1,6 +1,6 @@
 <template>
   <nav ref="nav" :class="{ responsive: responsiveMenu }">
-    <router-link class="logo" to="/">
+    <router-link class="logo" to="/browse">
       <img src="~@images/vicflix.png" alt="logo_vicflix" height="35" />
     </router-link>
     <template v-if="!responsiveMenu">
@@ -17,7 +17,7 @@
           />
         </div>
         <span slot="button">
-          <SvgIcon src="icons/actions/menu.svg" :size="30" />
+          <SvgIcon src="icons/actions/menu.svg" :size="30" color="white" />
         </span>
       </Popup>
     </div>
@@ -41,11 +41,34 @@ export default class NavBar extends Vue {
 
   private navLinks: NavLink[] = [
     {
-      label: 'Accueil',
+      label: 'Home',
       link: {
         name: routesNames.BROWSE,
       },
-      exact: true,
+    },
+    {
+      label: 'About me',
+      link: {
+        name: routesNames.ABOUT,
+      },
+    },
+    {
+      label: 'Projects',
+      link: {
+        name: routesNames.PROJECTS,
+      },
+    },
+    {
+      label: 'Skills',
+      link: {
+        name: routesNames.SKILLS,
+      },
+    },
+    {
+      label: 'Experience',
+      link: {
+        name: routesNames.EXPERIENCE,
+      },
     },
   ];
 
@@ -63,7 +86,7 @@ export default class NavBar extends Vue {
           this.navWidth = this.$refs.nav.scrollWidth;
           this.responsiveMenu = true;
         }
-      } else if (this.$refs.nav.scrollWidth >= this.navWidth) {
+      } else if (this.$refs.nav.clientWidth >= this.navWidth) {
         this.responsiveMenu = false;
       }
     }
@@ -83,8 +106,8 @@ export default class NavBar extends Vue {
 
 <style lang="scss" scoped>
 .logo {
+  margin-right: 20px;
 }
-
 nav {
   display: flex;
   position: relative;

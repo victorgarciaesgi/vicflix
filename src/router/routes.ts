@@ -4,6 +4,10 @@ import { MyRouteConfig } from './routes.models';
 export const routesNames = {
   BROWSE: 'browse',
   WHOAMI: 'whoami',
+  ABOUT: 'aboutme',
+  PROJECTS: 'projects',
+  SKILLS: 'skills',
+  EXPERIENCE: 'experience',
 };
 
 function loadView(view: string) {
@@ -34,7 +38,39 @@ export const routesList: MyRouteConfig[] = [
         meta: {
           title: 'Browse',
         },
-        component: loadView('Browse'),
+        component: loadView('Pages/Browse'),
+      },
+      {
+        path: '/about',
+        name: routesNames.ABOUT,
+        meta: {
+          title: 'About me',
+        },
+        component: loadView('Pages/AboutMe'),
+      },
+      {
+        path: '/projects',
+        name: routesNames.PROJECTS,
+        meta: {
+          title: 'Browse',
+        },
+        component: loadView('Pages/Projects'),
+      },
+      {
+        path: '/skills',
+        name: routesNames.SKILLS,
+        meta: {
+          title: 'Skills',
+        },
+        component: loadView('Pages/Skills'),
+      },
+      {
+        path: '/experience',
+        name: routesNames.EXPERIENCE,
+        meta: {
+          title: 'Skills',
+        },
+        component: loadView('Pages/Skills'),
       },
     ],
   },

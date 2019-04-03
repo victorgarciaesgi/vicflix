@@ -1,6 +1,7 @@
 <template>
   <div class="root flex">
     <HeaderComponent />
+    <ProgressBar />
     <div class="rootView">
       <transition name="fade" mode="out-in">
         <keep-alive>
@@ -14,11 +15,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { HeaderComponent } from '@components';
+import { HeaderComponent, ProgressBar } from '@components';
 
 @Component({
   components: {
     HeaderComponent,
+    ProgressBar,
   },
 })
 export default class BaseApp extends Vue {}
@@ -29,16 +31,19 @@ export default class BaseApp extends Vue {}
 <style lang="scss" scoped>
 div.root {
   width: 100%;
+  background-color: #000;
+
   .rootView {
     position: absolute;
     display: flex;
     flex-flow: row nowrap;
     align-items: stretch;
     left: 0;
-    top: $headerHeight;
+    top: 0;
     width: 100%;
     max-width: 100%;
-    min-height: calc(100% - #{$headerHeight});
+    min-height: 100%;
+    // min-height: calc(100% - #{$headerHeight});
 
     div.overlay {
       position: absolute;

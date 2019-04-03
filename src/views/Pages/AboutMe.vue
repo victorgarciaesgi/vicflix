@@ -1,5 +1,5 @@
 <template>
-  <div>Browse</div>
+  <div></div>
 </template>
 
 
@@ -7,7 +7,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({})
-export default class Browse extends Vue {}
+export default class AboutMe extends Vue {}
 </script>
 
 

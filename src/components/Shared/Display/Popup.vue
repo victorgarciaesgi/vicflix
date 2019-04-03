@@ -24,7 +24,9 @@
           :style="trianglePosition"
           :class="[PopupXYTypes.XType, PopupXYTypes.YType, { active: show }]"
         ></div>
-        <div class="popup-wrapper"><slot v-if="show" name="popup" /></div>
+        <div class="popup-wrapper">
+          <slot v-if="show" name="popup" />
+        </div>
       </div>
     </transition>
     <button
@@ -102,9 +104,11 @@ export default class Popup extends Vue {
           target.style.left = left as string;
           target.style.top = top as string;
           target.style.bottom = bottom as string;
-          this.trianglePosition = {
-            left: triangleLeft,
-          };
+          if (Types.XType !== 'center') {
+            this.trianglePosition = {
+              left: triangleLeft,
+            };
+          }
           this.PopupXYTypes = Types;
         } else {
           this.PopupXYTypes = Types;
@@ -300,15 +304,15 @@ export default class Popup extends Vue {
     }
 
     &.dark {
-      background-color: rgb(60, 60, 60);
+      background-color: rgb(40, 40, 40);
 
       .triangle {
         border-left: $triangleSize solid transparent;
         border-right: $triangleSize solid transparent;
-        border-top: $triangleSize solid rgb(60, 60, 60);
+        border-top: $triangleSize solid rgb(40, 40, 40);
 
         &.bottom {
-          border-bottom: $triangleSize solid rgb(60, 60, 60);
+          border-bottom: $triangleSize solid rgb(40, 40, 40);
           border-top: $triangleSize solid transparent;
         }
       }

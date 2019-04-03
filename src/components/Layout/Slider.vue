@@ -4,14 +4,20 @@
       <span>{{ title }}</span>
     </div>
     <div class="slider-container flex">
-      <div class="slider-page-button left flex center" @click="slideLeft">
-        <SvgIcon src="icons/Forms/arrow_left.svg" color="white" :size="50" />
+      <div class="slider-page-button left">
+        <button class="flex center w100 h100" v-if="page > 1" @click="slideLeft">
+          <SvgIcon src="icons/Forms/arrow_left.svg" color="white" size="50%" />
+        </button>
       </div>
-      <div class="slider-wrapper flex" ref="slider">
-        <SlideItem v-for="item of slides" :key="item.id" :item="item" :perPage="slidePerPage" />
+      <div class="slider-wrapper flex" key="slider">
+        <ul class="slider-list flex" :style="getStyle">
+          <SlideItem v-for="item of slides" :key="item.id" :item="item" :perPage="slidePerPage" />
+        </ul>
       </div>
-      <div class="slider-page-button right flex center" @click="slideRight">
-        <SvgIcon src="icons/Forms/arrow_right.svg" color="white" :size="50" />
+      <div class="slider-page-button right flex center">
+        <button class="flex center w100 h100" v-if="page < pageLength" @click="slideRight">
+          <SvgIcon src="icons/Forms/arrow_right.svg" color="white" size="50%" />
+        </button>
       </div>
     </div>
   </div>
@@ -34,16 +40,19 @@ export default class Slider extends Vue {
 
   private translateValue = 0;
   private slidePerPage = 4;
+  private page = 1;
 
   slideRight() {
-    this.translateValue = this.translateValue - 100;
+    this.translateValue -= 100;
+    this.page++;
   }
   slideLeft() {
-    this.translateValue = this.translateValue + 100;
+    this.translateValue += 100;
+    this.page--;
   }
 
   get pageLength() {
-    return Math.floor(this.slides.length / this.slidePerPage);
+    return Math.ceil(this.slides.length / this.slidePerPage);
   }
 
   get getStyle() {
@@ -95,7 +104,10 @@ div.slider-root {
       top: 0;
       width: 4%;
       z-index: 2;
-      cursor: pointer;
+
+      button {
+        cursor: pointer;
+      }
 
       &.left {
         left: 0;
@@ -105,7 +117,7 @@ div.slider-root {
       }
 
       &:hover {
-        background-color: rgba(50, 50, 50, 0.8);
+        background-color: rgba(0, 0, 0, 0.8);
       }
     }
     div.slider-wrapper {

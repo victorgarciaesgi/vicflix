@@ -1,8 +1,9 @@
 <template>
-  <transition name="fade">
-    <div v-if="type === 'progress' && progressState.show">
+  <div v-if="type === 'progress'">
+    <transition name="fade">
       <div
         class="progress"
+        v-if="progressState.show"
         :style="{
           width: progressState.percent + '%',
           height: progressState.height,
@@ -11,9 +12,11 @@
             : progressState.failedColor,
         }"
       ></div>
-    </div>
-    <div v-else-if="progressState.show">
-      <div class="loader-wrapper flex">
+    </transition>
+  </div>
+  <div v-else>
+    <transition name="fade">
+      <div class="loader-wrapper flex" v-if="progressState.show">
         <Spinner class="spinner" :size="70" />
         <span>Recupération des données</span>
         <div class="bar">
@@ -28,8 +31,8 @@
           ></div>
         </div>
       </div>
-    </div>
-  </transition>
+    </transition>
+  </div>
 </template>
 
 <script lang='ts'>
@@ -61,7 +64,7 @@ export default class ProgressBar extends Vue {
   right: 0px;
   height: 2px;
   width: 0%;
-  transition: width 0.2s linear;
+  transition: width 0.2s linear, opacity 0.2s linear;
   z-index: 999999;
 }
 

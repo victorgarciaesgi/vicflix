@@ -28,9 +28,9 @@ export default class SliderItem extends Vue {
 <style lang="scss" scoped>
 li.slide-item {
   position: relative;
-  width: calc(100% / 4);
   flex: 0 0 auto;
   display: block;
+  transition: width 0.3s, height 0.3s, transform 0.3s;
 
   img.mask {
     opacity: 0;
@@ -49,6 +49,9 @@ li.slide-item {
   &:not(:first-child) div.content {
     left: 5px;
     width: calc(100% - 5px);
+  }
+
+  &:hover {
   }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="header-wrapper">
     <header :class="{ transparent: headerFade }">
-      <NavBar />
+      <NavBar/>
       <div class="box-right flex">
         <Popup :outside="true" :width="150" :mode="getPopupMode">
           <div class="user-popup flex column" slot="popup">
@@ -24,7 +24,7 @@
           </div>
           <div class="user-button flex" slot="button">
             <div class="avatar bg" :style="userAvatar"></div>
-            <SvgIcon src="icons/Forms/arrow_bottom.svg" color="white" />
+            <SvgIcon src="icons/Forms/arrow_bottom.svg" color="white"/>
           </div>
         </Popup>
       </div>
@@ -122,8 +122,8 @@ header {
     div.user-popup {
       width: 100%;
       ul.profils {
-        padding: 20px 0 10px 0;
-        border-bottom: 1px solid $w160;
+        padding: 10px 0 10px 0;
+        border-bottom: 1px solid $g90;
         li.profil {
           flex-flow: row nowrap;
           align-items: center;

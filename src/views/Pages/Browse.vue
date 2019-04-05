@@ -4,10 +4,17 @@
       <div class="title-wrapper flex">
         <div class=""></div>
       </div>
-      <img
+      <!-- <img
         src="https://occ-0-56-55.1.nflxso.net/art/7de7c/a49a556b9b4348305115af131ff4bdda1787de7c.webp"
+      /> -->
+      <img
+        src="https://occ-0-56-55.1.nflxso.net/art/01a6c/73f25ed568ef74526ced08e470111aff3bb01a6c.webp"
+        alt=""
       />
     </div>
+    <section>
+      <Slider :slides="projectsSliderItems" title="Projects" />
+    </section>
     <section>
       <Slider :slides="projectsSliderItems" title="Projects" />
     </section>
@@ -80,6 +87,7 @@ div.browse {
       max-width: 100%;
       width: 100%;
       height: auto;
+      mask-image: linear-gradient(rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
     }
   }
 }

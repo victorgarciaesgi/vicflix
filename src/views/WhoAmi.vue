@@ -41,6 +41,7 @@ export default class WhoAmI extends Vue {
 <style lang="scss" scoped>
 div.whoami {
   padding: 10px;
+  background-color: $g20;
 
   div.logo {
     position: absolute;
@@ -51,6 +52,7 @@ div.whoami {
   div.profil-window {
     width: 650px;
     align-items: center;
+    animation: bounce-in 0.4s;
 
     div.title {
       text-align: center;

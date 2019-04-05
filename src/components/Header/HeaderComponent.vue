@@ -1,7 +1,7 @@
 <template>
   <div class="header-wrapper">
     <header :class="{ transparent: headerFade }">
-      <NavBar/>
+      <NavBar />
       <div class="box-right flex">
         <Popup :outside="true" :width="150" :mode="getPopupMode">
           <div class="user-popup flex column" slot="popup">
@@ -24,7 +24,7 @@
           </div>
           <div class="user-button flex" slot="button">
             <div class="avatar bg" :style="userAvatar"></div>
-            <SvgIcon src="icons/Forms/arrow_bottom.svg" color="white"/>
+            <SvgIcon src="icons/Forms/arrow_bottom.svg" color="white" />
           </div>
         </Popup>
       </div>
@@ -100,7 +100,7 @@ header {
   transition: background-color 0.5s;
 
   &.transparent {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0);
     // box-shadow: 0 0 30px inset rgba(0, 0, 0, 0.4);
   }
 

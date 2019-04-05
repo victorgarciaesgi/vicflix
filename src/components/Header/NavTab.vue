@@ -41,7 +41,7 @@ export default class NavTab extends Vue {
 a.link {
   align-items: center;
   justify-content: center;
-  color: $w240;
+  color: $w245;
   height: 35px;
   padding: 8px 3px 8px 3px;
   margin: 0 10px 0 10px;
@@ -62,6 +62,9 @@ a.link {
   }
 
   &.button {
+    span {
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
     &.router-link-active {
       span {
         transform: scale(1.1);

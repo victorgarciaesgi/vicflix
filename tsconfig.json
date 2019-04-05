@@ -32,6 +32,7 @@
       "@icons/*": ["src/assets/icons/*"],
       "@constructors": ["src/constructors/index.ts"],
       "@css": ["src/styles/root.scss"],
+      "@colors": ["src/styles/colors.module.scss"],
       "@utils": ["src/utils/index.ts"],
       "@router": ["src/router/index.ts"],
       "@paths": ["src/store/Api/ApiRoutes.ts"],

@@ -1,16 +1,21 @@
 <template>
   <div class="browse flex column w100">
     <div class="main-banner">
-      <div class="title-wrapper flex">
-        <div class=""></div>
+      <img src="@images/home_image.jpg" alt="" />
+      <div class="title-wrapper flex column">
+        <div class="title">Original Vicflix</div>
+        <div class="buttons flex">
+          <VButton>
+            <SvgIcon
+              src="icons/actions/play.svg"
+              color="white"
+              :size="22"
+              :style="{ marginRight: '5px' }"
+            />
+            <span>Découvrir</span>
+          </VButton>
+        </div>
       </div>
-      <!-- <img
-        src="https://occ-0-56-55.1.nflxso.net/art/7de7c/a49a556b9b4348305115af131ff4bdda1787de7c.webp"
-      /> -->
-      <img
-        src="https://occ-0-56-55.1.nflxso.net/art/01a6c/73f25ed568ef74526ced08e470111aff3bb01a6c.webp"
-        alt=""
-      />
     </div>
     <section>
       <Slider :slides="projectsSliderItems" title="Projects" />
@@ -74,6 +79,38 @@ export default class Browse extends Vue {
       technos: ['Vue', 'Graphql', 'Typescript'],
       type: 'Project',
     },
+    {
+      id: 6,
+      title: 'Test',
+      image:
+        'https://occ-0-56-55.1.nflxso.net/dnm/api/v6/0DW6CdE4gYtYx8iy3aj8gs9WtXE/AAAABTEnZtEJn5UXZnlLhTnE4ucqjMiOC_guqk69Hi7J6MIYAouwJGvVY8kpFjqVhkcwjm7kX9kluSIsPMTGzQntofPLis3fa0xc.jpg?r=dca',
+      technos: ['Vue', 'Graphql', 'Typescript'],
+      type: 'Project',
+    },
+    {
+      id: 7,
+      title: 'Test',
+      image:
+        'https://occ-0-56-55.1.nflxso.net/dnm/api/v6/0DW6CdE4gYtYx8iy3aj8gs9WtXE/AAAABTEnZtEJn5UXZnlLhTnE4ucqjMiOC_guqk69Hi7J6MIYAouwJGvVY8kpFjqVhkcwjm7kX9kluSIsPMTGzQntofPLis3fa0xc.jpg?r=dca',
+      technos: ['Vue', 'Graphql', 'Typescript'],
+      type: 'Project',
+    },
+    {
+      id: 8,
+      title: 'Test',
+      image:
+        'https://occ-0-56-55.1.nflxso.net/dnm/api/v6/0DW6CdE4gYtYx8iy3aj8gs9WtXE/AAAABTEnZtEJn5UXZnlLhTnE4ucqjMiOC_guqk69Hi7J6MIYAouwJGvVY8kpFjqVhkcwjm7kX9kluSIsPMTGzQntofPLis3fa0xc.jpg?r=dca',
+      technos: ['Vue', 'Graphql', 'Typescript'],
+      type: 'Project',
+    },
+    {
+      id: 9,
+      title: 'Test',
+      image:
+        'https://occ-0-56-55.1.nflxso.net/dnm/api/v6/0DW6CdE4gYtYx8iy3aj8gs9WtXE/AAAABTEnZtEJn5UXZnlLhTnE4ucqjMiOC_guqk69Hi7J6MIYAouwJGvVY8kpFjqVhkcwjm7kX9kluSIsPMTGzQntofPLis3fa0xc.jpg?r=dca',
+      technos: ['Vue', 'Graphql', 'Typescript'],
+      type: 'Project',
+    },
   ];
 }
 </script>
@@ -82,12 +119,34 @@ export default class Browse extends Vue {
 
 <style lang="scss" scoped>
 div.browse {
+  height: 100%;
   div.main-banner {
+    position: relative;
+    max-height: 70vh;
+    min-height: 15vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    mask-image: linear-gradient(rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+
+    div.title-wrapper {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-55%);
+      padding-left: 5%;
+
+      div.title {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+    }
+
     img {
       max-width: 100%;
       width: 100%;
       height: auto;
-      mask-image: linear-gradient(rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
     }
   }
 }

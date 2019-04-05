@@ -2,7 +2,8 @@ export interface ISlideItem {
   id: number;
   title: string;
   image: string;
-  technos: ITechno[];
+  technos?: ITechno[];
+  description?: string;
   type: ISlideType;
 }
 

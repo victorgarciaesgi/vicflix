@@ -65,6 +65,7 @@ div.whoami {
       display: flex;
       width: 100%;
       justify-content: center;
+      flex-flow: row wrap;
 
       li.profil {
         padding: 5px;

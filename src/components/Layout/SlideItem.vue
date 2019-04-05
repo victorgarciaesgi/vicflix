@@ -6,7 +6,17 @@
     @mouseleave="handleMouseLeave"
   >
     <img class="mask" src="~@images/blank.png" alt="" />
-    <div class="content bg" :style="{ backgroundImage: `url(${item.image})` }"></div>
+    <div class="content bg" :style="{ backgroundImage: `url(${item.image})` }">
+      <transition name="fade">
+        <div class="info-item flex" v-if="hovered">
+          <div class="infos flex">
+            <span class="title">{{ item.title }}</span>
+            <span class="description ellipsis"></span>
+          </div>
+          <div v-if="item.type === 'project'" class="techno flex"></div>
+        </div>
+      </transition>
+    </div>
   </li>
 </template>
 
@@ -76,6 +86,17 @@ li.slide-item {
     left: 0;
     height: 100%;
     width: 100%;
+
+    div.info-item {
+      flex-flow: row nowrap;
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+
+      div.infos {
+        align-items: flex-end;
+      }
+    }
   }
 
   &:not(:first-child) div.content {

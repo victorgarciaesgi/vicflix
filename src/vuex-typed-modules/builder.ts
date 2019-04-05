@@ -176,7 +176,7 @@ function createStore() {
         'background:#2788d2;padding: 1px;border-radius: 0 3px 3px 0;color: #fff',
         'background:transparent'
       );
-      console.log('ACTION', action.payload);
+      console.log('PAYLOAD', action.payload);
       console.log('STATE', state);
       console.groupEnd();
     },

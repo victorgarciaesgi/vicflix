@@ -21,6 +21,7 @@ module.exports = {
       '@graphql': path.resolve(__dirname, 'src/graphql/index.ts'),
       '@utils': path.resolve(__dirname, 'src/utils/index.ts'),
       '@css': path.resolve(__dirname, 'src/styles/root.scss'),
+      '@colors': path.resolve(__dirname, 'src/styles/colors.module.scss'),
       '@router': path.resolve(__dirname, 'src/router/index.ts'),
       '@validators': path.resolve(__dirname, 'src/utils/validators.ts'),
       '@methods': path.resolve(__dirname, 'src/utils/methods.ts'),

@@ -334,8 +334,8 @@ export default class Popup extends Vue {
     cursor: pointer;
 
     &.shadow.active > * {
-      transition: box-shadow 0.2s;
-      box-shadow: 0 0 5px inset rgba(0, 0, 0, 0.15);
+      // transition: box-shadow 0.2s;
+      // box-shadow: 0 0 5px inset rgba(0, 0, 0, 0.15);
     }
   }
 }

@@ -1,16 +1,16 @@
 <template>
-  <div class="slider-root flex">
+  <div class="slider-root flex" ref="sliderRoot">
     <div class="title">
       <span>{{ title }}</span>
     </div>
     <div class="slider-container flex">
       <div class="slider-page-button left">
         <button class="flex center w100 h100" v-if="page > 1" @click="slideLeft">
-          <SvgIcon src="icons/Forms/arrow_left.svg" color="white" size="50%" />
+          <SvgIcon src="icons/Forms/arrow_left.svg" color="white" :size="30" />
         </button>
       </div>
       <div class="slider-wrapper flex" key="slider">
-        <ul class="slider-list flex" :style="getStyle" ref="slideList">
+        <ul class="slider-list flex" :style="getStyle" ref="sliderList">
           <SlideItem
             v-for="item of slides"
             :key="item.id"
@@ -23,7 +23,7 @@
       </div>
       <div class="slider-page-button right flex center">
         <button class="flex center w100 h100" v-if="page < pageLength" @click="slideRight">
-          <SvgIcon src="icons/Forms/arrow_right.svg" color="white" size="50%" />
+          <SvgIcon src="icons/Forms/arrow_right.svg" color="white" :size="30" />
         </button>
       </div>
     </div>
@@ -47,13 +47,15 @@ export default class Slider extends Vue {
   @Prop() slides: ISlideItem[];
 
   $refs: {
-    slideList: HTMLElement;
+    sliderList: HTMLElement;
+    sliderRoot: HTMLElement;
   };
 
   private offset = 0;
   private slidePerPage = 4;
   private page = 1;
   private containerTimeout = null;
+  private margins = 4;
 
   get itemsOnNextPage(): number {
     const remaining = this.slides.length - this.page * this.slidePerPage;
@@ -98,30 +100,41 @@ export default class Slider extends Vue {
 
   setContainerFix() {
     clearTimeout(this.containerTimeout);
-    this.$refs.slideList.style.maxHeight = this.$refs.slideList.clientHeight + 'px';
+    this.$refs.sliderList.style.maxHeight = this.$refs.sliderList.clientHeight + 'px';
   }
 
   freeContainer() {
     clearTimeout(this.containerTimeout);
     this.containerTimeout = setTimeout(() => {
-      this.$refs.slideList.style.maxHeight = 'none';
+      this.$refs.sliderList.style.maxHeight = 'none';
     }, 410);
   }
 
   checkItemPerPage() {
     const size = window.innerWidth;
     if (size < 700) {
+      this.margins = 8;
       this.slidePerPage = 2;
     } else if (size < 1000) {
+      this.margins = 4;
       this.slidePerPage = 3;
-    } else if (size < 1300) {
+    } else if (size < 1200) {
+      this.margins = 4;
       this.slidePerPage = 4;
-    } else if (size < 1600) {
+    } else if (size < 1400) {
+      this.margins = 4;
       this.slidePerPage = 5;
+    } else if (size < 1400) {
+      this.margins = 2;
+      this.slidePerPage = 6;
+    } else {
+      this.margins = 2;
+      this.slidePerPage = 7;
     }
+    this.$refs.sliderRoot.style.setProperty('--margins', this.margins + '%');
   }
 
-  created() {
+  mounted() {
     window.addEventListener('resize', this.checkItemPerPage);
     this.checkItemPerPage();
   }
@@ -135,10 +148,10 @@ div.slider-root {
   width: 100%;
   flex-flow: column wrap;
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 
   div.title {
-    margin: 0 4% 10px 4%;
+    margin: 0 var(--margins) 10px var(--margins);
     font-weight: bold;
     color: $w230;
   }
@@ -149,7 +162,7 @@ div.slider-root {
       height: 100%;
       position: absolute;
       top: 0;
-      width: 4%;
+      width: var(--margins);
       z-index: 2;
 
       button {
@@ -167,7 +180,7 @@ div.slider-root {
       }
     }
     div.slider-wrapper {
-      padding: 0 4%;
+      padding: 0 var(--margins);
       flex: 1 1 auto;
 
       ul.slider-list {

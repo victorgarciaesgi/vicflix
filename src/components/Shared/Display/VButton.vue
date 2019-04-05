@@ -5,12 +5,13 @@
     :to="to"
     @click="emitClick($event)"
     :type="type"
+    ref="button"
     :class="[theme, size, { submitting, loading, disabled, rounded, justIcon }]"
   >
     <span class="text">
       <slot />
     </span>
-    <img class="loading" :src="getLoader" :height="getSize" :width="getSize" />
+    <Spinner class="loading" :color="getLoaderColor" :size="getSize" />
   </component>
 </template>
 
@@ -18,9 +19,10 @@
 import Vue from 'vue';
 import { Component, Prop, Model } from 'vue-property-decorator';
 import { Location } from 'vue-router';
+import Colors from '@colors';
 
 @Component({})
-export default class FormButton extends Vue {
+export default class VButton extends Vue {
   @Prop({ required: false })
   submitting!: boolean;
   @Prop({ required: false })
@@ -29,8 +31,8 @@ export default class FormButton extends Vue {
   type!: string;
   @Prop()
   to!: string | Location;
-  @Prop({ default: 'primary' })
-  theme!: 'primary' | 'red' | 'white';
+  @Prop({ default: 'dark' })
+  theme!: 'red' | 'dark' | 'white';
   @Prop({ default: 'little' })
   size!: 'mini' | 'little' | 'medium' | 'large';
   @Prop({ default: false }) rounded!: boolean;
@@ -39,17 +41,33 @@ export default class FormButton extends Vue {
 
   private loading = false;
 
-  private css = require('@css');
+  $refs: {
+    button: HTMLElement;
+  };
 
   get getSize() {
     if (this.size === 'mini') return 16;
     return 20;
   }
 
-  get getLoader() {
-    if (this.theme === 'white') return require('@images/loading_blue.svg');
-    else if (this.theme === 'primary') return require('@images/loading_white.svg');
-    else return require('@images/loading_blue.svg');
+  get themeVars(): { bg: string; text: string } {
+    if (this.theme === 'red') {
+      return {
+        bg: Colors.red1,
+        text: 'white',
+      };
+    } else if (this.theme === 'dark') {
+      return {
+        bg: 'rgb(60, 60, 60, 0.8)',
+        text: 'white',
+      };
+    }
+  }
+
+  get getLoaderColor() {
+    if (this.theme === 'red') return 'white';
+    else if (this.theme === 'dark') return 'white';
+    else if (this.theme === 'white') return 'g60';
   }
 
   async emitClick(event: Event) {
@@ -74,6 +92,11 @@ export default class FormButton extends Vue {
       event.preventDefault();
     }
   }
+
+  mounted() {
+    this.$refs.button.style.setProperty('--button-bg', this.themeVars.bg);
+    this.$refs.button.style.setProperty('--button-text', this.themeVars.text);
+  }
 }
 </script>
 
@@ -89,39 +112,48 @@ export default class FormButton extends Vue {
   flex: 0 0 auto;
   width: fit-content;
   margin: 0 5px 0 5px;
-  border-radius: 40px;
+  border-radius: 4px;
   text-align: center;
   cursor: pointer;
   outline: none;
   @include userselect;
-  background-color: $w235;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
   transition: box-shadow 0.3s, transform 0.3s;
+  background-color: var(--button-bg);
+  span {
+    color: var(--button-text);
+    text-shadow: 0 1px 3px var(--button-bg);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    display: flex;
+    align-items: center;
+  }
 
   &.mini {
     min-height: 25px;
     font-size: 14px;
     font-weight: normal;
-    padding: 3px 10px 3px 10px;
+    padding: 3px 10px;
   }
 
   &.little {
     min-height: 30px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: normal;
-    padding: 5px 14px 5px 14px;
+    padding: 8px 25px;
   }
 
   &.medium {
     min-height: 32px;
     font-size: 20px;
-    padding: 8px 25px 8px 25px;
+    padding: 8px 25px;
   }
 
   &.large {
     min-height: 40px;
     font-size: 22px;
-    padding: 10px 30px 10px 30px;
+    padding: 10px 30px;
   }
 
   &.rounded {
@@ -160,33 +192,6 @@ export default class FormButton extends Vue {
   }
 
   // Themes
-
-  &.white {
-    span.text {
-      color: $primary;
-      font-weight: bold;
-    }
-    &:not(.disabled):hover {
-      span.text {
-        color: $primary;
-      }
-    }
-  }
-
-  &.red {
-    span.text {
-      color: $red1;
-      font-weight: bold;
-    }
-  }
-
-  &.primary {
-    background-color: $primary;
-    span.text {
-      color: white;
-      font-weight: bold;
-    }
-  }
 }
 </style>
 

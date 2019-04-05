@@ -15,6 +15,8 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import Axios from 'axios';
+import Colors from '@colors';
+import { Partial } from 'lodash';
 
 @Component({
   name: 'SvgIcon',
@@ -30,13 +32,11 @@ export default class SvgIcon extends Vue {
   @Prop() pointer!: boolean;
   @Prop({ default: 'fill' }) type: 'fill' | 'stroke';
 
-  private css = require('@css');
-
   private svgContent = null;
 
   get activeColor() {
-    if (typeof this.color == 'string') {
-      return this.css[this.color] || this.color;
+    if (typeof this.color === 'string') {
+      return Colors[this.color] || this.color;
     } else if (this.color != null) {
       let keys = Object.keys(this.color);
       let filtered = keys.filter(key => this.color[key]);

@@ -1,9 +1,10 @@
 <template>
   <div class="browse flex column w100">
     <div class="main-banner">
-      <img src="@images/home_image.jpg" alt="" />
+      <img src="@images/home_image.jpg" alt>
       <div class="title-wrapper flex column">
         <div class="title">Original Vicflix</div>
+        <div class="serieName">Victor Garcia</div>
         <div class="buttons flex">
           <VButton>
             <SvgIcon
@@ -18,10 +19,10 @@
       </div>
     </div>
     <section>
-      <Slider :slides="projectsSliderItems" title="Projects" />
+      <Slider :slides="projectsSliderItems" title="Projects"/>
     </section>
     <section>
-      <Slider :slides="projectsSliderItems" title="Projects" />
+      <Slider :slides="projectsSliderItems" title="Projects"/>
     </section>
   </div>
 </template>
@@ -42,72 +43,63 @@ export default class Browse extends Vue {
     {
       id: 1,
       title: 'Test',
-      image:
-        'https://occ-0-56-55.1.nflxso.net/dnm/api/v6/0DW6CdE4gYtYx8iy3aj8gs9WtXE/AAAABTEnZtEJn5UXZnlLhTnE4ucqjMiOC_guqk69Hi7J6MIYAouwJGvVY8kpFjqVhkcwjm7kX9kluSIsPMTGzQntofPLis3fa0xc.jpg?r=dca',
+      image: require('@images/projects/bigup.png'),
       technos: ['Vue', 'Graphql', 'Typescript'],
       type: 'Project',
     },
     {
       id: 2,
       title: 'Test',
-      image:
-        'https://occ-0-56-55.1.nflxso.net/dnm/api/v6/0DW6CdE4gYtYx8iy3aj8gs9WtXE/AAAABTEnZtEJn5UXZnlLhTnE4ucqjMiOC_guqk69Hi7J6MIYAouwJGvVY8kpFjqVhkcwjm7kX9kluSIsPMTGzQntofPLis3fa0xc.jpg?r=dca',
+      image: require('@images/projects/bigup.png'),
       technos: ['Vue', 'Graphql', 'Typescript'],
       type: 'Project',
     },
     {
       id: 3,
       title: 'Test',
-      image:
-        'https://occ-0-56-55.1.nflxso.net/dnm/api/v6/0DW6CdE4gYtYx8iy3aj8gs9WtXE/AAAABTEnZtEJn5UXZnlLhTnE4ucqjMiOC_guqk69Hi7J6MIYAouwJGvVY8kpFjqVhkcwjm7kX9kluSIsPMTGzQntofPLis3fa0xc.jpg?r=dca',
+      image: require('@images/projects/bigup.png'),
       technos: ['Vue', 'Graphql', 'Typescript'],
       type: 'Project',
     },
     {
       id: 4,
       title: 'Test',
-      image:
-        'https://occ-0-56-55.1.nflxso.net/dnm/api/v6/0DW6CdE4gYtYx8iy3aj8gs9WtXE/AAAABTEnZtEJn5UXZnlLhTnE4ucqjMiOC_guqk69Hi7J6MIYAouwJGvVY8kpFjqVhkcwjm7kX9kluSIsPMTGzQntofPLis3fa0xc.jpg?r=dca',
+      image: require('@images/projects/bigup.png'),
       technos: ['Vue', 'Graphql', 'Typescript'],
       type: 'Project',
     },
     {
       id: 5,
       title: 'Test',
-      image:
-        'https://occ-0-56-55.1.nflxso.net/dnm/api/v6/0DW6CdE4gYtYx8iy3aj8gs9WtXE/AAAABTEnZtEJn5UXZnlLhTnE4ucqjMiOC_guqk69Hi7J6MIYAouwJGvVY8kpFjqVhkcwjm7kX9kluSIsPMTGzQntofPLis3fa0xc.jpg?r=dca',
+      image: require('@images/projects/bigup.png'),
       technos: ['Vue', 'Graphql', 'Typescript'],
       type: 'Project',
     },
     {
       id: 6,
       title: 'Test',
-      image:
-        'https://occ-0-56-55.1.nflxso.net/dnm/api/v6/0DW6CdE4gYtYx8iy3aj8gs9WtXE/AAAABTEnZtEJn5UXZnlLhTnE4ucqjMiOC_guqk69Hi7J6MIYAouwJGvVY8kpFjqVhkcwjm7kX9kluSIsPMTGzQntofPLis3fa0xc.jpg?r=dca',
+      image: require('@images/projects/bigup.png'),
       technos: ['Vue', 'Graphql', 'Typescript'],
       type: 'Project',
     },
     {
       id: 7,
       title: 'Test',
-      image:
-        'https://occ-0-56-55.1.nflxso.net/dnm/api/v6/0DW6CdE4gYtYx8iy3aj8gs9WtXE/AAAABTEnZtEJn5UXZnlLhTnE4ucqjMiOC_guqk69Hi7J6MIYAouwJGvVY8kpFjqVhkcwjm7kX9kluSIsPMTGzQntofPLis3fa0xc.jpg?r=dca',
+      image: require('@images/projects/bigup.png'),
       technos: ['Vue', 'Graphql', 'Typescript'],
       type: 'Project',
     },
     {
       id: 8,
       title: 'Test',
-      image:
-        'https://occ-0-56-55.1.nflxso.net/dnm/api/v6/0DW6CdE4gYtYx8iy3aj8gs9WtXE/AAAABTEnZtEJn5UXZnlLhTnE4ucqjMiOC_guqk69Hi7J6MIYAouwJGvVY8kpFjqVhkcwjm7kX9kluSIsPMTGzQntofPLis3fa0xc.jpg?r=dca',
+      image: require('@images/projects/bigup.png'),
       technos: ['Vue', 'Graphql', 'Typescript'],
       type: 'Project',
     },
     {
       id: 9,
       title: 'Test',
-      image:
-        'https://occ-0-56-55.1.nflxso.net/dnm/api/v6/0DW6CdE4gYtYx8iy3aj8gs9WtXE/AAAABTEnZtEJn5UXZnlLhTnE4ucqjMiOC_guqk69Hi7J6MIYAouwJGvVY8kpFjqVhkcwjm7kX9kluSIsPMTGzQntofPLis3fa0xc.jpg?r=dca',
+      image: require('@images/projects/bigup.png'),
       technos: ['Vue', 'Graphql', 'Typescript'],
       type: 'Project',
     },
@@ -127,7 +119,7 @@ div.browse {
     overflow: hidden;
     display: flex;
     align-items: center;
-    mask-image: linear-gradient(rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+    mask-image: linear-gradient(rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0) 100%);
 
     div.title-wrapper {
       position: absolute;
@@ -138,7 +130,14 @@ div.browse {
       div.title {
         font-size: 30px;
         font-weight: bold;
-        margin-bottom: 20px;
+        margin-bottom: 5x;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      div.serieName {
+        font-size: 40px;
+        font-weight: bold;
+        margin-bottom: 10px;
         text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
       }
     }

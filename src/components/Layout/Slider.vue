@@ -6,24 +6,25 @@
     <div class="slider-container flex">
       <div class="slider-page-button left">
         <button class="flex center w100 h100" v-if="page > 1" @click="slideLeft">
-          <SvgIcon src="icons/Forms/arrow_left.svg" color="white" :size="30" />
+          <SvgIcon src="icons/Forms/arrow_left.svg" color="white" :size="30"/>
         </button>
       </div>
       <div class="slider-wrapper flex" key="slider">
         <ul class="slider-list flex" :style="getStyle" ref="sliderList">
           <SlideItem
-            v-for="item of slides"
+            v-for="(item, index) of slides"
             :key="item.id"
             :item="item"
+            :ref="`slide${index}`"
             :perPage="slidePerPage"
-            @mouseenter="setContainerFix"
-            @mouseleave="freeContainer"
+            @mouseenter="setContainerFix($event, index)"
+            @mouseleave="freeContainer($event, index)"
           />
         </ul>
       </div>
       <div class="slider-page-button right flex center">
         <button class="flex center w100 h100" v-if="page < pageLength" @click="slideRight">
-          <SvgIcon src="icons/Forms/arrow_right.svg" color="white" :size="30" />
+          <SvgIcon src="icons/Forms/arrow_right.svg" color="white" :size="30"/>
         </button>
       </div>
     </div>
@@ -98,12 +99,12 @@ export default class Slider extends Vue {
     };
   }
 
-  setContainerFix() {
+  setContainerFix(event) {
     clearTimeout(this.containerTimeout);
     this.$refs.sliderList.style.maxHeight = this.$refs.sliderList.clientHeight + 'px';
   }
 
-  freeContainer() {
+  freeContainer(event) {
     clearTimeout(this.containerTimeout);
     this.containerTimeout = setTimeout(() => {
       this.$refs.sliderList.style.maxHeight = 'none';

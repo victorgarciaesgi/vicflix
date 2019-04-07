@@ -15,6 +15,7 @@
     "importHelpers": true,
     "jsx": "preserve",
     "strictNullChecks": false,
+    "incremental": true,
     "downlevelIteration": true,
     "skipLibCheck": true,
     "baseUrl": ".",

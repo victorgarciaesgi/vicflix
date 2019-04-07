@@ -1,12 +1,14 @@
 <template>
   <li
     class="slide-item"
-    :style="getStyle"
+    :style="getContainerStyle"
+    ref="slideItem"
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
   >
-    <img class="mask" src="~@images/blank.png" alt="" />
-    <div class="content bg" :style="{ backgroundImage: `url(${item.image})` }">
+    <img class="mask" src="~@images/blank.png">
+    <div class="content bg" ref="content" :style="getContentStyle">
+      <img class="vicflix" src="~@images/vicflix.png" width="60px">
       <transition name="fade">
         <div class="info-item flex" v-if="hovered">
           <div class="infos flex">
@@ -33,31 +35,57 @@ export default class SliderItem extends Vue {
 
   private hovered = false;
   private hoverTimeout = null;
+  private ratio = 240 / 136;
 
-  get getStyle() {
+  $refs: {
+    slideItem: HTMLElement;
+    content: HTMLElement;
+  };
+
+  get getContainerStyle() {
+    return {
+      width: `calc(100% / ${this.perPage})`,
+    };
+    // if (!this.hovered) {
+    //   return {
+    //     width: `calc(100% / ${this.perPage})`,
+    //   };
+    // } else {
+    //   const width = this.$refs.slideItem.clientWidth * 1.5;
+    //   return {
+    //     width: width + 'px',
+    //     marginLeft: `-${(width - this.$refs.slideItem.clientWidth) / 2}px`,
+    //     top: '50%',
+    //     transform: `translateY(-50%)`,
+    //   };
+    // }
+  }
+
+  get getContentStyle() {
     if (!this.hovered) {
-      return {
-        width: `calc(100% / ${this.perPage})`,
-      };
+      return { backgroundImage: `url(${this.item.image})` };
     } else {
       return {
-        width: `calc(100% / ${this.perPage / 1.5})`,
-        top: '50%',
-        transform: `translate3d(0, -50%, 0)`,
+        backgroundImage: `url(${this.item.image})`,
+        transform: 'scale(1.4)',
       };
     }
   }
 
   async handleMouseEnter() {
-    this.$emit('mouseenter');
+    this.$emit('mouseenter', this.$refs.slideItem);
     this.hoverTimeout = setTimeout(() => {
       this.hovered = true;
+      this.$refs.content.style.zIndex = '10';
     }, 400);
   }
   handleMouseLeave() {
     clearTimeout(this.hoverTimeout);
-    this.$emit('mouseleave');
+    this.$emit('mouseleave', this.$refs.slideItem);
     this.hovered = false;
+    setTimeout(() => {
+      this.$refs.content.style.zIndex = 'initial';
+    }, 250);
   }
 }
 </script>
@@ -71,8 +99,7 @@ li.slide-item {
   display: block;
   top: 0px;
   left: 0;
-  transition: top ease-in-out 0.3s, width ease-in-out 0.3s, height ease-in-out 0.3s,
-    transform ease-in-out 0.3s;
+  transition: width ease-in-out 0.3s, height ease-in-out 0.3s;
 
   img.mask {
     opacity: 0;
@@ -86,6 +113,13 @@ li.slide-item {
     left: 0;
     height: 100%;
     width: 100%;
+    transition: transform ease-in-out 0.3s;
+
+    img.vicflix {
+      position: absolute;
+      left: 5px;
+      top: 5px;
+    }
 
     div.info-item {
       flex-flow: row nowrap;

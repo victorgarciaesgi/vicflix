@@ -2,6 +2,13 @@
   "name": "Portefolio Victor Garcia",
   "short_name": "Victor Garcia",
   "start_url": "/",
+  "icons": [
+    {
+      "src": "/icons-favicon/apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
   "display": "standalone",
   "background_color": "#000",
   "theme_color": "#000"

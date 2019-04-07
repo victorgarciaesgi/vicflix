@@ -1,11 +1,11 @@
 <template>
   <div class="root flex">
-    <HeaderComponent />
-    <ProgressBar />
+    <HeaderComponent/>
+    <ProgressBar/>
     <div class="rootView">
       <transition name="fade" mode="out-in">
         <keep-alive>
-          <router-view />
+          <router-view/>
         </keep-alive>
       </transition>
     </div>
@@ -43,6 +43,7 @@ div.root {
     width: 100%;
     max-width: 100%;
     min-height: 100%;
+    overflow-x: hidden;
     // min-height: calc(100% - #{$headerHeight});
 
     div.overlay {

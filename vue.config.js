@@ -3,6 +3,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const productionGzipExtensions = ['js'];
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const AppManifestWebpackPlugin = require('app-manifest-webpack-plugin');
 
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
@@ -61,30 +62,65 @@ module.exports = {
           minRatio: 0.8,
         })
       );
+      config.plugins.push(
+        new AppManifestWebpackPlugin({
+          logo: './public/favicon.png',
+          emitStats: false,
+          statsFilename: 'iconstats-[name].json',
+          persistentCache: true,
+          inject: true,
+          background: '#000',
+          config: {
+            appName: process.env.VUE_APP_NAME,
+            appDescription: '',
+            developerName: null,
+            developerURL: null,
+            background: '#000',
+            theme_color: '#000',
+            display: 'standalone',
+            orientation: 'portrait',
+            start_url: '/',
+            version: '1.0',
+            logging: false,
+            icons: {
+              android: { offset: 25 },
+              appleIcon: { offset: 25 },
+              appleStartup: { offset: 25 },
+              coast: false,
+              favicons: true,
+              firefox: true,
+              opengraph: true,
+              twitter: true,
+              yandex: false,
+              windows: false,
+            },
+          },
+        })
+      );
+    } else {
+      config.plugins.push(
+        new FaviconsWebpackPlugin({
+          logo: './public/favicon.png',
+          emitStats: false,
+          statsFilename: 'iconstats-[name].json',
+          persistentCache: true,
+          inject: true,
+          background: '#000',
+          icons: {
+            android: true,
+            appleIcon: true,
+            appleStartup: true,
+            coast: false,
+            favicons: true,
+            firefox: true,
+            opengraph: true,
+            twitter: true,
+            yandex: false,
+            windows: false,
+          },
+        })
+      );
     }
-    config.plugins.push(
-      new FaviconsWebpackPlugin({
-        logo: './public/favicon.png',
-        prefix: 'icons-[name]/',
-        emitStats: false,
-        statsFilename: 'iconstats-[name].json',
-        persistentCache: true,
-        inject: true,
-        background: '#000',
-        icons: {
-          android: true,
-          appleIcon: true,
-          appleStartup: true,
-          coast: false,
-          favicons: true,
-          firefox: true,
-          opengraph: true,
-          twitter: true,
-          yandex: false,
-          windows: false,
-        },
-      })
-    );
   },
 
   css: {

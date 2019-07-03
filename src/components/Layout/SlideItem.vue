@@ -6,16 +6,22 @@
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
   >
-    <img class="mask" src="~@images/blank.png">
+    <img class="mask" src="~@images/blank.png" />
     <div class="content bg" ref="content" :style="getContentStyle">
-      <img class="vicflix" src="~@images/vicflix.png" width="60px">
+      <img class="vicflix" src="~@images/vicflix.png" width="60px" />
       <transition name="fade">
-        <div class="info-item flex" v-if="hovered">
-          <div class="infos flex">
+        <div class="info-item flex">
+          <div class="infos column flex">
             <span class="title">{{ item.title }}</span>
-            <span class="description ellipsis"></span>
+            <span class="description ellipsis">{{ item.description }}</span>
           </div>
-          <div v-if="item.type === 'project'" class="techno flex"></div>
+          <div class="technos flex" v-if="item.type === 'Project'">
+            <img
+              v-for="techno of item.technos"
+              :key="techno"
+              :src="require(`@images/technos/${iconsPaths[techno]}`)"
+            />
+          </div>
         </div>
       </transition>
     </div>
@@ -28,6 +34,13 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import { ISlideItem } from '@models';
 import { setTimeout, clearTimeout } from 'timers';
 
+const icons = {
+  Vue: 'vue.png',
+  Graphql: 'graphql.png',
+  Typescript: 'ts.png',
+  Stripe: 'stripe.png',
+};
+
 @Component({})
 export default class SliderItem extends Vue {
   @Prop() item: ISlideItem;
@@ -36,6 +49,8 @@ export default class SliderItem extends Vue {
   private hovered = false;
   private hoverTimeout = null;
   private ratio = 240 / 136;
+
+  private iconsPaths = icons;
 
   $refs: {
     slideItem: HTMLElement;
@@ -46,19 +61,6 @@ export default class SliderItem extends Vue {
     return {
       width: `calc(100% / ${this.perPage})`,
     };
-    // if (!this.hovered) {
-    //   return {
-    //     width: `calc(100% / ${this.perPage})`,
-    //   };
-    // } else {
-    //   const width = this.$refs.slideItem.clientWidth * 1.5;
-    //   return {
-    //     width: width + 'px',
-    //     marginLeft: `-${(width - this.$refs.slideItem.clientWidth) / 2}px`,
-    //     top: '50%',
-    //     transform: `translateY(-50%)`,
-    //   };
-    // }
   }
 
   get getContentStyle() {
@@ -67,7 +69,7 @@ export default class SliderItem extends Vue {
     } else {
       return {
         backgroundImage: `url(${this.item.image})`,
-        transform: 'scale(1.4)',
+        transform: 'scale(1.2)',
       };
     }
   }
@@ -128,7 +130,19 @@ li.slide-item {
       background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
 
       div.infos {
-        align-items: flex-end;
+        justify-content: flex-end;
+        flex: 1 1 auto;
+      }
+
+      div.technos {
+        flex-flow: column-reverse wrap;
+        padding: 0 5px;
+
+        img {
+          height: 20px;
+          width: 20px;
+          margin-bottom: 5px;
+        }
       }
     }
   }

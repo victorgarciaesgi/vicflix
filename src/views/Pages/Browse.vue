@@ -1,7 +1,7 @@
 <template>
   <div class="browse flex column w100">
     <div class="main-banner">
-      <img src="@images/home_image.jpg" alt>
+      <img src="@images/home_image.jpg" alt />
       <div class="title-wrapper flex column">
         <div class="title">Original Vicflix</div>
         <div class="serieName">Victor Garcia</div>
@@ -19,10 +19,10 @@
       </div>
     </div>
     <section>
-      <Slider :slides="projectsSliderItems" title="Projects"/>
+      <Slider :slides="projectsSliderItems" title="Projects" />
     </section>
     <section>
-      <Slider :slides="projectsSliderItems" title="Projects"/>
+      <Slider :slides="projectsSliderItems" title="Projects" />
     </section>
   </div>
 </template>
@@ -45,6 +45,7 @@ export default class Browse extends Vue {
       title: 'Test',
       image: require('@images/projects/bigup.png'),
       technos: ['Vue', 'Graphql', 'Typescript'],
+      description: 'ezlfhjlizehfioezhf eziofhliezhfozef kuezhfkuz',
       type: 'Project',
     },
     {

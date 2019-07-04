@@ -42,67 +42,66 @@ export default class Browse extends Vue {
   private projectsSliderItems: ISlideItem[] = [
     {
       id: 1,
-      title: 'Test',
+      title: 'Big Up Vidéo Client',
       image: require('@images/projects/bigup.png'),
-      technos: ['Vue', 'Graphql', 'Typescript'],
-      description: 'ezlfhjlizehfioezhf eziofhliezhfozef kuezhfkuz',
-      type: 'Project',
+      technos: ['Vue', 'Graphql', 'Typescript', 'Stripe'],
+      type: 'Work Project',
     },
     {
       id: 2,
-      title: 'Test',
-      image: require('@images/projects/bigup.png'),
-      technos: ['Vue', 'Graphql', 'Typescript'],
-      type: 'Project',
+      title: 'Big Up BackOffice',
+      image: require('@images/projects/bigupadmin.png'),
+      technos: ['Vue', 'Graphql', 'Typescript', 'Stripe'],
+      type: 'Work Project',
     },
     {
       id: 3,
-      title: 'Test',
-      image: require('@images/projects/bigup.png'),
-      technos: ['Vue', 'Graphql', 'Typescript'],
-      type: 'Project',
+      title: 'Carrefour PackDiff',
+      image: require('@images/projects/packdiff.png'),
+      technos: ['Vue', 'Typescript'],
+      type: 'Work Project',
     },
     {
       id: 4,
-      title: 'Test',
-      image: require('@images/projects/bigup.png'),
-      technos: ['Vue', 'Graphql', 'Typescript'],
-      type: 'Project',
+      title: 'Rewind Back office',
+      image: require('@images/projects/rewind.png'),
+      technos: ['Vue', 'Graphql', 'Typescript', 'MapBox', 'PWA'],
+      type: 'Work Project',
     },
     {
       id: 5,
       title: 'Test',
       image: require('@images/projects/bigup.png'),
       technos: ['Vue', 'Graphql', 'Typescript'],
-      type: 'Project',
+      type: 'Work Project',
     },
     {
       id: 6,
       title: 'Test',
       image: require('@images/projects/bigup.png'),
       technos: ['Vue', 'Graphql', 'Typescript'],
-      type: 'Project',
+      type: 'Work Project',
     },
     {
       id: 7,
       title: 'Test',
       image: require('@images/projects/bigup.png'),
       technos: ['Vue', 'Graphql', 'Typescript'],
-      type: 'Project',
+      type: 'Work Project',
     },
     {
       id: 8,
       title: 'Test',
       image: require('@images/projects/bigup.png'),
       technos: ['Vue', 'Graphql', 'Typescript'],
-      type: 'Project',
+      type: 'Work Project',
     },
     {
       id: 9,
       title: 'Test',
       image: require('@images/projects/bigup.png'),
       technos: ['Vue', 'Graphql', 'Typescript'],
-      type: 'Project',
+      type: 'Work Project',
     },
   ];
 }
@@ -147,6 +146,7 @@ div.browse {
       max-width: 100%;
       width: 100%;
       height: auto;
+      min-height: 300px;
     }
   }
 }

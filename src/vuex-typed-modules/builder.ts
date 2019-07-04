@@ -1,4 +1,4 @@
-import Vuex, { Store } from 'vuex';
+import Vuex, { Store, StoreOptions } from 'vuex';
 import Vue from 'vue';
 import {
   ReturnedMutations,
@@ -7,9 +7,12 @@ import {
   MutationsPayload,
   ActionsPayload,
   GettersPayload,
+  SharedMutations,
 } from './types';
 import { enableHotReload } from './hotModule';
 import { oc } from 'ts-optchain';
+import { cloneDeep } from 'lodash';
+import { Omit, KeepProperties } from '@models';
 
 Vue.use(Vuex);
 
@@ -75,6 +78,7 @@ function stateBuilder<S>(state: S, name: string) {
     }
     return renderedGetters as any;
   };
+
   return {
     registerMutations,
     registerActions,
@@ -97,7 +101,7 @@ function defineModule<
   actions: ReturnedActions<A>;
   mutations: ReturnedMutations<M>;
   state: S;
-};
+} & SharedMutations<S>;
 function defineModule<S, M extends MutationsPayload, A extends ActionsPayload>(
   name: string,
   state: S,
@@ -106,7 +110,7 @@ function defineModule<S, M extends MutationsPayload, A extends ActionsPayload>(
   actions: ReturnedActions<A>;
   mutations: ReturnedMutations<M>;
   state: S;
-};
+} & SharedMutations<S>;
 function defineModule<S, M extends MutationsPayload, G extends GettersPayload>(
   name: string,
   state: S,
@@ -115,7 +119,7 @@ function defineModule<S, M extends MutationsPayload, G extends GettersPayload>(
   getters: ReturnedGetters<G>;
   mutations: ReturnedMutations<M>;
   state: S;
-};
+} & SharedMutations<S>;
 function defineModule<S, A extends ActionsPayload, G extends GettersPayload>(
   name: string,
   state: S,
@@ -124,18 +128,51 @@ function defineModule<S, A extends ActionsPayload, G extends GettersPayload>(
   getters: ReturnedGetters<G>;
   actions: ReturnedActions<A>;
   state: S;
-};
+} & SharedMutations<S>;
 function defineModule<S, M extends MutationsPayload>(
   name: string,
   state: S,
   { mutations }: { mutations: M }
-): { mutations: ReturnedMutations<M>; state: S };
+): {
+  mutations: ReturnedMutations<M>;
+  state: S;
+} & SharedMutations<S>;
 function defineModule<S, A extends ActionsPayload>(
   name: string,
   state: S,
   { actions }: { actions: A }
-): { actions: ReturnedActions<A>; state: S };
+): {
+  actions: ReturnedActions<A>;
+  state: S;
+} & SharedMutations<S>;
 function defineModule(name, state, vuexModule) {
+  if (!vuexModule.mutations) vuexModule.mutations = {};
+  const initialState = cloneDeep(state);
+  vuexModule.mutations.resetState = moduleState => {
+    Object.keys(initialState).map(key => {
+      Vue.set(moduleState, key, initialState[key]);
+    });
+  };
+  vuexModule.mutations.updateState = (moduleState, params) => {
+    Object.keys(params).map(key => {
+      Vue.set(moduleState, key, params[key]);
+    });
+  };
+  vuexModule.mutations.updateListItem = (moduleState, { key, id, data }) => {
+    const list = moduleState[key];
+    const index = list.findIndex(f => f.id === id);
+    const item = list.find(f => f.id === id);
+    Vue.set(list, index, { ...item, ...data });
+  };
+  vuexModule.mutations.removeListItem = (moduleState, { key, id }) => {
+    Vue.set(moduleState, key, moduleState[key].filter(f => f.id !== id));
+  };
+  vuexModule.mutations.addListItem = (moduleState, { key, data }) => {
+    Vue.set(moduleState, key, moduleState[key].push(data));
+  };
+  vuexModule.mutations.concatList = (moduleState, { key, data }) => {
+    Vue.set(moduleState, key, moduleState[key].concat(data));
+  };
   if (module.hot) {
     enableHotReload(name, state, vuexModule);
   } else {
@@ -150,19 +187,39 @@ function defineModule(name, state, vuexModule) {
     state,
     name
   );
+
   return {
     mutations: registerMutations(vuexModule.mutations),
     actions: registerActions(vuexModule.actions),
     getters: registerGetters(vuexModule.getters),
+    resetState() {
+      storeBuilder.commit(`${name}/resetState`);
+    },
+    updateState(params) {
+      storeBuilder.commit(`${name}/updateState`, params);
+    },
+    addListItem(key, data) {
+      storeBuilder.commit(`${name}/updateListItem`, { key, data });
+    },
+    updateListItem(key, id, data) {
+      storeBuilder.commit(`${name}/updateListItem`, { key, id, data });
+    },
+    removeListItem(key, id) {
+      storeBuilder.commit(`${name}/removeListItem`, { key, id });
+    },
+    concatList(key, data) {
+      storeBuilder.commit(`${name}/concatList`, { key, data });
+    },
     get state() {
       return newState()();
     },
   } as any;
 }
 
-function createStore() {
+function createStore({ strict = false, ...options }: StoreOptions<any>) {
   storeBuilder = new Vuex.Store({
-    strict: false,
+    strict,
+    ...options,
     modules: storedModules,
   });
   storeBuilder.subscribeAction({

@@ -13,17 +13,23 @@ export function randomNumber(min: number, max: number): number {
 export function calculatePopupPosition(
   origin: HTMLElement,
   target: HTMLElement,
-  Types: { XType: 'left' | 'right' | 'center' | 'fill'; YType: 'bottom' | 'top'; maxHeight: number }
+  Types: {
+    XType: 'left' | 'right' | 'center' | 'fill';
+    YType: 'bottom' | 'top';
+    maxHeight: number;
+  },
+  selectMode: boolean
 ) {
   const originWidth: number = origin.offsetWidth;
   const originHeight: number = origin.offsetHeight;
+  const targetOffset = selectMode ? 2 : 15;
+
   const viewportOffset = origin.getBoundingClientRect();
   const position = {
     left: Math.round(viewportOffset.left),
     top: Math.round(viewportOffset.top),
   };
-  const popupWidth = target.offsetWidth;
-  const popupHeight = target.offsetHeight;
+  const popupWidth = selectMode ? originWidth : target.offsetWidth;
   let outputLeft: number | string = position.left + originWidth / 2 - popupWidth / 2;
   let outputTop: number | string = position.top + originHeight;
   let outputBottom: number | string = 'none';
@@ -32,13 +38,15 @@ export function calculatePopupPosition(
   if (Types.XType === 'right') {
     outputLeft = windowWidth - popupWidth - 15;
   } else if (Types.XType === 'left') {
-    outputLeft = 5;
+    outputLeft = 10;
+  } else if (Types.XType === 'fill') {
+    outputLeft = 10;
   }
   if (Types.YType === 'top') {
     outputTop = 'none';
-    outputBottom = window.innerHeight - position.top + 15 + 'px';
+    outputBottom = window.innerHeight - position.top + targetOffset + 'px';
   } else if (Types.YType === 'bottom') {
-    outputTop = outputTop + 15 + 'px';
+    outputTop = outputTop + targetOffset + 'px';
   }
   const triangleLeft = position.left - outputLeft + originWidth / 2 - 13 + 'px';
 
@@ -58,7 +66,7 @@ export function calculatePopupRelativePosition(
   container?: HTMLElement
 ) {
   const originWidth: number = origin.offsetWidth;
-  const originHeight: number = origin.clientHeight;
+  const originHeight: number = origin.offsetHeight;
   const viewportOffset = origin.getBoundingClientRect();
   const targetOffset = selectMode ? 2 : 15;
   let OriginPosition = {

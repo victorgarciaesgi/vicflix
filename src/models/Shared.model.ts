@@ -1,4 +1,9 @@
 import { RawLocation } from 'vue-router';
+import { ValidationProperties, ValidationGroups } from 'vue/types/vue';
+import { Validation } from 'vuelidate';
+
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type KeepProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? K : never }[keyof T]>;
 
 export interface NavLink {
   label: string;
@@ -16,6 +21,15 @@ export interface IPaginate<T> {
   totalCount?: number;
 }
 
+export interface IConnection<T> {
+  pageInfo: IPageInfo;
+  aggregate?: {
+    count: number;
+  };
+  edges: T[];
+  totalCount?: number;
+}
+
 export interface IPageInfo {
   hasNextPage: boolean;
   hasPreviousPage: boolean;
@@ -26,3 +40,5 @@ export interface IPageInfo {
 export interface IAnyObject {
   [x: string]: any;
 }
+
+export type ValidationRoot<T> = ValidationProperties<T> & ValidationGroups & Validation;

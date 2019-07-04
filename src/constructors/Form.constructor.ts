@@ -1,79 +1,181 @@
+/* eslint-disable */
 const css = require('@css');
 import uuid from 'uuid/v4';
 import { IErrorValidators } from '@validators';
+import { IAnyObject, ValidationRoot, IConnection } from '@models';
+import isEmpty from 'lodash/isEmpty';
+import cloneDeep from 'lodash/cloneDeep';
+import { RuleDecl } from 'vue/types/options';
+import { CleaveOptions } from 'cleave.js/options';
 
-export namespace Forms {
-  function extractValues(_this, _fieldsData, _fieldsValues, fields) {
-    for (let prop in fields) {
-      if (fields[prop] instanceof DefaultFormElement) {
-        let { value, ...rest } = fields[prop];
-        if (typeof value === 'function') {
-          _fieldsValues[prop] = value();
-        } else {
-          _fieldsValues[prop] = value;
-        }
-        _fieldsData[prop] = rest;
-      } else if (fields[prop] != null) {
-        _this[prop] = {};
-        _fieldsData[prop] = {};
-        _fieldsValues[prop] = {};
-        extractValues(_this[prop], _fieldsData[prop], _fieldsValues[prop], fields[prop]);
+function extractValues(_this, _fieldsData, _fieldsValues, fields) {
+  for (let prop in fields) {
+    if (fields[prop] instanceof Forms.DefaultFormElement) {
+      let { value, ...rest } = fields[prop];
+      if (typeof value === 'function') {
+        _fieldsValues[prop] = value();
+      } else {
+        _fieldsValues[prop] = value;
       }
+      _fieldsData[prop] = rest;
+    } else if (fields[prop] != null && typeof fields[prop] === 'object') {
+      _this[prop] = {};
+      _fieldsData[prop] = {};
+      _fieldsValues[prop] = {};
+      extractValues(_this[prop], _fieldsData[prop], _fieldsValues[prop], fields[prop]);
     }
   }
+}
 
-  function extractForm<T>(_this: DefaultFormElement<T>) {
-    const { value, reset, ...data } = _this;
-    return {
-      value,
-      reset,
-      data,
-    };
+function resetValues(_fieldsValues, fields) {
+  for (let fieldKey in fields) {
+    if (fields[fieldKey] instanceof Forms.DefaultFormElement) {
+      let { value } = fields[fieldKey];
+      if (typeof value === 'function') {
+        _fieldsValues[fieldKey] = value();
+      } else {
+        _fieldsValues[fieldKey] = value;
+      }
+    } else if (fields[fieldKey] != null && typeof fields[fieldKey] === 'object') {
+      resetValues(_fieldsValues[fieldKey], fields[fieldKey]);
+    }
   }
-  type FormValues<T extends keyOfPayload<T>> = { [S in keyof T]: T[S]['value'] };
-  type FullFormPayload<T extends keyOfPayload<T>> = { [S in keyof T]?: keyof T[S] };
-  type keyOfPayload<T> = { [P in keyof T]?: any };
-  type Unpacked<T> = T | ((...args: any[]) => T);
+}
 
-  export class Form<T extends keyOfPayload<T>> {
-    private initialState: T;
+function extractForm<T>(_this: Forms.DefaultFormElement<T>) {
+  let { value, reset, ...data } = _this;
+  if (typeof value === 'function') {
+    value = value();
+  } else {
+    value = value;
+  }
+  return {
+    value,
+    reset,
+    data,
+  };
+}
+export namespace Forms {
+  export type FormValues<T extends Partial<T>> = {
+    [S in keyof T]: T[S] extends Forms.DefaultFormElement<any> ? T[S]['value'] : FormValues<T[S]>;
+  };
+  export type EditFormValues<T extends Partial<T>> = {
+    [S in keyof T]?: T[S] extends Forms.DefaultFormElement<any>
+      ? T[S]['value']
+      : EditFormValues<T[S]>;
+  };
+  export type ValidationTree<T> = {
+    [K in keyof T]?: T[K] extends Forms.DefaultFormElement<any> ? RuleDecl : ValidationTree<T[K]>;
+  };
+  export type FormStructure<T> = {
+    [K in keyof T]?: T[K] extends Forms.DefaultFormElement<any> ? T[K] : FormStructure<T[K]>;
+  };
+  type FullFormPayload<T> = {
+    [K in keyof T]?: T[K] extends Forms.DefaultFormElement<any>
+      ? FormPayload<T[K]>
+      : FullFormPayload<T[K]>;
+  };
+
+  export class Form<T extends FormStructure<T>> {
+    private initialState: FormStructure<T>;
+    public id: string;
     public fieldsData: FullFormPayload<T> = {};
     public fieldsValues: FormValues<T> = {} as any;
+    public fields: FormStructure<T>;
+    private validations?: ValidationTree<T>;
+    public $v: ValidationRoot<T> = {} as any;
+    public editMode: boolean;
 
-    constructor(fields: T) {
-      this.initialState = { ...fields };
+    constructor({
+      fields,
+      validations,
+      editMode,
+    }: {
+      fields: FormStructure<T>;
+      validations?: ValidationTree<T>;
+      editMode?: boolean;
+    }) {
+      this.id = uuid();
+      if (editMode) {
+        function recursiveEditmode(_fields) {
+          Object.keys(_fields).map(m => {
+            if (_fields[m] instanceof DefaultFormElement) {
+              _fields[m].editMode = true;
+            } else if (typeof _fields[m] === 'object') {
+              recursiveEditmode(_fields[m]);
+            }
+          });
+        }
+        recursiveEditmode(fields);
+        this.editMode = editMode;
+      }
+      this.initialState = cloneDeep(fields);
       extractValues(this, this.fieldsData, this.fieldsValues, fields);
+      this.fields = fields;
+      this.validations = validations;
     }
 
-    public reset() {
-      extractValues(this, this.fieldsData, this.fieldsValues, this.initialState);
+    public reset(): void {
+      if (this.$v) this.$v.$reset();
+      resetValues(this.fieldsValues, this.initialState);
+      this.id = uuid();
     }
 
     get isFormModified() {
       return Object.keys(this.getModifiedData()).length > 0;
     }
 
-    public getModifiedData(): FormValues<T> {
-      return Object.keys(this.fieldsValues)
-        .filter(key => {
-          if (typeof this.initialState[key].value === 'function') {
-            return this.fieldsValues[key] !== this.initialState[key].value();
-          } else {
-            return this.fieldsValues[key] !== this.initialState[key].value;
+    public getModifiedData(): EditFormValues<T> {
+      const modifiedValues: any = {};
+      function recursiveModified(_fields, _fieldsValues, _initialState, _modifiedValues) {
+        Object.keys(_fields).map(m => {
+          if (_fields[m] instanceof DefaultFormElement) {
+            if (typeof _initialState[m].value === 'function') {
+              if (_fieldsValues[m] !== _initialState[m].value()) {
+                _modifiedValues[m] = _fieldsValues[m];
+              }
+            } else {
+              if (_fieldsValues[m] !== _initialState[m].value) {
+                _modifiedValues[m] = _fieldsValues[m];
+              }
+            }
+          } else if (typeof _fields[m] === 'object') {
+            _modifiedValues[m] = {};
+            recursiveModified(_fields[m], _fieldsValues[m], _initialState[m], _modifiedValues[m]);
           }
-        })
-        .reduce((obj, key) => {
-          obj[key] = this.fieldsValues[key];
-          return obj;
-        }, {}) as any;
+        });
+      }
+      recursiveModified(this.fields, this.fieldsValues, this.initialState, modifiedValues);
+
+      function cleanModified(_fields) {
+        Object.keys(_fields).map(m => {
+          if (
+            typeof _fields[m] === 'object' &&
+            _fields[m] !== null &&
+            !(_fields[m] instanceof File)
+          ) {
+            if (isEmpty(_fields[m])) {
+              delete _fields[m];
+            } else {
+              cleanModified(_fields[m]);
+              if (isEmpty(_fields[m])) {
+                delete _fields[m];
+              }
+            }
+          }
+        });
+      }
+      cleanModified(modifiedValues);
+
+      return modifiedValues;
     }
 
     public getValues(): FormValues<T> {
-      return { ...this.fieldsValues };
+      return cloneDeep(this.fieldsValues);
     }
 
-    get validations() {
-      return Object.keys(this.fieldsData).map(m => this.fieldsData[m].validations);
+    get getValidations() {
+      return this.validations;
     }
   }
 
@@ -87,10 +189,9 @@ export namespace Forms {
     | 'tel'
     | 'date'
     | 'time'
-    | 'datetime-local'
-    | 'image'
-    | 'video';
-  type IOptions = { value: any; text: string };
+    | 'float'
+    | 'datetime-local';
+
   type IComponentType =
     | 'FormText'
     | 'FormField'
@@ -100,19 +201,24 @@ export namespace Forms {
     | 'Radio'
     | 'FormCalendar'
     | 'FormPlaceSearch'
-    | 'FormUpload';
+    | 'FormUpload'
+    | 'RichText'
+    | 'RichRadio'
+    | 'RichCheckBoxList';
+
+  type Unpacked<T> = T | T[] | ((...args: any[]) => T);
 
   export class FormPayload<T> {
     value?: Unpacked<T>;
+    displayValue?: string;
     tempValue?: T;
     icon?: string;
     type?: FormType;
     placeholder?: string;
     error?: boolean;
-    options?: IOptions[];
     disabled?: boolean;
-    required?: boolean;
     noMargin?: boolean;
+    noBorder?: boolean;
     label?: string;
     inlineIcon?: boolean;
     debounce?: number;
@@ -123,22 +229,24 @@ export namespace Forms {
     update?: (value: T) => void;
     id?: string;
     halfWidth?: boolean;
-    validations?: {
-      [x: string]: any;
-    };
+    width?: string;
+    cleaveOptions?: CleaveOptions;
   }
-  class DefaultFormElement<T extends FormPayload<T>> extends FormPayload<T> {
+  export class DefaultFormElement<T> extends FormPayload<T> {
+    public initialValue: Unpacked<T>;
     public value: T;
     constructor({
       value = null,
       error = true,
-      required = true,
       noEdit = false,
       editMode = false,
       ...fields
-    }) {
+    }: FormPayload<T>) {
       super();
-      this.value = value;
+      this.id = uuid();
+      this.value = value as T;
+      this.displayValue = fields.displayValue;
+      this.initialValue = value;
       this.icon = fields.icon || null;
       this.type = fields.type || 'text';
       this.placeholder = fields.placeholder || fields.label || null;
@@ -148,15 +256,13 @@ export namespace Forms {
       this.debounce = fields.debounce || null;
       this.noMargin = fields.noMargin || false;
       this.errorMessages = fields.errorMessages || null;
-      this.required = required;
       this.label = fields.label;
-      this.options = fields.options || null;
       this.halfWidth = fields.halfWidth || false;
-      this.id = uuid();
+      this.width = fields.width;
       this.component = fields.component || null;
-      this.validations = fields.validations;
       this.tempValue = fields.tempValue;
       this.update = fields.update;
+      this.noBorder = fields.noBorder;
       this.noEdit = noEdit;
       this.editMode = editMode;
     }
@@ -166,55 +272,181 @@ export namespace Forms {
     }
 
     reset() {
-      this.value = null;
+      this.value = cloneDeep(this.initialValue as T);
     }
   }
 
-  export class TextForm<T = string> extends DefaultFormElement<T> {
+  // Text
+  export class TextForm<T extends string = string> extends DefaultFormElement<T> {
     constructor(fields: FormPayload<T>) {
       super({ ...fields, component: 'FormText' });
     }
   }
 
-  export class FieldForm<T = string> extends DefaultFormElement<T> {
+  // Textarea
+  export class FieldForm<T extends string = string> extends DefaultFormElement<T> {
     constructor(fields: FormPayload<T>) {
       super({ ...fields, component: 'FormField' });
     }
   }
 
-  export interface UploadPayload<T = string | File> extends FormPayload<T> {
-    accept?: Array<'jpg' | 'png'>;
-    type?: 'image' | 'video';
+  // RichText
+  export class RichText<T extends string = string> extends DefaultFormElement<T> {
+    constructor({ type = 'text', ...fields }: FormPayload<T>) {
+      super({ ...fields, component: 'RichText' });
+    }
   }
-  export class UploadForm<T = File> extends DefaultFormElement<T> {
+
+  // Upload
+  export interface UploadPayload<T extends File | string = string> extends FormPayload<T> {
+    uploadType?: 'image' | 'video' | 'audio';
+  }
+  export class UploadForm<T extends File | string = string> extends DefaultFormElement<T> {
     public inForm = true;
-    public accept?: Array<'jpg' | 'png'>;
-    public type?: 'image' | 'video';
+    public uploadType?: 'image' | 'video' | 'audio';
     constructor(fields: UploadPayload<T>) {
       super({ ...fields, component: 'FormUpload' });
-      this.accept = fields.accept || ['jpg'];
-      this.type = fields.type || 'image';
+      this.uploadType = fields.uploadType || 'image';
     }
   }
 
-  export class Radio<T = boolean> extends DefaultFormElement<T> {
-    constructor(fields: FormPayload<T>) {
+  // Radio
+  export interface IRadioItem<T> {
+    value: T;
+    text: string;
+  }
+  export interface IRadioPayload<T> {
+    radios: IRadioItem<T>[];
+  }
+
+  export class Radio<T extends string = string> extends DefaultFormElement<T> {
+    public radios: IRadioItem<T>[];
+    constructor(fields: FormPayload<T> & IRadioPayload<T>) {
       super({ ...fields, type: 'radio', component: 'Radio' });
+      this.radios = fields.radios;
     }
   }
 
-  export class Select<T = string> extends DefaultFormElement<T> {
-    public options?: IOptions[];
+  // RichRadio
+  export interface IRichRadioItem<T> extends IRadioItem<T> {
+    icon?: string;
+  }
+  export interface IRichRadioPayload<T> {
+    radios: IRichRadioItem<T>[];
+  }
 
-    constructor({ ...fields }: FormPayload<T>) {
+  export class RichRadio<T extends string = string> extends DefaultFormElement<T> {
+    public radios: IRadioItem<T>[];
+    constructor(fields: FormPayload<T> & IRichRadioPayload<T>) {
+      super({ ...fields, type: 'radio', component: 'RichRadio' });
+      this.radios = fields.radios;
+    }
+  }
+
+  // Select
+  export type IOptions<T extends any = any> = { value: T; text: string; icon?: string };
+  export interface ISelectPayload<T = any, V = any> {
+    options?: IOptions<T>[];
+    handler?: (...args: any[]) => Promise<IConnection<any>>;
+    handlerParams?: { [x: string]: any };
+    formater?: (item: V) => IOptions<T>;
+    allOption?: boolean;
+    search?: (value: string) => IAnyObject;
+  }
+
+  export class Select<T extends string = string, V extends any = any> extends DefaultFormElement<
+    T
+  > {
+    public options?: IOptions<T>[];
+    public handler?: (...args: any[]) => Promise<IConnection<T>>;
+    public handlerParams?: { [x: string]: any };
+    public formater?: (item: V) => IOptions<T>;
+    public allOption?: boolean;
+    public search?: (value: string) => IAnyObject;
+
+    constructor({ ...fields }: FormPayload<T> & ISelectPayload<T, V>) {
       super({ ...fields, component: 'FormSelect' });
+      this.options = fields.options || null;
+      this.handler = fields.handler;
+      this.handlerParams = fields.handlerParams;
+      this.formater = fields.formater;
+      this.allOption = fields.allOption;
+      this.search = fields.search;
     }
   }
 
-  export class CheckBox<T = boolean> extends DefaultFormElement<T> {
+  // Calendar
+  export type ICalendarValue = Date | ICalendarPeriodType;
+  export type ICalendarPeriodType = { start: Date; end: Date };
+  export type ICalendarType = 'normal' | 'period';
+  export interface ICalendarPayload {
+    calendarType?: ICalendarType;
+    type?: 'date' | 'datetime-local' | 'time';
+    sideList?: boolean;
+  }
+
+  export class Calendar<T extends ICalendarValue = ICalendarValue> extends DefaultFormElement<T> {
+    public calendarType: ICalendarType;
+    public sideList: boolean;
+    constructor({
+      value,
+      calendarType = 'normal',
+      type = 'date',
+      ...fields
+    }: FormPayload<T> & ICalendarPayload) {
+      super({ ...fields, component: 'FormCalendar' });
+      this.calendarType = calendarType;
+      this.type = type;
+      this.sideList = fields.sideList;
+      if (this.calendarType === 'period') {
+        value = {
+          start: null,
+          end: null,
+          ...value,
+        } as any;
+      }
+      this.value = value as T;
+    }
+  }
+
+  // CheckBox
+  export class CheckBox<T extends boolean = boolean> extends DefaultFormElement<T> {
     constructor(fields: FormPayload<T>) {
       super({ ...fields, type: 'checkbox', component: 'FormCheckBox' });
     }
+  }
+
+  // RichCheckBoxList
+  export type IRichCheckBoxListItem<T = any> = {
+    text: string;
+    value: T;
+    icon?: string;
+  };
+  export interface IRichCheckBoxListPayload<T> {
+    checkboxs: IRichCheckBoxListItem<T>[];
+  }
+
+  export class RichCheckBoxList<T extends any = string> extends DefaultFormElement<T> {
+    public checkboxs: IRichCheckBoxListItem<T>[];
+    constructor({ value = [], ...fields }: FormPayload<T> & IRichCheckBoxListPayload<T>) {
+      super({ ...fields, value, type: 'checkbox', component: 'RichCheckBoxList' });
+      this.checkboxs = fields.checkboxs;
+    }
+  }
+
+  // Section
+  export class SectionConstructor {
+    public sectionTitle: string;
+    constructor(title, fields) {
+      this.sectionTitle = title;
+      Object.keys(fields).map(m => {
+        this[m] = fields[m];
+      });
+    }
+  }
+
+  export function Section<T>(title: string, fields: FormStructure<T>): T {
+    return new SectionConstructor(title, fields) as any;
   }
 
   interface StarPayload<T> extends FormPayload<T> {
@@ -229,7 +461,7 @@ export namespace Forms {
     center?: boolean;
   }
 
-  export class StarRating<T = number> extends DefaultFormElement<T> {
+  export class StarRating<T extends number = number> extends DefaultFormElement<T> {
     starCount?: number;
     baseColor?: string;
     selectedColor?: string;
@@ -255,3 +487,5 @@ export namespace Forms {
     }
   }
 }
+
+export default Forms;

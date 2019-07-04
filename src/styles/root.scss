@@ -3,6 +3,7 @@
 @import './variables';
 @import './mixins';
 @import './transitions.scss';
+@import './global.scss';
 
 html {
   height: 100%;
@@ -59,50 +60,6 @@ li {
   margin: 0;
   list-style: none;
   list-style-type: none;
-}
-
-.flex,
-.grid {
-  position: relative;
-  min-width: 0;
-  min-height: 0;
-  max-width: 100%;
-
-  &.flex {
-    display: flex;
-    &.scroll {
-      overflow-y: auto;
-      & > * {
-        width: 100%;
-      }
-    }
-    &.center {
-      justify-content: center;
-      align-items: center;
-    }
-
-    &.column {
-      flex-flow: column wrap;
-    }
-  }
-
-  &.grid {
-    display: grid;
-  }
-}
-
-.pad10 {
-  padding: 10px;
-}
-.pad5 {
-  padding: 5px;
-}
-
-.w100 {
-  width: 100%;
-}
-.h100 {
-  height: 100%;
 }
 
 .ellipsis {

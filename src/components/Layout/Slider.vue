@@ -1,12 +1,20 @@
 <template>
   <div class="slider-root flex" ref="sliderRoot">
-    <div class="title">
+    <div class="title flex between">
       <span>{{ title }}</span>
+      <div class="grid-indicator flex center">
+        <div
+          class="page"
+          v-for="gridPage of pageLength"
+          :key="gridPage"
+          :class="{ active: page === gridPage }"
+        ></div>
+      </div>
     </div>
     <div class="slider-container flex">
       <div class="slider-page-button left">
         <button class="flex center w100 h100" v-if="page > 1" @click="slideLeft">
-          <SvgIcon src="icons/Forms/arrow_left.svg" color="white" :size="30"/>
+          <SvgIcon src="icons/Forms/arrow_left.svg" color="white" :size="30" />
         </button>
       </div>
       <div class="slider-wrapper flex" key="slider">
@@ -24,7 +32,7 @@
       </div>
       <div class="slider-page-button right flex center">
         <button class="flex center w100 h100" v-if="page < pageLength" @click="slideRight">
-          <SvgIcon src="icons/Forms/arrow_right.svg" color="white" :size="30"/>
+          <SvgIcon src="icons/Forms/arrow_right.svg" color="white" :size="30" />
         </button>
       </div>
     </div>
@@ -101,21 +109,25 @@ export default class Slider extends Vue {
 
   setContainerFix(event) {
     clearTimeout(this.containerTimeout);
-    this.$refs.sliderList.style.maxHeight = this.$refs.sliderList.clientHeight + 'px';
+    window.requestAnimationFrame(() => {
+      this.$refs.sliderList.style.maxHeight = this.$refs.sliderRoot.offsetHeight + 'px';
+    });
   }
 
   freeContainer(event) {
     clearTimeout(this.containerTimeout);
-    this.containerTimeout = setTimeout(() => {
-      this.$refs.sliderList.style.maxHeight = 'none';
-    }, 410);
+    window.requestAnimationFrame(() => {
+      this.containerTimeout = setTimeout(() => {
+        this.$refs.sliderList.style.maxHeight = 'none';
+      }, 410);
+    });
   }
 
   checkItemPerPage() {
     const size = window.innerWidth;
     if (size < 700) {
-      this.margins = 8;
-      this.slidePerPage = 2;
+      this.margins = 10;
+      this.slidePerPage = 1;
     } else if (size < 1000) {
       this.margins = 4;
       this.slidePerPage = 3;
@@ -132,12 +144,17 @@ export default class Slider extends Vue {
       this.margins = 2;
       this.slidePerPage = 7;
     }
-    this.$refs.sliderRoot.style.setProperty('--margins', this.margins + '%');
+    if (this.$refs.sliderRoot)
+      this.$refs.sliderRoot.style.setProperty('--margins', this.margins + '%');
   }
 
   mounted() {
     window.addEventListener('resize', this.checkItemPerPage);
     this.checkItemPerPage();
+  }
+
+  destroyed() {
+    window.removeEventListener('resize', this.checkItemPerPage);
   }
 }
 </script>
@@ -155,6 +172,19 @@ div.slider-root {
     margin: 0 var(--margins) 10px var(--margins);
     font-weight: bold;
     color: $w230;
+
+    div.grid-indicator {
+      div.page {
+        background-color: $w120;
+        width: 20px;
+        height: 2px;
+        margin-left: 2px;
+
+        &.active {
+          background-color: white;
+        }
+      }
+    }
   }
 
   div.slider-container {
@@ -190,7 +220,7 @@ div.slider-root {
         align-items: flex-start;
         justify-content: flex-start;
         flex: 0 0 auto;
-        transition: transform 0.4s;
+        transition: transform 0.3s ease-in-out;
       }
     }
   }

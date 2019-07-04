@@ -1,4 +1,5 @@
 import { storeBuilder, storedModules } from './builder';
+import { omitBy } from 'lodash';
 
 export function enableHotReload(name, state, vuexModule, dynamic?: boolean) {
   if (module.hot) {
@@ -9,16 +10,19 @@ export function enableHotReload(name, state, vuexModule, dynamic?: boolean) {
         ...vuexModule,
       };
     } else if (storedModules[name] != null) {
-      storedModules[name] = {
-        namespaced: true,
-        state,
-        ...vuexModule,
-      };
       storeBuilder.hotUpdate({
         modules: {
           ...storedModules,
+          [name]: { namespaced: true, state: { ...state }, ...vuexModule },
         },
       });
+      // storeBuilder.commit(`${name}/updateState`, diff);
+
+      storedModules[name] = {
+        namespaced: true,
+        state: { ...state },
+        ...vuexModule,
+      };
       console.log(
         `%c vuex-typed-modules %c ${dynamic ? 'Dynamic' : ''}Module '${name}' hot reloaded %c`,
         'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',

@@ -1,5 +1,5 @@
 <template>
-  <div id="app" @click="closePopups" v-cloak>
+  <div id="app" v-cloak>
     <transition name="bounce">
       <Alerts v-if="alertState" />
     </transition>
@@ -47,15 +47,9 @@ export default class App extends Vue {
   }
 
   created() {
-    window.addEventListener('resize', () => {
-      EventBus.$emit(Events.CLOSE_POPUPS);
-      this.checkMobile();
-    });
+    document.addEventListener('touchstart', e => {}, { passive: true });
+    document.addEventListener('touchmove', e => {}, { passive: true });
     this.checkMobile();
-  }
-
-  closePopups() {
-    EventBus.$emit(Events.CLOSE_POPUPS);
   }
 }
 </script>

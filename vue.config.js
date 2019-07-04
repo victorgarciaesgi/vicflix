@@ -1,9 +1,8 @@
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
-const productionGzipExtensions = ['js'];
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-const AppManifestWebpackPlugin = require('app-manifest-webpack-plugin');
+const BrotliPlugin = require('brotli-webpack-plugin');
 
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
@@ -20,6 +19,7 @@ module.exports = {
       '@services': path.resolve(__dirname, 'src/services/index.ts'),
       '@fonts': path.resolve(__dirname, 'src/assets/fonts'),
       '@graphql': path.resolve(__dirname, 'src/graphql/index.ts'),
+      '@fragments': path.resolve(__dirname, 'src/fragments/index.ts'),
       '@utils': path.resolve(__dirname, 'src/utils/index.ts'),
       '@css': path.resolve(__dirname, 'src/styles/root.scss'),
       '@colors': path.resolve(__dirname, 'src/styles/colors.module.scss'),
@@ -33,11 +33,30 @@ module.exports = {
       '@modules': path.resolve(__dirname, 'src/store/Modules/index.ts'),
     };
     if (process.env.NODE_ENV === 'production') {
+      config.optimization.splitChunks = {
+        chunks: 'async',
+        minSize: 30000,
+        maxSize: 250000,
+        minChunks: 1,
+        name: true,
+        cacheGroups: {
+          vendors: {
+            test: /[\\/]node_modules[\\/]/,
+            priority: -10,
+          },
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true,
+          },
+        },
+      };
+      config.optimization.concatenateModules = true;
       config.optimization.minimizer = [
         new TerserPlugin({
-          test: /\.js(\?.*)?$/i,
-          cache: './.build_cache/terser',
-          sourceMap: true,
+          // test: /\.js(\?.*)?$/i,
+          cache: true,
+          sourceMap: false,
           parallel: true,
           terserOptions: {
             ie8: false,
@@ -49,71 +68,45 @@ module.exports = {
             },
             compress: { hoist_funs: false, drop_console: true },
             warnings: false,
+            keep_fnames: false,
+            safari10: false,
           },
         }),
       ];
-      // config.plugins.push(new BundleAnalyzerPlugin())
+      // config.plugins.push(new BundleAnalyzerPlugin());
       config.plugins.push(
         new CompressionWebpackPlugin({
           filename: '[path].gz[query]',
           algorithm: 'gzip',
-          test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
-          threshold: 10240,
-          minRatio: 0.8,
-        })
-      );
-      config.plugins.push(
-        new AppManifestWebpackPlugin({
-          logo: './public/favicon.png',
-          emitStats: false,
-          statsFilename: 'iconstats-[name].json',
-          persistentCache: true,
-          inject: true,
-          background: '#000',
-          config: {
-            appName: process.env.VUE_APP_NAME,
-            appDescription: '',
-            developerName: null,
-            developerURL: null,
-            background: '#000',
-            theme_color: '#000',
-            display: 'standalone',
-            orientation: 'portrait',
-            start_url: '/',
-            version: '1.0',
-            logging: false,
-            icons: {
-              android: { offset: 25 },
-              appleIcon: { offset: 25 },
-              appleStartup: { offset: 25 },
-              coast: false,
-              favicons: true,
-              firefox: true,
-              opengraph: true,
-              twitter: true,
-              yandex: false,
-              windows: false,
-            },
-          },
-        })
-      );
-    } else {
-      config.plugins.push(
+          test: /\.(js|css)$/,
+          threshold: 8240,
+          minRatio: 0.9,
+          cache: true,
+        }),
+        new BrotliPlugin({
+          filename: '[path].br[query]',
+          algorithm: 'brotliCompress',
+          test: /\.(js|css)$/,
+          compressionOptions: { level: 11 },
+          threshold: 8240,
+          minRatio: 0.9,
+          deleteOriginalAssets: false,
+          cache: true,
+        }),
         new FaviconsWebpackPlugin({
           logo: './public/favicon.png',
-          emitStats: false,
-          statsFilename: 'iconstats-[name].json',
+          prefix: 'icons/',
           persistentCache: true,
           inject: true,
-          background: '#000',
+          background: '#FFF',
           icons: {
-            android: true,
-            appleIcon: true,
-            appleStartup: true,
+            android: { offset: 20 },
+            appleIcon: { offset: 20 },
+            appleStartup: { offset: 20 },
             coast: false,
             favicons: true,
             firefox: true,
-            opengraph: true,
+            opengraph: { offset: 20 },
             twitter: true,
             yandex: false,
             windows: false,
@@ -122,11 +115,16 @@ module.exports = {
       );
     }
   },
+  chainWebpack: config => {
+    const svgRule = config.module.rule('svg');
+    svgRule.uses.clear();
+    svgRule.use('svg-inline-loader').loader('svg-inline-loader');
+  },
 
   css: {
     loaderOptions: {
       sass: {
-        outputStyle: 'compressed',
+        outputStyle: process.env.NODE_ENV === 'production' ? 'compressed' : undefined,
         sourceMap: true,
         sourceMapContents: true,
         data: `
@@ -140,7 +138,7 @@ module.exports = {
   },
 
   devServer: {
-    port: 5080,
+    port: process.env.VUE_APP_DEV_PORT,
     historyApiFallback: true,
     disableHostCheck: true,
     host: '0.0.0.0',
@@ -153,6 +151,13 @@ module.exports = {
       fallbackLocale: 'fr',
       localeDir: 'locales',
       enableInSFC: false,
+    },
+  },
+  pwa: {
+    workboxOptions: {
+      cacheId: 'vicflix',
+      importWorkboxFrom: 'local',
+      navigateFallback: 'index.html',
     },
   },
 };

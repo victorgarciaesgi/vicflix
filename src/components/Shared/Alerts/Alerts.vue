@@ -1,72 +1,63 @@
 <template>
-  <div @click="closeAlert(false)" class="alert-base">
-    <div @click.stop class="alert-window to-animate">
-      <div class="content">
+  <div ref="base" class="alert-base" @click.self="closeAlert(false)">
+    <div class="alert-window to-animate" @click.stop="closePopups">
+      <div class="content flex">
         <div
-          :class="[alertState.alertData.type]"
-          class="alert-icon"
-          v-if="alertState.alertData.type != 'form' && alertState.alertData.type != 'info'"
+          v-if="alertType != 'form' && alertType != 'info'"
+          :class="[alertType]"
+          class="alert-icon flex center"
         >
-          <img
-            src="~@icons/notifications/success.svg"
-            v-if="alertState.alertData.type == 'success'"
+          <SvgIcon v-if="alertType == 'success'" src="icons/notifications/success.svg" :size="60" />
+          <SvgIcon
+            v-else-if="alertType === 'error'"
+            src="icons/notifications/error.svg"
+            :size="60"
           />
-          <img
-            src="~@icons/notifications/error.svg"
-            v-else-if="alertState.alertData.type == 'error'"
+          <SvgIcon
+            v-else-if="alertType === 'warning'"
+            src="icons/notifications/warning.svg"
+            :size="60"
           />
-          <img
-            src="~@icons/notifications/warning.svg"
-            v-else-if="alertState.alertData.type == 'warning'"
-          />
-          <img
-            src="~@icons/notifications/infos.svg"
-            v-else-if="alertState.alertData.type == 'alert'"
-          />
+          <SvgIcon v-else src="icons/notifications/infos.svg" color="blue" :size="60" />
         </div>
-        <div class="title">{{ alertState.alertData.title }}</div>
-        <span class="message" v-if="alertState.alertData.message">
+        <div class="title" :class="{ formMode: alertType === 'form' }">
+          {{ alertState.alertData.title }}
+        </div>
+        <span v-if="alertState.alertData.message" class="message">
           {{ alertState.alertData.message }}
         </span>
-        <div class="form" v-if="alertState.alertData.type == 'form'">
-          <component
-            :data="value"
-            :is="value.component"
-            :key="key"
-            :vl="$v.alertForm ? $v.alertForm.fieldsValues[key] : null"
-            v-for="(value, key) in alertState.alertData.formElement.form.fieldsData"
-            v-model="alertForm.fieldsValues[key]"
-          ></component>
+        <div v-if="alertType == 'form'" class="form flex scroll">
+          <FormContainer :form.sync="alertForm" />
         </div>
       </div>
-      <div class="footer">
+      <div class="footer flex">
         <template v-if="alertState.alertData.actions">
           <div class="align-left">
             <AlertButton
+              v-for="action in leftButtons"
               :key="action.text"
               :theme="getTheme(action.type)"
               @click="executeAction(action, false)"
-              v-for="action in leftButtons"
               >{{ action.text }}</AlertButton
             >
           </div>
           <div class="align-right">
             <AlertButton
-              :disabled="isDisabled"
+              v-for="action in rightButtons"
               :key="action.text"
+              :disabled="isDisabled(action)"
               :link="action.type == 'link'"
               :submitting="action.submitting"
               :theme="getTheme(action.type)"
               :to="action.to"
               @click="executeAction(action, true)"
-              @disabledClick="$v.alertForm.fieldsValues.$touch()"
-              v-for="action in rightButtons"
+              @disabledClick="alertForm.$v.$touch()"
               >{{ action.text }}</AlertButton
             >
           </div>
         </template>
         <template v-else>
-          <AlertButton @click="validAlert" theme="blue">Valider</AlertButton>
+          <AlertButton theme="blue" @click="validAlert">Valider</AlertButton>
         </template>
       </div>
     </div>
@@ -80,28 +71,22 @@ import { AlertsModule } from '@modules';
 import { AlertsElement, ActionsElements } from '@constructors';
 import StarRating from '../StarRating/StarRating.vue';
 import AlertButton from './AlertButton.vue';
-import { CheckBox, FormText, FormField, FormUpload } from '../Forms';
+import { FormContainer } from '../Forms';
 import { oc } from 'ts-optchain';
+import { EventBus, Events } from '@services';
 
 @Component({
-  components: { AlertButton, CheckBox, FormText, FormField, FormUpload },
-  validations() {
-    const _this = this as any;
-    if (_this.alertForm) {
-      if (_this.formValidations) {
-        return { alertForm: { fieldsValues: _this.formValidations } };
-      } else {
-        return false;
-      }
-    }
-    return false;
+  components: {
+    AlertButton,
+    FormContainer,
   },
 })
 export default class Alerts extends Vue {
-  public $v;
-
   public alertForm = null;
-  public formValidations = null;
+
+  $refs: {
+    base: HTMLElement;
+  };
 
   get alertState() {
     return AlertsModule.state;
@@ -109,8 +94,28 @@ export default class Alerts extends Vue {
   get submitting() {
     return AlertsModule.state.submitting;
   }
+
   get isDisabled() {
-    return this.$v.alertForm ? this.$v.alertForm.$invalid : false;
+    return (action: ActionsElements.Action) => {
+      if (this.alertForm.$v) {
+        if (action.type === 'confirm') {
+          if (oc(this.alertState.alertData.formElement.form).editMode()) {
+            return (
+              this.alertForm.$v.$invalid ||
+              !this.alertState.alertData.formElement.form.isFormModified
+            );
+          } else {
+            return this.alertForm.$v.$invalid;
+          }
+        }
+        return false;
+      }
+      return false;
+    };
+  }
+
+  get alertType() {
+    return this.alertState.alertData.type;
   }
 
   get getTheme() {
@@ -141,6 +146,10 @@ export default class Alerts extends Vue {
     }
   }
 
+  closePopups() {
+    EventBus.$emit(Events.CLOSE_POPUPS);
+  }
+
   validAlert() {
     AlertsModule.mutations.confirmAlert();
   }
@@ -150,20 +159,17 @@ export default class Alerts extends Vue {
   }
 
   destroyed() {
-    AlertsModule.mutations.hideAlert();
+    AlertsModule.resetState();
   }
   created() {
     if (this.alertState.alertData.formElement) {
       this.alertForm = this.alertState.alertData.formElement.form;
-      this.formValidations = this.alertState.alertData.formElement.validations;
     }
   }
 }
 </script>
 
-
-
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .alert-base {
   position: fixed;
   height: 100%;
@@ -174,9 +180,11 @@ export default class Alerts extends Vue {
   align-items: center;
   align-content: center;
   z-index: 11000;
+  padding: 10px;
 
   .alert-window {
     display: flex;
+    flex-flow: column nowrap;
     position: relative;
     background-color: white;
     border-radius: 5px;
@@ -187,26 +195,25 @@ export default class Alerts extends Vue {
     min-width: 300px;
     max-width: 600px;
     max-height: 80vh;
-    flex-flow: column nowrap;
     align-items: center;
     overflow: hidden;
 
     div.content {
-      display: flex;
       flex-flow: column nowrap;
-      justify-content: center;
-      align-items: center;
-      flex: 0 0 auto;
-      overflow: auto;
-      text-align: center;
       width: 400px;
-      padding: 20px 30px 20px 30px;
+      min-width: 100%;
+      justify-content: center;
+      position: relative;
+      flex: 1 1 auto;
+      text-align: center;
 
       .alert-icon {
         display: flex;
         padding: 5px;
         border-radius: 100%;
         border: 5px solid transparent;
+        flex: 0 0 auto;
+        padding-top: 10px;
 
         &.success {
           border-color: $yellow;
@@ -216,30 +223,35 @@ export default class Alerts extends Vue {
         }
 
         &.confirm {
-          padding: 0;
           border: none;
-        }
-
-        img {
-          height: 50px;
-          width: 50px;
         }
       }
 
       .title {
-        display: flex;
         font-weight: bold;
         font-size: 20px;
-        padding: 20px;
+        padding: 10px;
+        flex: 0 0 auto;
+
+        &.formMode {
+          padding: 0;
+          border-bottom: 1px solid $w230;
+          padding: 10px 5px;
+          text-align: center;
+          font-size: 16px;
+        }
       }
 
       .message {
         max-width: 400px;
+        padding: 20px 10px;
+        flex: 1 1 auto;
       }
 
       .form {
         width: 100%;
-        margin-top: 20px;
+        padding: 10px 20px;
+        flex: 1 1 auto;
       }
     }
 
@@ -270,4 +282,3 @@ export default class Alerts extends Vue {
   }
 }
 </style>
-

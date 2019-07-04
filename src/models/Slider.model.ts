@@ -7,5 +7,5 @@ export interface ISlideItem {
   type: ISlideType;
 }
 
-export type ITechno = 'Vue' | 'Graphql' | 'Typescript' | 'Stripe';
-export type ISlideType = 'Project' | 'Skill' | 'About' | 'Experience';
+export type ITechno = 'Vue' | 'Graphql' | 'Typescript' | 'Stripe' | 'MapBox' | 'PWA';
+export type ISlideType = 'Work Project' | 'Skill' | 'About' | 'Experience';

@@ -1,65 +1,89 @@
 <template>
-  <div class="FormUpload">
-    <div class="upload-wrapper" :class="{ inForm: data.inForm }">
-      <div
-        class="dropZone"
-        :for="formId"
-        @click="triggerInput"
-        @dragenter="handleDragEnter"
-        @dragleave="handleDragLeave"
-        @dragover.prevent
-        @dragend="handleDragEnd"
-        @drop.prevent="handleItemDrop"
-      ></div>
-      <div v-if="data.inForm" class="dropDisplay inForm">
-        <div class="image-previsu" v-if="dropped && !videoSizeLimitTriggered">
-          <img v-if="loadingImage" src="~@images/loading.svg" />
-          <div
-            class="image"
-            v-else-if="imageUploaded && type == 'image'"
-            :style="formatedImage"
-          ></div>
-        </div>
-        <div v-else class="icon flex center">
-          <SvgIcon src="icons/AjouterPhoto.svg" :size="70" color="primary" />
-        </div>
+  <div
+    class="input-box"
+    :class="{
+      noMargin: data.noMargin,
+      noBorder: data.noBorder,
+      halfWidth: data.halfWidth,
+      formError,
+      formValid,
+      disabled: data.disabled,
+      focus: isFocused,
+    }"
+  >
+    <label v-if="label" class="input-label">
+      {{ label }}
+    </label>
+    <div class="input-container upload">
+      <div v-if="data.icon" class="icon">
+        <SvgIcon
+          :src="data.icon"
+          :size="22"
+          :color="{
+            [css.green]: formValid,
+            [css.red1]: formError,
+            [css.blue]: !formValid && !formValid && isFocused,
+            [css.g90]: true,
+          }"
+        />
       </div>
-      <div v-else class="dropDisplay" :class="{ draggedOver, imageUploaded }">
-        <div class="image-previsu" v-if="dropped && !videoSizeLimitTriggered">
-          <img v-if="loadingImage" src="@images/loading.svg" />
-          <div
-            class="image"
-            v-else-if="imageUploaded && type == 'image'"
-            :style="formatedImage"
-          ></div>
+      <div class="display-result flex" :class="{ audio: type === 'audio' }">
+        <div class="infos flex h100">
+          <div v-if="loadingFile" class="flex center w100">
+            <Spinner />
+          </div>
+          <span v-else-if="!fileUploaded" class="placeholder">
+            <VButton theme="white" :rounded="false" @click="triggerInput">
+              Importer {{ getTypeDisplay }}
+            </VButton>
+          </span>
+          <div v-else class="value h100 flex">
+            <div class="file-read flex cenyer">
+              <img v-if="type === 'image'" :src="previsualisationData" alt="" />
+              <video v-else-if="type === 'video'" :src="previsualisationData"></video>
+              <audio v-else controls :src="previsualisationData"></audio>
+            </div>
+            <div v-if="!onlyDisplay" class="file-infos flex column">
+              <span class="name ellipsis">{{ value.name }}</span>
+              <span class="size">{{ getFileSize }}</span>
+            </div>
+          </div>
         </div>
-        <div v-else-if="imageUploaded" class="file-too-large">
-          <SvgIcon key="done" src="icons/Forms/done.svg" color="green" :size="40" />
-          <span>Fichier trop gros pour être prévisualisé</span>
-        </div>
-        <div class="drop-infos" v-else>
-          <template v-if="draggedOver">
-            <SvgIcon src="icons/Forms/import.svg" :size="35" color="primary" />
-            <span>Relachez pour importer!</span>
-          </template>
-          <template v-else>
-            <SvgIcon src="icons/Forms/drop.svg" :size="35" color="rgb(120,120,120)" />
-            <span>Déposez l'image ou cliquez pour importer</span>
-          </template>
+        <div class="icon-upload flex center">
+          <SvgIcon
+            v-if="!fileUploaded && !loadingFile"
+            key="file"
+            pointer
+            class="arrow"
+            :src="getIcon"
+            :size="20"
+            color="g90"
+            @click="triggerInput"
+          />
+          <SvgIcon
+            v-else
+            key="cancel"
+            src="icons/actions/cancel.svg"
+            :size="20"
+            pointer
+            @click.stop="deleteFile"
+          />
         </div>
       </div>
       <input
-        ref="inputFile"
         :id="formId"
-        @change="handleImportFile"
+        ref="inputFile"
         type="file"
         :accept="getAccept"
+        :disabled="data.disabled"
         style="display: none"
+        @focus="handleFocus()"
+        @blur="handleBlur()"
+        @change="handleImportFile"
       />
     </div>
-    <div class="flex center w100">
-      <FormError v-if="vl" :vl="vl" :data="data" />
-    </div>
+
+    <FormError v-if="vl && data.error" :vl="vl" :data="data" />
   </div>
 </template>
 
@@ -68,191 +92,171 @@ import { Prop, Watch } from 'vue-property-decorator';
 import { Component, Mixin, Mixins } from 'vue-mixin-decorator';
 import { FormMixin } from '../../Mixins/FormMixin';
 import { NotificationsModule } from '@store';
-import { Forms } from '@constructors';
+import { Forms, ErrorNotification } from '@constructors';
 import FormError from './FormError.vue';
+import { InputFileSystem } from 'webpack';
+import Axios from 'axios';
 
 @Component({
   components: { FormError },
 })
 export default class FormUpload extends FormMixin {
-  @Prop({ default: 'image' })
-  type: 'image' | 'video';
-  @Prop({ default: () => ['jpeg'] })
-  accept: Array<'jpg' | 'png'>;
-
+  value: File;
   data: Forms.UploadPayload;
 
-  private draggedOver = false;
+  get type() {
+    return this.data.uploadType;
+  }
 
-  private dropped = false;
-  private onlyDisplay = false;
-  private loadingImage = false;
-  private imageUploaded = false;
-  private fileTitle: string = null;
-  private imagePrevisu: string = null;
-  private videoSizeLimitTriggered = false;
-  private videoPreviewSizeLimit = 10000000;
+  public onlyDisplay = false;
+  public loadingFile = false;
+  public fileUploaded = false;
+  public fileTitle: string = null;
+  public previsualisationData: string = null;
+  public videoSizeLimitTriggered = false;
+  public videoPreviewSizeLimit = 10000000;
 
-  private acceptedVideosTypes = [
+  public preloadedFileSize: number = null;
+
+  public acceptedImageTypes = ['image/jpeg', 'image/png'];
+  public acceptedVideosTypes = [
     'video/mp4',
     'video/x-m4v',
     'video/webm',
     'video/x-msvideo',
     'video/quicktime',
   ];
+  public acceptedAudioTypes = ['audio/x-m4a', 'audio/*'];
 
   get formatedImage() {
-    return { backgroundImage: `url(${this.imagePrevisu})` };
+    return { backgroundImage: `url(${this.previsualisationData})` };
   }
 
-  get getAccept() {
-    const type = this.type || this.data.type;
-    const accept = this.accept || this.data.accept;
-    if (type == 'image') {
-      return accept.map(m => 'image/' + m).join(',');
-    } else if (type == 'video') {
-      return this.acceptedVideosTypes.join(',');
+  get getIcon() {
+    if (this.type === 'image') {
+      return 'icons/Forms/image.svg';
+    } else if (this.type === 'video') {
+      return 'icons/Forms/video.svg';
+    } else {
+      return 'icons/Forms/audio.svg';
     }
   }
 
-  get sizeLimit() {
-    const type = this.type || this.data.type;
-    if (type == 'image') {
+  get getTypeDisplay() {
+    if (this.type === 'image') {
+      return 'une image';
+    } else if (this.type === 'video') {
+      return 'une vidéo';
+    } else {
+      return 'un fichier audio';
+    }
+  }
+
+  get getFileSize() {
+    let size = null;
+    if (this.value instanceof File) size = this.value.size;
+    else size = this.preloadedFileSize;
+
+    if (size < 1024) {
+      return size + ' octets';
+    } else if (size >= 1024 && size < 1048576) {
+      return (size / 1024).toFixed(1) + ' Ko';
+    } else if (size >= 1048576) {
+      return (size / 1048576).toFixed(1) + ' Mo';
+    }
+    return null;
+  }
+
+  get getAccept(): string {
+    if (this.type === 'image') {
+      return this.acceptedImageTypes.join(',');
+    } else if (this.type === 'video') {
+      return this.acceptedVideosTypes.join(',');
+    } else {
+      return this.acceptedAudioTypes.join(',');
+    }
+  }
+
+  get sizeLimit(): number {
+    if (this.type === 'image') {
       return 3000000;
-    } else if (this.type == 'video') {
+    } else {
       return 300000000;
     }
   }
 
-  handleImportFile(event) {
-    const file = this.$refs['inputFile']['files'][0];
-    this.readImage(file);
-    this.dropped = true;
-    this.$emit('input', file);
-    if (this.vl) this.vl.$touch();
-  }
-
-  handleItemDrop(event: DragEvent) {
-    this.draggedOver = false;
-    let imageFile = null;
-    if (event.dataTransfer.items) {
-      if (event.dataTransfer.items[0].kind === 'file') {
-        imageFile = event.dataTransfer.items[0].getAsFile();
-      }
+  handleImportFile(event): void {
+    const file = this.$refs.inputFile.files[0];
+    const success = this.readImage(file);
+    if (success) {
+      this.$emit('input', file);
+      if (this.vl) this.vl.$touch();
     } else {
-      for (var i = 0; i < event.dataTransfer.files.length; i++) {
-        imageFile = event.dataTransfer.files[0];
-      }
+      this.$refs.inputFile.value = '';
     }
-    if (imageFile) {
-      const type = this.type || this.data.type;
-      if (type == 'image') {
-        if (imageFile.type == 'image/jpeg') {
-          this.readImage(imageFile);
-          this.$emit('input', imageFile);
-        } else {
-          NotificationsModule.actions.addNotification({
-            type: 'error',
-            message: 'Seuls les fichiers .jpeg ou .jpg sont acceptés',
-          });
-        }
-      } else if (type == 'video') {
-        if (this.acceptedVideosTypes.includes(imageFile.type)) {
-          this.readImage(imageFile);
-          this.$emit('input', imageFile);
-        } else {
-          NotificationsModule.actions.addNotification({
-            type: 'error',
-            message: 'Seuls les fichiers mp4, x-m4v, webm, x-ms-video et quicktime sont acceptés',
-          });
-        }
-      }
-    }
-    this.removeDragData(event);
   }
 
-  readImage(image: any) {
+  readImage(image: File): boolean {
     if (image.size > this.sizeLimit) {
-      NotificationsModule.actions.addNotification({
-        type: 'error',
-        message: `La taille maximale est de ${this.sizeLimit / 1000000}Mo`,
-      });
+      new ErrorNotification(`La taille maximale est de ${this.sizeLimit / 1000000}Mo`);
+      return false;
     } else {
-      this.dropped = true;
       if (image.size < this.videoPreviewSizeLimit) {
         const reader = new FileReader();
-        this.loadingImage = true;
+        this.loadingFile = true;
         this.fileTitle = image.name;
 
         reader.onload = (event: any) => {
-          this.imagePrevisu = event.target.result;
-          this.imageUploaded = true;
-          this.loadingImage = false;
+          this.previsualisationData = event.target.result;
+          this.fileUploaded = true;
+          this.loadingFile = false;
         };
         reader.onerror = () => {
-          this.loadingImage = false;
+          this.loadingFile = false;
         };
         reader.readAsDataURL(image);
+        return true;
       } else {
-        this.imageUploaded = true;
+        this.fileUploaded = true;
         this.videoSizeLimitTriggered = true;
+        return false;
       }
     }
   }
 
   deleteFile() {
-    this.dropped = false;
-    this.loadingImage = false;
-    this.imageUploaded = false;
+    this.loadingFile = false;
+    this.fileUploaded = false;
     this.fileTitle = null;
-    this.imagePrevisu = null;
+    this.previsualisationData = null;
+    this.onlyDisplay = false;
+
     this.$emit('input', null);
     if (this.vl) this.vl.$touch();
-    this.$refs['inputFile']['value'] = null;
-  }
-
-  handleDragEnter(event: DragEvent) {
-    if (!this.imageUploaded) {
-      this.draggedOver = true;
-    }
-  }
-
-  handleDragLeave() {
-    this.draggedOver = false;
-  }
-
-  handleDragEnd() {
-    this.draggedOver = false;
-  }
-
-  removeDragData(ev: DragEvent) {
-    if (ev.dataTransfer.items) {
-      ev.dataTransfer.items.clear();
-    } else {
-      ev.dataTransfer.clearData();
-    }
+    this.$refs.inputFile.value = null;
   }
 
   triggerInput() {
-    this.$refs['inputFile']['click']();
+    if (!this.value) {
+      this.$refs.inputFile.click();
+    }
   }
 
   @Watch('value')
   valueChanged(newVal, oldVal) {
     if (this.data.editMode) {
       if (newVal == this.initialValue) {
-        this.vl.$reset();
+        if (this.vl) this.vl.$reset();
         this.preloadInitialImage();
       }
     }
   }
 
-  preloadInitialImage() {
-    if (!!this.value) {
+  async preloadInitialImage() {
+    if (this.value) {
       this.onlyDisplay = true;
-      this.imagePrevisu = this.value;
-      this.dropped = true;
-      this.imageUploaded = true;
+      this.previsualisationData = this.value as any;
+      this.fileUploaded = true;
     }
   }
 
@@ -262,166 +266,98 @@ export default class FormUpload extends FormMixin {
 }
 </script>
 
+<style lang="scss" scoped>
+@import './styles/formStyles';
 
+div.display-result {
+  flex-flow: row nowrap;
+  width: 100%;
 
-<style lang='scss' scoped>
-.FormUpload {
-  display: flex;
-  flex-flow: column wrap;
-  padding: 5px;
+  div.infos {
+    flex: 1 1 auto;
+    align-items: center;
 
-  .upload-wrapper {
-    display: flex;
-    position: relative;
-    height: 350px;
-
-    &.inForm {
-      justify-content: center;
-      height: auto;
-      margin: 10px 0 10px 0;
+    span.placeholder {
+      padding-left: 10px;
     }
 
-    .dropZone {
-      position: absolute;
-      z-index: 10;
-      width: 100%;
-      height: 100%;
-      cursor: pointer;
-    }
+    div.value {
+      flex-flow: row nowrap;
 
-    .dropDisplay {
-      display: flex;
-      position: relative;
-      flex-flow: column wrap;
-      width: 100%;
-      border: 3px dashed $w180;
-      overflow: hidden;
-
-      .image-previsu {
-        display: flex;
+      div.file-read {
         flex: 0 0 auto;
-        height: 100%;
-        justify-content: center;
-        align-items: center;
-        background-color: $w235;
-
-        .image {
-          width: 100%;
-          height: 100%;
-          @include bg-center;
-        }
-      }
-
-      .file-too-large {
-        display: flex;
-        flex-flow: column wrap;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        height: 100%;
-
-        span {
-          margin-top: 10px;
-        }
-      }
-
-      .image-uploaded {
-        display: flex;
-        flex-flow: column nowrap;
         position: relative;
-        justify-content: flex-start;
-        flex: 1 1 auto;
+        overflow: hidden;
+        padding: 5px;
+        max-width: 50%;
         min-width: 0;
+        min-height: 0;
+        text-align: left;
 
-        .info {
-          display: flex;
+        img,
+        video,
+        audio {
+          flex: 0 0 auto;
           position: relative;
-          flex: 1 1 auto;
-          justify-content: flex-start;
-          align-items: center;
-          padding-left: 15px;
-          font-size: 14px;
-          color: $w120;
-          font-weight: bold;
-          overflow: hidden;
-
-          &.title {
-            position: relative;
-            color: $primary;
-            font-size: 15px;
-            align-items: flex-end;
-            display: flex;
-            flex-flow: row nowrap;
-
-            span {
-              @include ellipsis;
-            }
-          }
-
-          &.state {
-            font-size: 13px;
-            .image {
-              height: 18px;
-              width: 18px;
-              margin-left: 5px;
-            }
-          }
-
-          &.delete {
-            .bouton {
-              color: transparentize($red1, 0.2);
-              cursor: pointer;
-            }
-          }
-        }
-      }
-
-      .drop-infos {
-        display: flex;
-        flex-flow: column wrap;
-        flex: 1 1 auto;
-        justify-content: center;
-        align-items: center;
-        color: $w120;
-        font-weight: bold;
-        font-size: 14px;
-      }
-
-      &.inForm {
-        width: 100px;
-        height: 100px;
-        border: 3px solid $primary;
-        border-radius: 100%;
-
-        .icon {
+          max-height: 100%;
+          width: auto;
           height: 100%;
-          width: 100%;
+          border-radius: 4px;
+          max-width: 100%;
+          min-width: 50px;
+          object-fit: cover;
+        }
+
+        audio {
+          width: 250px;
+          height: 54px;
         }
       }
 
-      &.draggedOver {
-        border-color: $primary;
-        .drop-infos {
-          color: $primary;
-        }
-      }
+      div.file-infos {
+        justify-content: center;
+        padding: 10px;
+        text-align: left;
+        align-items: flex-start;
+        flex: 1 1 auto;
 
-      &.imageUploaded {
-        border: none;
-        background-color: white;
-        border: 1px solid $w220;
-        cursor: initial;
-        z-index: 11;
+        span.name {
+          padding: 5px 0;
+          font-weight: bold;
+          font-size: 16px;
+        }
+
+        span.size {
+          background-color: $primary;
+          color: white;
+          border-radius: 40px;
+          padding: 4px 10px;
+          font-size: 12px;
+        }
       }
     }
   }
 
-  .label {
-    font-weight: bold;
-    padding: 0 0 5px 0;
-    font-size: 14px;
-    color: $g90;
+  &.audio {
+    div.value {
+      flex-flow: column nowrap !important;
+      width: 100%;
+      div.file-read {
+        display: flex;
+        align-items: flex-start;
+        flex: 0 0 auto !important;
+        padding-bottom: 5px !important;
+      }
+      div.file-infos {
+        padding-top: 5px !important;
+        flex: 0 0 auto !important;
+      }
+    }
+  }
+
+  div.icon-upload {
+    flex: 0 0 auto;
+    padding: 10px;
   }
 }
 </style>
-

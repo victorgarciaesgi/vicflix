@@ -1,28 +1,32 @@
 // import 'es6-shim';
+import 'reflect-metadata';
 import Vue from 'vue';
 import Vuelidate from 'vuelidate';
 import App from './App.vue';
 import { sync } from 'vuex-router-sync';
 import { createStore } from '@/vuex-typed-modules';
 import { Router } from '@router';
-import infiniteScroll from 'vue-infinite-scroll';
-import { SvgIcon, Spinner, VButton, Popup } from '@components';
+import { Component } from 'vue-property-decorator';
+import { SvgIcon, Spinner, VButton, Popup, SearchField, InfiniScroll } from '@components';
+
 import './registerServiceWorker';
 import i18n from './i18n';
 
 // Plugins declaration
 Vue.use(Vuelidate);
-Vue.use(infiniteScroll);
+Component.registerHooks(['validations']);
 
 // Global components
 Vue.component('SvgIcon', SvgIcon);
 Vue.component('Spinner', Spinner);
 Vue.component('VButton', VButton);
 Vue.component('Popup', Popup);
+Vue.component('SearchField', SearchField);
+Vue.component('InfiniScroll', InfiniScroll);
 
 Vue.config.productionTip = false;
 
-const store = createStore();
+const store = createStore({});
 
 // Sync VueRouter and VuexStore
 sync(store, Router, { moduleName: 'RouterModule' });

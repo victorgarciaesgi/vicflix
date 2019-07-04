@@ -1,14 +1,15 @@
 <template>
+  <!-- eslint-disable -->
   <div
     class="svg-container"
-    v-html="svgContent"
     :class="{ relative: size, pointer }"
-    @click="$emit('click', $event)"
     :style="{
       [type]: `${activeColor}!important`,
       height: `${size}px`,
       width: `${size}px`,
     }"
+    @click="$emit('click', $event)"
+    v-html="svgContent"
   ></div>
 </template>
 
@@ -22,19 +23,23 @@ import { Partial } from 'lodash';
   name: 'SvgIcon',
 })
 export default class SvgIcon extends Vue {
-  public defaultColor = '#3C3C3C';
+  public defaultColor = Colors.g90;
   @Prop({ required: true })
   src!: string;
   @Prop({ required: false, default: 20 })
   size!: number;
-  @Prop({ required: false, default: '#3C3C3C', type: [String, Object] })
+  @Prop({ required: false, default: Colors.g90, type: [String, Object] })
   color;
   @Prop() pointer!: boolean;
   @Prop({ default: 'fill' }) type: 'fill' | 'stroke';
 
-  private svgContent = null;
+  public svgContent = null;
 
-  get activeColor() {
+  $refs: {
+    svgObject: HTMLObjectElement;
+  };
+
+  get activeColor(): string {
     if (typeof this.color === 'string') {
       return Colors[this.color] || this.color;
     } else if (this.color != null) {
@@ -50,9 +55,8 @@ export default class SvgIcon extends Vue {
     this.loadIcon();
   }
 
-  async loadIcon() {
-    const { data } = await Axios.get(require('@assets/' + this.src));
-    this.svgContent = data;
+  loadIcon() {
+    this.svgContent = require('@assets/' + this.src);
   }
 
   created() {
@@ -77,6 +81,9 @@ export default class SvgIcon extends Vue {
   &.pointer {
     cursor: pointer;
   }
+
+  svg {
+    transition: fill 0.2s, stroke 0.2s;
+  }
 }
 </style>
-

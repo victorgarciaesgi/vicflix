@@ -1,15 +1,15 @@
 <template>
   <div
+    ref="popupRoot"
     class="popup-root"
     @mouseenter="togglePopup('hover', $event)"
     @mouseleave="togglePopup('hover', $event)"
   >
     <transition :name="mode === 'click' ? 'slide-top' : null">
       <div
+        v-if="show"
         ref="popup"
         class="popup-box"
-        @click.stop
-        v-if="show"
         :style="getWidth"
         :class="[
           PopupXYTypes.XType,
@@ -17,23 +17,24 @@
           theme,
           { active: show, selectMode, scroll, outside },
         ]"
+        @click.stop
       >
         <div
-          class="triangle"
           v-if="show && !selectMode"
+          class="triangle"
           :style="trianglePosition"
           :class="[PopupXYTypes.XType, PopupXYTypes.YType, { active: show }]"
         ></div>
         <div class="popup-wrapper">
-          <slot v-if="show" name="popup" />
+          <slot v-if="show" name="popup" :direction="PopupXYTypes.YType" />
         </div>
       </div>
     </transition>
     <button
-      class="button-popup"
-      @click.stop.prevent="togglePopup('click', $event)"
-      :class="{ active: show, shadow }"
       ref="button"
+      class="button-popup"
+      :class="{ active: show, shadow }"
+      @click.stop.prevent="togglePopup('click', $event)"
     >
       <slot name="button" :active="show" />
     </button>
@@ -41,14 +42,14 @@
 </template>
 
 <script lang="ts">
-import { Vue, Prop, Component } from 'vue-property-decorator';
+import { Vue, Prop, Component, Watch } from 'vue-property-decorator';
 
 import { EventBus, Events } from '@services';
 import { calculatePopupRelativePosition, calculatePopupPosition } from '@methods';
 
 @Component({})
 export default class Popup extends Vue {
-  @Prop({ default: 'auto' })
+  @Prop({ default: 'auto', type: [String, Number] })
   width: number | string;
   @Prop({ default: 'click' })
   mode: 'click' | 'hover';
@@ -65,17 +66,19 @@ export default class Popup extends Vue {
   @Prop({ default: false })
   outside: boolean;
   @Prop({ default: true }) shadow: boolean;
+  @Prop() onFocus: boolean;
 
-  private show: boolean = false;
-  private PopupXYTypes = {
+  public show: boolean = false;
+  public PopupXYTypes = {
     XType: null,
     YType: null,
   };
-  private trianglePosition = null;
+  public trianglePosition = null;
 
   $refs: {
     button: HTMLElement;
     popup: HTMLElement;
+    popupRoot: HTMLElement;
   };
 
   get getWidth() {
@@ -89,46 +92,17 @@ export default class Popup extends Vue {
         return;
       }
       if (!this.show) {
-        this.show = true;
-        await this.$nextTick();
-        const origin = this.$refs.button.children[0] as HTMLElement;
-        const target = this.$refs.popup;
-        const Types = calculatePopupRelativePosition(
-          origin,
-          target,
-          this.selectMode,
-          this.container
-        );
-        if (this.outside) {
-          const { left, top, bottom, triangleLeft } = calculatePopupPosition(origin, target, Types);
-          target.style.left = left as string;
-          target.style.top = top as string;
-          target.style.bottom = bottom as string;
-          if (Types.XType !== 'center') {
-            this.trianglePosition = {
-              left: triangleLeft,
-            };
-          }
-          this.PopupXYTypes = Types;
-        } else {
-          this.PopupXYTypes = Types;
-          if (Types.XType === 'fill' && this.container) {
-            target.style.width = this.container.offsetWidth - 15 + 'px';
-          } else if (Types.XType === 'center') {
-            this.trianglePosition = {
-              left: '50%',
-            };
-          } else {
-            this.trianglePosition = {
-              [Types.XType]: origin.offsetWidth / 2 - 13 + 'px',
-            };
-          }
+        this.showPopup(event);
+        EventBus.$emit(Events.CLOSE_POPUPS, this);
+        window.addEventListener('resize', this.closePopup);
+        window.addEventListener('scroll', this.closePopup);
+        document.body.addEventListener('click', this.closePopup);
+        document.body.addEventListener('touchstart', this.closePopup);
+        this.$refs.popupRoot.addEventListener('touchstart', e => e.stopPropagation());
+        if (this.getScrollParent(this.$refs.popupRoot)) {
+          this.getScrollParent(this.$refs.popupRoot).addEventListener('scroll', this.closePopup);
         }
 
-        if (Types.maxHeight) {
-          target.style.maxHeight = Types.maxHeight + 'px';
-        }
-        EventBus.$emit(Events.CLOSE_POPUPS, this);
         EventBus.$on(Events.CLOSE_POPUPS, this.closePopup);
         this.$emit('open');
       } else {
@@ -137,30 +111,101 @@ export default class Popup extends Vue {
     }
   }
 
-  closePopup() {
-    EventBus.$off(Events.CLOSE_POPUPS);
+  async showPopup(event?: Event): Promise<void> {
+    this.show = true;
+    await this.$nextTick();
+    window.requestAnimationFrame(async () => {
+      const origin = this.$refs.button.children[0] as HTMLElement;
+      const target = this.$refs.popup;
+      const Types = calculatePopupRelativePosition(origin, target, this.selectMode, this.container);
+      if (this.outside) {
+        const { left, top, bottom, triangleLeft } = calculatePopupPosition(
+          origin,
+          target,
+          Types,
+          this.selectMode
+        );
+        target.style.left = left as string;
+        target.style.top = top as string;
+        target.style.bottom = bottom as string;
+        if (this.selectMode) {
+          target.style.width = this.$refs.button.clientWidth + 'px';
+        }
+
+        if (Types.XType === 'center') {
+          this.trianglePosition = {
+            left: '50%',
+          };
+        } else {
+          this.trianglePosition = {
+            left: triangleLeft,
+          };
+        }
+        this.PopupXYTypes = Types;
+      } else {
+        this.PopupXYTypes = Types;
+        if (Types.XType === 'center') {
+          this.trianglePosition = {
+            left: '50%',
+          };
+        } else {
+          this.trianglePosition = {
+            [Types.XType]: origin.offsetWidth / 2 - 13 + 'px',
+          };
+        }
+      }
+      if (Types.XType === 'fill') {
+        target.style.width =
+          (this.container ? this.container.offsetWidth : window.innerWidth) - 20 + 'px';
+      }
+
+      if (Types.maxHeight) {
+        target.style.maxHeight = Types.maxHeight + 'px';
+      }
+    });
+  }
+
+  getScrollParent(node: HTMLElement): HTMLElement {
+    if (node == null) {
+      return null;
+    }
+    if (node.scrollHeight > node.clientHeight) {
+      return node;
+    } else {
+      return this.getScrollParent(node.parentElement);
+    }
+  }
+
+  closePopup(event?: Event): void {
+    // if (event) event.preventDefault()
     this.PopupXYTypes = {
       XType: null,
       YType: null,
     };
     this.show = false;
     this.$emit('close');
-  }
+    EventBus.$off(Events.CLOSE_POPUPS);
+    window.removeEventListener('resize', this.closePopup);
+    window.removeEventListener('scroll', this.closePopup);
+    document.body.removeEventListener('click', this.closePopup);
+    document.body.removeEventListener('touchstart', this.closePopup);
 
-  mounted() {}
+    if (this.getScrollParent(this.$refs.popupRoot))
+      this.getScrollParent(this.$refs.popupRoot).removeEventListener('scroll', this.closePopup);
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .popup-root {
   position: relative;
-  height: 100%;
   flex: inherit;
   flex-flow: inherit;
   justify-content: inherit;
   align-items: inherit;
   max-width: 100%;
   width: inherit;
+  flex: 0 0 auto;
 
   .popup-box {
     position: absolute;
@@ -175,6 +220,7 @@ export default class Popup extends Vue {
     width: auto;
     flex-flow: row nowrap;
     z-index: 10011;
+    max-width: 100vw;
 
     &.outside {
       position: fixed;
@@ -304,15 +350,15 @@ export default class Popup extends Vue {
     }
 
     &.dark {
-      background-color: rgb(40, 40, 40);
+      background-color: rgb(60, 60, 60);
 
       .triangle {
         border-left: $triangleSize solid transparent;
         border-right: $triangleSize solid transparent;
-        border-top: $triangleSize solid rgb(40, 40, 40);
+        border-top: $triangleSize solid rgb(60, 60, 60);
 
         &.bottom {
-          border-bottom: $triangleSize solid rgb(40, 40, 40);
+          border-bottom: $triangleSize solid rgb(60, 60, 60);
           border-top: $triangleSize solid transparent;
         }
       }
@@ -333,10 +379,10 @@ export default class Popup extends Vue {
     @include userselect;
     cursor: pointer;
 
-    &.shadow.active > * {
-      // transition: box-shadow 0.2s;
-      // box-shadow: 0 0 5px inset rgba(0, 0, 0, 0.15);
-    }
+    // &.shadow.active > * {
+    //   transition: box-shadow 0.2s;
+    //   box-shadow: 0 0 5px inset rgba(0, 0, 0, 0.15);
+    // }
   }
 }
 </style>

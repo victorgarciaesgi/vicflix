@@ -4,21 +4,34 @@ import { Prop, Watch } from 'vue-property-decorator';
 import debounce from 'lodash/debounce';
 import { Mixin } from 'vue-mixin-decorator';
 import { Forms } from '@constructors';
+import Colors from '@colors';
+import { Validation } from 'vuelidate';
+import Cleave from 'cleave.js';
+import { Popup } from '@components/Shared';
+
+type ValueType = string | number | boolean | any[] | File | (() => any) | Forms.ICalendarValue;
 
 @Mixin({})
 export class FormMixin extends Vue {
-  @Prop({ required: true })
-  value!: any;
+  @Prop({ required: true, default: null, type: null })
+  value: ValueType;
   @Prop({ required: false })
-  vl;
+  vl: Validation;
   @Prop({ required: true })
-  data: Forms.FormPayload<any> | Forms.UploadForm;
+  data: Forms.FormPayload<any> | Forms.UploadForm<any>;
 
-  public formId = null;
-  public isFocused = false;
-  public initialValue = null;
-  public showOptions = false;
-  public css = require('@css');
+  public formId: string = null;
+  public isFocused: boolean = false;
+  public initialValue: ValueType = null;
+  public css = Colors;
+  public cleave: Cleave = null;
+
+  $refs: {
+    input: HTMLInputElement;
+    popup: Popup;
+    inputFile: HTMLInputElement;
+    imagePopup: Popup;
+  };
 
   get valid() {
     return this.vl ? !this.vl.$invalid : null;
@@ -29,52 +42,76 @@ export class FormMixin extends Vue {
   get error() {
     return this.vl ? this.vl.$error : null;
   }
-  get required() {
+  get required(): boolean {
     return this.vl ? this.vl.$params.required : null;
   }
   get isPending() {
     return this.vl ? this.vl.$pending : null;
   }
 
-  get label() {
+  get formValid(): boolean {
+    if (this.data.editMode) {
+      return (
+        this.value !== this.initialValue &&
+        this.valid &&
+        this.dirty &&
+        this.data.error &&
+        !this.isPending
+      );
+    } else {
+      return this.valid && this.dirty && this.data.error && !this.isPending;
+    }
+  }
+
+  get formError(): boolean {
+    if (this.data.editMode) {
+      return this.error && this.data.error && !this.isPending;
+    } else {
+      return !this.valid && this.dirty && this.data.error && !this.isPending;
+    }
+  }
+
+  get label(): string {
     if (this.required && this.data.error && this.data.label) return this.data.label + '*';
     return this.data.label;
   }
-  get placeholder() {
+  get placeholder(): string {
     if (this.required && this.data.error && this.data.placeholder)
       return this.data.placeholder + '*';
     return this.data.placeholder;
   }
 
-  updateValue(value: any) {
+  updateValue(value: ValueType) {
     if (this.vl) this.vl.$touch();
     let parsedValue = value;
-    if (this.data.type === 'number') {
-      if (Number(value)) {
-        parsedValue = parseFloat(value);
+    if (typeof parsedValue === 'string') {
+      parsedValue = parsedValue.trim();
+    }
+    if ((this.data.type === 'number' || this.data.type === 'float') && !!value) {
+      if (typeof value === 'string' && !isNaN(Number(value))) {
+        parsedValue = Number(value);
       } else {
-        parsedValue = value;
+        parsedValue = value as number;
       }
     }
     if (this.data.update) {
       this.data.update(parsedValue);
     }
     this.$emit('input', parsedValue);
-    this.showOptions = false;
   }
 
-  handleBlur() {
+  handleBlur(): void {
     this.isFocused = false;
   }
 
-  handleFocus() {
+  handleFocus(): void {
     this.isFocused = true;
   }
 
   @Watch('value')
   valueChanged(newVal, oldVal) {
     if (this.data.editMode) {
-      if (newVal == this.initialValue) this.vl.$reset();
+      if (newVal === this.initialValue) this.vl.$reset();
     }
   }
 
@@ -86,37 +123,41 @@ export class FormMixin extends Vue {
         this.initialValue = this.value;
       }
     }
+    if (this.data.type === 'tel') {
+      this.cleave = new Cleave(this.$refs.input, {
+        phone: true,
+        phoneRegionCode: 'FR',
+      });
+    } else if (this.data.type === 'number' || this.data.type === 'float') {
+      this.cleave = new Cleave(this.$refs.input, {
+        numeral: true,
+        numeralThousandsGroupStyle: 'thousand',
+        ...this.data.cleaveOptions,
+      });
+    } else if (this.data.cleaveOptions) {
+      this.cleave = new Cleave(this.$refs.input, this.data.cleaveOptions);
+    }
   }
 
   created() {
     this.formId = shortid.generate();
     if (this.data.debounce) {
-      this.updateValue = debounce(value => {
-        if (this.vl) this.vl.$touch();
-        if (this.data.type === 'number') {
-          if (parseFloat(value) != NaN) {
-            this.$emit('input', parseFloat(value));
-          } else {
-            this.$emit('input', value);
-          }
-        } else {
-          this.$emit('input', value);
-        }
-        if (this.data.update) {
-          this.data.update(value);
-        }
-        this.showOptions = false;
-      }, this.data.debounce);
+      const cloneUpdate = this.updateValue;
+      this.updateValue = debounce(cloneUpdate, this.data.debounce);
     }
   }
 
   get formatedValue() {
-    let newValue;
+    let newValue: ValueType;
     if (typeof this.value === 'function') {
       newValue = this.value();
     } else {
       newValue = this.value;
     }
     return newValue;
+  }
+
+  destroyed() {
+    if (this.cleave) this.cleave.destroy();
   }
 }

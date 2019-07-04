@@ -1,13 +1,12 @@
 <template>
   <component
-    class="button"
     :is="link ? 'router-link' : 'button'"
+    class="button"
     :to="to"
-    @mousedown.stop="emitClick($event)"
     :type="type"
-    :disabled="submitting || disabled"
     :class="[{ submitting, disabled }, colorClass]"
     :style="getColorTheme"
+    @click.stop="emitClick($event)"
   >
     <img v-if="!!icon" :src="icon" />
     <span :style="{ color: spanColor }">
@@ -21,6 +20,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop, Model } from 'vue-property-decorator';
+import { Location } from 'vue-router';
 
 @Component({})
 export default class AlertButton extends Vue {
@@ -36,11 +36,10 @@ export default class AlertButton extends Vue {
   theme: string;
   @Prop({ required: false })
   color: string;
-
   @Prop()
   link: boolean;
-  @Prop()
-  to: any;
+  @Prop([String, Object])
+  to: string | Location;
 
   @Prop()
   colorTheme: string;
@@ -48,7 +47,7 @@ export default class AlertButton extends Vue {
   public css = require('@css');
 
   get getColorTheme() {
-    if (!this.colorTheme) return;
+    if (!this.colorTheme) return null;
     return {
       color: 'white',
       backgroundColor: this.colorTheme,
@@ -59,7 +58,7 @@ export default class AlertButton extends Vue {
     if (this.link) {
       event.preventDefault();
     } else if (!this.submitting && !this.disabled) {
-      if (this.type == 'button') this.$emit('click');
+      if (this.type === 'button') this.$emit('click');
       else if (this.type == 'submit') this.$emit('submit');
     } else if (this.disabled) {
       event.preventDefault();
@@ -79,9 +78,7 @@ export default class AlertButton extends Vue {
 }
 </script>
 
-
-
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .button {
   position: relative;
   display: flex;
@@ -147,6 +144,8 @@ export default class AlertButton extends Vue {
   &.red span {
     color: $red1;
   }
+  &.yellow span {
+    color: $yellow;
+  }
 }
 </style>
-

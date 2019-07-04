@@ -35,7 +35,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { Popup } from '@components';
+import Popup from '../Shared/Display/Popup.vue';
 import { routesNames } from '@router';
 import { Forms } from '@constructors';
 import NavBar from './NavBar.vue';

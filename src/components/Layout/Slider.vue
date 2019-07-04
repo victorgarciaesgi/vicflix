@@ -1,44 +1,43 @@
 <template>
-  <div class="slider-root flex" ref="sliderRoot">
+  <div ref="sliderRoot" class="slider-root flex">
     <div class="title flex between">
       <span>{{ title }}</span>
       <div class="grid-indicator flex center">
         <div
-          class="page"
           v-for="gridPage of pageLength"
           :key="gridPage"
+          class="page"
           :class="{ active: page === gridPage }"
         ></div>
       </div>
     </div>
     <div class="slider-container flex">
       <div class="slider-page-button left">
-        <button class="flex center w100 h100" v-if="page > 1" @click="slideLeft">
+        <button v-if="page > 1" class="flex center w100 h100" @click="slideLeft">
           <SvgIcon src="icons/Forms/arrow_left.svg" color="white" :size="30" />
         </button>
       </div>
-      <div class="slider-wrapper flex" key="slider">
-        <ul class="slider-list flex" :style="getStyle" ref="sliderList">
+      <div key="slider" class="slider-wrapper flex">
+        <ul ref="sliderList" class="slider-list flex" :style="getStyle">
           <SlideItem
             v-for="(item, index) of slides"
             :key="item.id"
-            :item="item"
             :ref="`slide${index}`"
-            :perPage="slidePerPage"
+            :item="item"
+            :per-page="slidePerPage"
             @mouseenter="setContainerFix($event, index)"
             @mouseleave="freeContainer($event, index)"
           />
         </ul>
       </div>
       <div class="slider-page-button right flex center">
-        <button class="flex center w100 h100" v-if="page < pageLength" @click="slideRight">
+        <button v-if="page < pageLength" class="flex center w100 h100" @click="slideRight">
           <SvgIcon src="icons/Forms/arrow_right.svg" color="white" :size="30" />
         </button>
       </div>
     </div>
   </div>
 </template>
-
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
@@ -158,8 +157,6 @@ export default class Slider extends Vue {
   }
 }
 </script>
-
-
 
 <style lang="scss" scoped>
 div.slider-root {

@@ -7,7 +7,7 @@ import { Component, Prop, Model } from 'vue-property-decorator';
   props: ['limit']
 })
 export default class LimitRender extends Vue {
-
+  limit;
   render(h) {
     return <div class='paginationView-root'>
       {this.$slots.default.slice(0,this.limit)}

@@ -5,7 +5,8 @@
     "serve": "pm2 flush && pm2 startOrRestart pm2.json --only",
     "dev": "vue-cli-service serve",
     "pm2:production": "cross-env NODE_ENV=production vue-cli-service build --mode production && npm run serve viclix-production",
-    "get:schemas": "node getSchemas"
+    "get:schemas": "node getSchemas",
+    "fix": "eslint --fix"
   },
   "license": "MIT",
   "dependencies": {
@@ -50,7 +51,7 @@
     "compression-webpack-plugin": "^3.0.0",
     "cross-env": "^5.2.0",
     "custom-env": "^1.0.2",
-    "eslint": "^6.0.1",
+    "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.3.0",
     "eslint-loader": "2.2.0",
     "eslint-plugin-prettier": "^3.1.0",

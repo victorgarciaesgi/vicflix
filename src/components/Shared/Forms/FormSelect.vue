@@ -1,19 +1,19 @@
 <template>
   <div class="input-box" :class="{ noMargin: data.noMargin }">
-    <label :for="formId" v-if="data.label" class="input-label">
+    <label v-if="data.label" :for="formId" class="input-label">
       {{ label }}
     </label>
-    <Popup :selectMode="true" ref="popup" :shadow="false">
+    <Popup ref="popup" :select-mode="true" :shadow="false">
       <ul slot="popup" class="options-list flex">
         <li
-          class="option flex"
           v-for="option of data.options"
           :key="option.value"
+          class="option flex"
           :class="{ selected: option.value === value }"
           @click="selectOption(option.value)"
         >
           <span class="value ellipsis">{{ option.text }}</span>
-          <div class="icon" v-if="option.value === value">
+          <div v-if="option.value === value" class="icon">
             <SvgIcon src="icons/Forms/done.svg" color="primary" />
           </div>
         </li>
@@ -35,7 +35,7 @@
             <span class="placeholder ellipsis" :class="{ top: !!getDisplayValue }">
               {{ placeholder }}
             </span>
-            <span class="value ellipsis" v-if="getDisplayValue">{{ getDisplayValue }}</span>
+            <span v-if="getDisplayValue" class="value ellipsis">{{ getDisplayValue }}</span>
           </div>
           <div class="icon-collapse flex center">
             <SvgIcon class="arrow" src="icons/Forms/unfold.svg" :size="20" />
@@ -61,12 +61,8 @@ import { oc } from 'ts-optchain';
   },
 })
 export default class FormSelect extends FormMixin {
-  $refs: {
-    popup: Popup;
-  };
-
   get getDisplayValue() {
-    return oc(this.data.options.find(f => f.value === this.value)).text();
+    return '';
   }
 
   selectOption(value: any) {
@@ -76,9 +72,7 @@ export default class FormSelect extends FormMixin {
 }
 </script>
 
-
-
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import './styles/formStyles';
 
 ul.options-list {
@@ -132,4 +126,3 @@ div.display-text {
   }
 }
 </style>
-

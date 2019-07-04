@@ -1,14 +1,14 @@
 <template>
   <router-link
+    ref="slideItem"
     to="/projects"
     class="slide-item"
     :style="getContainerStyle"
-    ref="slideItem"
     @mouseenter.native="handleMouseEnter"
     @mouseleave.native="handleMouseLeave"
   >
     <img class="mask" src="~@images/blank.png" />
-    <div class="content bg" ref="content" :style="getContentStyle" :class="{ hovered }">
+    <div ref="content" class="content bg" :style="getContentStyle" :class="{ hovered }">
       <img class="vicflix" src="~@images/vicflix.png" width="60px" />
       <transition name="fade">
         <div v-if="hovered" class="info-item flex pad10">
@@ -19,7 +19,7 @@
               </div>
             </div>
             <span class="title">{{ item.title }}</span>
-            <div class="technos flex" v-if="item.type === 'Work Project'">
+            <div v-if="item.type === 'Work Project'" class="technos flex">
               <img
                 v-for="techno of item.technos"
                 :key="techno"
@@ -32,7 +32,6 @@
     </div>
   </router-link>
 </template>
-
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
@@ -103,8 +102,6 @@ export default class SliderItem extends Vue {
   }
 }
 </script>
-
-
 
 <style lang="scss" scoped>
 .slide-item {

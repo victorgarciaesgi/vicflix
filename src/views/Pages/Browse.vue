@@ -107,8 +107,6 @@ export default class Browse extends Vue {
 }
 </script>
 
-
-
 <style lang="scss" scoped>
 div.browse {
   height: 100%;

@@ -1,0 +1,94 @@
+@import './colors.pcss';
+@import './transitions.pcss';
+@import './animations.pcss';
+@import './global.pcss';
+
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  width: 100%;
+  min-height: 100%;
+  position: relative;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  display: flex;
+  color: var(--text1);
+  background-color: var(--bg1);
+
+  @screen md {
+    font-size: 14px;
+  }
+}
+
+#__nuxt,
+#__layout {
+  flex: 1;
+  display: flex;
+  width: 100%;
+}
+
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+  outline: none !important;
+}
+
+input,
+select,
+textarea,
+button {
+  color: var(--text1);
+}
+
+input {
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  background: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+ul[list] {
+  padding: 0;
+  list-style: none;
+  list-style-type: none;
+  li {
+    list-style: none;
+    list-style-type: none;
+  }
+}
+
+span {
+  display: inline;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  display: flex;
+  outline: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: none;
+  resize: none;
+  font-size: inherit;
+  cursor: pointer;
+  color: var(--text1);
+}

@@ -1,44 +1,98 @@
-import { RawLocation } from 'vue-router';
-import { ValidationProperties, ValidationGroups } from 'vue/types/vue';
+import { RawLocation, Location } from 'vue-router';
+// import { PageInfo } from './__generated';
 import { Validation } from 'vuelidate';
+import { TypedRawLocation } from 'nuxt-typed-router/types/vue';
+import { ValidationRule } from 'vuelidate/lib/validators';
 
+// Temporary
+export enum OrderByDirection {
+  Asc = 'ASC',
+  Desc = 'DESC',
+}
+// --------------
+
+export type ObjectLiteral<TKey extends string | number | symbol = string, TValue = any> = Record<
+  TKey,
+  TValue
+>;
+
+export type IsValidArg<T> = T extends ObjectLiteral ? (keyof T extends never ? false : true) : true;
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type KeepProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? K : never }[keyof T]>;
+export type ExludeProperties<T, P> = Pick<
+  T,
+  { [K in keyof T]: T[K] extends P ? never : K }[keyof T]
+>;
+export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> & U[keyof U];
+export type ArrayElement<A> = A extends Array<infer U> ? U : never;
+export interface Dictionary<T> {
+  [x: string]: T;
+}
+
+// Vuelidate
+export type ValidationProperties<V> = {
+  [P in Exclude<keyof V, '$v'>]?: Validation & ValidationProperties<V[P]> & Record<string, number>;
+};
+
+export interface ValidationGroups {
+  [groupName: string]: Validation & ValidationProperties<any>;
+}
+
+interface ValidGroupDecl {
+  [group: string]: string[];
+}
+
+export interface RuleDecl {
+  [rule: string]: ValidationDecl | GroupDecl | AsyncDecl | NestedDecl;
+}
+
+interface ValidPropertyDecl {
+  [prop: string]: RuleDecl;
+}
+
+type ValidationDecl = ValidationRule | ((...args: any[]) => ValidationRule);
+type GroupDecl = string[];
+type AsyncDecl = (...args: any[]) => boolean | Promise<boolean>;
+type NestedDecl = RuleDecl;
+type DynamicDecl = () => RuleDecl;
+
+export type ValidationRoot<T = any> = ValidationProperties<T> & ValidationGroups & Validation;
+
+//
 
 export interface NavLink {
   label: string;
-  link: RawLocation;
+  link: Location;
   icon?: string;
   exact?: boolean;
   condition?: boolean;
 }
-export interface IPaginate<T> {
-  pageInfo: IPageInfo;
-  aggregate: {
-    count: number;
-  };
-  edges: T[];
-  totalCount?: number;
+
+export interface IConnectionPayload<T = any, V = any> {
+  where?: T;
+  orderBy?: V;
+  page: number;
+  limit?: number;
+}
+export interface IReadOnlyObject {
+  readonly [x: string]: any;
 }
 
-export interface IConnection<T> {
-  pageInfo: IPageInfo;
-  aggregate?: {
-    count: number;
-  };
-  edges: T[];
-  totalCount?: number;
+export type IConstant<T extends string | number> = {
+  [key in T]: string;
+};
+
+export interface IStep {
+  label: string;
+  strict?: boolean;
 }
 
-export interface IPageInfo {
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
-  startCursor: string;
-  endCursor: string;
-}
-
-export interface IAnyObject {
-  [x: string]: any;
-}
-
-export type ValidationRoot<T> = ValidationProperties<T> & ValidationGroups & Validation;
+export type ColumnType = 'text' | 'numeric' | 'date';
+export type ColumnExtended<T = string> = {
+  text: string;
+  key?: T;
+  type?: ColumnType;
+  order?: OrderByDirection;
+  format?: string;
+};
+export type TableColumn<T = any> = string | ColumnExtended<T>;

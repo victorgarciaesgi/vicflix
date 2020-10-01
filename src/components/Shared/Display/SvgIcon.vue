@@ -2,11 +2,11 @@
   <!-- eslint-disable -->
   <div
     class="svg-container"
-    :class="{ relative: size, pointer }"
+    :class="{ relativeSize: size, pointer }"
     :style="{
-      [type]: `${activeColor}!important`,
-      height: `${size}px`,
-      width: `${size}px`,
+      ...(activeColor && { [type]: `${activeColor}!important` }),
+      height: `${calculatedHeight}`,
+      width: `${calculatedWidth}`,
     }"
     @click="$emit('click', $event)"
     v-html="svgContent"
@@ -14,38 +14,49 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+import { Vue, Component, Prop, Watch, Ref } from 'nuxt-property-decorator';
 import Axios from 'axios';
 import Colors from '@colors';
-import { Partial } from 'lodash';
 
 @Component({
   name: 'SvgIcon',
 })
 export default class SvgIcon extends Vue {
-  public defaultColor = Colors.g90;
+  public defaultColor = 'currentColor';
   @Prop({ required: true })
   src!: string;
-  @Prop({ required: false, default: 20 })
+  @Prop()
   size!: number;
-  @Prop({ required: false, default: Colors.g90, type: [String, Object] })
-  color;
-  @Prop() pointer!: boolean;
-  @Prop({ default: 'fill' }) type: 'fill' | 'stroke';
+  @Prop({ type: [String, Object] })
+  color!: string | { [x: string]: boolean };
+  @Prop(Boolean) pointer?: boolean;
+  @Prop({ default: 'fill' }) type!: 'fill' | 'stroke' | 'both';
+  @Prop() width?: number;
+  @Prop() height?: number;
+
+  get calculatedWidth() {
+    if (this.width) return this.width + 'px';
+    else if (this.height) return 'auto';
+    else if (this.size) return this.size + 'px';
+    else return undefined;
+  }
+
+  get calculatedHeight() {
+    if (this.height) return this.height + 'px';
+    else if (this.width) return 'auto';
+    else if (this.size) return this.size + 'px';
+    else return undefined;
+  }
 
   public svgContent = null;
-
-  $refs: {
-    svgObject: HTMLObjectElement;
-  };
 
   get activeColor(): string {
     if (typeof this.color === 'string') {
       return Colors[this.color] || this.color;
     } else if (this.color != null) {
       let keys = Object.keys(this.color);
-      let filtered = keys.filter(key => this.color[key]);
-      return filtered[0] || this.defaultColor;
+      let filtered = keys.filter((key) => this.color[key]);
+      return Colors[filtered[0]] || filtered[0] || this.defaultColor;
     } else {
       return this.defaultColor;
     }
@@ -65,25 +76,20 @@ export default class SvgIcon extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="postcss">
 .svg-container {
   display: flex;
   flex: 0 0 auto;
-  position: relative;
   align-items: center;
   float: left;
 
-  &.relative svg {
+  svg {
     height: 100%;
     width: 100%;
   }
 
   &.pointer {
     cursor: pointer;
-  }
-
-  svg {
-    transition: fill 0.2s, stroke 0.2s;
   }
 }
 </style>

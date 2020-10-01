@@ -1,23 +1,22 @@
 import Vue from 'vue';
+import { VuexModule } from 'vuex-typed-modules';
 import { IProgressState } from '@models';
-import { defineModule } from '@/vuex-typed-modules';
+import Colors from '@colors';
 
-const css = require('@css');
+let TIMER: NodeJS.Timer | null = null;
+let TIMEOUT: NodeJS.Timeout | null = null;
+let CUT: number | null = null;
 
-let TIMER = null;
-let TIMEOUT = null;
-let CUT = null;
-
-//State
+// State
 const state: IProgressState = {
   percent: 0,
   show: false,
   canSuccess: true,
   duration: 3000,
   height: '3px',
-  color: css.primary,
-  failedColor: '#fff',
-  loaderColor: css.primary,
+  color: Colors.blue,
+  failedColor: Colors.red1,
+  loaderColor: Colors.blue,
   type: null,
 };
 
@@ -25,7 +24,7 @@ const state: IProgressState = {
 const mutations = {
   start(state: IProgressState, type: 'loader' | 'progress') {
     if (!state.show) {
-      clearTimeout(TIMEOUT);
+      if (TIMEOUT) clearTimeout(TIMEOUT);
       state.type = type;
       state.show = true;
       state.canSuccess = true;
@@ -35,9 +34,11 @@ const mutations = {
       }
       CUT = 20000 / Math.floor(state.duration);
       TIMER = setInterval(() => {
-        state.percent = state.percent + Math.floor(CUT * Math.random());
-        if (state.percent > 80) {
-          clearInterval(TIMER);
+        if (CUT) {
+          state.percent = state.percent + Math.floor(CUT * Math.random());
+          if (state.percent > 80 && TIMER) {
+            clearInterval(TIMER);
+          }
         }
       }, 200);
     }
@@ -54,7 +55,7 @@ const mutations = {
     state.percent = 100;
   },
   hide(state: IProgressState) {
-    clearInterval(TIMER);
+    if (TIMER) clearInterval(TIMER);
     TIMER = null;
     TIMEOUT = setTimeout(() => {
       state.show = false;
@@ -72,6 +73,4 @@ const mutations = {
 };
 
 // Module
-export const ProgressBarModule = defineModule('ProgressBarModule', state, {
-  mutations,
-});
+export const ProgressBarModule = new VuexModule({ name: 'ProgressBarModule', state, mutations });

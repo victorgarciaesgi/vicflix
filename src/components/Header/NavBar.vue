@@ -1,126 +1,18 @@
 <template>
-  <nav ref="nav" :class="{ responsive: responsiveMenu }">
-    <router-link class="logo" to="/browse">
-      <img src="~@images/vicflix.png" alt="logo_vicflix" height="35" />
-    </router-link>
-    <template v-if="!responsiveMenu">
-      <NavTab v-for="navLink of navLinksFiltered" :key="navLink.label" :data="navLink" />
-    </template>
-    <div v-else>
-      <Popup :outside="true" :width="200">
-        <div slot="popup" class="flex column w100">
-          <NavTab
-            v-for="navLink of navLinksFiltered"
-            :key="navLink.label"
-            :data="navLink"
-            :list="true"
-          />
-        </div>
-        <span slot="button">
-          <SvgIcon src="icons/actions/menu.svg" :size="30" color="white" />
-        </span>
-      </Popup>
-    </div>
+  <nav class="flex flex-row justify-center h-full">
+    <NavTab v-for="navLink of routes" :key="navLink.label" :route="navLink" />
   </nav>
 </template>
 
-
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import NavTab from './NavTab.vue';
+import { Component, Vue, Ref, Prop } from 'nuxt-property-decorator';
+import { AuthModule } from '@store';
 import { NavLink } from '@models';
-import { routesNames } from '@router';
+import NavTab from './NavTab.vue';
 
 @Component({ components: { NavTab } })
 export default class NavBar extends Vue {
-  private responsiveMenu = false;
-  private navWidth: number = null;
-  public $refs: {
-    nav: HTMLElement;
-  };
-
-  private navLinks: NavLink[] = [
-    {
-      label: 'Home',
-      link: {
-        name: routesNames.BROWSE,
-      },
-    },
-    {
-      label: 'About me',
-      link: {
-        name: routesNames.ABOUT,
-      },
-    },
-    {
-      label: 'Projects',
-      link: {
-        name: routesNames.PROJECTS,
-      },
-    },
-    {
-      label: 'Skills',
-      link: {
-        name: routesNames.SKILLS,
-      },
-    },
-    {
-      label: 'Experience',
-      link: {
-        name: routesNames.EXPERIENCE,
-      },
-    },
-  ];
-
-  get navLinksFiltered() {
-    return this.navLinks.filter(f => {
-      if (f.condition == null) return true;
-      else return f.condition;
-    });
-  }
-
-  checkResponsive() {
-    if (this.$refs.nav) {
-      if (!this.responsiveMenu) {
-        if (this.$refs.nav.scrollWidth > this.$refs.nav.clientWidth || window.innerWidth < 480) {
-          this.navWidth = this.$refs.nav.scrollWidth;
-          this.responsiveMenu = true;
-        }
-      } else if (this.$refs.nav.clientWidth >= this.navWidth) {
-        this.responsiveMenu = false;
-      }
-    }
-  }
-
-  mounted() {
-    this.checkResponsive();
-  }
-
-  created() {
-    window.addEventListener('resize', this.checkResponsive);
-  }
+  @Prop() routes!: NavLink[];
+  @Ref() readonly nav!: HTMLElement;
 }
 </script>
-
-
-
-<style lang="scss" scoped>
-.logo {
-  margin-right: 20px;
-}
-nav {
-  display: flex;
-  position: relative;
-  flex-flow: row nowrap;
-  padding: 0 30px 0 30px;
-  justify-content: flex-start;
-  align-items: center;
-  flex: 1 1 auto;
-  overflow-x: hidden;
-
-  &.responsive {
-    padding: 0 10px 0 10px;
-    justify-content: flex-start;
-  }
-}
-</style>

@@ -1,92 +1,73 @@
 <template>
-  <router-link
-    :to="data.link"
-    :exact="data.exact"
-    class="link flex"
-    :class="{ list, button: !list }"
-  >
-    <SvgIcon class="icon" v-if="data.icon" :src="data.icon" :size="20" :color="getColor" />
-    <span>{{ data.label }}</span>
-  </router-link>
+  <div class="NavTab / flex h-full mx-2">
+    <nuxt-link :to="route.link" :exact="route.exact" class="NavLink / flex h-full">
+      <SvgIcon v-if="route.icon" :src="route.icon" :size="22" class="Icon" />
+      <span class="md:hidden ml-1">{{ route.label }}</span>
+    </nuxt-link>
+  </div>
 </template>
 
-
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'nuxt-property-decorator';
 import { NavLink } from '@models';
 
 @Component
 export default class NavTab extends Vue {
-  @Prop() data: NavLink;
-  @Prop() list: boolean;
-
-  get getColor() {
-    let active = false;
-    if (this.data.exact) {
-      active = this.$route.path === this.data.link;
-    } else {
-      active = this.$route.matched.some(s => {
-        return s.path === this.data.link;
-      });
-    }
-    if (active) return 'text';
-    else return 'white';
-  }
+  @Prop() route!: NavLink;
+  @Prop() list!: boolean;
+  @Prop() responsive!: boolean;
 }
 </script>
 
+<style lang="postcss" scoped>
+@keyframes navHover {
+  from {
+    width: 0;
+    left: 50%;
+  }
+  to {
+    width: 100%;
+    left: 0;
+  }
+}
 
-
-<style lang="scss" scoped>
-a.link {
+a.NavLink {
   align-items: center;
   justify-content: center;
-  color: $w245;
-  height: 35px;
-  padding: 8px 3px 8px 3px;
-  margin: 0 10px 0 10px;
-  font-size: 14px;
+  color: var(--text10);
+  height: 100%;
+  padding: 8px 10px;
+  font-size: 16px;
+  font-weight: bold;
   flex: 0 0 auto;
-  transition: opacity 0.3s;
+  border-radius: 5px;
+  transition: color 0.1s ease-in-out;
 
-  span {
-    transition: transform 0.2s, font-weight 0.3s;
+  &::after {
+    content: '';
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    bottom: 0;
+    border-radius: 1px;
+    transition: background-color 0.2s ease-in-out;
   }
-
-  &:hover:not(.router-link-active) {
-    opacity: 0.8;
-  }
-
-  .icon {
-    margin-right: 5px;
-  }
-
-  &.button {
-    span {
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-    }
-    &.router-link-active {
-      span {
-        transform: scale(1.1);
-        color: white;
-        font-weight: bold;
-        cursor: default;
-      }
+  &.nuxt-link-active {
+    border-radius: 5px;
+    color: var(--text1);
+    &:after {
+      display: block;
+      background-color: var(--text1);
+      animation: navHover 0.3s;
     }
   }
-
-  &.list {
-    padding: 0;
-    margin: 0;
-    border-radius: 0;
-    height: 40px;
-
-    &:not(:last-child) {
-      // border-bottom: 1px solid $w230;
-    }
-    &.router-link-active {
-      font-weight: bold;
-      color: $primary;
+  &:hover:not(.nuxt-link-active) {
+    color: var(--text1);
+    &:after {
+      display: block;
+      background-color: var(--text1);
+      animation: navHover 0.3s;
     }
   }
 }

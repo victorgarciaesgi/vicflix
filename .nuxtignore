@@ -1,0 +1,2 @@
+src/pages/**/-*.vue
+src/store/modules/**/*

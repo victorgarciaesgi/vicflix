@@ -1,258 +1,137 @@
+import { RawLocation } from 'vue-router';
+import { nanoid } from 'nanoid';
+import { ObjectLiteral, IReadOnlyObject, ButtonTheme } from '@models';
 import { AlertsModule } from '@store';
-import { Forms } from './Form.constructor';
-import { oc } from 'ts-optchain';
 
-export namespace AlertsElement {
-  type AlertType = 'success' | 'confirm' | 'warning' | 'error' | 'info' | 'form';
-  type formParam = {
-    form: Forms.Form<any>;
-    validations?: {
-      [x: string]: any;
-    };
-    submit: {
-      params?: { [x: string]: any };
-      trigger: (...args: any[]) => void;
-    };
-  };
+// export type PartialForm<F> = { [K in keyof F]?: F[K] extends Object ? string : F[K] };
 
-  export class Alert {
-    public type: AlertType;
-    public title: string;
-    public message?: string;
-    public strict?: boolean;
-    public actions: ActionsElements.Action[];
-    public formElement?: formParam;
-    public onClose?: Array<() => void>;
+export namespace Alerts {
+  type ActionType = 'confirm' | 'cancel' | 'link' | 'action';
 
-    constructor({
-      actions,
-      ...fields
-    }: {
-      type: AlertType;
-      title: string;
-      message?: string;
-      strict?: boolean;
-      actions: ActionsElements.Action[];
-      formElement?: formParam;
-      onClose?: Array<() => void>;
-    }) {
-      const filteredActions = actions.filter(f => !!f);
-      Object.assign(this, {
-        ...fields,
-        actions: filteredActions,
-      });
-      AlertsModule.actions.addAlert(this);
-    }
-
-    public async waitResponse() {
-      return AlertsModule.actions.addAlert(this);
-    }
+  interface ActionPayload {
+    type?: ActionType;
+    text?: string;
+    handler?: (...args: any[]) => any;
+    to?: RawLocation;
+    theme?: ButtonTheme;
   }
 
-  export class ConfirmAlert extends Alert {
-    constructor(fields?: {
-      title: string;
-      message?: string;
-      strict?: boolean;
-      actions?: ActionsElements.Action[];
-      onClose?: Array<() => void>;
-    }) {
-      const actions = fields.actions.filter(f => !!f) || [];
-      const confirmAction =
-        actions && actions.find(m => m.type === 'confirm')
-          ? undefined
-          : new ActionsElements.ConfirmAction({});
-      const cancelAction =
-        actions && actions.find(m => m.type === 'cancel')
-          ? undefined
-          : new ActionsElements.CancelAction();
-      super({
-        title: fields.title,
-        type: 'confirm',
-        strict: fields.strict,
-        message: fields.message,
-        onClose: fields.onClose,
-        actions: [...actions, confirmAction, cancelAction],
-      });
-    }
-  }
-
-  export class WarningAlert extends Alert {
-    constructor(fields?: {
-      title: string;
-      message?: string;
-      strict?: boolean;
-      actions?: ActionsElements.Action[];
-      onClose?: Array<() => void>;
-    }) {
-      const actions = fields.actions.filter(f => !!f) || [];
-
-      const confirmAction =
-        actions && actions.find(m => m.type === 'confirm')
-          ? undefined
-          : new ActionsElements.ConfirmAction({});
-      super({
-        title: fields.title,
-        type: 'warning',
-        strict: fields.strict,
-        message: fields.message,
-        onClose: fields.onClose,
-        actions: [...actions, confirmAction],
-      });
-    }
-  }
-
-  export class SuccessAlert extends Alert {
-    constructor(fields?: {
-      title: string;
-      message?: string;
-      strict?: boolean;
-      actions?: ActionsElements.Action[];
-      onClose?: Array<() => void>;
-    }) {
-      const actions = fields.actions.filter(f => !!f) || [];
-      const confirmAction =
-        actions && actions.find(m => m.type === 'confirm')
-          ? undefined
-          : new ActionsElements.ConfirmAction({});
-      super({
-        title: fields.title || 'Opération réussie',
-        type: 'success',
-        strict: fields.strict,
-        message: fields.message,
-        onClose: fields.onClose,
-        actions: [...actions, confirmAction],
-      });
-    }
-  }
-
-  export class ErrorAlert extends Alert {
-    constructor(fields?: {
-      title: string;
-      message?: string;
-      strict?: boolean;
-      actions?: ActionsElements.Action[];
-      onClose?: Array<() => void>;
-    }) {
-      const actions = fields.actions.filter(f => !!f) || [];
-      const confirmAction =
-        actions && actions.find(m => m.type === 'confirm')
-          ? undefined
-          : new ActionsElements.ConfirmAction({ text: 'Fermer' });
-      super({
-        title: fields.title || `Erreur de l'opération`,
-        type: 'error',
-        strict: fields.strict,
-        message: fields.message,
-        onClose: fields.onClose,
-        actions: [...actions, confirmAction],
-      });
-    }
-  }
-
-  export class FormAlert extends Alert {
-    constructor(fields?: {
-      title: string;
-      message?: string;
-      strict?: boolean;
-      formElement: formParam;
-      onClose?: Array<() => void>;
-    }) {
-      const confirmAction = new ActionsElements.ConfirmAction({
-        text: 'Valider',
-        triggers: [
-          () =>
-            fields.formElement.submit.trigger({
-              form: fields.formElement.form.getValues(),
-              ...fields.formElement.submit.params,
-            }),
-        ],
-      });
-
-      super({
-        title: fields.title || '',
-        type: 'form',
-        strict: fields.strict,
-        formElement: fields.formElement,
-        message: fields.message,
-        onClose: fields.onClose,
-        actions: [confirmAction, new ActionsElements.CancelAction()],
-      });
-    }
-  }
-}
-
-type ActionType = 'confirm' | 'action' | 'cancel' | 'link';
-
-interface ActionPayload {
-  type?: ActionType;
-  text: string;
-  to?: { path: string } | { name: string; params?: { [x: string]: any } };
-  trigger?: () => void;
-  triggers?: Array<() => void>;
-}
-
-export namespace ActionsElements {
   export class Action {
+    public id: string;
     public type: ActionType;
-    public text: string;
-    public to?: { path: string } | { name: string; params?: { [x: string]: any } };
-    public trigger?: () => void;
-    public triggers?: Array<() => void>;
-    public submitting?: boolean = false;
+    public text?: string;
+    public to?: RawLocation;
+    public handler!: (id: string) => any;
+    public theme?: ButtonTheme;
 
-    constructor({ type = 'action', text, trigger, triggers, to }: ActionPayload) {
-      this.text = text;
+    constructor({ type = 'action', handler, ...fields }: ActionPayload) {
       this.type = type;
-      this.trigger = trigger;
-      this.triggers = triggers ? triggers.filter(f => !!f) : null;
-      this.to = to;
+      this.text = fields.text;
+      this.theme = fields.theme;
+      this.to = fields.to;
+      this.id = nanoid(6);
+      this.handler = async (id) => {
+        if (handler && typeof handler === 'function') {
+          await handler();
+        }
+        AlertsModule.actions.deleteAlert(id);
+      };
     }
   }
 
   export class ConfirmAction extends Action {
-    constructor({ text, triggers }: { text?: string; triggers?: Array<() => void> }) {
-      super({
-        text: text || 'Valider',
-        type: 'confirm',
-      });
-      if (triggers) {
-        this.triggers = [...triggers, AlertsModule.mutations.confirmAlert];
-      } else {
-        this.trigger = this.trigger = AlertsModule.mutations.confirmAlert;
-      }
-    }
-  }
-
-  export class LinkAction extends Action {
-    constructor({
-      text,
-      to,
-    }: {
-      text: string;
-      to: { path: string } | { name: string; params?: { [x: string]: any } };
-    }) {
-      super({
-        text,
-        to,
-        type: 'link',
-      });
+    constructor({ type = 'confirm', text = 'Confirmer', ...fields }: ActionPayload) {
+      super({ type, text, ...fields });
     }
   }
 
   export class CancelAction extends Action {
-    constructor(data?: { text: string }) {
+    constructor({ type = 'cancel', text = 'Annuler', ...fields }: ActionPayload) {
+      super({ type, text, ...fields });
+    }
+  }
+
+  export class LinkAction extends Action {
+    constructor({ type = 'link', ...fields }: ActionPayload) {
+      super({ type, ...fields });
+    }
+  }
+
+  type AlertType = 'success' | 'confirm' | 'warning' | 'error' | 'info' | 'form';
+  export interface FormPayload<T = ObjectLiteral, P = ObjectLiteral> {
+    form: T;
+    params: P;
+  }
+
+  export interface AlertPayload<T, E = any, P extends IReadOnlyObject = IReadOnlyObject> {
+    [x: string]: any;
+    type?: AlertType;
+    title?: string;
+    description?: string;
+    strict?: boolean;
+    actions?: Action[];
+    onClose?: () => void;
+  }
+
+  export class Alert<T = ObjectLiteral, E = any, P extends IReadOnlyObject = IReadOnlyObject> {
+    public id!: string;
+    public type?: AlertType;
+    public title: string;
+    public description?: string;
+    public strict?: boolean;
+    public actions?: Action[];
+    public onClose?: () => void;
+
+    constructor({ actions, ...fields }: AlertPayload<T, E, P>) {
+      this.id = nanoid(6);
+      const filteredActions = actions?.filter((f) => !!f);
+      this.actions = filteredActions;
+      this.description = fields.description;
+      this.strict = fields.strict;
+      this.title = fields.title || 'OK';
+      this.type = fields.type;
+      this.onClose = fields.onClose;
+      AlertsModule.actions.createAlert(this as Alert);
+    }
+  }
+
+  export class ConfirmAlert<
+    T = ObjectLiteral,
+    E = never,
+    P extends IReadOnlyObject = IReadOnlyObject
+  > extends Alert<T, E, P> {
+    constructor(fields?: AlertPayload<T, E, P>) {
+      let actions: Action[] = [];
+      if (fields?.actions) actions = fields.actions?.filter((f) => !!f);
+
       super({
-        text: oc(data).text() || 'Annuler',
-        type: 'cancel',
-        trigger: AlertsModule.mutations.cancelAlert,
+        title: fields?.title,
+        type: 'confirm',
+        strict: fields?.strict,
+        description: fields?.description,
+        onClose: fields?.onClose,
+        actions: [...actions, new CancelAction({})],
       });
     }
   }
 
-  export const triggers = {
-    close() {
-      return AlertsModule.mutations.hideAlert();
-    },
-  };
+  export class SuccessALert<
+    T = ObjectLiteral,
+    E = never,
+    P extends IReadOnlyObject = IReadOnlyObject
+  > extends Alert<T, E, P> {
+    constructor(fields?: AlertPayload<T, E, P>) {
+      let actions: Action[] = [];
+      if (fields?.actions) actions = fields.actions?.filter((f) => !!f) || [];
+
+      super({
+        title: fields?.title,
+        type: 'success',
+        strict: fields?.strict,
+        description: fields?.description,
+        onClose: fields?.onClose,
+        actions: [...actions, new ConfirmAction({})],
+      });
+    }
+  }
 }

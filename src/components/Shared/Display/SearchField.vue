@@ -1,66 +1,73 @@
 <template>
-  <div class="search-wrapper flex" :class="[size]">
-    <img src="~@icons/actions/search.svg" />
+  <div :class="[size, { 'w-full': full }]" class="search-wrapper flex">
+    <SvgIcon :size="getIconSize" class="img" src="icons/actions/search.svg" />
     <input
-      type="text"
       :value="value"
-      @input="handleResearch($event.target.value)"
       :placeholder="placeholder"
+      type="text"
+      @input="handleResearch($event.target.value)"
+      @keydown.down.up.prevent.stop="$emit('update-result', $event)"
+      @keydown.esc.prevent="$emit('echap', $event)"
+      @keydown.enter.prevent="$emit('enter', $event)"
     />
-    <SvgIcon class="icon" v-if="loading" src="images/loading_blue.svg" :size="20" key="loading" />
+    <Spinner v-if="loading" :size="getIconSize" class="icon" />
     <SvgIcon
       v-else-if="value.length"
-      class="icon"
-      src="icons/cancel.svg"
-      :size="20"
-      :pointer="true"
-      @click="$emit('clear')"
       key="cancel"
+      :size="size === 'big' ? 20 : 16"
+      :pointer="true"
+      class="icon"
+      color="var(--text2)"
+      src="icons/actions/cancel.svg"
+      @click="$emit('input', '')"
     />
   </div>
 </template>
 
-
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'nuxt-property-decorator';
 import debounce from 'lodash/debounce';
 
 @Component
 export default class SearchField extends Vue {
-  @Prop() value: string;
-  @Prop() loading: boolean;
-  @Prop({ default: 300 }) debounce: number;
-  @Prop({ default: 1 }) offset: number;
-  @Prop({ default: 'Recherche...' }) placeholder: string;
-  @Prop({ default: 'normal' }) size: 'normal' | 'big';
+  @Prop({ default: '' }) value!: string;
+  @Prop() loading!: boolean;
+  @Prop({ default: 300 }) debounce!: number;
+  @Prop({ default: 1 }) offset!: number;
+  @Prop({ default: 'Recherche...' }) placeholder!: string;
+  @Prop({ default: 'normal' }) size!: 'normal' | 'big';
+  @Prop() full?: boolean;
 
-  private handleResearch = null;
+  handleResearch = debounce((value) => {
+    if (value.length > this.offset) {
+      this.$emit('input', value);
+    } else if (value.length === 0) {
+      this.$emit('input', '');
+      this.$emit('clear');
+    }
+  }, this.debounce);
 
-  created() {
-    this.handleResearch = debounce(value => {
-      if (value.length > this.offset) {
-        this.$emit('input', value);
-      } else if (value.length === 0) {
-        this.$emit('clear');
-      }
-    }, this.debounce);
+  get getIconSize() {
+    if (this.size === 'normal') {
+      return 16;
+    } else {
+      return 18;
+    }
   }
 }
 </script>
 
-
-
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
 div.search-wrapper {
   flex-flow: row nowrap;
   padding: 6px 5px 6px 5px;
-  border-radius: 4px;
-  background-color: $w240;
-  color: $g60;
+  border-radius: 5px;
+  background-color: var(--bg3);
+  align-items: center;
+  color: var(--text);
+  max-width: 100%;
 
-  img {
-    width: 18px;
-    height: 18px;
+  .img {
     flex: 0 0 auto;
     margin-right: 5px;
   }
@@ -76,6 +83,10 @@ div.search-wrapper {
     font-size: 14px;
   }
 
+  &.full {
+    width: 100%;
+  }
+
   .icon {
     position: absolute;
     right: 5px;
@@ -84,14 +95,15 @@ div.search-wrapper {
   }
 
   &.big {
-    img {
-      width: 22px;
-      height: 22px;
-    }
+    width: 250px;
 
     input {
       height: 26px;
       line-height: 26px;
+    }
+
+    .img {
+      margin: 0 5px;
     }
   }
 }

@@ -7,5 +7,5 @@ export interface IProgressState {
   color: string;
   failedColor: string;
   loaderColor: string;
-  type: 'progress' | 'loader';
+  type: 'progress' | 'loader' | null;
 }

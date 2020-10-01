@@ -1,0 +1,4 @@
+dist
+.nuxt
+node_modules
+scripts

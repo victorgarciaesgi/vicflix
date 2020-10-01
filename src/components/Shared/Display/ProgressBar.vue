@@ -2,7 +2,6 @@
   <div v-if="type === 'progress'">
     <transition name="fade">
       <div
-        class="progress"
         v-if="progressState.show"
         :style="{
           width: progressState.percent + '%',
@@ -11,23 +10,24 @@
             ? progressState.color
             : progressState.failedColor,
         }"
+        class="progress"
       ></div>
     </transition>
   </div>
   <div v-else>
-    <transition name="fade">
-      <div class="loader-wrapper flex" v-if="progressState.show">
-        <Spinner class="spinner" :size="70" />
+    <transition name="page">
+      <div v-if="progressState.show" class="loader-wrapper flex">
+        <Spinner :size="50" class="spinner" color="mint" />
         <span>Recupération des données</span>
         <div class="bar">
           <div
-            class="loader"
             :style="{
               width: progressState.percent + '%',
               backgroundColor: progressState.canSuccess
                 ? progressState.loaderColor
                 : progressState.failedColor,
             }"
+            class="loader"
           ></div>
         </div>
       </div>
@@ -35,8 +35,8 @@
   </div>
 </template>
 
-<script lang='ts'>
-import { Vue, Component } from 'vue-property-decorator';
+<script lang="ts">
+import { Vue, Component } from 'nuxt-property-decorator';
 import { ProgressBarModule } from '@store';
 import Spinner from './Spinner.vue';
 
@@ -56,7 +56,7 @@ export default class ProgressBar extends Vue {
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang="postcss" scoped>
 .progress {
   position: fixed;
   top: 0px;
@@ -73,7 +73,7 @@ div.loader-wrapper {
   z-index: 999999;
   height: 100%;
   width: 100%;
-  background-color: white;
+  background-color: var(--bg1);
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
@@ -85,14 +85,14 @@ div.loader-wrapper {
   }
 
   span {
-    color: $primary;
+    color: var(--blue);
     font-weight: bold;
     font-size: 20px;
     margin-bottom: 10px;
   }
 
   div.bar {
-    background-color: $w230;
+    background-color: var(--bg3);
     border-radius: 4px;
     height: 6px;
     position: relative;

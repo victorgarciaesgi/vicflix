@@ -1,38 +1,45 @@
 <template>
-  <div class="message flex column">
-    <div v-if="title" class="title ellipsis">{{ title }}</div>
-    <div class="content">
+  <div class="Info / flex flex-row items-center justify-center my-1">
+    <div :class="[type]" class="Bubble / px-4 py-2 text-xs text-center rounded-full">
       <slot />
     </div>
   </div>
 </template>
 
-
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'nuxt-property-decorator';
+import Colors from '@colors';
 
 @Component
 export default class InfoMessage extends Vue {
-  @Prop({ default: 'info' }) type: 'info' | 'error' | 'success';
-  @Prop() title: string;
+  @Prop({ default: 'info' }) type!: 'info' | 'warning' | 'error' | 'success';
+  @Prop({ required: false }) title?: string;
+
+  $refs: {
+    info: HTMLElement;
+  } = this.$refs;
 }
 </script>
 
-
-
-<style lang="scss" scoped>
-div.message {
-  width: 100%;
-  border-radius: 4px;
-  border: 1px solid $red1;
-
-  div.title {
-  }
-
-  div.content {
-    padding: 10px;
-    white-space: pre;
-    font-size: 16px;
+<style lang="postcss" scoped>
+div.Info {
+  div.Bubble {
+    &.error {
+      color: white;
+      background-color: var(--redError);
+    }
+    &.warning {
+      color: white;
+      background-color: var(--orange);
+    }
+    &.success {
+      color: white;
+      background-color: var(--green);
+    }
+    &.info {
+      color: var(--text1);
+      background-color: var(--text1);
+    }
   }
 }
 </style>

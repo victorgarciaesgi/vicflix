@@ -1,21 +1,13 @@
 # Vicflix
 
 <p align="center">
-<img width="100" src="https://github.com/victorgarciaesgi/vicflix/blob/master/src/assets/images/vicflix.png?raw=true" alt="Vicflix">
-
+<img width="100" src="https://vuejs.org/images/logo.png" alt="Vue logo">
+<img width="100" src="https://d33wubrfki0l68.cloudfront.net/ff3666b10124b7c29e14fd20d9c7c11c1908a718/4111c/logos/nuxt.svg" alt="nuxt logo">
+<img width="100" src="https://raw.githubusercontent.com/remojansen/logo.ts/master/ts.png" alt="ts logo">
+<img width="100" src="https://tailwindcss.com/img/tailwind.svg" alt="tailwind logo">
 </p>
 
-- JWT auth
-- Typescript
-- Vuex Types Modules
-- Form components
-- Multiple visual home made components
-- SCSS
-- Dynamic imports
-- Brotli and Gzip builds
-- PWA enabled (6/6) lighthouse score
-
-# Installation
+# Dependencies Installation
 
 ```bash
 yarn
@@ -23,12 +15,8 @@ yarn
 
 # Change API url endpoint
 
-`env.development` -> API_URL constant for development
-`env.production` -> API_URL constant for production
-
-## Config
-
-Webpack config in `vue.config.js`
+- `env.development` -> `NUXT_ENV_API_URL` constant for development
+- `env.production` -> `NUXT_ENV_API_URL` constant for production
 
 # Developpment
 
@@ -36,11 +24,17 @@ Webpack config in `vue.config.js`
 yarn dev
 ```
 
-A page will open on `localhost:{PORT}`
+Endpoint: [localhost:5130](http://localhost:5130)
 
+# Stages and deployments
 
-# Production build
+## Configure build for Stages
+
+- Edit `.env.{stage}` API urls
+- Edit `ecosystem.config.js` stage app port
+
+### Production build
 
 ```bash
-yarn pm2:production
+yarn deploy production
 ```

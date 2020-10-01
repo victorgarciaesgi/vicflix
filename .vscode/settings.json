@@ -1,0 +1,6 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "vetur.experimental.templateInterpolationService": true,
+  "vetur.trace.server": "verbose",
+  "vetur.completion.autoImport": true
+}

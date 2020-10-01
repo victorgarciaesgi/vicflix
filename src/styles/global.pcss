@@ -1,0 +1,164 @@
+:root {
+  --headerHeight: 70px;
+  --navWidth: 230px;
+  color-scheme: dark light;
+}
+
+body[data-theme='dark'] {
+  --bg1: var(--g10);
+  --bg2: var(--g20);
+  --bg3: var(--g30);
+  --bg4: var(--g40);
+  --bg5: var(--g50);
+  --bg6: var(--g60);
+  --bg7: var(--g80);
+  --bg8: var(--g90);
+  --bg9: var(--w100);
+  --bg10: var(--w110);
+  --bg11: var(--w120);
+  --bg12: var(--w130);
+  --text1: white;
+  --text2: var(--w250);
+  --text3: var(--w245);
+  --text4: var(--w240);
+  --text5: var(--w230);
+  --text6: var(--w220);
+  --text7: var(--w210);
+  --text8: var(--w200);
+  --text9: var(--w190);
+  --text10: var(--w170);
+  --text11: var(--w160);
+  --text12: var(--w150);
+  --textLink: var(--rose);
+  --shadow: rgba(255, 255, 255, 0.1);
+}
+
+body[data-theme='light'] {
+  --bg1: white;
+  --bg2: var(--w250);
+  --bg3: var(--w245);
+  --bg4: var(--w240);
+  --bg5: var(--w235);
+  --bg6: var(--w225);
+  --bg7: var(--w215);
+  --bg8: var(--w200);
+  --bg9: var(--w190);
+  --bg10: var(--w170);
+  --bg11: var(--w160);
+  --bg12: var(--w150);
+  --text1: var(--g10);
+  --text2: var(--g20);
+  --text3: var(--g30);
+  --text4: var(--g40);
+  --text5: var(--g50);
+  --text6: var(--g60);
+  --text7: var(--g80);
+  --text8: var(--g90);
+  --text9: var(--w100);
+  --text10: var(--w110);
+  --text11: var(--w120);
+  --text12: var(--w130);
+  --textLink: var(--mint);
+  --shadow: rgba(40, 40, 40, 0.1);
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    --headerHeight: 60px !important;
+  }
+}
+/* // *:not(.no-anim) {
+//   transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+// } */
+
+ul.listOptions {
+  display: flex;
+  max-width: 100%;
+  flex-flow: row wrap;
+  width: 100%;
+  padding-left: 0;
+  margin: 0;
+
+  li {
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 10px 40px 10px 16px;
+    text-align: left;
+    width: 100%;
+    color: var(--text1);
+
+    &:not(.no-hover) {
+      cursor: pointer;
+    }
+
+    &:first-child {
+      padding-top: 14px;
+    }
+    &:last-child {
+      padding-bottom: 14px;
+    }
+
+    &.red {
+      color: var(--red);
+    }
+
+    &:not(.disabled):not(.no-hover):hover {
+      background-color: var(--bg2);
+    }
+
+    &.disabled {
+      cursor: not-allowed;
+      color: var(--text2);
+    }
+  }
+
+  &[small] {
+    li {
+      font-size: 14px;
+    }
+  }
+  &[mini] {
+    li {
+      font-size: 12px;
+      padding: 4px 5px;
+    }
+  }
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.txt-block {
+  max-width: 700px;
+  white-space: initial;
+  display: block;
+}
+
+.--Avatar-Mask {
+  border-radius: 4px;
+  overflow: hidden;
+  outline: none;
+
+  &.active {
+    border-color: var(--blue);
+  }
+
+  &[round] {
+    border-radius: 100%;
+  }
+}
+
+a.link,
+span.link {
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

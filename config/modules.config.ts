@@ -5,14 +5,16 @@ import 'cookie-universal-nuxt';
 const isProd = process.env.NODE_ENV === 'production';
 
 export const modules: NuxtOptionsModule[] = [
+  'nuxt-client-init-module',
   'nuxt-typed-router',
   'cookie-universal-nuxt',
-  // '@nuxtjs/robots',
-  'nuxt-client-init-module',
   'portal-vue/nuxt',
+  'nuxt-i18n',
+  '@nuxtjs/robots',
+  // '~/plugins/custom/iconPaths.generator.ts',
+  // '@nuxtjs/sitemap',
   ...(isProd
     ? ([
-        '@nuxtjs/pwa',
         [
           'nuxt-compress',
           {
@@ -91,7 +93,4 @@ export const modules: NuxtOptionsModule[] = [
         ],
       ] as any)
     : []),
-
-  // '@nuxtjs/sitemap',
-  // '@nuxtjs/component-cache',
 ];

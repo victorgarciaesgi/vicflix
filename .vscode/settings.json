@@ -1,6 +1,44 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
-  "vetur.experimental.templateInterpolationService": true,
   "vetur.trace.server": "verbose",
-  "vetur.completion.autoImport": true
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll": false,
+    "source.organizeImports": false
+  },
+  "typescript.suggest.includeAutomaticOptionalChainCompletions": true,
+  "typescript.check.npmIsInstalled": false,
+  "typescript.suggest.autoImports": true,
+  "typescript.reportStyleChecksAsWarnings": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/*.map": true
+  },
+  "vetur.validation.template": true,
+  "vetur.validation.script": true,
+  "vetur.format.defaultFormatter.html": "prettier",
+  "vetur.experimental.templateInterpolationService": true,
+  "vetur.completion.autoImport": true,
+  "vetur.completion.tagCasing": "initial",
+  "vetur.validation.templateProps": true,
+  "editor.formatOnSave": true,
+  "headwind.runOnSave": true,
+  "headwind.prependCustomClasses": true,
+  "i18n-ally.localesPaths": "src/locales",
+  "i18n-ally.enabledParsers": ["js", "ts"],
+  "i18n-ally.keystyle": "nested",
+  "errorLens.addAnnotationTextPrefixes": true,
+  "errorLens.annotationPrefix": [
+    "ERROR: ",
+    "WARNING: ",
+    "INFO: ℹ️ "
+  ],
+  "errorLens.enabledDiagnosticLevels": [
+    "error",
+    "info"
+  ]
 }

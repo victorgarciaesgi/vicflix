@@ -15,7 +15,8 @@ export interface IToastNotification {
   errorMessage?: any;
   timer?: boolean | number;
   actions?: {
-    handler: () => Promise<void> | void;
+    handler?: () => Promise<void> | void;
+    to?: Location;
     text: string;
   }[];
   namespace?: string;

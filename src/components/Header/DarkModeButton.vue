@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center justify-between">
-    <span>Dark Mode </span>
+    <span>Mode sombre</span>
     <Toggle v-model="value" :darkmode="true" />
   </div>
 </template>
@@ -23,9 +23,9 @@ export default class DarkModeButton extends Vue {
     const theme = value ? 'dark' : 'light';
     DarkModeModule.actions.setTheme(theme);
     localStorage.setItem('displayMode', theme);
-    DarkModeModule.helpers.updateState({
+    DarkModeModule.updateState(() => ({
       autoTheme: false,
-    });
+    }));
     localStorage.setItem('autoTheme', 'false');
   }
 }

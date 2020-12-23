@@ -6,6 +6,7 @@ export enum ButtonSizes {
 }
 
 export enum ButtonTheme {
+  'Primary' = 'primary',
   'Blue' = 'blue',
   'Red' = 'red',
   'Default' = 'default',
@@ -17,7 +18,7 @@ export enum ButtonTheme {
 
 export enum ButtonType {
   'Submit' = 'submit',
-  'Button' = 'Button',
+  'Button' = 'button',
 }
 
 export enum ButtonEffect {

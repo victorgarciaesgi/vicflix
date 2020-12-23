@@ -1,7 +1,6 @@
 import { RawLocation, Location } from 'vue-router';
 // import { PageInfo } from './__generated';
 import { Validation } from 'vuelidate';
-import { TypedRawLocation } from 'nuxt-typed-router/types/vue';
 import { ValidationRule } from 'vuelidate/lib/validators';
 
 // Temporary
@@ -15,6 +14,8 @@ export type ObjectLiteral<TKey extends string | number | symbol = string, TValue
   TKey,
   TValue
 >;
+
+export type Maybe<T> = T | null;
 
 export type IsValidArg<T> = T extends ObjectLiteral ? (keyof T extends never ? false : true) : true;
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -30,8 +31,11 @@ export interface Dictionary<T> {
 }
 
 // Vuelidate
+
+export type ValidationRoot<T = any> = ValidationProperties<T> & ValidationGroups & Validation;
+
 export type ValidationProperties<V> = {
-  [P in Exclude<keyof V, '$v'>]?: Validation & ValidationProperties<V[P]> & Record<string, number>;
+  [P in Exclude<keyof V, '$v'>]?: Validation | ValidationProperties<V[P]> | Record<string, number>;
 };
 
 export interface ValidationGroups {
@@ -56,8 +60,6 @@ type AsyncDecl = (...args: any[]) => boolean | Promise<boolean>;
 type NestedDecl = RuleDecl;
 type DynamicDecl = () => RuleDecl;
 
-export type ValidationRoot<T = any> = ValidationProperties<T> & ValidationGroups & Validation;
-
 //
 
 export interface NavLink {
@@ -74,11 +76,12 @@ export interface IConnectionPayload<T = any, V = any> {
   page: number;
   limit?: number;
 }
+
 export interface IReadOnlyObject {
   readonly [x: string]: any;
 }
 
-export type IConstant<T extends string | number> = {
+export type IConstant<T extends string> = {
   [key in T]: string;
 };
 

@@ -2,45 +2,34 @@
   <div id="app" class="flex">
     <ToastContainer />
     <AlertsContainer />
-    <portal-target multiple style="z-index: 20000" class="fixed top-0 left-0" name="Popup-Outlet" />
+    <HeaderComponent />
+    <PortalTarget multiple style="z-index: 11000" class="fixed top-0 left-0" name="Popup-Outlet" />
+    <PortalTarget multiple style="z-index: 10500" class="fixed top-0 left-0" name="Modal-Outlet" />
+
     <div id="rootView">
       <Nuxt />
     </div>
+    <ProfileSelect v-if="showProfilePicker" />
   </div>
 </template>
 
 <script lang="ts">
-import { Store } from 'vuex';
 import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator';
-import { EventBus, Events } from '@services';
-import { AlertsContainer, ProgressBar, ToastContainer } from '@components';
-import { AlertsModule, AuthModule, DarkModeModule, DisplayTheme, ToastModule } from '@store';
-import { SuccessToast } from '@constructors';
-import { IToastNotificationType } from '@models';
+import { AlertsContainer, ToastContainer, HeaderComponent, ProfileSelect } from '@components';
+import { AuthModule, DarkModeModule, DisplayTheme, RouterModule } from '@store';
 
 @Component({
   components: {
     AlertsContainer,
-    ProgressBar,
     ToastContainer,
+    HeaderComponent,
+    ProfileSelect,
   },
 })
 export default class App extends Vue {
-  get isVisible() {
-    return !AuthModule.state.hideHeader;
+  get showProfilePicker() {
+    return AuthModule.state.showProfilePicker;
   }
-
-  @Watch('isVisible', { immediate: true })
-  headerChanged(value) {
-    if (process.browser) {
-      if (value) {
-        document.documentElement.style.setProperty('--headerHeight', '70px');
-      } else {
-        document.documentElement.style.setProperty('--headerHeight', '0px');
-      }
-    }
-  }
-
   created() {
     if (process.browser) {
       const storedPreference = localStorage.getItem('displayMode');
@@ -50,10 +39,9 @@ export default class App extends Vue {
       } else if (storedPreference) {
         DarkModeModule.actions.setTheme(storedPreference as DisplayTheme);
       } else {
-        DarkModeModule.actions.setTheme('light');
+        DarkModeModule.actions.setTheme('dark');
       }
     }
-
     if (process.browser) {
       document.addEventListener('touchstart', (e) => {}, { passive: true });
       document.addEventListener('touchmove', (e) => {}, { passive: true });
@@ -75,6 +63,7 @@ div#app {
     max-width: 100%;
     flex: 1;
     display: flex;
+    padding-top: var(--headerHeight);
   }
 }
 </style>

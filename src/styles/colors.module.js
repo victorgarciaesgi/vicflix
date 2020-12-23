@@ -1,14 +1,16 @@
 module.exports = {
-  green: '#20b063',
-  green2: 'rgba(170, 195, 198, 1);',
+  grey: '#7a7a7a',
 
-  red: '#E50914',
+  green: '#2f8975',
+  green2: '#aac3c6',
+
+  red: '#ff6565',
+  red2: '#fa8787',
   redError: '#da4453',
 
-  blue: '#27a0d6',
-  blue2: 'rgba(0, 120, 163, 1)',
-
-  grey: 'rgb(35, 35, 35)',
+  blue: '#0079af',
+  blue2: '#0078a3',
+  blue3: '#97b0c4',
 
   yellow: '#ffce54',
   yellow2: '#f6bb42',
@@ -16,7 +18,7 @@ module.exports = {
   orange: '#fc6e51',
   orange2: '#e9573f',
 
-  w255: 'rgb(255, 255, 255)',
+  white: 'rgb(255, 255, 255)',
   w250: 'rgb(250, 250, 250)',
   w245: 'rgb(245, 245, 245)',
   w240: 'rgb(240, 240, 240)',
@@ -46,7 +48,7 @@ module.exports = {
   g30: 'rgb(30, 30, 30)',
   g20: 'rgb(20, 20, 20)',
   g10: 'rgb(10, 10, 10)',
-  g0: 'rgb(0, 0, 0)',
+  black: 'rgb(0, 0, 0)',
 
   bg1: 'var(--bg1)',
   bg2: 'var(--bg2)',

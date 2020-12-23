@@ -1,0 +1,37 @@
+import { ObjectLiteral } from '@models';
+
+export const defaultMessagesList = (params: ObjectLiteral) => ({
+  required: 'Ce champs est requis',
+  email: "L'adresse mail doit être valide",
+  minLength: `${params.minLength ? params.minLength.min : ''} caractères minimum`,
+  maxLength: `${params.maxLength ? params.maxLength.max : ''} caractères maximum`,
+  minValue: `La valeur doit être supérieur à ${params.minValue ? params.minValue.min : ''}`,
+  maxValue: `La valeur doit être inférieure à ${params.maxValue ? params.maxValue.max : ''}`,
+  sameAs: 'Les mots de passe doivent être identiques',
+  isMailUnique: 'Cet email est déjà utilisé',
+  siretValidator: "Ce siret n'est pas valide",
+  isLicenceTitleAvailable: 'Ce titre de licence est déjà utilisé',
+  phone: 'Le numéro de téléphone doit être valide',
+  numeric: 'Ce champs doit être un nombre entier',
+  decimal: 'Ce champs doit être un nombre décimal',
+  price: 'Ce champs doit être un prix valide',
+  minPrice: `Le prix doit être de minimum${params.minPrice?.value} €`,
+  isCguChecked: 'Les CGU doivent être acceptées',
+  date: 'La date doit être valide',
+  minTagSize: 'Il faut au moins un tag',
+  isDateAfter: 'La date de fin doit être supérieure à la date de début',
+  isDateAfterToday: 'La date ne peut pas être dans le passé',
+  isDateBeforeToday: "La date doit être avant aujourd'hui",
+  time: `L'heure doit être valide`,
+  file: 'Vous devez importer un fichier',
+  isTimeAfter: "L'heure de fin doit être supérieure à l'heure de début",
+  userExists: "Ce client n'éxiste pas",
+  iban: 'Veuillez préciser un iban valide',
+  minSize: `${params.minValue ? params.minValue.min : ''} éléments minimum`,
+  maxSize: `${params.maxValue ? params.maxValue.max : ''} éléments maximum`,
+  minSessions: 'Vous devez mettre au moins une session',
+  link: 'Ce champs doit être un lien',
+  isPasswordValid: 'Le mot de passe doit comporter au moins une majuscule et un chiffre',
+});
+
+export type AvailableValidationsMessages = ReturnType<typeof defaultMessagesList>;

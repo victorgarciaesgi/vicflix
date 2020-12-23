@@ -1,12 +1,9 @@
+import { routerPagesNames } from '@models';
 import { Middleware } from '@nuxt/types';
 import { AuthModule } from '@store';
 
-const auth: Middleware = async ({ redirect, route }) => {
+export const authMiddleware: Middleware = async ({ redirect, route }) => {
   if (!AuthModule.state.loggedIn) {
-    redirect(`/login?nextRoute=${route.fullPath}`);
-  } else {
-    // await AuthModule.actions.reloadInfos();
+    AuthModule.updateState({ showProfilePicker: true });
   }
 };
-
-export default auth;

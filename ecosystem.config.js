@@ -1,19 +1,17 @@
 const PROJECT = 'vicflix';
-const isSpa = false;
-const ENVS = ['production'];
+const ENVS = ['dev', 'production'];
 
 module.exports = {
   apps: [
     ...ENVS.map((env) => ({
       name: `${PROJECT}-${env}`,
       exec_mode: 'cluster',
+      error_file: `~/logs/${PROJECT}-${env}-error.log`,
+      out_file: `~/logs/${PROJECT}-${env}-out.log`,
       instances: '2',
       ignore_watch: ['.git', 'dist', '.nuxt', 'scripts'],
-      ...(isSpa && { script: './scripts/production.server.js' }),
-      ...(!isSpa && {
-        script: './node_modules/nuxt/bin/nuxt.js',
-        args: `start --spa --port=${process.env.NUXT_ENV_PORT}`,
-      }),
+      script: './node_modules/.bin/nuxt-ts',
+      args: `start --modern -c ./nuxt.config.ts`,
       env: {
         NUXT_ENV_STAGE: process.env.NUXT_ENV_STAGE,
         NODE_ENV: 'production',

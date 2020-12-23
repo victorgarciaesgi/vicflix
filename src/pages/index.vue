@@ -1,16 +1,13 @@
+<template>
+  <NuxtChild />
+</template>
+
 <script lang="ts">
+import { authMiddleware } from '@middleware';
 import { Component, Vue } from 'nuxt-property-decorator';
-import { AuthModule } from '@store';
-import { routerPagesNames } from '../models';
 
 @Component({
-  middleware: ({ redirect }) => {
-    // if (AuthModule.state.loggedIn) {
-    //   redirect({ name: routerPagesNames.admin.index });
-    // } else {
-    //   redirect({ name: routerPagesNames.login });
-    // }
-  },
+  middleware: authMiddleware,
 })
-export default class Index extends Vue {}
+export default class IndexRoot extends Vue {}
 </script>

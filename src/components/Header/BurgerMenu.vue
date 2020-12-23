@@ -50,7 +50,7 @@ export default class BurgerMenu extends Vue {
   }
 
   disconnect() {
-    AuthModule.actions.disconnect();
+    AuthModule.actions.disconnectUser();
   }
 
   get routePath() {
@@ -62,16 +62,16 @@ export default class BurgerMenu extends Vue {
     this.$emit('close');
   }
 
-  @Watch('show')
-  stateChanged(value: boolean) {
-    if (AuthModule.state.authChecked) {
-      window.requestAnimationFrame(async () => {
-        await this.$nextTick();
-      });
-      if (value) document.body.style.setProperty('overflow-y', 'hidden');
-      else document.body.style.setProperty('overflow-y', 'auto');
-    }
-  }
+  // @Watch('show')
+  // stateChanged(value: boolean) {
+  //   if (AuthModule.state.authChecked) {
+  //     window.requestAnimationFrame(async () => {
+  //       await this.$nextTick();
+  //     });
+  //     if (value) document.body.style.setProperty('overflow-y', 'hidden');
+  //     else document.body.style.setProperty('overflow-y', 'auto');
+  //   }
+  // }
 }
 </script>
 

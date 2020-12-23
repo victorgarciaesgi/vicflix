@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-row items-center justify-between">
     <Popin mode="hover" :width="200">
-      <template #popup>
+      <template #content>
         <span class="px-2 py-2 text-sm"
-          >L'application basera le dark/light mode en fonction de vos réglages système</span
+          >L'application basera le mode clair/sombre en fonction de vos réglages système</span
         >
       </template>
       <template #button>

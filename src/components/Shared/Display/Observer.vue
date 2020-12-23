@@ -20,7 +20,7 @@ export default class Observer extends Vue {
   };
 
   @Watch('disabled')
-  watchDisabled(newVal: boolean, oldVal) {
+  watchDisabled(newVal: boolean, oldVal: boolean) {
     if (this.observer) {
       if (newVal) {
         this.observer.unobserve(this.$refs.observer);
@@ -67,5 +67,3 @@ export default class Observer extends Vue {
   }
 }
 </script>
-
-<style lang="postcss" scoped></style>

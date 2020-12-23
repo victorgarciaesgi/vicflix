@@ -3,6 +3,7 @@ const colors = require('./src/styles/colors.module');
 
 module.exports = {
   important: false,
+  darkMode: 'class',
   future: {
     removeDeprecatedGapUtilities: true,
     purgeLayersByDefault: true,
@@ -12,14 +13,30 @@ module.exports = {
     layers: ['utilities'],
     enabled: process.env.NODE_ENV === 'production',
     defaultExtractor: (content) => content.match(/[^<>"'`\s]*[^<>"'`\s:!]/g) || [],
-    whitelist: ['html', 'body', 'app', '__nuxt', '__layout'],
-    whitelistPatterns: [/ProseMirror/, /nuxt/],
+
     content: [
       './src/components/**/*.vue',
       './src/layouts/**/*.vue',
       './src/pages/**/*.vue',
       './src/plugins/**/*.ts',
     ],
+    options: {
+      safelist: {
+        standard: [
+          'html',
+          'body',
+          'app',
+          '__nuxt',
+          '__layout',
+
+          /ProseMirror/,
+          /nuxt/,
+          /grid-cols-/,
+          /grid-cols-/,
+          /object-/,
+        ],
+      },
+    },
   },
   theme: {
     screens: {
@@ -32,6 +49,7 @@ module.exports = {
       '-lg': { min: '1023px' },
       '-xl': { min: '1279px' },
     },
+    colors,
     extend: {
       fontSize: {
         xxs: '0.6rem',
@@ -44,6 +62,10 @@ module.exports = {
       },
       maxHeight: {
         inh: 'inherit',
+      },
+      maxWidth: {
+        12: '12rem',
+        xxs: '16rem',
       },
       padding: {
         '2px': '2px',
@@ -74,9 +96,9 @@ module.exports = {
         104: '26rem',
       },
       boxShadow: {
-        default: '0 0 10px var(--shadow)',
-        top: '0 -8px 10px var(--shadow)',
-        bottom: '0 8px 10px var(--shadow)',
+        default: '0 0 10px var(--shadowColor)',
+        top: '0 -8px 10px var(--shadowColor)',
+        bottom: '0 8px 10px var(--shadowColor)',
       },
       zIndex: {
         'm-1': '-1',
@@ -96,26 +118,30 @@ module.exports = {
         '35p': '35%',
         '50p': '50%',
       },
-      colors,
     },
   },
   corePlugins: {},
   variants: {
-    backgroundColor: ['responsive', 'hover', 'active', 'dark', 'light', 'important'],
-    backgroundOpacity: ['responsive', 'hover', 'active', 'dark', 'light', 'important'],
-    display: ['responsive', 'hover', 'dark', 'light', 'important'],
-    margin: ['responsive', 'hover', 'first', 'last', 'important'],
-    visibility: ['responsive', 'important'],
-    width: ['responsive', 'important'],
-    height: ['responsive', 'important'],
-    padding: ['responsive', 'important'],
-    inset: ['responsive', 'important'],
-    textColor: ['responsive', 'hover', 'important'],
-    fontSize: ['responsive', 'hover', 'important'],
-    fontWeight: ['hover', 'important'],
-    rotate: ['hover', 'important'],
-    borderColor: ['responsive', 'hover', 'important', 'first', 'last'],
-    boxShadow: ['responsive', 'hover', 'important', 'dark', 'light'],
+    extend: {
+      backgroundColor: ['important', 'active'],
+      backgroundOpacity: ['important'],
+      display: ['important'],
+      margin: ['first', 'last', 'important'],
+      visibility: ['responsive', 'important'],
+      width: ['important'],
+      height: ['important'],
+      padding: ['important'],
+      inset: ['important'],
+      textColor: ['important'],
+      fontSize: ['important'],
+      fontWeight: ['important'],
+      rotate: ['important'],
+      borderColor: ['important', 'first', 'last'],
+      boxShadow: ['important'],
+      minWidth: ['important'],
+      ringColor: ['hover'],
+      ringWidth: ['hover'],
+    },
   },
   plugins: [
     plugin(({ theme, addVariant, addUtilities, e }) => {
@@ -123,17 +149,6 @@ module.exports = {
         '.grid-col-min-content': {
           gridAutoColumns: 'min-content',
         },
-      });
-
-      addVariant('dark', ({ modifySelectors, separator }) => {
-        modifySelectors(({ className }) => {
-          return `body[data-theme='dark'] .${e(`dark${separator}${className}`)}`;
-        });
-      });
-      addVariant('light', ({ modifySelectors, separator }) => {
-        modifySelectors(({ className }) => {
-          return `body[data-theme='light'] .${e(`light${separator}${className}`)}`;
-        });
       });
       addVariant('important', ({ container }) => {
         container.walkRules((rule) => {

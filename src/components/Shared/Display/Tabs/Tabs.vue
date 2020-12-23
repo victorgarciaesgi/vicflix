@@ -1,17 +1,20 @@
 <template>
-  <div class="Tabs-Container / flex flex-row items-center justify-center py-3">
+  <div class="Tabs-Container / flex flex-col">
     <div
       ref="container"
-      class="TabBar / bg-bg4 flex flex-row flex-no-wrap overflow-hidden"
-      style="border-radius: 8px"
+      class="TabBar / grid overflow-hidden"
+      :class="[`grid-cols-${tabs.length}`]"
     >
       <NuxtLink
         v-for="tab of tabs"
         :key="tab.label"
         :to="tab.link"
         :exact="tab.exact"
-        class="Tab-Link / p-2px z-10"
+        class="Tab-Link / text-text10 flex items-center justify-center h-16 text-sm font-semibold text-center"
       >
+        <div class="Tab-Focus px-5 py-1">
+          {{ tab.label }}
+        </div>
         <!-- <TabLink
           :exact="tab.exact"
           v-bind="{ isActive, isExactActive, href, navigate }"
@@ -20,9 +23,6 @@
         >
           
         </TabLink> -->
-        <div class="Tab-Focus px-5 py-1" style="border-radius: 7px">
-          {{ tab.label }}
-        </div>
       </NuxtLink>
       <!-- <div ref="cursorRef" class="Cursor / p-2px absolute top-0 left-0 z-0 h-full">
         <div class="bg-bg1 w-full h-full shadow" style="border-radius: 7px"></div>
@@ -98,6 +98,7 @@ export default class Tabs extends Vue {
 <style lang="postcss" scoped>
 div.Tabs-Container {
   width: auto;
+  border-bottom: 1px solid var(--bg5);
 
   div.Cursor {
     transition-duration: 0.2s;
@@ -106,8 +107,8 @@ div.Tabs-Container {
   }
 
   .Tab-Link {
-    flex: 0 0 auto;
-    transition: background-color 0.2s, color 0.2s;
+    transition: border-color 0.2s, color 0.2s;
+    border-bottom: 3px solid transparent;
 
     @mixin dark {
       /* background-color: var(--bg2); */
@@ -116,15 +117,21 @@ div.Tabs-Container {
       /* background-color: var(--bg3); */
     }
 
+    &:first-child {
+      border-radius: 0.5rem 0 0 0;
+    }
+    &:last-child {
+      border-radius: 0 0.5rem 0 0;
+    }
+
     &:not(.nuxt-link-active):not(.list):hover {
-      color: var(--text2);
+      border-color: var(--green2);
     }
 
     &.nuxt-link-active {
-      /* background-color: var(--blue) !important; */
-      .Tab-Focus {
-        @apply bg-bg1 w-full h-full shadow;
-      }
+      color: var(--green);
+      border-color: var(--green);
+      box-shadow: 0 0 5px inset rgba(0, 0, 0, 0.1);
     }
   }
 }

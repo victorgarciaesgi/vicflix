@@ -6,21 +6,30 @@
     @mousedown.stop
   >
     <div
-      class="QuitIcon / p-2px bg-bg4 text-text6 absolute top-0 right-0 z-10 flex mt-2 mr-2 rounded-full cursor-pointer"
+      class="QuitIcon / p-2px bg-bg4 text-text6 top-3 right-3 absolute z-10 flex rounded-full cursor-pointer"
       @click="deleteAlert"
     >
-      <SvgIcon src="icons/toasts/error.svg" :size="16" />
+      <SvgIcon src="toasts/error" :size="16" />
     </div>
-    <div class="header flex flex-no-wrap items-start justify-between flex-shrink-0 px-6 pt-6 pb-4">
-      <span class="flex-grow text-2xl font-semibold text-left">{{ title }}</span>
+    <div v-if="getIcon" class="center flex pt-12">
+      <SvgIcon :src="getIcon" :size="100" />
+    </div>
+    <div
+      class="header flex items-center flex-shrink-0 px-6 pb-4"
+      :class="{ 'pt-12': !getIcon, 'pt-6': getIcon }"
+    >
+      <span class="flex-grow text-2xl font-semibold text-center">{{ title }}</span>
     </div>
     <div v-if="description || isForm" class="content scroll-y flex flex-grow px-6 pt-2 pb-6">
       <span v-if="description" class="description text-center">
         {{ description }}
       </span>
+      <form v-if="isForm" class="form column flex">
+        <FormContainer :form="alert.form" />
+      </form>
     </div>
 
-    <div class="flex flex-no-wrap justify-between flex-shrink-0 p-4">
+    <div class="flex-nowrap flex justify-between flex-shrink-0 p-4">
       <div v-if="leftButtons" class="left-buttons flex flex-grow-0">
         <Action
           v-for="button of leftButtons"
@@ -29,7 +38,7 @@
           :handler="() => button.handler(alert.id)"
           :shadow="true"
         >
-          {{ button.text }}
+          {{ button.content }}
         </Action>
       </div>
       <div v-if="rightButtons" class="right-buttons flex flex-grow-0">
@@ -38,9 +47,10 @@
           :key="button.id"
           :theme="getTheme(button)"
           :handler="() => button.handler(alert.id)"
+          :form="alert.form"
           :shadow="false"
         >
-          {{ button.text }}
+          {{ button.content }}
         </Action>
       </div>
     </div>
@@ -51,14 +61,21 @@
 import Vue from 'vue';
 import { Component, Prop, Watch } from 'nuxt-property-decorator';
 import { AlertsModule } from '@store';
-import { Alerts } from '@constructors';
+import {
+  ActionRoot,
+  ActionType,
+  AlertRoot,
+  AlertType,
+  createAlert,
+  FormShape,
+} from '@constructors';
 import { EventBus, Events } from '@services';
 import Colors from '@colors';
-import { ButtonTheme } from '../../../models';
+import { ButtonTheme } from '@models';
 
-@Component
+@Component({})
 export default class Alert extends Vue {
-  @Prop() readonly alert!: Alerts.Alert<any, any>;
+  @Prop() readonly alert!: AlertRoot<any>;
 
   get isForm() {
     return this.alert.type === 'form';
@@ -74,14 +91,24 @@ export default class Alert extends Vue {
     }
     return { width: '400px' };
   }
+  get getIcon() {
+    switch (this.alert.type) {
+      case AlertType.Warning:
+        return 'alerts/warning';
+      case AlertType.Success:
+        return 'alerts/success';
+      default:
+        return null;
+    }
+  }
 
   get getTheme() {
-    return (button: Alerts.Action): ButtonTheme => {
+    return (button: ActionRoot): ButtonTheme => {
       if (button.theme) {
         return button.theme;
-      } else if (button.type === 'confirm') {
+      } else if (button.type === ActionType.Confirm) {
         return ButtonTheme.Inverted;
-      } else if (button.type === 'action' || button.type === 'link') {
+      } else if (button.type === ActionType.Action || button.type === ActionType.Link) {
         return ButtonTheme.Default;
       } else {
         return ButtonTheme.Default;
@@ -105,7 +132,16 @@ export default class Alert extends Vue {
   }
 
   deleteAlert() {
-    AlertsModule.actions.deleteAlert(this.alert.id);
+    if (this.alert.form && this.alert.form.dirty) {
+      createAlert({
+        title: 'Are you sure you want to leave the page',
+        description: 'Some fields have not been saved',
+        actions: ({ confirm }) => [confirm({})],
+        type: AlertType.Confirm,
+      });
+    } else {
+      AlertsModule.actions.deleteAlert(this.alert.id);
+    }
   }
 }
 </script>
@@ -122,7 +158,7 @@ div.Alert-Window {
   overflow: hidden;
 
   @mixin dark {
-    background-color: rgba(30, 30, 30, 1);
+    background-color: rgba(10, 10, 10, 1);
   }
 
   @mixin light {

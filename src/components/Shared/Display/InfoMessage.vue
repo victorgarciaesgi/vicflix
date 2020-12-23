@@ -1,6 +1,6 @@
 <template>
-  <div class="Info / flex flex-row items-center justify-center my-1">
-    <div :class="[type]" class="Bubble / px-4 py-2 text-xs text-center rounded-full">
+  <div class="Info / flex flex-row items-center justify-center my-2">
+    <div :class="[type]" class="Bubble / px-4 py-2 text-xs font-semibold text-center rounded-lg">
       <slot />
     </div>
   </div>
@@ -24,6 +24,8 @@ export default class InfoMessage extends Vue {
 <style lang="postcss" scoped>
 div.Info {
   div.Bubble {
+    opacity: 0.9;
+
     &.error {
       color: white;
       background-color: var(--redError);

@@ -1,8 +1,10 @@
 import path from 'path';
 import { NuxtOptionsBuild } from '@nuxt/types/config/build';
 import chalk from 'chalk';
+import { IgnorePlugin } from 'webpack';
 
 const isProd = process.env.NODE_ENV === 'production';
+const isDev = process.env.NODE_ENV === 'development';
 
 type nodeEnvs = 'development' | 'production' | 'testing' | 'staging';
 
@@ -20,30 +22,43 @@ export const build: NuxtOptionsBuild = {
   analyze: false,
   extractCSS: isProd,
   optimizeCSS: isProd,
-  friendlyErrors: true,
+  friendlyErrors: isProd,
   parallel: false,
   transpile: ['lodash-es'],
   devtools: testEnv.includes(process.env.NUXT_ENV_STAGE as any),
-  babel: {
-    presets({ isServer }) {
-      return [
-        [
-          require.resolve('@nuxt/babel-preset-app'),
-          {
-            buildTarget: isServer ? 'server' : 'client',
-            corejs: { version: 3 },
+  postcss: {
+    plugins: {
+      autoprefixer: {},
+      tailwindcss: {},
+      'postcss-mixins': {
+        mixins: {
+          light: {
+            'html.light &': {
+              '@mixin-content': {},
+            },
           },
-        ],
-      ];
+          dark: {
+            'html.dark &': {
+              '@mixin-content': {},
+            },
+          },
+        },
+      },
+      'postcss-simple-vars': {},
+      'postcss-hexrgba': {},
+      'postcss-extend': {},
+      'postcss-atroot': {},
+      'postcss-current-selector': {},
+      'postcss-nested': {},
     },
   },
-  extend(config, { isDev, isClient, isServer, loaders }) {
-    if (config.performance) config.performance.hints = false;
-    if (config.resolve) config.resolve.symlinks = true;
+  extend(config, { isDev, isClient }) {
+    if (config.performance) config.performance.hints = 'warning';
+    if (config.resolve) config.resolve.symlinks = false;
     if (isDev && isClient && config.module) {
       config.module.rules.push({
         enforce: 'pre',
-        test: /\.(js|vue)$/,
+        test: /\.(js|ts|vue)$/,
         loader: 'eslint-loader',
         exclude: /(node_modules)/,
       });
@@ -52,19 +67,23 @@ export const build: NuxtOptionsBuild = {
     if (config.resolve) {
       config.resolve.alias = {
         ...config.resolve.alias,
-        '@': path.resolve(__dirname, '../src'),
-        '@components': path.resolve(__dirname, '../src/components/index.ts'),
+        '@components': path.resolve(__dirname, '../src/components'),
+        '@global': path.resolve(__dirname, '../src/components/Global/index.ts'),
         '@icons': path.resolve(__dirname, '../src/assets/icons'),
         '@assets': path.resolve(__dirname, '../src/assets'),
         '@images': path.resolve(__dirname, '../src/assets/images'),
         '@constructors': path.resolve(__dirname, '../src/constructors/index.ts'),
-        '@mixins': path.resolve(__dirname, '../src/components/Mixins/index.ts'),
+        '@mixins': path.resolve(__dirname, '../src/mixins/index.ts'),
         '@services': path.resolve(__dirname, '../src/services/index.ts'),
         '@middleware': path.resolve(__dirname, '../src/middleware/index.ts'),
         '@utils': path.resolve(__dirname, '../src/utils/index.ts'),
+        '@constants': path.resolve(__dirname, '../src/constants/index.ts'),
+        '@decorators': path.resolve(__dirname, '../src/decorators/index.ts'),
+        '@hooks': path.resolve(__dirname, '../src/hooks/index.ts'),
         '@colors': path.resolve(__dirname, '../src/styles/colors.module.js'),
         '@models': path.resolve(__dirname, '../src/models/index.ts'),
-        '@store': path.resolve(__dirname, '../src/store/modules/index.ts'),
+        '@locales': path.resolve(__dirname, '../src/locales/index.ts'),
+        '@store': path.resolve(__dirname, '../src/vuex-modules/index.ts'),
       };
     }
     if (config.module) {
@@ -87,7 +106,30 @@ export const build: NuxtOptionsBuild = {
       });
     }
   },
+  // Remove moment locales dependencies from chartjs
+  plugins: [
+    new IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/,
+    }) as any,
+  ],
+  babel: {
+    // presets({ isServer }) {
+    //   return [
+    //     [
+    //       require.resolve('@nuxt/babel-preset-app'),
+    //       {
+    //         buildTarget: isServer ? 'server' : 'client',
+    //         corejs: { version: 2 },
+    //       },
+    //     ],
+    //   ];
+    // },
+  },
   optimization: {
+    runtimeChunk: true,
+    removeAvailableModules: isProd,
+    removeEmptyChunks: isProd,
     ...(isProd && {
       splitChunks: {
         minSize: 10000,
@@ -104,6 +146,12 @@ export const build: NuxtOptionsBuild = {
             chunks: 'all',
             enforce: true,
           },
+          scripts: {
+            name: 'scripts',
+            test: /\.(js|ts)$/,
+            chunks: 'all',
+            enforce: true,
+          },
         },
       },
     }),
@@ -116,32 +164,7 @@ export const build: NuxtOptionsBuild = {
       esModule: false,
     } as any,
   },
-  postcss: {
-    plugins: {
-      autoprefixer: {},
-      tailwindcss: {},
-      'postcss-mixins': {
-        mixins: {
-          light: {
-            "body[data-theme='light'] &": {
-              '@mixin-content': {},
-            },
-          },
-          dark: {
-            "body[data-theme='dark'] &": {
-              '@mixin-content': {},
-            },
-          },
-        },
-      },
-      'postcss-simple-vars': {},
-      'postcss-hexrgba': {},
-      'postcss-extend': {},
-      'postcss-atroot': {},
-      'postcss-current-selector': {},
-      'postcss-nested': {},
-    },
-  },
+
   terser: {
     terserOptions: {
       compress: {

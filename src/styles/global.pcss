@@ -1,75 +1,28 @@
-:root {
-  --headerHeight: 70px;
-  --navWidth: 230px;
-  color-scheme: dark light;
-}
-
-body[data-theme='dark'] {
-  --bg1: var(--g10);
-  --bg2: var(--g20);
-  --bg3: var(--g30);
-  --bg4: var(--g40);
-  --bg5: var(--g50);
-  --bg6: var(--g60);
-  --bg7: var(--g80);
-  --bg8: var(--g90);
-  --bg9: var(--w100);
-  --bg10: var(--w110);
-  --bg11: var(--w120);
-  --bg12: var(--w130);
-  --text1: white;
-  --text2: var(--w250);
-  --text3: var(--w245);
-  --text4: var(--w240);
-  --text5: var(--w230);
-  --text6: var(--w220);
-  --text7: var(--w210);
-  --text8: var(--w200);
-  --text9: var(--w190);
-  --text10: var(--w170);
-  --text11: var(--w160);
-  --text12: var(--w150);
-  --textLink: var(--rose);
-  --shadow: rgba(255, 255, 255, 0.1);
-}
-
-body[data-theme='light'] {
-  --bg1: white;
-  --bg2: var(--w250);
-  --bg3: var(--w245);
-  --bg4: var(--w240);
-  --bg5: var(--w235);
-  --bg6: var(--w225);
-  --bg7: var(--w215);
-  --bg8: var(--w200);
-  --bg9: var(--w190);
-  --bg10: var(--w170);
-  --bg11: var(--w160);
-  --bg12: var(--w150);
-  --text1: var(--g10);
-  --text2: var(--g20);
-  --text3: var(--g30);
-  --text4: var(--g40);
-  --text5: var(--g50);
-  --text6: var(--g60);
-  --text7: var(--g80);
-  --text8: var(--g90);
-  --text9: var(--w100);
-  --text10: var(--w110);
-  --text11: var(--w120);
-  --text12: var(--w130);
-  --textLink: var(--mint);
-  --shadow: rgba(40, 40, 40, 0.1);
-}
-
-@media screen and (max-width: 768px) {
-  :root {
-    --headerHeight: 60px !important;
-  }
-}
 /* // *:not(.no-anim) {
 //   transition: background-color 0.2s, color 0.2s, border-color 0.2s;
 // } */
+
+*.--FullScreen {
+  height: calc(100vh - var(--headerHeight));
+}
+
+*.--Scrollable {
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 25px;
+    z-index: 2;
+
+    background: linear-gradient(to top, var(--bg1), rgba(255, 255, 255, 0));
+  }
+}
+
+*.--FullScreen-ext {
+  height: 100vh;
+}
 
 ul.listOptions {
   display: flex;

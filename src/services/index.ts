@@ -1,2 +1,3 @@
 export { EventBus, Events } from './EventBus';
-export * from './TokenStrategies';
+export * from './token.service';
+// export * from './firebase.service';

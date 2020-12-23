@@ -1,14 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es2018",
+    "target": "ES2019",
     "module": "esnext",
     "moduleResolution": "node",
     "lib": ["esnext", "dom", "es2017", "es2017.object", "webworker", "webworker.importscripts"],
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": false,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "noUnusedLocals": false,
     "pretty": true,
     "sourceMap": true,
@@ -18,32 +17,48 @@
     "downlevelIteration": false,
     "suppressImplicitAnyIndexErrors": true,
     "skipLibCheck": true,
+    "noUncheckedIndexedAccess": false,
     "noImplicitThis": true,
     "strict": true,
     "allowJs": true,
     "noEmit": true,
-    "checkJs": true,
+    "checkJs": false,
     "baseUrl": "./src/",
     "resolveJsonModule": true,
     "paths": {
       "@components": ["components/index.ts"],
       "@components/*": ["components/*"],
-      "@store": ["store/modules/index.ts"],
+      "@global": ["components/Global/index.ts"],
+      "@store": ["vuex-modules/index.ts"],
       "@middleware": ["middleware/index.ts"],
       "@services": ["services/index.ts"],
       "@assets/*": ["assets/*"],
       "@images/*": ["assets/images/*"],
       "@icons/*": ["assets/icons/*"],
       "@constructors": ["constructors/index.ts"],
-      "@mixins": ["components/Mixins/index.ts"],
+      "@decorators": ["decorators/index.ts"],
+      "@hooks": ["hooks/index.ts"],
+      "@mixins": ["mixins/index.ts"],
       "@colors": ["styles/colors.module.js"],
       "@utils": ["utils/index.ts"],
+      "@constants": ["constants/index.ts"],
       "@models": ["models/index.ts"],
-      "~/*": ["*"]
+      "@locales": ["locales/index.ts"]
     },
-    "types": ["@nuxt/types", "node", "webpack-env"]
+    "types": ["@nuxt/types", "nuxt-typed-router", "node", "webpack-env", "jest", "nuxt-i18n"],
+    "plugins": [
+      {
+        "name": "@vuedx/typescript-vetur"
+      }
+    ]
   },
-  "include": ["./src/**/*.ts", "./src/**/*.js", "./src/**/*.vue", "./config/**/*.ts"],
+  "include": [
+    "./src/**/*.ts",
+    "__tests__/**/*.ts",
+    "./src/**/*.js",
+    "./src/**/*.vue",
+    "./config/**/*.ts"
+  ],
   "files": ["nuxt.config.ts"],
   "exclude": ["node_modules", "dist", ".nuxt"]
 }

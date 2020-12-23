@@ -26,15 +26,15 @@ export default class AlertsContainer extends Vue {
   };
 
   get alertList() {
-    return AlertsModule.state.alertList;
+    return AlertsModule.state.alertsList;
   }
   get showAlert() {
-    return AlertsModule.getters.showAlert;
+    return AlertsModule.state.alertsList.length > 0;
   }
 
   deleteLastAlert() {
-    const { length, [length - 1]: last } = this.alertList;
-    AlertsModule.actions.deleteAlert(last.id);
+    const [first] = this.alertList;
+    AlertsModule.actions.deleteAlert(first.id);
   }
 }
 </script>

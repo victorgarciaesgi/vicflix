@@ -1,11 +1,16 @@
-import { IToastNotification, IToastNotificationType, IToastPayload } from '@models';
+import { IToastNotificationType, IToastPayload } from '@models';
 import { ToastModule } from '@store';
 
-export const SuccessToast = (message: string, title?: string) => {
+export const SuccessToast = (
+  message: string,
+  title?: string,
+  options?: Omit<IToastPayload, 'message' | 'title' | 'type'>
+) => {
   return ToastModule.actions.addToast({
     type: IToastNotificationType.SUCCESS,
     message,
     title,
+    ...options,
   });
 };
 

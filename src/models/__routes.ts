@@ -1,1 +1,1 @@
-export const routerPagesNames = { index: 'index' };
+export const routerPagesNames = { index: { index: 'index' }, all: 'all' };

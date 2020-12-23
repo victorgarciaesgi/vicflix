@@ -39,6 +39,8 @@ module.exports = {
     'no-useless-constructor': 'off',
     'no-debugger': 'off',
     'no-void': 'off',
+    'import/named': 'off',
+    'prettier/prettier': 'warn',
     camelcase: 'off',
     'import/first': 'off',
     'no-use-before-define': 'off',

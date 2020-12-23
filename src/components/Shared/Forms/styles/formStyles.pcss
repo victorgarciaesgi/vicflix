@@ -1,0 +1,261 @@
+div.input-box {
+  flex-flow: column wrap;
+  flex: 0 1 auto;
+  min-width: 120px;
+  max-width: 100%;
+  min-height: 0;
+  position: relative;
+  margin: 5px 0;
+
+  &.halfWidth {
+    width: 50%;
+    margin-left: 0;
+    margin-right: 0;
+    flex-basis: 50%;
+
+    @media screen and (min-width: 767px) {
+      &:nth-of-type(even) {
+        padding-left: 5px;
+      }
+      &:nth-of-type(odd) {
+        padding-right: 5px;
+      }
+    }
+
+    @media screen and (max-width: 767px) {
+      width: 100%;
+      flex-basis: auto;
+      padding: initial;
+    }
+  }
+
+  &.noMargin {
+    margin: 0;
+  }
+
+  div.input-container {
+    display: flex;
+    flex-flow: row nowrap;
+    border-radius: 5px;
+    min-width: 0;
+    min-height: 0;
+    max-width: 100%;
+    border: 2px solid transparent;
+    background-color: var(--bg3);
+    font-size: 14px;
+    padding: 0 5px;
+    outline: none;
+
+    &.disabled {
+      background-color: var(--bg4);
+    }
+
+    &.select .display-text {
+      height: 36px;
+    }
+
+    &.upload .display-result {
+      min-height: 50px;
+      max-height: 100px;
+
+      &.audio {
+        max-height: 150px;
+      }
+    }
+
+    div.icon {
+      flex: 0 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+    }
+
+    %input {
+      border: none;
+      height: 36px;
+      color: var(--text1);
+      line-height: 36px;
+      font-size: 14px;
+      outline: none;
+      width: 100%;
+      background: none;
+      padding: 5px 5px;
+      font-weight: 600;
+    }
+
+    input {
+      @extend %input;
+    }
+
+    textarea {
+      @extend %input;
+      height: 100px;
+      resize: none;
+      line-height: 24px;
+      padding-top: 5px;
+    }
+
+    input,
+    textarea {
+      &::placeholder {
+        color: var(--text9);
+      }
+    }
+
+    ul.options-list {
+      flex-flow: column wrap;
+      width: 100%;
+
+      li.option {
+        flex-flow: row nowrap;
+        height: 32px;
+        align-items: center;
+        cursor: pointer;
+        transition: background-color 0.1s;
+        text-align: left;
+
+        span.value {
+          flex: 1 1 auto;
+          padding-left: 10px;
+          padding-right: 5px;
+          font-size: 14px;
+          line-height: 32px;
+          color: var(--text1);
+          transition: color 0.1s;
+        }
+
+        div.image {
+          border-radius: 3px;
+          flex: 0 0 auto;
+          margin-left: 10px;
+          height: 25px;
+          width: 25px;
+        }
+
+        div.icon {
+          flex: 0 0 auto;
+          padding: 10px;
+        }
+
+        &.selected {
+          font-weight: bold;
+          cursor: default;
+        }
+
+        &:not(.selected):hover,
+        &.selecting.focused {
+          background-color: var(--blue);
+          span {
+            color: white;
+          }
+        }
+      }
+    }
+
+    .richText .editor {
+      overflow: auto;
+      div.ProseMirror {
+        border: none;
+        height: 250px;
+        color: var(--text1);
+        line-height: 36px;
+        font-size: 14px;
+        width: 100%;
+        background: none;
+        outline: none;
+        padding: 10px 10px;
+        font-weight: 600;
+        resize: none;
+      }
+    }
+  }
+
+  &.noBackground div.input-container {
+    background-color: transparent;
+  }
+
+  &.noBorder div.input-container {
+    border: none;
+  }
+  &.noRadius div.input-container {
+    border-radius: 0;
+  }
+
+  &.disabled {
+    div.input-container {
+      background-color: var(--bg4);
+      cursor: not-allowed !important;
+
+      input {
+        background-color: var(--bg4);
+        cursor: not-allowed !important;
+      }
+    }
+    .selectedValues {
+      cursor: not-allowed !important;
+    }
+  }
+
+  &.formError {
+    div.input-container {
+      border-color: var(--redError);
+      input,
+      textarea,
+      .value {
+        color: var(--redError);
+      }
+    }
+    div.avatar-mask {
+      border-color: var(--redError);
+    }
+  }
+
+  &.isPending {
+    div.input-container {
+      border-color: var(--yellow) !important;
+      input,
+      textarea,
+      .value {
+        color: var(--yellow) !important;
+      }
+    }
+    div.avatar-mask {
+      border-color: var(--yellow) !important;
+    }
+  }
+
+  &.formValid {
+    div.input-container {
+      border-color: var(--green);
+      input,
+      textarea,
+      .value {
+        /* color: var(--blue); */
+      }
+    }
+    div.avatar-mask {
+      border-color: var(--green);
+    }
+  }
+
+  &.focus {
+    &:not(.noBorder) {
+      div.input-container {
+        border-color: var(--text5);
+      }
+    }
+
+    div.input-container {
+      input,
+      textarea,
+      .display-text,
+      .value {
+        color: var(--text1);
+      }
+      div.avatar-mask {
+        border-color: initial;
+      }
+    }
+  }
+}

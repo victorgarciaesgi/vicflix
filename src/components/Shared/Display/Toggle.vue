@@ -1,11 +1,7 @@
 <template>
   <div class="Switch">
     <Spinner v-if="loading" :size="22" />
-    <div
-      :class="{ checked: value, darkmode }"
-      class="container p-2"
-      @click.stop.prevent="changeValue"
-    >
+    <div :class="{ checked: value, darkmode }" class="container p-2" @click="changeValue">
       <template v-if="darkmode">
         <img src="~@icons/header/sun.png" width="16" class="sun" />
         <img src="~@icons/header/moon.png" width="16" class="moon" />
@@ -97,7 +93,7 @@ $boule: 24px;
 
     &.checked {
       &:not(.darkmode) {
-        background-color: var(--red);
+        background-color: var(--primary);
       }
       &.darkmode {
         background-color: #5882b7;

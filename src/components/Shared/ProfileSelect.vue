@@ -3,19 +3,28 @@
     <div class="flex-0 flex flex-row px-8 py-4">
       <img src="@images/vicflix.png" width="90" />
     </div>
-    <div class="flex flex-col items-center flex-1">
-      <h1 class="py-3 font-normal">Qui est-ce ?</h1>
-      <div class="flex flex-row items-center justify-center">
-        <div v-for="profile of profiles" :key="profile.id" class="User / flex flex-col">
-          <div class="Picture / relative rounded-sm">
-            <img
-              :src="require(profile.picture)"
-              class="absolute top-0 left-0 object-cover w-full h-full"
-            />
-          </div>
-          <span class="Name /">{{ profile.name }}</span>
-        </div>
-      </div>
+    <div class="flex flex-col items-center justify-center flex-1 pb-10">
+      <div class="Wrapper / flex flex-col">
+        <h1 class="py-4 font-normal text-center">Qui est-ce ?</h1>
+        <div class="flex flex-row items-center justify-center">
+          <button
+            v-for="profile of profiles"
+            :key="profile.id"
+            type="button"
+            class="User / group flex flex-col items-center"
+          >
+            <div class="Picture / relative">
+              <img
+                :src="profile.picture"
+                class="group-hover:ring-2 group-hover:ring-white absolute top-0 left-0 object-cover w-full h-full rounded"
+              />
+            </div>
+            <span class="Name / text-w140 group-hover:text-white py-2 text-center">{{
+              profile.name
+            }}</span>
+          </button>
+        </div></div
+      >
     </div>
   </div>
 </template>
@@ -34,6 +43,17 @@ export default class ProfileSelect extends Vue {
 </script>
 
 <style lang="postcss" scoped>
+@keyframes appear {
+  from {
+    transform: scale(1.1);
+    opacity: 0.1;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 div.Profile {
   z-index: 20000;
 
@@ -47,17 +67,23 @@ div.Profile {
     background: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
   }
 
-  div.User {
-    div.Picture {
-      height: 10vw;
-      width: 10vw;
-      max-height: 200px;
-      max-width: 200px;
-      min-height: 84px;
-      min-width: 84px;
-    }
-    span.Name {
-      font-size: 1.3vw;
+  div.Wrapper {
+    animation: appear 0.25s ease;
+    button.User {
+      &:not(:last-child) {
+        margin-right: 2vw;
+      }
+      div.Picture {
+        height: 10vw;
+        width: 10vw;
+        max-height: 200px;
+        max-width: 200px;
+        min-height: 84px;
+        min-width: 84px;
+      }
+      span.Name {
+        font-size: 1.3vw;
+      }
     }
   }
 }

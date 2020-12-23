@@ -1,4 +1,4 @@
-# Profeel Back office
+# Vicflix
 
 <p align="center">
 <img width="100" src="https://vuejs.org/images/logo.png" alt="Vue logo">
@@ -28,7 +28,7 @@ yarn
 yarn dev
 ```
 
-Endpoint: [localhost:5100](http://localhost:5100)
+Endpoint: [localhost:4100](http://localhost:4100)
 
 # Regenerates Typescript schemas
 
@@ -50,20 +50,4 @@ complete `.env.production` with according API URLs
 
 ```bash
 yarn deploy production
-```
-
-### Staging build
-
-complete `.env.staging` with according API URLs
-
-```bash
-yarn deploy staging
-```
-
-### Testing build
-
-complete `.env.testing` with according API URLs
-
-```bash
-yarn deploy testing
 ```

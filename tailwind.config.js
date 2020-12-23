@@ -139,8 +139,8 @@ module.exports = {
       borderColor: ['important', 'first', 'last'],
       boxShadow: ['important'],
       minWidth: ['important'],
-      ringColor: ['hover'],
-      ringWidth: ['hover'],
+      ringColor: ['hover', 'group-hover'],
+      ringWidth: ['hover', 'group-hover'],
     },
   },
   plugins: [

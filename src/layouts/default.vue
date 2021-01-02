@@ -2,14 +2,14 @@
   <div id="app" class="flex">
     <ToastContainer />
     <AlertsContainer />
-    <HeaderComponent />
+    <HeaderComponent v-if="loggedIn" />
     <PortalTarget multiple style="z-index: 11000" class="fixed top-0 left-0" name="Popup-Outlet" />
     <PortalTarget multiple style="z-index: 10500" class="fixed top-0 left-0" name="Modal-Outlet" />
 
     <div id="rootView">
       <Nuxt />
     </div>
-    <ProfileSelect v-if="showProfilePicker" />
+    <ProfileSelect v-if="!loggedIn" />
   </div>
 </template>
 
@@ -27,8 +27,8 @@ import { AuthModule, DarkModeModule, DisplayTheme, RouterModule } from '@store';
   },
 })
 export default class App extends Vue {
-  get showProfilePicker() {
-    return AuthModule.state.showProfilePicker;
+  get loggedIn() {
+    return AuthModule.state.loggedIn;
   }
   created() {
     if (process.browser) {
@@ -63,7 +63,7 @@ div#app {
     max-width: 100%;
     flex: 1;
     display: flex;
-    padding-top: var(--headerHeight);
+    /* padding-top: var(--headerHeight); */
   }
 }
 </style>

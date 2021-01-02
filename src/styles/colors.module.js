@@ -4,7 +4,7 @@ module.exports = {
   green: '#2f8975',
   green2: '#aac3c6',
 
-  red: '#ff6565',
+  red: '#e50914',
   red2: '#fa8787',
   redError: '#da4453',
 

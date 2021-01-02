@@ -5,13 +5,14 @@
     </div>
     <div class="flex flex-col items-center justify-center flex-1 pb-10">
       <div class="Wrapper / flex flex-col">
-        <h1 class="py-4 font-normal text-center">Qui est-ce ?</h1>
+        <h1 class="-xl:text-5xl py-4 font-normal text-center">Qui est-ce ?</h1>
         <div class="flex flex-row items-center justify-center">
           <button
             v-for="profile of profiles"
             :key="profile.id"
             type="button"
             class="User / group flex flex-col items-center"
+            @click="selectProfile(profile)"
           >
             <div class="Picture / relative">
               <img
@@ -23,8 +24,8 @@
               profile.name
             }}</span>
           </button>
-        </div></div
-      >
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -32,12 +33,17 @@
 <script lang="ts">
 import { usersConstant } from '@constants';
 import { User } from '@models';
+import { AuthModule } from '@store';
 import { Component, Vue, Prop } from 'nuxt-property-decorator';
 
 @Component({})
 export default class ProfileSelect extends Vue {
   get profiles(): User[] {
     return usersConstant;
+  }
+
+  selectProfile(profile: User) {
+    AuthModule.actions.connexionRequest(profile);
   }
 }
 </script>

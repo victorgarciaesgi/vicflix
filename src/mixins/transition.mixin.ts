@@ -42,7 +42,7 @@ export default class TransitionMixin extends Vue {
     if (this.transitionType === 'list' && this.listRoutes) {
       // const isComingFromList = this.listRoutes.find((f) => f.link?.name === from.name);
       const routes = this.listRoutes
-        .map((route) => route.link?.name)
+        .map((route) => (typeof route.link === 'object' ? route.link?.name : null))
         .filter((f): f is string => !!f)
         .map((name) => clampAtFromName(name)) as string[];
       if (to.name && from?.name) {

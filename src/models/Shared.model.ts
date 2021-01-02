@@ -64,7 +64,7 @@ type DynamicDecl = () => RuleDecl;
 
 export interface NavLink {
   label: string;
-  link: Location;
+  link: RawLocation;
   icon?: string;
   exact?: boolean;
   condition?: boolean;

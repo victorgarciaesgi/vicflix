@@ -14,6 +14,7 @@ export enum ButtonTheme {
   'Green' = 'green',
   'White' = 'white',
   'Dark' = 'dark',
+  'Gray' = 'gray',
 }
 
 export enum ButtonType {

@@ -4,6 +4,6 @@ import { AuthModule } from '@store';
 
 export const authMiddleware: Middleware = async ({ redirect, route }) => {
   if (!AuthModule.state.loggedIn) {
-    AuthModule.updateState({ showProfilePicker: true });
+    // AuthModule.updateState({ showProfilePicker: true });
   }
 };

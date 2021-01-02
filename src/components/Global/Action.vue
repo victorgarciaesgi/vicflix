@@ -8,7 +8,7 @@
     :class="getClass"
     @click="handleClick"
   >
-    <div v-if="icon" class="ButtonIcon" :class="{ 'pr-1 ml-1': !isOnlyIcon }">
+    <div v-if="icon" class="ButtonIcon mr-2" :class="{ 'pr-1 ml-1': !isOnlyIcon }">
       <SvgIcon :src="icon" color="currentColor" :size="getIconSize" />
     </div>
     <span v-if="$slots.default || $scopedSlots.default" class="ButtonText">
@@ -111,8 +111,8 @@ export default class Action extends Vue {
 
   get getIconSize() {
     if (this.size === ButtonSizes.sm) return 14;
-    else if (this.size === ButtonSizes.md) return 16;
-    else if (this.size === ButtonSizes.lg) return 20;
+    else if (this.size === ButtonSizes.md) return 20;
+    else if (this.size === ButtonSizes.lg) return 28;
     return 24;
   }
 
@@ -213,7 +213,6 @@ export default class Action extends Vue {
   outline: none;
   user-select: none;
   border-radius: 50px;
-  font-size: 16px;
   transition-property: box-shadow, transform, background-color, border-color;
   transition-duration: 0.2s;
   transition-timing-function: ease-in-out;
@@ -232,7 +231,7 @@ export default class Action extends Vue {
   /* Size */
   &.size {
     &-sm {
-      border-radius: 100px;
+      border-radius: 6px;
       font-size: 12px;
       padding: 5px 10px;
       font-weight: 500;
@@ -241,7 +240,7 @@ export default class Action extends Vue {
       }
     }
     &-md {
-      border-radius: 100px;
+      border-radius: 6px;
       font-size: 14px;
       padding: 8px 14px;
       font-weight: 500;
@@ -250,16 +249,16 @@ export default class Action extends Vue {
       }
     }
     &-lg {
-      border-radius: 100px;
+      border-radius: 6px;
       min-height: 37px;
-      padding: 6px 18px;
-      @apply text-sm;
+      font-size: 16px;
+      padding: 6px 16px;
       span {
         padding: 0 8px;
       }
     }
     &-xl {
-      border-radius: 100px;
+      border-radius: 6px;
       padding: 10px 22px;
       min-height: 40px;
       @apply text-base;
@@ -318,11 +317,23 @@ export default class Action extends Vue {
       color: var(--g40);
       &:hover,
       &:focus {
-        background-color: var(--w250);
-        @apply ring-w235;
+        background-color: var(--w245);
       }
       &:active {
-        background-color: var(--w245);
+        background-color: var(--w230);
+      }
+    }
+
+    &-gray {
+      background-color: var(--w150);
+      border-color: var(--w150);
+      color: white;
+      &:hover,
+      &:focus {
+        background-color: var(--w130);
+      }
+      &:active {
+        background-color: var(--w110);
       }
     }
 
@@ -333,7 +344,6 @@ export default class Action extends Vue {
       &:hover,
       &:focus {
         background-color: var(--g50);
-        @apply ring-g80;
       }
       &:active {
         background-color: var(--g60);

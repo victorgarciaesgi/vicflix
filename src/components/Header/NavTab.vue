@@ -1,12 +1,11 @@
 <template>
-  <div class="NavTab / flex flex-col w-full my-1">
+  <div class="NavTab / flex flex-col my-1">
     <nuxt-link
       :to="route.link"
       :exact="route.exact"
-      class="NavLink flex items-center h-full px-3 py-2 rounded-lg"
+      class="NavLink text-w200 flex items-center px-2 py-2 font-normal"
     >
-      <SvgIcon v-if="route.icon" :src="route.icon" class="Icon w-5" />
-      <span class="text-md ml-3 font-semibold">{{ route.label }}</span>
+      <span class="text-md ml-3">{{ route.label }}</span>
     </nuxt-link>
   </div>
 </template>
@@ -23,13 +22,12 @@ export default class NavTab extends Vue {
 
 <style lang="postcss" scoped>
 a.NavLink {
-  color: var(--green);
+  transition: color 0.2s ease-in, font-weight 0.2s ease-in;
   &.nuxt-link-active {
-    color: white;
-    background: var(--buttonGreen);
+    @apply text-white font-semibold;
   }
   &:hover:not(.nuxt-link-active) {
-    background-color: var(--bg3);
+    @apply text-w170;
   }
 }
 </style>

@@ -1,17 +1,15 @@
 <template>
-  <header
-    class="bg-bg1 text-text1 pl-5p border-bg3 lg:pl-5 fixed flex items-center justify-between pr-5 border-b"
-  >
-    <div class="absolute top-0 left-0 z-0 w-full h-full overflow-hidden">
-      <img
-        src="~@images/misc/circles_thin.svg"
-        class="w-96 h-96 absolute top-0 left-0 mt-10 ml-8 transform -translate-x-1/2 -translate-y-1/2 opacity-75"
-      />
+  <header class="text-text1 fixed flex items-center justify-between px-10">
+    <div class="flex-0 flex flex-row items-center">
+      <img src="@images/vicflix.png" width="90" />
+      <div class="px-8">
+        <NavBar :routes="navRoutes" />
+      </div>
     </div>
-    <div class="Title text-green leading-1 lg:text-2xl flex ml-12 text-4xl font-semibold">
-      <span class="--GradientText py-1">{{ currentTitle }}</span>
-    </div>
+
     <div class="Menus / flex items-center flex-shrink-0 ml-5">
+      <SvgIcon src="actions/search" :size="28" class="mx-2" />
+      <SvgIcon src="alerts/notif" :size="28" class="mx-2" />
       <div class="flex ml-3">
         <UserPopup />
       </div>
@@ -22,7 +20,7 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator';
 import { AuthModule, RouterModule } from '@store';
-import { NavLink, routerPagesNames } from '@models';
+import { NavLink, navRoutes, routerPagesNames } from '@models';
 import BurgerMenu from './BurgerMenu.vue';
 import NavBar from './NavBar.vue';
 import UserPopup from './UserPopup.vue';
@@ -32,6 +30,7 @@ import UserPopup from './UserPopup.vue';
 })
 export default class HeaderComponent extends Vue {
   public showBurger = false;
+  public navRoutes = navRoutes;
   get isLoggedIn() {
     return AuthModule.state.loggedIn;
   }
@@ -50,11 +49,20 @@ export default class HeaderComponent extends Vue {
 header {
   position: fixed;
   top: 0px;
-  left: var(--navWidth);
+  left: 0px;
   height: var(--headerHeight);
-  width: calc(100vw - var(--navWidth));
+  width: 100%;
   z-index: 10003;
   flex-flow: row nowrap;
-  min-width: 800px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+  }
 }
 </style>

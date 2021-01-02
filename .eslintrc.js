@@ -1,8 +1,12 @@
+/** @type {import("eslint").} */
 module.exports = {
   root: true,
   env: {
     browser: true,
     node: true,
+  },
+  globals: {
+    NodeJS: 'readonly',
   },
   parser: 'vue-eslint-parser',
   parserOptions: {

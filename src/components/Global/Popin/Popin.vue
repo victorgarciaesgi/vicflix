@@ -2,51 +2,52 @@
   <Fragment @click.native="handleClick">
     <!-- Popin wrapper -->
     <Portal v-if="rendered" to="Popup-Outlet">
-      <div
-        v-show="visible"
-        ref="popup"
-        :key="id"
-        :style="getPopupStyle"
-        class="Popup-Box / absolute"
-        @click.stop
-      >
+      <transition name="fade">
         <div
-          v-if="arrow"
-          ref="arrow"
-          :src="getArrowSrc"
-          :class="[PopupPlacement, alignement]"
-          class="Arrow / absolute"
+          v-show="visible"
+          ref="popup"
+          :key="id"
+          :style="getPopupStyle"
+          class="Popup-Box / absolute"
+          @click.stop
+          @mouseenter="handlePopupMouseEnter"
+          @mouseleave="handlePopupMouseLeave"
         >
-          <svg
-            :height="10"
-            :width="20"
-            x="0px"
-            y="0px"
-            viewBox="0 0 26 13"
-            style="enable-background: new 0 0 26 13"
-            xml:space="preserve"
+          <div
+            v-if="arrow"
+            ref="arrow"
+            :src="getArrowSrc"
+            :class="[PopupPlacement, alignement]"
+            class="Arrow / absolute"
           >
-            <g>
-              <path
+            <svg
+              :height="10"
+              :width="20"
+              x="0px"
+              y="0px"
+              viewBox="0 0 26 13"
+              style="enable-background: new 0 0 26 13"
+              xml:space="preserve"
+            >
+              <g>
+                <!-- <path
                 class="st0"
                 fill="var(--bg5)"
                 d="M26,13h-1.5L13.53,1.71c-0.29-0.3-0.77-0.3-1.06,0L1.5,13H0L12.45,0.21c0.3-0.31,0.8-0.31,1.1,0L26,13z"
-              />
-              <path
-                class="st1"
-                fill="var(--bg1)"
-                d="M24.5,13h-23L12.47,1.71c0.29-0.3,0.77-0.3,1.06,0L24.5,13z"
-              />
-            </g>
-          </svg>
+              /> -->
+                <path
+                  class="st1"
+                  fill="black"
+                  d="M24.5,13h-23L12.47,1.71c0.29-0.3,0.77-0.3,1.06,0L24.5,13z"
+                />
+              </g>
+            </svg>
+          </div>
+          <div class="max-h-inh flex overflow-x-hidden overflow-y-auto bg-black">
+            <slot :alignement="alignement" name="content" />
+          </div>
         </div>
-        <div
-          class="bg-bg1 border-bg5 max-h-inh flex overflow-x-hidden overflow-y-auto border rounded-md"
-          style="box-shadow: 0 0 20px var(--shadowColor)"
-        >
-          <slot :alignement="alignement" name="content" />
-        </div>
-      </div>
+      </transition>
     </Portal>
 
     <!-- Button wrapper -->
@@ -65,6 +66,7 @@
 import { Vue, Prop, Component, Emit } from 'nuxt-property-decorator';
 import { EventBus, Events } from '@services';
 import { nanoid } from 'nanoid';
+import { debounce } from 'lodash-es';
 import { getPopupComputedOutputMesures, getScrollParent } from './utils';
 import { PopupPlacement, PopupAlignement } from './types';
 import PopinButton from './PopinButton';
@@ -134,6 +136,8 @@ export default class Popin extends Vue {
   public arrowPosition: string | null = null;
   public resizeObserver: ResizeObserver | null = null;
   readonly id = nanoid(6);
+  public hovered = false;
+  public timeout: NodeJS.Timeout | null = null;
 
   get getPopupStyle(): Partial<CSSStyleDeclaration> | null {
     if (!this.width) return { width: 'max-content' };
@@ -157,7 +161,7 @@ export default class Popin extends Vue {
   }
 
   handleClick(event: UIEvent) {
-    if (!this.visible && !this.disabled) {
+    if (!this.visible && this.mode === PopupMode.Click && !this.disabled) {
       this.showPopup(event);
     } else {
       this.closePopup();
@@ -166,13 +170,33 @@ export default class Popin extends Vue {
 
   handleMouseEnter(event: UIEvent) {
     if (this.mode === PopupMode.Hover && !this.disabled) {
+      if (this.timeout) clearTimeout(this.timeout);
       this.showPopup(event);
     }
   }
 
-  handleMouseLeave() {
-    if (this.mode === PopupMode.Hover) {
+  handlePopupMouseEnter(event: UIEvent) {
+    if (this.mode === PopupMode.Hover && !this.disabled && this.timeout) {
+      clearTimeout(this.timeout);
+      this.showPopup(event);
+    }
+  }
+
+  debounceClosePopup() {
+    this.timeout = setTimeout(() => {
+      console.log(this.hovered);
       this.closePopup();
+    }, 200);
+  }
+
+  handleMouseLeave() {
+    if (this.mode === PopupMode.Hover && !this.disabled) {
+      this.debounceClosePopup();
+    }
+  }
+  handlePopupMouseLeave(event: UIEvent) {
+    if (this.mode === PopupMode.Hover && !this.disabled) {
+      this.debounceClosePopup();
     }
   }
 

@@ -12,20 +12,17 @@ export const state = () => ({});
 export const strict = false;
 
 export const actions = {
-  // Change to `nuxtServerInit` for server-side app
   async nuxtClientInit(_: any, { $cookies }: NuxtAppOptions) {
     const user = await getToken();
     if (user) {
       try {
-        Modules.AuthModule.mutations.connectUser({ user });
+        Modules.AuthModule.mutations.connectUser(user);
       } catch (e) {
         console.log(e);
-        clearToken();
-        Modules.AuthModule.mutations.disconnectUser();
+        Modules.AuthModule.actions.disconnectUser();
       }
     } else {
-      clearToken();
-      Modules.AuthModule.mutations.disconnectUser();
+      Modules.AuthModule.actions.disconnectUser();
     }
   },
 };

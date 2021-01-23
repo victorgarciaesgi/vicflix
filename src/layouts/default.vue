@@ -5,6 +5,12 @@
     <HeaderComponent v-if="loggedIn" />
     <PortalTarget multiple style="z-index: 11000" class="fixed top-0 left-0" name="Popup-Outlet" />
     <PortalTarget multiple style="z-index: 10500" class="fixed top-0 left-0" name="Modal-Outlet" />
+    <PortalTarget
+      multiple
+      style="z-index: 10500"
+      class="fixed top-0 left-0"
+      name="Preview-Outlet"
+    />
 
     <div id="rootView">
       <Nuxt />

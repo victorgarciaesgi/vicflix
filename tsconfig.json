@@ -37,7 +37,6 @@
       "@icons/*": ["assets/icons/*"],
       "@constructors": ["constructors/index.ts"],
       "@decorators": ["decorators/index.ts"],
-      "@hooks": ["hooks/index.ts"],
       "@mixins": ["mixins/index.ts"],
       "@colors": ["styles/colors.module.js"],
       "@utils": ["utils/index.ts"],

@@ -5,7 +5,7 @@
       :exact="route.exact"
       class="NavLink text-w200 flex items-center px-2 py-2 font-normal"
     >
-      <span class="text-md ml-3">{{ route.label }}</span>
+      <span class="text-md ml-3">{{ $t(route.label) }}</span>
     </nuxt-link>
   </div>
 </template>

@@ -1,6 +1,6 @@
-import { formatedMessages } from '@models';
+import { AppTrads } from '@models';
 import { defineNuxtPlugin } from '@nuxtjs/composition-api';
 
 export default defineNuxtPlugin((ctx, inject) => {
-  inject('messages', formatedMessages);
+  inject('messages', AppTrads);
 });

@@ -15,6 +15,14 @@ export type ObjectLiteral<TKey extends string | number | symbol = string, TValue
   TValue
 >;
 
+export enum BreakPointsTypes {
+  XSmall = 'xs',
+  Small = 'sm',
+  Medium = 'md',
+  Large = 'lg',
+  XLarge = 'xl',
+}
+
 export type Maybe<T> = T | null;
 
 export type IsValidArg<T> = T extends ObjectLiteral ? (keyof T extends never ? false : true) : true;

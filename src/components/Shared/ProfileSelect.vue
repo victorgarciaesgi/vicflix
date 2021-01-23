@@ -5,7 +5,9 @@
     </div>
     <div class="flex flex-col items-center justify-center flex-1 pb-10">
       <div class="Wrapper / flex flex-col">
-        <h1 class="-xl:text-5xl py-4 font-normal text-center">Qui est-ce ?</h1>
+        <h1 class="-xl:text-5xl py-4 font-normal text-center">{{
+          $t($messages.Login.WhoAreYou)
+        }}</h1>
         <div class="flex flex-row items-center justify-center">
           <button
             v-for="profile of profiles"

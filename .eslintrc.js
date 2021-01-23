@@ -45,6 +45,7 @@ module.exports = {
     'no-void': 'off',
     'import/named': 'off',
     'prettier/prettier': 'warn',
+    'no-undef': 'off',
     camelcase: 'off',
     'import/first': 'off',
     'no-use-before-define': 'off',

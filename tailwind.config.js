@@ -125,7 +125,7 @@ module.exports = {
     extend: {
       backgroundColor: ['important', 'active'],
       backgroundOpacity: ['important'],
-      display: ['important'],
+      display: ['important', 'group-hover'],
       margin: ['first', 'last', 'important'],
       visibility: ['responsive', 'important'],
       width: ['important'],

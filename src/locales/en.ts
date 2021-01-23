@@ -1,16 +1,17 @@
 import { LanguageConfig } from '@models';
 
-export const locale: LanguageConfig = {
+export default {
   Login: {
-    Button: 'Login',
+    WhoAreYou: "Who's watching?",
   },
-  Users: {
-    countUsers: 'No users | 1 user | {count} users',
+  Nav: {
+    Home: 'Home',
+    Projects: 'Projects',
+    Experience: 'Experience',
+    Studies: 'Studies',
   },
   config: {
     code: 'en',
     iso: 'en-US',
   },
 };
-
-export default locale;

@@ -86,9 +86,7 @@ export default class SvgIcon extends Vue {
 
 <style lang="postcss">
 .svg-container {
-  display: flex;
   flex: 0 0 auto;
-  align-items: center;
   float: left;
 
   svg {

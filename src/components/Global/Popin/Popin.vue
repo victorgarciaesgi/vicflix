@@ -106,6 +106,7 @@ export default class Popin extends Vue {
   @Prop({ default: PopupPlacement.Top }) placement!: PopupPlacement;
   @Prop({ required: false }) alignement?: PopupAlignement;
   @Prop({ default: false, type: Boolean }) inHeader?: boolean;
+  @Prop({ required: false, type: Boolean }) debounce?: boolean;
 
   @Emit()
   focus(event: Event) {
@@ -184,19 +185,26 @@ export default class Popin extends Vue {
 
   debounceClosePopup() {
     this.timeout = setTimeout(() => {
-      console.log(this.hovered);
       this.closePopup();
     }, 200);
   }
 
   handleMouseLeave() {
     if (this.mode === PopupMode.Hover && !this.disabled) {
-      this.debounceClosePopup();
+      if (this.debounce) {
+        this.debounceClosePopup();
+      } else {
+        this.closePopup();
+      }
     }
   }
   handlePopupMouseLeave(event: UIEvent) {
     if (this.mode === PopupMode.Hover && !this.disabled) {
-      this.debounceClosePopup();
+      if (this.debounce) {
+        this.debounceClosePopup();
+      } else {
+        this.closePopup();
+      }
     }
   }
 
@@ -265,7 +273,6 @@ export default class Popin extends Vue {
         !this.container &&
         Number(top.split('px')[0]) <= Number(headerHeight)
       ) {
-        console.log(Number(top.split('px')[0]));
         this.closePopup();
         return false;
       } else {

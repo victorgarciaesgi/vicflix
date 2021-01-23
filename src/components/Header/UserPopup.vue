@@ -1,5 +1,13 @@
 <template>
-  <Popin :width="200" mode="hover" in-header :arrow="true" :offset="4" alignement="End">
+  <Popin
+    :width="200"
+    mode="hover"
+    :debounce="true"
+    in-header
+    :arrow="true"
+    :offset="4"
+    alignement="End"
+  >
     <template #content>
       <div class="flex flex-col w-full text-sm">
         <div class="flex flex-col p-3">

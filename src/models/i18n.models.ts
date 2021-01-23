@@ -2,9 +2,9 @@ import * as Locales from '@locales';
 import { IConstant, ObjectLiteral } from './shared.model';
 
 const defaultLocale = process.env.NUXT_ENV_I18N_LOCALE as AvailableLocales;
-const { config, ...defaultMessages } = Locales.fr;
+const { config, ...defaultMessages } = Locales.en;
 
-function formatMessages(language: LanguageConfig, parent: string) {
+function formatMessages(language: LanguageConfig, parent: string): LocalesMessages {
   const { config, ...messages } = language;
   return Object.entries(messages).reduce((acc, [key, value]) => {
     const newParent = `${parent ? `${parent}.` : ''}${key}`;
@@ -18,7 +18,7 @@ function formatMessages(language: LanguageConfig, parent: string) {
       acc[key] = newParent;
     }
     return acc;
-  }, {});
+  }, {} as LocalesMessages);
 }
 
 type DefaultMessages = typeof defaultMessages;
@@ -38,7 +38,7 @@ export interface IsoConfig {
   iso: string;
 }
 
-export const formatedMessages = formatMessages(Locales.fr, '');
+export const AppTrads: LocalesMessages = formatMessages(Locales.fr, '');
 
 export type AvailableLocales = keyof typeof Locales;
 

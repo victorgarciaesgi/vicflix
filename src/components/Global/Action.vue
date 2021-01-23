@@ -274,13 +274,6 @@ export default class Action extends Vue {
     }
   }
 
-  &:hover {
-    @apply ring-2;
-  }
-  &:focus {
-    @apply ring-4;
-  }
-
   /* Theme */
   &.theme {
     &-inverted {
@@ -290,7 +283,6 @@ export default class Action extends Vue {
       &:hover,
       &:focus {
         background-color: var(--text5);
-        @apply ring-text5;
       }
       &:active {
         background-color: var(--text6);
@@ -304,7 +296,6 @@ export default class Action extends Vue {
       &:hover,
       &:focus {
         background-color: var(--bg2);
-        @apply ring-bg5;
       }
       &:active {
         background-color: var(--bg3);

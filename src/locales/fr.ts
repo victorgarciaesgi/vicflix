@@ -1,12 +1,19 @@
-export default {
+import { LanguageConfig } from '@models';
+
+export const locale: LanguageConfig = {
   Login: {
-    Button: 'Connexion',
+    WhoAreYou: 'Qui est-ce ?',
   },
-  Users: {
-    countUsers: 'Aucun utilisateurs | 1 utilisateur | {count} utilisateurs',
+  Nav: {
+    Home: 'Accueil',
+    Projects: 'Projets',
+    Experience: 'Expérience',
+    Studies: 'Études',
   },
   config: {
     code: 'fr',
     iso: 'fr-FR',
   },
 };
+
+export default locale;

@@ -55,14 +55,14 @@ export const build: NuxtOptionsBuild = {
   extend(config, { isDev, isClient }) {
     if (config.performance) config.performance.hints = 'warning';
     if (config.resolve) config.resolve.symlinks = false;
-    if (isDev && isClient && config.module) {
-      config.module.rules.push({
-        enforce: 'pre',
-        test: /\.(js|ts|vue)$/,
-        loader: 'eslint-loader',
-        exclude: /(node_modules)/,
-      });
-    }
+    // if (isDev && isClient && config.module) {
+    //   config.module.rules.push({
+    //     enforce: 'pre',
+    //     test: /\.(js|ts|vue)$/,
+    //     loader: 'eslint-loader',
+    //     exclude: /(node_modules)/,
+    //   });
+    // }
 
     if (config.resolve) {
       config.resolve.alias = {

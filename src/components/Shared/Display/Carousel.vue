@@ -25,20 +25,28 @@
     </div>
     <template v-if="arrows">
       <div
-        v-if="hasPreviousPage"
-        class="Arrow-Left / center group hover:bg-opacity-30 hover:bg-black absolute top-0 left-0 z-10 flex h-full text-white rounded-tr rounded-br cursor-pointer"
+        class="Arrow-Left / absolute top-0 left-0 z-10 flex h-full"
         :style="{ width: `${slidePadding / 2 - childGap}px` }"
-        @click="slidePrevious"
       >
-        <SvgIcon pointer src="carrousel/arrow_back" class="group-hover:block hidden w-10 h-10" />
+        <div
+          v-if="hasPreviousPage"
+          class="center group hover:bg-opacity-30 hover:bg-black flex w-full h-full text-white rounded-tr rounded-br cursor-pointer"
+          @click="slidePrevious"
+        >
+          <SvgIcon pointer src="carrousel/arrow_back" class="group-hover:block hidden w-10 h-10" />
+        </div>
       </div>
       <div
-        v-if="hasNextPage"
-        class="Arrow-Right / center group hover:bg-opacity-30 hover:bg-black absolute top-0 right-0 z-10 flex h-full text-white rounded-tl rounded-bl cursor-pointer"
+        class="Arrow-Right / absolute top-0 right-0 z-10 flex h-full"
         :style="{ width: `${slidePadding / 2 - childGap}px` }"
-        @click="slideNext"
       >
-        <SvgIcon pointer src="carrousel/arrow_next" class="group-hover:block hidden w-10 h-10" />
+        <div
+          v-if="hasNextPage"
+          class="center group hover:bg-opacity-30 hover:bg-black flex w-full h-full text-white rounded-tl rounded-bl cursor-pointer"
+          @click="slideNext"
+        >
+          <SvgIcon pointer src="carrousel/arrow_next" class="group-hover:block hidden w-10 h-10" />
+        </div>
       </div>
     </template>
   </div>
@@ -77,14 +85,12 @@ export default class Carrousel extends BreakpointMixin {
         .reduce(
           (acc, [breakpoint, value]) => {
             if (this.windowWidth < breakpoint && breakpoint < acc[0]) {
-              console.log(breakpoint, value);
               return [breakpoint, value];
             }
             return acc;
           },
           [99999, defaultValue]
         );
-      console.log(value);
       return value;
     } else {
       return this.itemsPerView;

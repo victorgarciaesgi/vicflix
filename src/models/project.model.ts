@@ -7,6 +7,8 @@ export interface Project {
   logo: string;
   technos: TechnosList[];
   link?: string;
+  year: number;
+  videoLink: string;
 }
 export interface Techno {
   title: string;

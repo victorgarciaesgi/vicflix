@@ -1,7 +1,7 @@
 <template>
   <div
     ref="root"
-    class="h-36 flex w-64"
+    class="h-36 flex w-64 cursor-pointer"
     @mouseenter="handleMouseEnter"
     @mouseleave="cancelMouseEnter"
   >
@@ -90,7 +90,7 @@ export default class ProjectPlaceholder extends Vue {
     this.showPreview = true;
 
     await Promise.all([this.$nextTick, Vue.nextTick]);
-    if (this.preview && this.pictureRef && this.previewBlock && !this.rendered) {
+    if (this.preview && this.pictureRef && this.previewBlock) {
       Object.assign(this.preview.style, {
         width: `${rootPosition.width}px`,
         transform: `translateX(${rootPosition.left}px) translateY(${rootPosition.top}px)`,
@@ -105,25 +105,33 @@ export default class ProjectPlaceholder extends Vue {
   async animateOpenPreview() {
     if (this.preview) {
       this.rendered = true;
-      const scaleZoom = 1.4;
-      const { height, top } = this.preview.getBoundingClientRect();
-      const initMesure = this.root.getBoundingClientRect();
-      const h2 = height * scaleZoom;
-      const t2 = initMesure.top - (h2 - height) / 2 + (height - initMesure.height) / 2;
-      this.root.style.opacity = '0';
-      anime({
-        targets: this.preview,
-        scale: scaleZoom,
-        translateY: t2,
-        duration: 200,
-        easing: 'cubicBezier(.5, .05, .1, .3)',
-      });
-      anime({
-        targets: this.previewBlock,
-        duration: 200,
-        opacity: 1,
-        easing: 'cubicBezier(.5, .05, .1, .3)',
-      });
+      const scaleZoom = 1.5;
+      const previewRect = this.preview.getBoundingClientRect();
+      const rootRect = this.root.getBoundingClientRect();
+      const ph = previewRect.height * scaleZoom;
+      const mt = (ph - previewRect.height) / 2;
+      const xPadding = (ph - rootRect.height) / 2 - mt;
+      const pt = rootRect.top - mt;
+      const tY = pt - ((ph - rootRect.height) / 2 - (rootRect.top - pt));
+      // console.log(ph, mt, pt, tY, xPadding, rootRect.top - xPadding);
+      const placeholderImage = new Image();
+      placeholderImage.onload = (ev) => {
+        this.root.style.opacity = '0';
+        anime({
+          targets: this.preview,
+          scale: scaleZoom,
+          translateY: rootRect.top - xPadding,
+          duration: 200,
+          easing: 'cubicBezier(.5, .05, .1, .3)',
+        });
+        anime({
+          targets: this.previewBlock,
+          duration: 200,
+          opacity: 1,
+          easing: 'cubicBezier(.5, .05, .1, .3)',
+        });
+      };
+      if (this.picture) placeholderImage.src = this.picture;
     }
   }
 

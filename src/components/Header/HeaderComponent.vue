@@ -1,5 +1,5 @@
 <template>
-  <header class="text-text1 fixed flex items-center justify-between px-10">
+  <header class="text-text1 fixed flex items-center justify-between px-10" :class="{ opaque }">
     <div class="flex-0 flex flex-row items-center">
       <img src="@images/vicflix.png" width="90" />
       <div class="px-8">
@@ -31,6 +31,7 @@ import UserPopup from './UserPopup.vue';
 export default class HeaderComponent extends Vue {
   public showBurger = false;
   public navRoutes = navRoutes;
+  public opaque = false;
   get isLoggedIn() {
     return AuthModule.state.loggedIn;
   }
@@ -41,6 +42,16 @@ export default class HeaderComponent extends Vue {
 
   get userInfos() {
     return AuthModule.state.user;
+  }
+
+  mounted() {
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 0) {
+        this.opaque = true;
+      } else {
+        this.opaque = false;
+      }
+    });
   }
 }
 </script>
@@ -54,6 +65,7 @@ header {
   width: 100%;
   z-index: 10003;
   flex-flow: row nowrap;
+  transition: background-color 0.4s ease-in-out;
 
   &::before {
     content: '';
@@ -63,6 +75,10 @@ header {
     width: 100%;
     height: 60px;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+  }
+
+  &.opaque {
+    background-color: rgba(0, 0, 0, 0.8);
   }
 }
 </style>

@@ -16,11 +16,11 @@
       >
         <VImg ref="pictureRef" :src="picture" fill="both" type="default" />
         <img :src="logo" class="left-3 top-3 absolute w-6 h-6" />
-        <div ref="previewBlock" class="Block / bg-bg2 flex flex-col">
-          <h3>{{ project.title }}</h3>
-          <span>Super ce projet!</span>
-
-          <span>bla lflezflezjhfl </span>
+        <div ref="previewBlock" class="Block / bg-bg2 flex flex-col p-2">
+          <h4 class="leading-5">{{ project.title }}</h4>
+          <div class="flex flex-row items-center justify-start">
+            <Techno v-for="techno of project.technos" :key="techno" :techno="techno" size="md" />
+          </div>
         </div>
       </div>
     </Portal>
@@ -32,8 +32,13 @@ import { Project } from '@models';
 import { Component, Vue, Prop, Ref } from 'nuxt-property-decorator';
 import anime from 'animejs';
 import { VImg } from '@components/Global';
+import Techno from './Techno.vue';
 
-@Component({})
+@Component({
+  components: {
+    Techno,
+  },
+})
 export default class ProjectPlaceholder extends Vue {
   @Prop() project!: Project;
 
@@ -112,7 +117,6 @@ export default class ProjectPlaceholder extends Vue {
       const mt = (ph - previewRect.height) / 2;
       const xPadding = (ph - rootRect.height) / 2 - mt;
       const pt = rootRect.top - mt;
-      const tY = pt - ((ph - rootRect.height) / 2 - (rootRect.top - pt));
       // console.log(ph, mt, pt, tY, xPadding, rootRect.top - xPadding);
       const placeholderImage = new Image();
       placeholderImage.onload = (ev) => {
@@ -132,6 +136,23 @@ export default class ProjectPlaceholder extends Vue {
         });
       };
       if (this.picture) placeholderImage.src = this.picture;
+    }
+  }
+
+  recalculatePreviewPosition() {
+    if (this.preview) {
+      const scaleZoom = 1.5;
+      const previewRect = this.preview.getBoundingClientRect();
+      const rootRect = this.root.getBoundingClientRect();
+      const ph = previewRect.height;
+      const mt = (ph - previewRect.height / scaleZoom) / 2;
+      const xPadding = (ph - rootRect.height) / 2 - mt;
+      const pt = rootRect.top - mt;
+      Object.assign(this.preview.style, {
+        transform: `translateX(${rootRect.left}px) translateY(${
+          rootRect.top - xPadding
+        }px) scale(${scaleZoom})`,
+      });
     }
   }
 
@@ -156,6 +177,12 @@ export default class ProjectPlaceholder extends Vue {
         easing: 'cubicBezier(.5, .05, .1, .3)',
       });
     }
+  }
+
+  mounted() {
+    window.addEventListener('scroll', () => {
+      this.recalculatePreviewPosition();
+    });
   }
 }
 </script>

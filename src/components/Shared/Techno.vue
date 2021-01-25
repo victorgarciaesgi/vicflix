@@ -4,7 +4,7 @@
       <span class="px-3 py-2 text-sm">{{ technoContent.title }}</span>
     </template>
     <template #button>
-      <SvgIcon :src="technoContent.logo" :size="getSize" />
+      <SvgIcon class="Techno" :src="technoContent.logo" :size="getSize" />
     </template>
   </Popin>
 </template>
@@ -30,3 +30,11 @@ export default class TechnoItem extends Vue {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+.Techno {
+  &:first-child {
+    margin-left: -5%;
+  }
+}
+</style>

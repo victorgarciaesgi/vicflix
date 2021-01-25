@@ -11,15 +11,46 @@
       <div
         v-show="showPreview"
         ref="preview"
-        class="Preview / fixed top-0 left-0 flex flex-col overflow-hidden rounded shadow-lg"
+        class="Preview / fixed top-0 left-0 flex flex-col overflow-hidden rounded cursor-pointer"
         @mouseleave="handleMouseLeave"
       >
         <VImg ref="pictureRef" :src="picture" fill="both" type="default" />
         <img :src="logo" class="left-3 top-3 absolute w-6 h-6" />
-        <div ref="previewBlock" class="Block / bg-bg2 flex flex-col p-2">
-          <h4 class="leading-5">{{ project.title }}</h4>
-          <div class="flex flex-row items-center justify-start">
-            <Techno v-for="techno of project.technos" :key="techno" :techno="techno" size="md" />
+        <div ref="previewBlock" class="Block / bg-bg2 flex-nowrap flex flex-row p-2">
+          <div class="flex flex-col flex-1">
+            <h4 class="leading-5">{{ project.title }}</h4>
+            <div class="text-text9 text-xxs flex flex-row items-center">
+              <span>{{ project.type }}</span>
+              <span class="px-1">•</span>
+              <span>{{ project.year }}</span>
+            </div>
+            <div class="flex flex-row items-center justify-start">
+              <Techno v-for="techno of project.technos" :key="techno" :techno="techno" size="md" />
+            </div>
+          </div>
+          <div class="flex-nowrap flex-0 flex flex-row items-center">
+            <Popin mode="hover" theme="white">
+              <template #content>
+                <span class="px-3 py-1 text-black">Lecture</span>
+              </template>
+              <template #button>
+                <div class="center flex p-1 text-black bg-white border-2 border-white rounded-full">
+                  <SvgIcon src="actions/play" :size="20" />
+                </div>
+              </template>
+            </Popin>
+            <Popin mode="hover" theme="white">
+              <template #content>
+                <span class="px-3 py-1 text-black">Plus d'infos</span>
+              </template>
+              <template #button>
+                <div
+                  class="center bg-bg4 border-bg10 flex p-1 ml-1 text-white border-2 rounded-full"
+                >
+                  <SvgIcon src="actions/expand" :size="20" />
+                </div>
+              </template>
+            </Popin>
           </div>
         </div>
       </div>
@@ -186,3 +217,9 @@ export default class ProjectPlaceholder extends Vue {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+.Preview {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 1);
+}
+</style>

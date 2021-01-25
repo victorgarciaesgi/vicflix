@@ -1,4 +1,4 @@
-import { Project } from '@models';
+import { Project, ProjectType } from '@models';
 import { TechnosList } from './technos.constant';
 
 export const milinusProject: Project = {
@@ -9,6 +9,7 @@ export const milinusProject: Project = {
   videoLink: '',
   year: 2020,
   link: 'https://www.milinus.com',
+  type: ProjectType.App,
   technos: [
     TechnosList.Nuxt,
     TechnosList.Vue,

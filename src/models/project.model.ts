@@ -9,8 +9,14 @@ export interface Project {
   link?: string;
   year: number;
   videoLink: string;
+  type: ProjectType;
 }
 export interface Techno {
   title: string;
   logo: string;
+}
+
+export enum ProjectType {
+  Site = 'Website',
+  App = 'App',
 }

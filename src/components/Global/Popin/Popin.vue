@@ -1,5 +1,5 @@
 <template>
-  <Fragment @click.native="handleClick">
+  <Fragment>
     <!-- Popin wrapper -->
     <Portal v-if="rendered" to="Popup-Outlet">
       <transition name="fade">
@@ -37,13 +37,13 @@
               /> -->
                 <path
                   class="st1"
-                  fill="black"
+                  :fill="theme"
                   d="M24.5,13h-23L12.47,1.71c0.29-0.3,0.77-0.3,1.06,0L24.5,13z"
                 />
               </g>
             </svg>
           </div>
-          <div class="max-h-inh flex overflow-x-hidden overflow-y-auto bg-black">
+          <div class="max-h-inh flex overflow-x-hidden overflow-y-auto" :class="[`bg-${theme}`]">
             <slot :alignement="alignement" name="content" />
           </div>
         </div>
@@ -102,11 +102,11 @@ export default class Popin extends Vue {
   @Prop({ default: '-1' }) tabindex!: string;
   @Prop({ default: true, type: Boolean }) rounded!: boolean;
   @Prop({ default: 0 }) offset!: number;
-  @Prop({ default: '--bg1' }) theme!: string;
   @Prop({ default: PopupPlacement.Top }) placement!: PopupPlacement;
   @Prop({ required: false }) alignement?: PopupAlignement;
   @Prop({ default: false, type: Boolean }) inHeader?: boolean;
   @Prop({ required: false, type: Boolean }) debounce?: boolean;
+  @Prop({ default: 'black' }) theme!: 'black' | 'white';
 
   @Emit()
   focus(event: Event) {

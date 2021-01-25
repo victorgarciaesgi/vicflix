@@ -2596,10 +2596,10 @@
     lodash "^4.17.15"
     pretty "^2.0.0"
 
-"@vuedx/analyze@0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@vuedx/analyze/-/analyze-0.6.0.tgz#93e1136e5259cb5ffc6b714cd5ffe63b70e89fb8"
-  integrity sha512-zq1d6PSQslESD8P1o0SejIjEWSnOLeWHfaWWW55oIVzMFseWiJKU56azn4nGA8gsb2goF2DPpbf74z1ZF4xrjg==
+"@vuedx/analyze@0.6.3":
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/@vuedx/analyze/-/analyze-0.6.3.tgz#f7f367ea1a1b10e22212a4f2f89d5781f17f3c84"
+  integrity sha512-LiQ7Ppw4nEr5qjth+gg1m48yXD7usOcAygUU10lLwfRRlDZevxAdZRcNuC0vBOXUG3xbl6CSDXnAMeWFdlUiyw==
   dependencies:
     "@babel/code-frame" "^7.10.4"
     "@babel/generator" "^7.12.1"
@@ -2608,106 +2608,106 @@
     "@babel/traverse" "7.12.1"
     "@babel/types" "7.12.1"
     "@types/micromatch" "^4.0.1"
-    "@vuedx/compiler-sfc" "0.6.0"
-    "@vuedx/compiler-tsx" "0.6.0"
-    "@vuedx/projectconfig" "0.6.0"
-    "@vuedx/shared" "0.6.0"
-    "@vuedx/template-ast-types" "0.6.0"
+    "@vuedx/compiler-sfc" "0.6.2"
+    "@vuedx/compiler-tsx" "0.6.3"
+    "@vuedx/projectconfig" "0.6.2"
+    "@vuedx/shared" "0.6.2"
+    "@vuedx/template-ast-types" "0.6.2"
     cli-highlight "^2.1.4"
     commander "^6.1.0"
     fast-glob "^3.2.4"
     hash-sum "^2.0.0"
     micromatch "^4.0.2"
 
-"@vuedx/compiler-sfc@0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@vuedx/compiler-sfc/-/compiler-sfc-0.6.0.tgz#94669e10cc65355b49dad44e953e3b426eec1bba"
-  integrity sha512-UNW6/NOgTDCUCCaQsM1ZW+XmfVIgTqn06FtrZGxvwYzq+9swqI41T788rNylGzTXcCbO5ksrEAUuANjU+vDmXA==
+"@vuedx/compiler-sfc@0.6.2":
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/@vuedx/compiler-sfc/-/compiler-sfc-0.6.2.tgz#f9a0d66eb48be839d363364ed4cd96967929f3cb"
+  integrity sha512-mJehCyO6BJiHCLPfVQQZb7RliuwBh7voGkrF27SkA3yhv44VSDaMbDIX2VRm3utl1CacFEVdNFqB9QYviZByfg==
   dependencies:
     "@vue/compiler-core" "^3.0.2"
     lru-cache "^6.0.0"
     source-map "^0.6.1"
 
-"@vuedx/compiler-tsx@0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@vuedx/compiler-tsx/-/compiler-tsx-0.6.0.tgz#54c2cc3f104cb1011a0e667d9defa9c385242200"
-  integrity sha512-lMufESTvpX51jRMgxoqgjn8rGSZJv2ChijkDDn9Lv5TPAf7m0hEvJ7gZa/oLlqk+zk0I8wzTDmr0lE5dCIWdNg==
+"@vuedx/compiler-tsx@0.6.3":
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/@vuedx/compiler-tsx/-/compiler-tsx-0.6.3.tgz#d5ed641ee5c90baf3a04962f47e8c9d31d318b9a"
+  integrity sha512-H1SSgUHQXWoTnrIxvl9uXGMUqKlWjNddp8xc+EAg7BRQ4F7kFzHTzOsafG5xzrqnmZujj8cLUknG123rWgsxIg==
   dependencies:
     "@babel/parser" "7.12.3"
     "@babel/types" "7.12.1"
     "@vue/compiler-core" "^3.0.1"
-    "@vuedx/shared" "0.6.0"
-    "@vuedx/template-ast-types" "0.6.0"
+    "@vuedx/shared" "0.6.2"
+    "@vuedx/template-ast-types" "0.6.2"
 
-"@vuedx/projectconfig@0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@vuedx/projectconfig/-/projectconfig-0.6.0.tgz#e38607528cafea3644358f6a1b5881587d4c3ab5"
-  integrity sha512-9xr8CpBl+s9fLLckQHEk7b665Le5OHDInAADOVaUzBnXOLyWD9mtGn5t+ljvDUspEGnoRYGxLukCrlzGohy8eQ==
+"@vuedx/projectconfig@0.6.2":
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/@vuedx/projectconfig/-/projectconfig-0.6.2.tgz#4c7c32fc76a5a0cb2a8a8b4c4530183d7b70decc"
+  integrity sha512-qoekczmYpg4bOHMUduGgwGEWYq2CZL9HfztNzSPaJnErTBc4VNFnCBLsAtFPLkILASh6vzE2m/EpIzSpMW5mJQ==
 
-"@vuedx/shared@0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@vuedx/shared/-/shared-0.6.0.tgz#a296bbad3ea7c012ac3f978d823348cd5512f590"
-  integrity sha512-DpHDUoP7urxYXItXYTieTp/HIxcuH2Lhbukx6xAZGCwjo1/8scao49mDgprkc1jWM4cabzrHgwagtcx/ExF4pA==
+"@vuedx/shared@0.6.2":
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/@vuedx/shared/-/shared-0.6.2.tgz#ada493a0af75306e37ac19fe8e836f1ce07c8745"
+  integrity sha512-xCXK+X5iDXkNfLglxFGFeEtqSWlopU8Cj6dGgMABWlee7HVDl47A4sj5oQpKuTjwRJHyE+BYtgGxtf1eLee5Yg==
   dependencies:
     "@sentry/node" "^5.30.0"
     node-unique-machine-id "^1.1.0"
     uuid "^8.3.2"
 
-"@vuedx/template-ast-types@0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@vuedx/template-ast-types/-/template-ast-types-0.6.0.tgz#e494b7737b4474a0d7d9b599a7755af5645ad6d9"
-  integrity sha512-VUooW3BrQFgydEDP8I0vk4VBSjPORlqCEIJpX3uc4TAR7RIsWExC55c57lOkfrOAELGvxCv2ouy28bfwL0djsg==
+"@vuedx/template-ast-types@0.6.2":
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/@vuedx/template-ast-types/-/template-ast-types-0.6.2.tgz#8932b665abfed4593a0bdbfa91ed788056876770"
+  integrity sha512-TY3IesmF6/XbZnlLnImE30MXVJeXpMh8F5ZKZeeVDIvDWmPDZ6fC8DbDj1GycZtx77C85yZRnJJqq5v0AED4aw==
   dependencies:
     "@vue/compiler-core" "^3.0.0"
 
-"@vuedx/typecheck@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@vuedx/typecheck/-/typecheck-0.6.0.tgz#05dbdb55d4f453112a870d834acf00078876959d"
-  integrity sha512-QExuNoY8cMEvFg11gSH/w1s9cdWDw00/yCeXf3+GnMnuX7MARxzXC5v8zSoWBz6p8nxeVaxiELlo2uZbGwwnQg==
+"@vuedx/typecheck@^0.6.3":
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/@vuedx/typecheck/-/typecheck-0.6.3.tgz#d66b8dcfa8d7d37ccfa196d019c8a5cc8bc7fc4d"
+  integrity sha512-1WfUI+bqg1O8Vklz24EZdsUE6ak4QCxtV6gWrUw+VUbep7ANhZM4RkaMsDFWVdeb2dip9ROrO8ESBrsIViPT8Q==
   dependencies:
-    "@vuedx/shared" "0.6.0"
-    "@vuedx/typescript-plugin-vue" "0.6.0"
-    "@vuedx/vue-virtual-textdocument" "0.6.0"
+    "@vuedx/shared" "0.6.2"
+    "@vuedx/typescript-plugin-vue" "0.6.3"
+    "@vuedx/vue-virtual-textdocument" "0.6.3"
     chalk "^4.1.0"
     fast-glob "^3.2.4"
     minimist "^1.2.5"
     resolve-from "^5.0.0"
     typescript "^4.0.3"
 
-"@vuedx/typescript-plugin-vue@0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@vuedx/typescript-plugin-vue/-/typescript-plugin-vue-0.6.0.tgz#69db85c01f7f9256a51b80363e127d78c15efc78"
-  integrity sha512-hTtqSPrU6hpZGQ1LH/mmK5G1gluXCWmD/Q46IzviMIzdJVC14W6BkxwoOMyg9+fIKtkMplqzBTPsK65FhDlOjA==
+"@vuedx/typescript-plugin-vue@0.6.3":
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/@vuedx/typescript-plugin-vue/-/typescript-plugin-vue-0.6.3.tgz#cc2d99bdc0abbde9bb5909341c47715af00539a3"
+  integrity sha512-zAhXM9LDVYvjAMnTiqf6yZcJXXh1rQrH3JhcmQNmlxk26sRysfa/VWNC8qkfq9vcOKRf1eQusH4g+Vov6qPGig==
   dependencies:
     "@intlify/core" "^9.0.0-beta.15"
-    "@vuedx/analyze" "0.6.0"
-    "@vuedx/compiler-sfc" "0.6.0"
-    "@vuedx/projectconfig" "0.6.0"
-    "@vuedx/shared" "0.6.0"
-    "@vuedx/template-ast-types" "0.6.0"
-    "@vuedx/vue-virtual-textdocument" "0.6.0"
+    "@vuedx/analyze" "0.6.3"
+    "@vuedx/compiler-sfc" "0.6.2"
+    "@vuedx/projectconfig" "0.6.2"
+    "@vuedx/shared" "0.6.2"
+    "@vuedx/template-ast-types" "0.6.2"
+    "@vuedx/vue-virtual-textdocument" "0.6.3"
     de-indent "^1.0.2"
     json5 "^2.1.3"
     quick-lru "^5.1.1"
     vscode-uri "^2.1.2"
     vscode-web-custom-data "^0.3.2"
 
-"@vuedx/typescript-vetur@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@vuedx/typescript-vetur/-/typescript-vetur-0.6.0.tgz#ac2cb1b465e81af4a7b5e7a8c9ee9f2a8012605b"
-  integrity sha512-i8YDRO0ibxSeUeclWBhHc+Y3eYY18cOCa7THfv9xdDB0yicNmLB7zyN8YuDNYC/4O7gZmyI0iky2VVjaOHA21A==
+"@vuedx/typescript-vetur@^0.6.3":
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/@vuedx/typescript-vetur/-/typescript-vetur-0.6.3.tgz#2d7e2fc7ce1e0c1c31d9df56222a71bc62289120"
+  integrity sha512-mVhxWxBrHRA+fQwxGK+UM6Dhq+q1jCa2EEtrf3UmyTO2eP1S2Tx1EihOf1eOTM2nrfLulGC31EgsmPMobCpVsw==
   dependencies:
-    "@vuedx/typescript-plugin-vue" "0.6.0"
+    "@vuedx/typescript-plugin-vue" "0.6.3"
 
-"@vuedx/vue-virtual-textdocument@0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@vuedx/vue-virtual-textdocument/-/vue-virtual-textdocument-0.6.0.tgz#2df68c78cd3a9d69cf56fae9581c939ebc22990d"
-  integrity sha512-LkJRmuyvTS3j9UoLPVIPB0/V6WhyuFtCHIzg6guGU/HxfhzttXC0/LQZ9gMCIC4RmDM0fpYb4pIkxjKWPGcZMw==
+"@vuedx/vue-virtual-textdocument@0.6.3":
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/@vuedx/vue-virtual-textdocument/-/vue-virtual-textdocument-0.6.3.tgz#750484d93378b47ead5f6e319e32d33160ed5658"
+  integrity sha512-FN5h4GsIcYAIfFbal0+1ryddDgpxMx/gxGE5QYinbwj5PwILZzyAUt//drQfppIHzCL+TJuZSml7fAod5tYvQA==
   dependencies:
-    "@vuedx/analyze" "0.6.0"
-    "@vuedx/compiler-sfc" "0.6.0"
-    "@vuedx/compiler-tsx" "0.6.0"
-    "@vuedx/shared" "0.6.0"
+    "@vuedx/analyze" "0.6.3"
+    "@vuedx/compiler-sfc" "0.6.2"
+    "@vuedx/compiler-tsx" "0.6.3"
+    "@vuedx/shared" "0.6.2"
     source-map "^0.6.1"
     vscode-languageserver-textdocument "^1.0.1"
     vscode-uri "^2.1.2"

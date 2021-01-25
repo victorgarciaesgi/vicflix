@@ -105,7 +105,7 @@ export default class ProjectPlaceholder extends Vue {
   async animateOpenPreview() {
     if (this.preview) {
       this.rendered = true;
-      const scaleZoom = 1.7;
+      const scaleZoom = 1.4;
       const { height, top } = this.preview.getBoundingClientRect();
       const initMesure = this.root.getBoundingClientRect();
       const h2 = height * scaleZoom;

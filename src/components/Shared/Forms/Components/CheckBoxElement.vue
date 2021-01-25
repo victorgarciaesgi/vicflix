@@ -95,7 +95,7 @@ export default class CheckBoxElement extends FormMixin {
 
       &:checked + label.button {
         background-color: var(--blue);
-        background-image: url('~@icons/forms/done_white.png');
+        /* background-image: url('~@icons/forms/done_white.png'); */
         border: 1px solid transparent;
 
         & ~ span {

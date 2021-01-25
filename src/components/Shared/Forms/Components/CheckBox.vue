@@ -112,7 +112,7 @@ $bgColor: var(--blue);
 
       &:checked + label.button {
         background-color: $bgColor;
-        background-image: url('~@icons/forms/done_white.png');
+        /* background-image: url('~@icons/forms/done_white.png'); */
         background-position: center center;
         border: 1px solid transparent;
 

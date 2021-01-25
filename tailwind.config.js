@@ -106,6 +106,9 @@ module.exports = {
       flex: {
         0: '0 0 auto',
       },
+      height: {
+        '2px': '2px',
+      },
       inset: {
         full: '100%',
         header: 'var(--headerHeight)',

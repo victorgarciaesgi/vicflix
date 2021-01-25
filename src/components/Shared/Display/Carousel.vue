@@ -97,6 +97,13 @@ export default class Carrousel extends BreakpointMixin {
     }
   }
 
+  @Watch('currentIndex', { immediate: true }) indexChanged() {
+    this.$emit('update:index', this.currentIndex);
+  }
+  @Watch('totalSlides', { immediate: true }) slidesChanged() {
+    this.$emit('update:slides', this.totalSlides);
+  }
+
   @Watch('windowWidth')
   windowChanged(value: number) {
     this.breakpointChanged(this.calculatedItemsPerView);

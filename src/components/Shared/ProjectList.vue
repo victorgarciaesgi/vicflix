@@ -1,14 +1,26 @@
 <template>
   <div class="c-row-y flex w-full py-3">
-    <h2 class="font-semibold" style="margin-left: 53px">
-      <slot />
-    </h2>
+    <div class="flex-nowrap flex flex-row justify-between">
+      <h2 class="font-semibold" style="margin-left: 53px">
+        <slot />
+      </h2>
+      <div class="Bullets / flex-nowrap flex flex-row items-center" style="padding-right: 50px">
+        <div
+          v-for="slide of totalSlides"
+          :key="slide"
+          class="bg-bg7 h-2px w-5 ml-1"
+          :class="{ '!bg-text1': currentIndex + 1 === slide }"
+        ></div>
+      </div>
+    </div>
     <Carrousel
       :arrows="true"
       :bullets="false"
       :center="true"
       :items-per-view="[[500, 1], [800, 2], [1100, 3], [1200, 4], [1500, 5], 6]"
       class="h-36"
+      @update:index="currentIndex = $event"
+      @update:slides="totalSlides = $event"
     >
       <ProjectPlaceholder v-for="(project, index) of projects" :key="index" :project="project" />
     </Carrousel>
@@ -28,5 +40,8 @@ import ProjectPlaceholder from './ProjectPlaceholder.vue';
 })
 export default class ProjectList extends Vue {
   @Prop({ required: true }) projects!: Project[];
+
+  public currentIndex = 0;
+  public totalSlides = 0;
 }
 </script>

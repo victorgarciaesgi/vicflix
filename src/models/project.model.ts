@@ -10,6 +10,7 @@ export interface Project {
   year: number;
   videoLink: string;
   type: ProjectType;
+  id: string;
 }
 export interface Techno {
   title: string;

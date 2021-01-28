@@ -1,10 +1,10 @@
 <template>
-  <Popin v-if="technoContent" mode="hover">
+  <Popin v-if="technoContent" class="Techno" mode="hover">
     <template #content>
       <span class="px-3 py-2 text-sm">{{ technoContent.title }}</span>
     </template>
     <template #button>
-      <SvgIcon class="Techno" :src="technoContent.logo" :size="getSize" />
+      <SvgIcon :src="technoContent.logo" :size="getSize" />
     </template>
   </Popin>
 </template>

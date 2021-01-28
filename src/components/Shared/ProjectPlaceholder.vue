@@ -10,8 +10,10 @@
     <Portal v-if="init" to="Preview-Outlet">
       <div
         v-show="showPreview"
+        :id="project.id"
         ref="preview"
         class="Preview / fixed top-0 left-0 flex flex-col overflow-hidden rounded cursor-pointer"
+        :data-show="showPreview"
         @mouseleave="handleMouseLeave"
       >
         <VImg ref="pictureRef" :src="picture" fill="both" type="default" />
@@ -44,11 +46,12 @@
                 <span class="px-3 py-1 text-black">Plus d'infos</span>
               </template>
               <template #button>
-                <div
+                <NuxtLink
+                  :to="toPreviewLink"
                   class="center bg-bg4 border-bg10 flex p-1 ml-1 text-white border-2 rounded-full"
                 >
                   <SvgIcon src="actions/expand" :size="20" />
-                </div>
+                </NuxtLink>
               </template>
             </Popin>
           </div>
@@ -63,6 +66,7 @@ import { Project } from '@models';
 import { Component, Vue, Prop, Ref } from 'nuxt-property-decorator';
 import anime from 'animejs';
 import { VImg } from '@components/Global';
+import { Location } from 'vue-router';
 import Techno from './Techno.vue';
 
 @Component({
@@ -90,6 +94,14 @@ export default class ProjectPlaceholder extends Vue {
     }
     return null;
   }
+  get toPreviewLink(): Location {
+    return {
+      path: this.$route.path,
+      query: {
+        jbv: this.project.id,
+      },
+    };
+  }
 
   get logo() {
     return `/logos/${this.project.logo}`;
@@ -115,7 +127,7 @@ export default class ProjectPlaceholder extends Vue {
 
   debounceClosePreview() {
     this.timeout = setTimeout(() => {
-      this.closePreview();
+      // this.closePreview();
     }, 100);
   }
 
@@ -147,7 +159,7 @@ export default class ProjectPlaceholder extends Vue {
       const ph = previewRect.height * scaleZoom;
       const mt = (ph - previewRect.height) / 2;
       const xPadding = (ph - rootRect.height) / 2 - mt;
-      const pt = rootRect.top - mt;
+      const ty = rootRect.top - xPadding;
       // console.log(ph, mt, pt, tY, xPadding, rootRect.top - xPadding);
       const placeholderImage = new Image();
       placeholderImage.onload = (ev) => {
@@ -155,7 +167,7 @@ export default class ProjectPlaceholder extends Vue {
         anime({
           targets: this.preview,
           scale: scaleZoom,
-          translateY: rootRect.top - xPadding,
+          translateY: ty,
           duration: 200,
           easing: 'cubicBezier(.5, .05, .1, .3)',
         });

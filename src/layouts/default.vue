@@ -15,7 +15,9 @@
     <div id="rootView">
       <Nuxt />
     </div>
-    <ProfileSelect v-if="!loggedIn" />
+    <transition name="fade">
+      <ProfileSelect v-if="!loggedIn" />
+    </transition>
   </div>
 </template>
 

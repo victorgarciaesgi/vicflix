@@ -30,10 +30,14 @@
       >
         <div
           v-if="hasPreviousPage"
-          class="center group hover:bg-opacity-30 hover:bg-black flex w-full h-full text-white rounded-tr rounded-br cursor-pointer"
+          class="center group -md:hover:bg-opacity-30 -md:hover:bg-black md:bg-black md:bg-opacity-30 flex w-full h-full text-white rounded-tr rounded-br cursor-pointer"
           @click="slidePrevious"
         >
-          <SvgIcon pointer src="carrousel/arrow_back" class="group-hover:block hidden w-10 h-10" />
+          <SvgIcon
+            pointer
+            src="carrousel/arrow_back"
+            class="-md:group-hover:block md:block hidden w-10 h-10"
+          />
         </div>
       </div>
       <div
@@ -42,10 +46,14 @@
       >
         <div
           v-if="hasNextPage"
-          class="center group hover:bg-opacity-30 hover:bg-black flex w-full h-full text-white rounded-tl rounded-bl cursor-pointer"
+          class="center group -md:hover:bg-opacity-30 -md:hover:bg-black md:bg-black md:bg-opacity-30 flex w-full h-full text-white rounded-tl rounded-bl cursor-pointer"
           @click="slideNext"
         >
-          <SvgIcon pointer src="carrousel/arrow_next" class="group-hover:block hidden w-10 h-10" />
+          <SvgIcon
+            pointer
+            src="carrousel/arrow_next"
+            class="-md:group-hover:block md:block hidden w-10 h-10"
+          />
         </div>
       </div>
     </template>

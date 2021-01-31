@@ -4,11 +4,11 @@
     @click="goBack"
   >
     <div
-      class="Modal / flex-0 center bg-bg2 flex flex-col m-auto"
+      class="Modal / flex-0 bg-bg2 flex flex-col m-auto overflow-hidden rounded"
       style="width: 800px; height: 600px"
     >
-      <div v-if="project" class="center flex">
-        {{ project.title }}
+      <div v-if="project" class="flex flex-col">
+        <VImg :src="picture" type="default" fill="width" />
       </div>
     </div>
   </div>
@@ -24,6 +24,17 @@ export default class ProjectPreview extends Vue {
   @Prop() id!: string;
 
   public project: Project | null = null;
+
+  get picture() {
+    if (this.project) {
+      const match = /^(.+)(\.\w+)$/.exec(this.project.picture);
+      if (match) {
+        return `/projects/${match[1]}_placeholder${match[2]}`;
+      }
+      return null;
+    }
+    return null;
+  }
 
   @Watch('id', { immediate: true }) idChanged() {
     const project = allProjects.find((f) => f.id === this.id);

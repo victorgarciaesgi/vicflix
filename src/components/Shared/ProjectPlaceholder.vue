@@ -1,7 +1,8 @@
 <template>
   <div
     ref="root"
-    class="h-36 flex w-64 cursor-pointer"
+    class="ProjectPlaceholder / h-36 flex w-64 cursor-pointer"
+    :data-show="showPreview"
     @mouseenter="handleMouseEnter"
     @mouseleave="cancelMouseEnter"
   >
@@ -127,7 +128,7 @@ export default class ProjectPlaceholder extends Vue {
 
   debounceClosePreview() {
     this.timeout = setTimeout(() => {
-      // this.closePreview();
+      this.closePreview();
     }, 100);
   }
 

@@ -43,7 +43,10 @@
               </g>
             </svg>
           </div>
-          <div class="max-h-inh flex overflow-x-hidden overflow-y-auto" :class="[`bg-${theme}`]">
+          <div
+            class="max-h-inh flex overflow-x-hidden overflow-y-auto"
+            :class="[`bg-${theme}`, { 'rounded-md': rounded }]"
+          >
             <slot :alignement="alignement" name="content" />
           </div>
         </div>

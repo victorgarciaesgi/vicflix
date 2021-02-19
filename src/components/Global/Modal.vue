@@ -1,8 +1,8 @@
 <template>
-  <Portal v-if="show" to="Modal-Outlet">
+  <Portal to="Modal-Outlet">
     <transition name="bounce">
       <div
-        v-show="show"
+        v-if="show"
         class="modal-base center"
         :class="{ full: !isPopup, fitWindow }"
         @click="closeModal"
@@ -87,7 +87,7 @@ export default class UIModal extends Vue {
   align-items: center;
   justify-content: center;
   padding: 20px;
-  z-index: 10002;
+  z-index: 100500;
 
   &.full {
     z-index: 2;

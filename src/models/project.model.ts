@@ -1,14 +1,27 @@
 import { TechnosList } from '@constants';
 
+export interface ProjectLink {
+  title: string;
+  link: string;
+}
+
+export interface ProjectVideo {
+  title: string;
+  duration: number;
+  description: string;
+  episode: number;
+  preview: string;
+  id: string;
+}
 export interface Project {
   title: string;
   description: string;
   picture: string;
   logo: string;
   technos: TechnosList[];
-  link?: string;
+  links?: ProjectLink[];
   year: number;
-  videoLink: string;
+  videos: ProjectVideo[];
   type: ProjectType;
   id: string;
 }

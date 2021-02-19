@@ -23,8 +23,6 @@ export enum BreakPointsTypes {
   XLarge = 'xl',
 }
 
-export type Maybe<T> = T | null;
-
 export type IsValidArg<T> = T extends ObjectLiteral ? (keyof T extends never ? false : true) : true;
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type KeepProperties<T, P> = Pick<T, { [K in keyof T]: T[K] extends P ? K : never }[keyof T]>;

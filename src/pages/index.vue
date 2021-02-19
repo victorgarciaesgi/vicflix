@@ -1,15 +1,7 @@
 <template>
   <div class="flex flex-col w-full">
     <NuxtChild />
-    <transition
-      :css="false"
-      @before-enter="beforeEnter"
-      @enter="enter"
-      @leave="leave"
-      @before-leave="beforeLeave"
-    >
-      <ProjectPreview v-if="showPreview" :id="projectId" />
-    </transition>
+    <ProjectPreview :id="projectId" :show="showPreview" />
   </div>
 </template>
 
@@ -17,10 +9,9 @@
 import { authMiddleware } from '@middleware';
 import { TransitionMixin } from '@mixins';
 import { navRoutes, TransitionDirection, TransitionType } from '@models';
-import { Component, Vue, Watch } from 'nuxt-property-decorator';
-import { Context } from '@nuxt/types';
+import { Component, Watch } from 'nuxt-property-decorator';
 import { ProjectPreview } from '@components';
-import anime from 'animejs';
+import { sgts } from '@services';
 
 @Component({
   middleware: authMiddleware,
@@ -38,82 +29,87 @@ export default class IndexRoot extends TransitionMixin {
 
   public cardOrigin: HTMLDivElement | null = null;
 
-  beforeEnter(el: HTMLDivElement) {
-    // el.style.opacity = '0';
-    document.body.style.overflowY = 'hidden';
-  }
-  enter(el: HTMLDivElement, done: () => void) {
-    const origin = document.querySelector(`#${this.projectId}[data-show=true]`);
-    if (origin) {
-      this.cardOrigin = document.querySelector(`.ProjectPlaceholder[data-show=true]`);
-      console.log(document.querySelector(`.ProjectPlaceholder[data-show=true]`));
-      const originRect = origin.getBoundingClientRect();
-      const childEl = el.children[0] as HTMLDivElement;
-      const childRect = childEl.getBoundingClientRect();
-      const scaleX = originRect.width / childRect.width;
-      const scaleY = originRect.height / childRect.height;
-      // top
+  // async fetch() {
+  //   const projects = await sgts.projects().$fetch();
+  //   console.log(projects);
+  // }
 
-      const pTop = childRect.top + (childRect.height - originRect.height) / 2;
-      console.log({ pTop });
+  // beforeEnter(el: HTMLDivElement) {
+  //   // el.style.opacity = '0';
+  //   document.body.style.overflowY = 'hidden';
+  // }
+  // enter(el: HTMLDivElement, done: () => void) {
+  //   const origin = document.querySelector(`#${this.projectId}[data-show=true]`);
+  //   if (origin) {
+  //     this.cardOrigin = document.querySelector(`.ProjectPlaceholder[data-show=true]`);
+  //     console.log(document.querySelector(`.ProjectPlaceholder[data-show=true]`));
+  //     const originRect = origin.getBoundingClientRect();
+  //     const childEl = el.children[0] as HTMLDivElement;
+  //     const childRect = childEl.getBoundingClientRect();
+  //     const scaleX = originRect.width / childRect.width;
+  //     const scaleY = originRect.height / childRect.height;
+  //     // top
 
-      const pLeft = childRect.left + (childRect.width - originRect.width) / 2;
-      console.log({ pLeft });
+  //     const pTop = childRect.top + (childRect.height - originRect.height) / 2;
+  //     console.log({ pTop });
 
-      console.log(childRect.top + (childRect.height - originRect.height) / 2);
-      childEl.style.transform = `scaleX(${scaleX}) scaleY(${scaleY}) translateX(${
-        (originRect.left - pLeft) / scaleX
-      }px) translateY(${(originRect.top - pTop) / scaleY}px) `;
-      // anime({
-      //   targets: el,
-      //   opacity: 1,
-      //   duration: 300,
-      //   easing: 'cubicBezier(.5, .05, .1, .3)',
-      // });
-      anime({
-        targets: childEl,
-        translateX: 0,
-        translateY: 0,
-        scaleX: 1,
-        scaleY: 1,
-        easing: 'easeOutQuint',
-        duration: 300,
-        complete: done,
-      });
-    }
-  }
+  //     const pLeft = childRect.left + (childRect.width - originRect.width) / 2;
+  //     console.log({ pLeft });
 
-  beforeLeave(el: HTMLDivElement) {}
+  //     console.log(childRect.top + (childRect.height - originRect.height) / 2);
+  //     childEl.style.transform = `scaleX(${scaleX}) scaleY(${scaleY}) translateX(${
+  //       (originRect.left - pLeft) / scaleX
+  //     }px) translateY(${(originRect.top - pTop) / scaleY}px) `;
+  //     // anime({
+  //     //   targets: el,
+  //     //   opacity: 1,
+  //     //   duration: 300,
+  //     //   easing: 'cubicBezier(.5, .05, .1, .3)',
+  //     // });
+  //     anime({
+  //       targets: childEl,
+  //       translateX: 0,
+  //       translateY: 0,
+  //       scaleX: 1,
+  //       scaleY: 1,
+  //       easing: 'easeOutQuint',
+  //       duration: 300,
+  //       complete: done,
+  //     });
+  //   }
+  // }
 
-  leave(el: HTMLDivElement, done: () => void) {
-    document.body.style.overflowY = 'auto';
-    console.log(this.cardOrigin);
-    if (this.cardOrigin) {
-      const originRect = this.cardOrigin.getBoundingClientRect();
-      const childEl = el.children[0] as HTMLDivElement;
-      const childRect = childEl.getBoundingClientRect();
-      const scaleX = originRect.width / childRect.width;
-      const scaleY = originRect.height / childRect.height;
-      // top
+  // beforeLeave(el: HTMLDivElement) {}
 
-      const pTop = childRect.top + (childRect.height - originRect.height) / 2;
+  // leave(el: HTMLDivElement, done: () => void) {
+  //   document.body.style.overflowY = 'auto';
+  //   console.log(this.cardOrigin);
+  //   if (this.cardOrigin) {
+  //     const originRect = this.cardOrigin.getBoundingClientRect();
+  //     const childEl = el.children[0] as HTMLDivElement;
+  //     const childRect = childEl.getBoundingClientRect();
+  //     const scaleX = originRect.width / childRect.width;
+  //     const scaleY = originRect.height / childRect.height;
+  //     // top
 
-      const pLeft = childRect.left + (childRect.width - originRect.width) / 2;
+  //     const pTop = childRect.top + (childRect.height - originRect.height) / 2;
 
-      anime({
-        targets: childEl,
-        translateX: (originRect.left - pLeft) / scaleX,
-        translateY: (originRect.top - pTop) / scaleY,
-        scaleX,
-        scaleY,
-        easing: 'easeOutQuint',
-        duration: 300,
-        complete: done,
-      });
-    } else {
-      done();
-    }
-  }
+  //     const pLeft = childRect.left + (childRect.width - originRect.width) / 2;
+
+  //     anime({
+  //       targets: childEl,
+  //       translateX: (originRect.left - pLeft) / scaleX,
+  //       translateY: (originRect.top - pTop) / scaleY,
+  //       scaleX,
+  //       scaleY,
+  //       easing: 'easeOutQuint',
+  //       duration: 300,
+  //       complete: done,
+  //     });
+  //   } else {
+  //     done();
+  //   }
+  // }
 
   get routeParam() {
     return this.$route.query;
@@ -121,7 +117,6 @@ export default class IndexRoot extends TransitionMixin {
 
   @Watch('routeParam', { deep: true, immediate: true }) routeChanged() {
     const jbv = this.$route.query.jbv;
-    console.log(jbv);
     if (jbv && typeof jbv === 'string') {
       this.showPreview = true;
       this.projectId = jbv;

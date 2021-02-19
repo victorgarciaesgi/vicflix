@@ -6,6 +6,7 @@
     in-header
     :arrow="true"
     :offset="4"
+    :rounded="false"
     alignement="End"
   >
     <template #content>

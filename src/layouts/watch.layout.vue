@@ -2,15 +2,8 @@
   <div id="app" class="flex">
     <ToastContainer />
     <AlertsContainer />
-    <HeaderComponent v-if="loggedIn" />
     <PortalTarget multiple style="z-index: 11000" class="fixed top-0 left-0" name="Popup-Outlet" />
     <PortalTarget multiple style="z-index: 10600" class="fixed top-0 left-0" name="Modal-Outlet" />
-    <PortalTarget
-      multiple
-      style="z-index: 10500"
-      class="fixed top-0 left-0"
-      name="Preview-Outlet"
-    />
 
     <div id="rootView">
       <Nuxt />
@@ -34,7 +27,7 @@ import { AuthModule, DarkModeModule, DisplayTheme, RouterModule } from '@store';
     ProfileSelect,
   },
 })
-export default class App extends Vue {
+export default class WatchLayout extends Vue {
   get loggedIn() {
     return AuthModule.state.loggedIn;
   }

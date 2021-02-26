@@ -84,7 +84,7 @@
 </template>
 
 <script lang="ts">
-import { allProjects } from '@constants';
+import { allProjects } from '@data';
 import { Project } from '@models';
 import { Component, Vue, Prop, Watch } from 'nuxt-property-decorator';
 import Techno from './Techno.vue';

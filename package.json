@@ -18,6 +18,7 @@
     "start": "nuxt-ts start",
     "build": "./scripts/build.sh",
     "deploy": "./scripts/deploy.sh",
+    "generate": "sgts generate",
     "lint": "eslint -c .eslintrc.js . --ext .ts,.vue --fix --ignore-path .gitignore",
     "patch": "npm version patch --no-git-tag-version",
     "minor": "npm version minor --no-git-tag-version",

@@ -41,6 +41,7 @@
       "@colors": ["styles/colors.module.js"],
       "@utils": ["utils/index.ts"],
       "@constants": ["constants/index.ts"],
+      "@data": ["data/index.ts"],
       "@models": ["models/index.ts"],
       "@locales": ["locales/index.ts"]
     },

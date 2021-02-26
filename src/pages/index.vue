@@ -11,7 +11,6 @@ import { TransitionMixin } from '@mixins';
 import { navRoutes, TransitionDirection, TransitionType } from '@models';
 import { Component, Watch } from 'nuxt-property-decorator';
 import { ProjectPreview } from '@components';
-import { sgts } from '@services';
 
 @Component({
   middleware: authMiddleware,
@@ -28,6 +27,21 @@ export default class IndexRoot extends TransitionMixin {
   public projectId = '';
 
   public cardOrigin: HTMLDivElement | null = null;
+
+  get routeParam() {
+    return this.$route.query;
+  }
+
+  @Watch('routeParam', { deep: true, immediate: true }) routeChanged() {
+    const jbv = this.$route.query.jbv;
+    if (jbv && typeof jbv === 'string') {
+      this.showPreview = true;
+      this.projectId = jbv;
+    } else {
+      this.showPreview = false;
+      this.projectId = '';
+    }
+  }
 
   // async fetch() {
   //   const projects = await sgts.projects().$fetch();
@@ -110,20 +124,5 @@ export default class IndexRoot extends TransitionMixin {
   //     done();
   //   }
   // }
-
-  get routeParam() {
-    return this.$route.query;
-  }
-
-  @Watch('routeParam', { deep: true, immediate: true }) routeChanged() {
-    const jbv = this.$route.query.jbv;
-    if (jbv && typeof jbv === 'string') {
-      this.showPreview = true;
-      this.projectId = jbv;
-    } else {
-      this.showPreview = false;
-      this.projectId = '';
-    }
-  }
 }
 </script>

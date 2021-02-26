@@ -103,7 +103,7 @@ export default class UIModal extends Vue {
     position: relative;
     background-color: var(--bg1);
     border-radius: 3px;
-    box-shadow: 0 0 20px var(--shadow);
+    box-shadow: 0 0 10px rgba(20, 20, 20, 0.2);
     height: auto;
     flex: 0 1 auto;
     min-height: 100px;

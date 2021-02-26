@@ -8,6 +8,7 @@ import { Component, Vue } from 'nuxt-property-decorator';
 
 @Component({
   middleware: authMiddleware,
+  layout: 'watch',
 })
 export default class WatchRoot extends Vue {}
 </script>

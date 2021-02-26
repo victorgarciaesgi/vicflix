@@ -78,6 +78,7 @@ export const build: NuxtOptionsBuild = {
         '@middleware': path.resolve(__dirname, '../src/middleware/index.ts'),
         '@utils': path.resolve(__dirname, '../src/utils/index.ts'),
         '@constants': path.resolve(__dirname, '../src/constants/index.ts'),
+        '@data': path.resolve(__dirname, '../src/data/index.ts'),
         '@decorators': path.resolve(__dirname, '../src/decorators/index.ts'),
         '@hooks': path.resolve(__dirname, '../src/hooks/index.ts'),
         '@colors': path.resolve(__dirname, '../src/styles/colors.module.js'),

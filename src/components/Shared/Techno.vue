@@ -1,5 +1,5 @@
 <template>
-  <Popin v-if="technoContent" class="Techno" mode="hover">
+  <Popin v-if="technoContent" class="Techno" mode="hover" :debounce="false">
     <template #content>
       <span class="px-3 py-2 text-sm">{{ technoContent.title }}</span>
     </template>

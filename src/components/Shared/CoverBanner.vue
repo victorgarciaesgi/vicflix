@@ -23,7 +23,7 @@
         </div>
         <div class="flex flex-row py-4">
           <Action icon="actions/play" theme="white">Lecture</Action>
-          <Action icon="alerts/info" theme="gray">Plus d'infos</Action>
+          <Action icon="alerts/info" theme="gray" :to="toPreviewLink">Plus d'infos</Action>
         </div>
       </div>
     </div>
@@ -31,10 +31,11 @@
 </template>
 
 <script lang="ts">
-import { TechnosConstant } from '@constants';
-import { Project, Techno } from '@models';
+import { Project } from '@models';
 import { Component, Vue, Prop } from 'nuxt-property-decorator';
+import { Location } from 'vue-router';
 import TechnoItem from './Techno.vue';
+
 @Component({
   components: {
     TechnoItem,
@@ -49,6 +50,15 @@ export default class CoverBanner extends Vue {
 
   get logo() {
     return `/logos/${this.data.logo}`;
+  }
+
+  get toPreviewLink(): Location {
+    return {
+      path: this.$route.path,
+      query: {
+        jbv: this.data.id,
+      },
+    };
   }
 }
 </script>

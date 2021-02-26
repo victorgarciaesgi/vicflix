@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col w-full pb-6">
-    <CoverBanner :data="milinusProject" />
+    <CoverBanner :data="coverProject" />
     <ProjectList :projects="featuredProjects"> Projets en vedette </ProjectList>
     <ProjectList :projects="featuredProjects"> Projets en vedette </ProjectList>
   </div>
@@ -9,7 +9,7 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator';
 import { CoverBanner, ProjectList } from '@components';
-import { featuredProject, milinusProject } from '@constants';
+import { featuredProject, coverProject } from '@data';
 
 @Component({
   components: {
@@ -21,7 +21,7 @@ import { featuredProject, milinusProject } from '@constants';
   },
 })
 export default class Home extends Vue {
-  public milinusProject = milinusProject;
+  public coverProject = coverProject;
   public featuredProjects = featuredProject;
 }
 </script>

@@ -12,6 +12,8 @@ export interface ProjectVideo {
   episode: number;
   preview: string;
   id: string;
+  projectId: string;
+  videoUrl: string;
 }
 export interface Project {
   title: string;

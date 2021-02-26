@@ -35,6 +35,7 @@ export type ArrayElement<A> = A extends Array<infer U> ? U : never;
 export interface Dictionary<T> {
   [x: string]: T;
 }
+export type Maybe<T> = T | null;
 
 // Vuelidate
 

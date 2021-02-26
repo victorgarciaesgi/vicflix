@@ -220,11 +220,11 @@ export default class Action extends Vue {
   border-width: 1px;
   border-style: solid;
 
-  &:first-of-type {
+  &:first-child {
     margin-left: 0;
   }
 
-  &:last-of-type {
+  &:last-child {
     margin-right: 0;
   }
 

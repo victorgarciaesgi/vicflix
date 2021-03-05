@@ -1,80 +1,88 @@
 <template>
-  <div ref="containerRef" class="VideoPlayer / flex w-screen h-screen">
+  <div
+    ref="containerRef"
+    class="VideoPlayer / flex w-screen h-screen"
+    @mousemove="debounceHideToolbar"
+  >
     <video
       ref="videoPlayer"
       class="w-full h-full"
       playsinline
       preload="metadata"
       @progress="handleVideoProgress"
+      @click="toggleVideoPlay"
     >
       <source :src="video.videoUrl" type="video/mp4" />
     </video>
     <div v-if="loading" class="center absolute top-0 left-0 flex w-full h-full">
       <Spinner color="red" :size="50" />
     </div>
-    <div
-      class="ToolBar / absolute bottom-0 left-0 z-10 flex-col w-full px-5 py-8"
-      :class="{ playing: videoPlaying }"
-    >
-      <PlayerTrackBar
-        v-bind="{ currentProgress, currentTime, remainingTime, totalTime }"
-        @update="handleUpdateTime"
-      />
-      <div class="Actions / flex flex-row items-center justify-between pt-4">
-        <div class="flex flex-row items-center">
-          <SvgIcon
-            v-if="!videoPlaying"
-            class="ButtonAction"
-            src="videos/play"
-            :size="50"
-            @click="playVideo"
-          />
-          <SvgIcon
-            v-else-if="videoPlaying"
-            class="ButtonAction"
-            src="videos/pause"
-            :size="50"
-            @click="pauseVideo"
-          />
-          <SvgIcon
-            class="ButtonAction / ml-6"
-            src="videos/replay"
-            :size="45"
-            @click="addVideoTime(-10)"
-          />
-          <SvgIcon
-            class="ButtonAction / ml-6"
-            src="videos/forward"
-            :size="45"
-            @click="addVideoTime(10)"
-          />
-          <Popin mode="hover" :debounce="true" :arrow="false" :offset="2">
-            <template #content>
-              <VolumeSlider :volume="volume" @update="handleUpdateVolume" />
-            </template>
-            <template #button>
-              <SvgIcon class="ButtonAction / ml-6" :src="volumeIcon" :size="45" />
-            </template>
-          </Popin>
-        </div>
-        <div class="flex flex-row items-center">
-          <SvgIcon
-            v-if="!isFullScreen"
-            class="ButtonAction"
-            src="videos/fullscreen"
-            :size="50"
-            @click="toggleFullScreen"
-          />
-          <SvgIcon
-            v-else
-            class="ButtonAction"
-            src="videos/fullscreen_exit"
-            :size="50"
-            @click="toggleFullScreen"
-          />
+    <transition name="fade">
+      <div
+        v-if="showToolbar"
+        class="ToolBar / absolute bottom-0 left-0 z-10 flex-col w-full px-5 py-8"
+        :class="{ playing: videoPlaying }"
+      >
+        <PlayerTrackBar
+          v-bind="{ currentProgress, currentTime, remainingTime, totalTime }"
+          @update="handleUpdateTime"
+        />
+        <div class="Actions / flex flex-row items-center justify-between pt-4">
+          <div class="flex flex-row items-center">
+            <SvgIcon
+              v-if="!videoPlaying"
+              class="ButtonAction"
+              src="videos/play"
+              :size="50"
+              @click="playVideo"
+            />
+            <SvgIcon
+              v-else-if="videoPlaying"
+              class="ButtonAction"
+              src="videos/pause"
+              :size="50"
+              @click="pauseVideo"
+            />
+            <SvgIcon
+              class="ButtonAction / ml-6"
+              src="videos/replay"
+              :size="45"
+              @click="addVideoTime(-10)"
+            />
+            <SvgIcon
+              class="ButtonAction / ml-6"
+              src="videos/forward"
+              :size="45"
+              @click="addVideoTime(10)"
+            />
+            <Popin mode="hover" :debounce="true" :arrow="false" :offset="2">
+              <template #content>
+                <VolumeSlider :volume="volume" @update="handleUpdateVolume" />
+              </template>
+              <template #button>
+                <SvgIcon class="ButtonAction / ml-6" :src="volumeIcon" :size="45" />
+              </template>
+            </Popin>
+          </div>
+          <div class="flex flex-row items-center">
+            <SvgIcon
+              v-if="!isFullScreen"
+              class="ButtonAction"
+              src="videos/fullscreen"
+              :size="50"
+              @click="toggleFullScreen"
+            />
+            <SvgIcon
+              v-else
+              class="ButtonAction"
+              src="videos/fullscreen_exit"
+              :size="50"
+              @click="toggleFullScreen"
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
     <div class="ButtonAction / group left-5 top-5 absolute flex flex-row items-center">
       <SvgIcon src="videos/back" :size="45" @click="goBack" />
       <span class="group-hover:opacity-100 ml-2 text-lg transition-opacity duration-200 opacity-0"
@@ -114,6 +122,9 @@ export default class VideoPlayer extends Vue {
   public loading = true;
   public isFullScreen = false;
   public volume = 0;
+
+  public showToolbar = true;
+  public toolBarTimeOut: NodeJS.Timeout | null = null;
 
   get remainingTime() {
     return secondsToHoursAndMinutes(this.totalTime - this.currentTime);
@@ -251,6 +262,18 @@ export default class VideoPlayer extends Vue {
   handleSeeked() {
     this.loading = false;
     this.handleVideoProgress();
+  }
+
+  //! Toolbar
+
+  hideToolBar() {
+    this.showToolbar = false;
+  }
+
+  debounceHideToolbar() {
+    this.showToolbar = true;
+
+    this.toolBarTimeOut = setTimeout(this.hideToolBar, 3000);
   }
 
   //! LifeCycle

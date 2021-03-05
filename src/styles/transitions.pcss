@@ -19,6 +19,18 @@
   opacity: 0;
   transform: scale(0.95);
 }
+
+.fade-descale-enter-active,
+.fade-descale-leave-active {
+  transition: opacity 0.3s linear, transform 0.3s linear;
+}
+
+.fade-descale-enter,
+.fade-descale-leave-to {
+  opacity: 0;
+  transform: scale(1.1);
+}
+
 /* Slide transition */
 
 @keyframes bounce-in {

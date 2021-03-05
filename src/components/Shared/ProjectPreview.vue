@@ -40,9 +40,11 @@
                   :key="link.link"
                   :href="link.link"
                   target="_blank"
-                  class="text-text8 text-md mr-2 underline"
-                  >{{ link.title }}</a
+                  class="text-bg6 flex flex-row items-center px-3 py-1 mr-2 text-sm bg-white rounded-full"
                 >
+                  <span>{{ link.title }}</span>
+                  <SvgIcon src="actions/open_in" class="ml-1" :size="16" />
+                </a>
               </div>
             </div>
             <div class="flex-0 flex flex-col w-1/3 text-sm">

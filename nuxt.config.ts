@@ -3,6 +3,7 @@ import dotenv from 'dotenv-extended';
 
 // Load envs from 'env.${STAGE}'
 const stage = process.env.NUXT_ENV_STAGE;
+console.log(stage);
 dotenv.load({ path: `.env.${stage}` });
 process.env.DEBUG = 'nuxt:*';
 

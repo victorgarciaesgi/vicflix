@@ -18,18 +18,24 @@ export default class PopinButton extends Vue {
 
   mounted() {
     const elRoot = this.$el;
-    elRoot.addEventListener('click', this.clickEvent);
-    elRoot.addEventListener('mouseenter', this.mouseEnterEvent);
-    elRoot.addEventListener('mouseleave', this.mouseLeaveEvent);
-    elRoot.classList.add('cursor-pointer');
-    this.$emit('element-init', elRoot);
+    if (elRoot) {
+      elRoot.addEventListener('click', this.clickEvent);
+      elRoot.addEventListener('mouseenter', this.mouseEnterEvent);
+      elRoot.addEventListener('mouseleave', this.mouseLeaveEvent);
+      elRoot.classList.add('cursor-pointer');
+      this.$emit('element-init', elRoot);
+    } else {
+      console.warn('No Popin slot content found');
+    }
   }
 
   beforeDestroy() {
     const elRoot = this.$el;
-    elRoot.removeEventListener('click', this.clickEvent);
-    elRoot.removeEventListener('mouseenter', this.mouseEnterEvent);
-    elRoot.removeEventListener('mouseleave', this.mouseLeaveEvent);
+    if (elRoot) {
+      elRoot.removeEventListener('click', this.clickEvent);
+      elRoot.removeEventListener('mouseenter', this.mouseEnterEvent);
+      elRoot.removeEventListener('mouseleave', this.mouseLeaveEvent);
+    }
   }
 
   render(h: CreateElement) {

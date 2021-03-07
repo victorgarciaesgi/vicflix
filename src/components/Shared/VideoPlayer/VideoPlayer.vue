@@ -1,12 +1,12 @@
 <template>
   <div
     ref="containerRef"
-    class="VideoPlayer / flex w-screen h-screen"
+    class="VideoPlayer / absolute flex w-full h-full"
     @mousemove="debounceHideToolbar"
   >
     <video
       ref="videoPlayer"
-      class="w-full h-full"
+      class="VideoElement / w-full h-full"
       playsinline
       preload="metadata"
       @progress="handleVideoProgress"
@@ -192,17 +192,22 @@ export default class VideoPlayer extends Vue {
   }
 
   exitFullScreen() {
-    document.exitFullscreen();
-    this.isFullScreen = false;
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
   }
 
   async enableFullScreen() {
     try {
       await this.containerRef.requestFullscreen();
-    } catch (e) {
-      this.videoPlayer.requestFullscreen();
-    } finally {
       this.isFullScreen = true;
+    } catch (e) {
+      console.log(e);
+      try {
+        await (this.videoPlayer as any).webkitRequestFullScreen();
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
 
@@ -222,6 +227,7 @@ export default class VideoPlayer extends Vue {
   }
 
   handleKeyUp(event: KeyboardEvent) {
+    this.debounceHideToolbar();
     switch (event.code) {
       case 'Space': {
         this.toggleVideoPlay();
@@ -258,15 +264,17 @@ export default class VideoPlayer extends Vue {
 
   handleVideoProgress() {
     let range = 0;
-    const bf = this.videoPlayer.buffered;
-    const time = this.videoPlayer.currentTime;
+    const bf = this.videoPlayer?.buffered;
+    const time = this.videoPlayer?.currentTime;
 
-    while (!(bf.start(range) <= time && time <= bf.end(range))) {
-      range += 1;
+    if (bf && time) {
+      while (!(bf.start(range) <= time && time <= bf.end(range))) {
+        range += 1;
+      }
+      const loadStartPercentage = bf.start(range) / this.videoPlayer.duration;
+      const loadEndPercentage = bf.end(range) / this.videoPlayer.duration;
+      this.currentProgress = loadEndPercentage - loadStartPercentage;
     }
-    const loadStartPercentage = bf.start(range) / this.videoPlayer.duration;
-    const loadEndPercentage = bf.end(range) / this.videoPlayer.duration;
-    this.currentProgress = loadEndPercentage - loadStartPercentage;
   }
 
   handleSeeked() {
@@ -295,7 +303,7 @@ export default class VideoPlayer extends Vue {
       this.videoPlayer.addEventListener('timeupdate', this.timeUpdate);
       this.videoPlayer.addEventListener('seeked', this.handleSeeked);
       this.videoPlayer.addEventListener('loadedmetadata', () => {
-        this.totalTime = this.videoPlayer.duration;
+        this.totalTime = this.videoPlayer?.duration ?? 0;
         this.loading = false;
       });
       this.volume = this.videoPlayer.volume;
@@ -311,15 +319,24 @@ export default class VideoPlayer extends Vue {
 </script>
 
 <style lang="postcss" scoped>
-div.ToolBar {
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6));
-}
+div.VideoPlayer {
+  div.ToolBar {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6));
+  }
 
-.ButtonAction {
-  transition: transform 0.2s ease-in-out;
-  cursor: pointer;
-  &:hover {
-    transform: scale(1.1);
+  .ButtonAction {
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  video.VideoElement {
+    &:-webkit-full-screen {
+      width: 100%;
+      height: 100%;
+    }
   }
 }
 </style>

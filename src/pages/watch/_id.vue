@@ -1,5 +1,5 @@
 <template>
-  <div class="w-screen h-screen bg-black">
+  <div class="VideoRoot / relative w-screen bg-black">
     <VideoPlayer :video="video" />
   </div>
 </template>
@@ -32,3 +32,9 @@ export default class WatchId extends Vue {
   }
 }
 </script>
+<style lang="postcss" scoped>
+div.VideoRoot {
+  height: 100vh;
+  height: -webkit-fill-available;
+}
+</style>

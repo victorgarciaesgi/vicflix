@@ -1,7 +1,7 @@
 <template>
   <div class="CoverBanner / flex flex-col">
-    <div class="BannerWrapper / absolute flex w-full h-full">
-      <img :src="picture" class="object-cover" />
+    <div class="BannerWrapper / absolute w-full h-full">
+      <VImg class="ImgWrapper" type="default" :src="picture" />
     </div>
     <div class="pt-28 sm:ml-0 sm:mt-20 flex flex-col items-start max-w-lg pb-10 mt-10 ml-10">
       <div class="sm:hidden flex flex-row items-center">
@@ -75,9 +75,7 @@ export default class CoverBanner extends Vue {
 <style lang="postcss" scoped>
 div.CoverBanner {
   div.BannerWrapper {
-    img {
-      width: 100vw;
-      height: auto;
+    >>> img {
       mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 5%, black 60%);
     }
   }

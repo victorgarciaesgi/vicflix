@@ -6,12 +6,14 @@ import { AlertsModule, ToastModule } from './shared';
 export interface IAuthState {
   loggedIn: boolean;
   user: User | null;
-  hideHeader?: boolean;
+  hideHeader: boolean;
+  hideNav: boolean;
 }
 
 const state: IAuthState = {
   loggedIn: false,
   hideHeader: false,
+  hideNav: false,
   user: null,
 };
 

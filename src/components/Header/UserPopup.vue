@@ -1,7 +1,7 @@
 <template>
   <Popin
     :width="200"
-    mode="hover"
+    :mode="popinMode"
     :debounce="true"
     in-header
     :arrow="true"
@@ -58,18 +58,27 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator';
 import { AuthModule } from '@store';
-import { NavLink, routerPagesNames, User } from '@models';
+import { BreakPointsTypes, BreakPointsValues, NavLink, routerPagesNames, User } from '@models';
 import { Location } from 'vue-router';
 import { usersConstant } from '@constants';
+import { BreakpointMixin } from '@mixins';
 import DarkModeButton from './DarkModeButton.vue';
 import AutoDarkModeButton from './AutoDarkModeButton.vue';
 
 @Component({
   components: { DarkModeButton, AutoDarkModeButton },
 })
-export default class UserPopup extends Vue {
+export default class UserPopup extends BreakpointMixin {
   get user() {
     return AuthModule.state.user!;
+  }
+
+  get popinMode() {
+    if (this.windowWidth < BreakPointsValues.Small) {
+      return 'click';
+    } else {
+      return 'hover';
+    }
   }
 
   get picture() {

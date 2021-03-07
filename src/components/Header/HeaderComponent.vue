@@ -1,8 +1,12 @@
 <template>
-  <header class="text-text1 fixed flex items-center justify-between px-10" :class="{ opaque }">
+  <header
+    class="text-text1 sm:px-5 sm:py-4 fixed flex items-center justify-between px-10 py-4"
+    :class="{ opaque }"
+  >
     <div class="flex-0 flex flex-row items-center">
-      <img src="@images/vicflix.png" width="90" />
-      <div class="px-8">
+      <img class="sm:hidden" src="@images/vicflix.png" width="90" />
+      <img class="-sm:hidden" src="/icon.png" width="24" />
+      <div class="sm:hidden px-8">
         <NavBar :routes="navRoutes" />
       </div>
     </div>
@@ -14,13 +18,16 @@
         <UserPopup />
       </div>
     </div>
+    <div v-if="!hideNavBar" class="-sm:hidden flex flex-col items-center w-full">
+      <NavBar :routes="navRoutes" />
+    </div>
   </header>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator';
 import { AuthModule, RouterModule } from '@store';
-import { NavLink, navRoutes, routerPagesNames } from '@models';
+import { navRoutes } from '@models';
 import BurgerMenu from './BurgerMenu.vue';
 import NavBar from './NavBar.vue';
 import UserPopup from './UserPopup.vue';
@@ -32,8 +39,13 @@ export default class HeaderComponent extends Vue {
   public showBurger = false;
   public navRoutes = navRoutes;
   public opaque = false;
+
   get isLoggedIn() {
     return AuthModule.state.loggedIn;
+  }
+
+  get hideNavBar() {
+    return AuthModule.state.hideNav;
   }
 
   get currentTitle() {
@@ -61,7 +73,6 @@ header {
   position: fixed;
   top: 0px;
   left: 0px;
-  height: var(--headerHeight);
   width: 100%;
   z-index: 10003;
   flex-flow: row nowrap;

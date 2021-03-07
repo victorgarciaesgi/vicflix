@@ -7,7 +7,7 @@
     @mouseleave="cancelMouseEnter"
   >
     <VImg :src="picture" class="rounded" />
-    <img :src="logo" class="left-3 top-3 absolute w-6 h-6" />
+    <img :src="logo" class="left-3 top-3 absolute w-6" />
     <Portal v-if="init" to="Preview-Outlet">
       <div
         v-show="showPreview"
@@ -38,7 +38,7 @@
               </template>
               <template #button>
                 <div class="center flex p-1 text-black bg-white border-2 border-white rounded-full">
-                  <SvgIcon src="actions/play" :size="20" />
+                  <SvgIcon src="actions/play" :size="20" @click="playFirstVideo" />
                 </div>
               </template>
             </Popin>
@@ -63,7 +63,7 @@
 </template>
 
 <script lang="ts">
-import { Project } from '@models';
+import { Project, routerPagesNames } from '@models';
 import { Component, Vue, Prop, Ref } from 'nuxt-property-decorator';
 import anime from 'animejs';
 import { VImg } from '@components/Global';
@@ -107,6 +107,15 @@ export default class ProjectPlaceholder extends Vue {
   get logo() {
     return `/logos/${this.project.logo}`;
   }
+
+  playFirstVideo() {
+    const { videos } = this.project;
+    if (videos[0]) {
+      this.$router.push({ name: routerPagesNames.watch.id, params: { id: videos[0].id } });
+    }
+  }
+
+  //! Animations
 
   handleMouseEnter() {
     this.debounceDisplayPreview();

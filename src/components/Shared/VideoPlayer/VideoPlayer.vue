@@ -83,12 +83,17 @@
         </div>
       </div>
     </transition>
-    <div class="ButtonAction / group left-5 top-5 absolute flex flex-row items-center">
-      <SvgIcon src="videos/back" :size="45" @click="goBack" />
-      <span class="group-hover:opacity-100 ml-2 text-lg transition-opacity duration-200 opacity-0"
-        >Retour a la navigation</span
+    <transition name="fade">
+      <div
+        v-if="showToolbar"
+        class="ButtonAction / group left-5 top-5 absolute flex flex-row items-center"
       >
-    </div>
+        <SvgIcon src="videos/back" :size="45" @click="goBack" />
+        <span class="group-hover:opacity-100 ml-2 text-lg transition-opacity duration-200 opacity-0"
+          >Retour a la navigation</span
+        >
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -191,9 +196,14 @@ export default class VideoPlayer extends Vue {
     this.isFullScreen = false;
   }
 
-  enableFullScreen() {
-    this.containerRef.requestFullscreen();
-    this.isFullScreen = true;
+  async enableFullScreen() {
+    try {
+      await this.containerRef.requestFullscreen();
+    } catch (e) {
+      this.videoPlayer.requestFullscreen();
+    } finally {
+      this.isFullScreen = true;
+    }
   }
 
   toggleFullScreen() {
@@ -272,7 +282,7 @@ export default class VideoPlayer extends Vue {
 
   debounceHideToolbar() {
     this.showToolbar = true;
-
+    if (this.toolBarTimeOut) clearTimeout(this.toolBarTimeOut);
     this.toolBarTimeOut = setTimeout(this.hideToolBar, 3000);
   }
 

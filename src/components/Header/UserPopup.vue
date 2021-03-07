@@ -2,7 +2,7 @@
   <Popin
     :width="200"
     :mode="popinMode"
-    :debounce="true"
+    :debounce="false"
     in-header
     :arrow="true"
     :offset="4"

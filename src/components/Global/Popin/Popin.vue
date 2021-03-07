@@ -2,7 +2,7 @@
   <Fragment>
     <!-- Popin wrapper -->
     <Portal v-if="rendered" to="Popup-Outlet">
-      <transition name="fade">
+      <transition name="fade-show">
         <div
           v-show="visible"
           ref="popup"
@@ -165,10 +165,13 @@ export default class Popin extends Vue {
   }
 
   handleClick(event: UIEvent) {
-    if (!this.visible && this.mode === PopupMode.Click && !this.disabled) {
-      this.showPopup(event);
-    } else {
-      this.closePopup();
+    event.stopPropagation();
+    if (this.mode === PopupMode.Click && !this.disabled) {
+      if (!this.visible) {
+        this.showPopup(event);
+      } else {
+        this.closePopup();
+      }
     }
   }
 
@@ -180,14 +183,15 @@ export default class Popin extends Vue {
   }
 
   handlePopupMouseEnter(event: UIEvent) {
-    if (this.mode === PopupMode.Hover && !this.disabled && this.timeout) {
-      clearTimeout(this.timeout);
+    if (this.mode === PopupMode.Hover && !this.disabled) {
+      if (this.timeout) clearTimeout(this.timeout);
       this.showPopup(event);
     }
   }
 
   debounceClosePopup() {
     this.timeout = setTimeout(() => {
+      console.log('close1');
       this.closePopup();
     }, 200);
   }
@@ -305,7 +309,7 @@ export default class Popin extends Vue {
     window.addEventListener('resize', this.processPopupPlacement);
     window.addEventListener('scroll', this.processPopupPlacement);
     document.body.addEventListener('click', this.closePopup);
-    document.body.addEventListener('touchstart', this.closePopup);
+    // document.body.addEventListener('touchstart', this.closePopup);
     this.$refs.popup.addEventListener('touchstart', (e) => e.stopPropagation());
     this.addResizeObserver();
 
@@ -314,7 +318,7 @@ export default class Popin extends Vue {
       parentScrollNode.addEventListener('scroll', this.processPopupPlacement);
     }
 
-    if (!this.nested) {
+    if (!this.nested && this.mode !== PopupMode.Hover) {
       EventBus.$on(Events.CLOSE_POPUPS, this.closePopup);
     } else if (this.nestedNamespace) {
       EventBus.$on(`${Events.CLOSE_POPUPS}-${this.nestedNamespace}`, this.closePopup);
@@ -358,18 +362,6 @@ export default class Popin extends Vue {
         this.processPopupPlacement();
       });
     });
-    // if (this.$refs.button && this.$refs.button.parentElement) {
-    //   const computedStyle = window.getComputedStyle(this.$refs.button.parentElement);
-    //   Array.from(computedStyle)
-    //     .filter((key: any) => acceptedClonedStyles.includes(key))
-    //     .forEach((key) =>
-    //       this.$refs.button.style.setProperty(
-    //         key,
-    //         computedStyle.getPropertyValue(key),
-    //         computedStyle.getPropertyPriority(key)
-    //       )
-    //     );
-    // }
   }
 
   beforeDestroy() {
@@ -407,5 +399,14 @@ div.Popup-Box {
       top: calc(100% - 1px);
     }
   }
+}
+
+.fade-show-enter-active {
+  transition: opacity 0.1s linear;
+}
+
+.fade-show-enter,
+.fade-show-leave-to {
+  opacity: 0;
 }
 </style>

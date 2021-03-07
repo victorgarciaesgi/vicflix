@@ -35,6 +35,6 @@ export default class WatchId extends Vue {
 <style lang="postcss" scoped>
 div.VideoRoot {
   height: 100vh;
-  height: -webkit-fill-available;
+  height: calc(var(--vh, 1vh) * 100);
 }
 </style>

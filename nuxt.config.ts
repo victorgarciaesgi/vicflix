@@ -46,6 +46,7 @@ const config: NuxtConfig = {
   serverMiddleware: ['~/api/server.middleware'],
   plugins: [
     { src: '~/plugins/global.plugin.ts' },
+    { src: '~/plugins/mounted.plugin.ts', ssr: false },
     { src: '~/plugins/constants.plugin.ts' },
     { src: '~/plugins/toasts.plugin.ts' },
     { src: '~/plugins/i18n.plugin.ts' },

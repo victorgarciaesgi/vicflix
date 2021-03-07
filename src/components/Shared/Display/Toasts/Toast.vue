@@ -1,7 +1,7 @@
 <template>
   <component
     :is="getComponentType"
-    class="Toast / first:mb-4 flex-nowrap ring-1 dark:ring-green ring-g70 flex flex-col w-full p-3 my-3 ml-4 rounded-lg shadow"
+    class="Toast / first:mb-4 flex-nowrap ring-1 ring-g70 flex flex-col w-full p-3 my-3 ml-4 rounded-lg shadow"
   >
     <div class="Header / flex-nowrap flex flex-row items-center justify-between">
       <div class="flex-nowrap flex flex-row items-center flex-1">

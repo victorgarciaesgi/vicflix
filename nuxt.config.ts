@@ -31,8 +31,8 @@ const config: NuxtConfig = {
     filePath: 'src/models/__routes.ts',
   },
   loading: {
-    color: colors.green,
-    failedColor: colors.redError,
+    color: colors.red,
+    failedColor: colors.white,
     height: '4px',
   },
   tailwindcss: {

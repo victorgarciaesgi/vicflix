@@ -128,6 +128,8 @@ export default class VideoPlayer extends Vue {
   public isFullScreen = false;
   public volume = 0;
 
+  public isIos = false;
+
   public showToolbar = true;
   public toolBarTimeOut: NodeJS.Timeout | null = null;
 
@@ -191,9 +193,21 @@ export default class VideoPlayer extends Vue {
     this.videoEnded = true;
   }
 
+  //! Fullscreen
+
   exitFullScreen() {
     if (document.exitFullscreen) {
       document.exitFullscreen();
+      this.debounceHideToolbar();
+      this.isFullScreen = false;
+    }
+  }
+
+  handleFullScreenChange() {
+    console.log('pute');
+    if (!document.fullscreenElement) {
+      this.isFullScreen = false;
+      this.debounceHideToolbar();
     }
   }
 
@@ -204,7 +218,8 @@ export default class VideoPlayer extends Vue {
     } catch (e) {
       console.log(e);
       try {
-        await (this.videoPlayer as any).webkitRequestFullScreen();
+        await (this.videoPlayer as any).webkitEnterFullscreen();
+        this.isFullScreen = true;
       } catch (e) {
         console.log(e);
       }
@@ -306,8 +321,14 @@ export default class VideoPlayer extends Vue {
         this.totalTime = this.videoPlayer?.duration ?? 0;
         this.loading = false;
       });
+      document.addEventListener('fullscreenchange', this.handleFullScreenChange);
       this.volume = this.videoPlayer.volume;
       window.addEventListener('keydown', this.handleKeyUp);
+      const userAgent = window.navigator.userAgent;
+
+      if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i)) {
+        this.isIos = true;
+      }
     }
   }
 

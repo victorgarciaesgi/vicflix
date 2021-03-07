@@ -1,11 +1,13 @@
 <template>
   <header
     class="text-text1 sm:px-5 sm:py-4 fixed flex items-center justify-between px-10 py-4"
-    :class="{ opaque }"
+    :class="{ opaque, hideNavBar }"
   >
     <div class="flex-0 flex flex-row items-center">
-      <img class="sm:hidden" src="@images/vicflix.png" width="90" />
-      <img class="-sm:hidden" src="/icon.png" width="24" />
+      <NuxtLink to="/">
+        <img class="sm:hidden" src="@images/vicflix.png" width="90" />
+        <img class="-sm:hidden" src="/icon.png" width="24" />
+      </NuxtLink>
       <div class="sm:hidden px-8">
         <NavBar :routes="navRoutes" />
       </div>
@@ -56,14 +58,24 @@ export default class HeaderComponent extends Vue {
     return AuthModule.state.user;
   }
 
-  mounted() {
-    window.addEventListener('scroll', () => {
+  checkHeaderOpaque() {
+    if (!this.hideNavBar) {
       if (window.pageYOffset > 0) {
         this.opaque = true;
       } else {
         this.opaque = false;
       }
-    });
+    }
+  }
+
+  mounted() {
+    window.addEventListener('scroll', this.checkHeaderOpaque);
+    window.addEventListener('resize', this.checkHeaderOpaque);
+  }
+
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.checkHeaderOpaque);
+    window.removeEventListener('resize', this.checkHeaderOpaque);
   }
 }
 </script>
@@ -90,6 +102,10 @@ header {
 
   &.opaque {
     background: black;
+  }
+
+  &.hideNavBar {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
   }
 }
 </style>

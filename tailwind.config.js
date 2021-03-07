@@ -153,6 +153,13 @@ module.exports = {
           gridAutoColumns: 'min-content',
         },
       });
+      addUtilities({
+        '.h-screen-ios': {
+          '@supports (-webkit-touch-callout: none)': {
+            height: '-webkit-fill-available',
+          },
+        },
+      });
       addVariant('important', ({ container }) => {
         container.walkRules((rule) => {
           rule.selector = `.\\!${rule.selector.slice(1)}`;

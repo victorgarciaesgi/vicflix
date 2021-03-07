@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     :to="toVideoLink"
-    class="VideoPreviewBanner / group flex-nowrap flex flex-row items-center h-32 px-5 py-3"
+    class="VideoPreviewBanner / group flex-nowrap sm:px-0 flex flex-row items-center h-32 px-5 py-3"
   >
     <div class="pr-3 text-2xl">{{ video.episode }}</div>
     <div class="relative w-40 h-20 overflow-hidden rounded-md">
@@ -12,8 +12,8 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-col justify-center px-5">
-      <div class="flex flex-row justify-between">
+    <div class="sm:pr-0 flex flex-col justify-center px-5">
+      <div class="sm:flex-col flex flex-row justify-between">
         <span class="text-md font-semibold">{{ video.title }}</span>
         <span>{{ video.duration }} min</span>
       </div>

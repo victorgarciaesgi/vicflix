@@ -6,7 +6,7 @@
   </Modal>
   <div
     v-else-if="show"
-    class="fixed top-0 left-0 z-40 flex flex-col w-screen h-screen overflow-y-auto bg-black"
+    class="h-screen-ios fixed top-0 left-0 z-40 flex flex-col w-screen h-screen overflow-y-auto bg-black"
   >
     <PreviewContent v-if="project" :project="project" />
   </div>
@@ -50,12 +50,12 @@ export default class ProjectPreview extends BreakpointMixin {
 
   @Watch('show', { immediate: true }) showWatch() {
     if (this.show) {
-      document.body.style.overflowY = 'hidden';
+      document.body.style.overflow = 'hidden';
       if (this.windowWidth < BreakPointsValues.Small) {
         AuthModule.updateState({ hideNav: true });
       }
     } else {
-      document.body.style.overflowY = 'auto';
+      document.body.style.overflow = 'auto';
       AuthModule.updateState({ hideNav: false });
     }
   }

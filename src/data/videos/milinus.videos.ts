@@ -7,7 +7,7 @@ export const episode1: ProjectVideo = {
   title: "Présentation de l'application",
   description:
     "Victor nous fait découvrir l'application Milinus Admin, mais il se passe quelque chose d'imprévu...",
-  duration: 4,
+  duration: '0:45',
   episode: 1,
   projectId: milinusId,
   videoUrl:

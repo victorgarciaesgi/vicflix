@@ -7,7 +7,7 @@ export interface ProjectLink {
 
 export interface ProjectVideo {
   title: string;
-  duration: number;
+  duration: string;
   description: string;
   episode: number;
   preview: string;

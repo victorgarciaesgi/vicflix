@@ -4,7 +4,7 @@
     class="VideoPreviewBanner / group flex-nowrap sm:px-0 flex flex-row items-center h-32 px-5 py-3"
   >
     <div class="pr-3 text-2xl">{{ video.episode }}</div>
-    <div class="relative w-40 h-20 overflow-hidden rounded-md">
+    <div class="flex-0 sm:w-20 sm:h-12 relative w-40 h-20 overflow-hidden rounded-md">
       <VImg :src="video.preview" />
       <div class="group-hover:flex center absolute top-0 left-0 hidden w-full h-full">
         <div class="center flex p-1 border border-white rounded-full">
@@ -15,9 +15,10 @@
     <div class="sm:pr-0 flex flex-col justify-center px-5">
       <div class="sm:flex-col flex flex-row justify-between">
         <span class="text-md font-semibold">{{ video.title }}</span>
-        <span>{{ video.duration }} min</span>
+        <span class="sm:hidden">{{ video.duration }} min</span>
       </div>
-      <span class="text-text9 mt-1 text-sm">{{ video.description }}</span>
+      <span class="text-text9 sm:line-clamp-2 mt-1 text-sm">{{ video.description }}</span>
+      <span class="-sm:hidden text-grey text-md mt-1">{{ video.duration }} min</span>
     </div>
   </NuxtLink>
 </template>

@@ -11,6 +11,7 @@
       preload="metadata"
       @progress="handleVideoProgress"
       @click="toggleVideoPlay"
+      @dblclick="toggleFullScreen"
     >
       <source :src="video.videoUrl" type="video/mp4" />
     </video>
@@ -27,8 +28,8 @@
           v-bind="{ currentProgress, currentTime, remainingTime, totalTime }"
           @update="handleUpdateTime"
         />
-        <div class="Actions / flex flex-row items-center justify-between pt-4">
-          <div class="flex flex-row items-center">
+        <div class="Actions / flex-nowrap flex flex-row items-center justify-between pt-4">
+          <div class="flex-nowrap flex flex-row items-center">
             <SvgIcon
               v-if="!videoPlaying"
               class="ButtonAction"
@@ -55,7 +56,7 @@
               :size="45"
               @click="addVideoTime(10)"
             />
-            <Popin mode="hover" :debounce="true" :arrow="false" :offset="2">
+            <Popin v-if="!isMobile" mode="hover" :debounce="true" :arrow="false" :offset="2">
               <template #content>
                 <VolumeSlider :volume="volume" @update="handleUpdateVolume" />
               </template>
@@ -63,8 +64,19 @@
                 <SvgIcon class="ButtonAction / ml-6" :src="volumeIcon" :size="45" />
               </template>
             </Popin>
+            <div
+              v-if="projectRelated"
+              class="ellipsis sm:hidden flex-nowrap flex flex-row flex-shrink ml-10 leading-5"
+            >
+              <span class="text-xl font-semibold">{{ projectRelated.title }}</span>
+              <span class="text-w140 mt-px ml-2 text-lg">S1:E{{ video.episode }}</span>
+              <span class="text-w140 ellipsis flex-shrink mt-px ml-2 text-lg">{{
+                video.title
+              }}</span>
+            </div>
           </div>
-          <div class="flex flex-row items-center">
+          <div class="flex-nowrap flex flex-row items-center">
+            <SvgIcon class="ButtonAction / mr-6" src="videos/episodes" :size="45" />
             <SvgIcon
               v-if="!isFullScreen"
               class="ButtonAction"
@@ -85,13 +97,23 @@
     </transition>
     <transition name="fade">
       <div
-        v-if="showToolbar"
-        class="ButtonAction / group left-5 top-5 absolute flex flex-row items-center"
+        class="TopBar / top-5 flex-nowrap absolute left-0 flex flex-row items-center justify-between w-full px-5"
       >
-        <SvgIcon src="videos/back" :size="45" @click="goBack" />
-        <span class="group-hover:opacity-100 ml-2 text-lg transition-opacity duration-200 opacity-0"
-          >Retour a la navigation</span
+        <div v-if="showToolbar" class="ButtonAction / group flex flex-row items-center">
+          <SvgIcon src="videos/back" :size="45" @click="goBack" />
+          <span
+            class="group-hover:opacity-100 sm:hidden ml-2 text-lg transition-opacity duration-200 opacity-0"
+            >Retour a la navigation</span
+          >
+        </div>
+        <div
+          v-if="projectRelated"
+          class="ellipsis flex-nowrap -sm:hidden flex flex-row items-center flex-shrink ml-10 leading-5"
         >
+          <span class="sm:text-md text-xl font-semibold">{{ projectRelated.title }}</span>
+          <span class="text-w140 sm:text-sm mt-px ml-2 text-lg">S1:E{{ video.episode }}</span>
+          <span class="text-w140 sm:text-sm mt-px ml-2 text-lg">{{ video.title }}</span>
+        </div>
       </div>
     </transition>
   </div>
@@ -100,9 +122,10 @@
 <script lang="ts">
 import { Component, Vue, Prop, Ref } from 'vue-property-decorator';
 import { EventBus } from '@services';
-import { ProjectVideo } from '@models';
+import { BreakPointsValues, ProjectVideo } from '@models';
 import { secondsToHoursAndMinutes } from '@utils';
 import { allProjects } from '@data';
+import { BreakpointMixin } from '@mixins';
 import VolumeSlider from './VolumeSlider.vue';
 import PlayerTrackBar from './PlayerTrackBar.vue';
 
@@ -113,7 +136,7 @@ import PlayerTrackBar from './PlayerTrackBar.vue';
     PlayerTrackBar,
   },
 })
-export default class VideoPlayer extends Vue {
+export default class VideoPlayer extends BreakpointMixin {
   @Prop({ required: true }) video!: ProjectVideo;
 
   @Ref() containerRef!: HTMLDivElement;
@@ -149,6 +172,10 @@ export default class VideoPlayer extends Vue {
     } else {
       return 'videos/volume_max';
     }
+  }
+
+  get isMobile() {
+    return this.windowWidth < BreakPointsValues.Small;
   }
 
   goBack() {
@@ -300,7 +327,7 @@ export default class VideoPlayer extends Vue {
   //! Toolbar
 
   hideToolBar() {
-    this.showToolbar = false;
+    // this.showToolbar = false;
   }
 
   debounceHideToolbar() {
@@ -333,8 +360,10 @@ export default class VideoPlayer extends Vue {
   }
 
   beforeDestroy() {
-    this.videoPlayer.removeEventListener('ended', this.endOfVideo);
-    this.videoPlayer.removeEventListener('timeupdate', this.timeUpdate);
+    if (this.videoPlayer) {
+      this.videoPlayer.removeEventListener('ended', this.endOfVideo);
+      this.videoPlayer.removeEventListener('timeupdate', this.timeUpdate);
+    }
   }
 }
 </script>
@@ -342,7 +371,7 @@ export default class VideoPlayer extends Vue {
 <style lang="postcss" scoped>
 div.VideoPlayer {
   div.ToolBar {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6));
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9));
   }
 
   .ButtonAction {

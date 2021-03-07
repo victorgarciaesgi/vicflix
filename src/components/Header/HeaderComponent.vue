@@ -6,7 +6,8 @@
     <div class="flex-0 flex flex-row items-center">
       <NuxtLink to="/">
         <img class="sm:hidden" src="@images/vicflix.png" width="90" />
-        <img class="-sm:hidden" src="/icon.png" width="24" />
+        <img v-if="!hideNavBar" class="-sm:hidden" src="/icon.png" width="24" />
+        <SvgIcon v-else class="-sm:hidden" src="videos/back" :size="34" />
       </NuxtLink>
       <div class="sm:hidden px-8">
         <NavBar :routes="navRoutes" />

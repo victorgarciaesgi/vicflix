@@ -15,10 +15,6 @@ import { allVideos } from '@data';
   components: {
     VideoPlayer,
   },
-  transition: {
-    name: 'fade',
-    mode: 'out-in',
-  },
 })
 export default class WatchId extends Vue {
   public video!: ProjectVideo;

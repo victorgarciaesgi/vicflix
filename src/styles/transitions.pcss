@@ -90,6 +90,24 @@
   opacity: 0;
 }
 
+/* layout */
+
+.layout-enter-active,
+.layout-leave-active {
+  position: absolute;
+  width: 100%;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.layout-enter {
+  opacity: 0;
+}
+
+.layout-leave-to {
+  transform: scale(1.05);
+  opacity: 0;
+}
+
 /* Slide */
 
 .slide-left-enter-active,

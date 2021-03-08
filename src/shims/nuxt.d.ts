@@ -1,5 +1,5 @@
-import { NuxtApp } from '@nuxt/types';
-import VueRouter, { Location } from 'vue-router';
+import { NuxtApp, Transition, Transition } from '@nuxt/types';
+import VueRouter, { Location, Route } from 'vue-router';
 
 declare global {
   const $nuxt: NuxtApp;
@@ -15,6 +15,14 @@ declare module 'vue-fragment' {
   export const Fragment: Vue;
 }
 
+declare module 'vue/types/options' {
+  interface ComponentOptions<V extends Vue> {
+    layoutTransition?:
+      | string
+      | Transition
+      | ((to: Route, from: Route | undefined) => string | Transition);
+  }
+}
 declare module 'vue/types/vue' {
   interface Vue {
     $constants: typeof Constants;

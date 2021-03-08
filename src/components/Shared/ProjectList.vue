@@ -4,7 +4,11 @@
       <h2 class="font-semibold" style="margin-left: 53px">
         <slot />
       </h2>
-      <div class="Bullets / flex-nowrap flex flex-row items-center" style="padding-right: 50px">
+      <div
+        v-if="totalSlides > 1"
+        class="Bullets / flex-nowrap flex flex-row items-center"
+        style="padding-right: 50px"
+      >
         <div
           v-for="slide of totalSlides"
           :key="slide"

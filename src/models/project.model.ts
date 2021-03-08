@@ -26,6 +26,7 @@ export interface Project {
   videos: ProjectVideo[];
   type: ProjectType;
   id: string;
+  info?: string;
 }
 export interface Techno {
   title: string;

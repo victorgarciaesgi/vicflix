@@ -82,6 +82,8 @@ export default class Carrousel extends BreakpointMixin {
   public childGap = 3;
   public slidePadding = 100;
 
+  public isReady = false;
+
   public startX = 0;
   public startY = 0;
 
@@ -148,9 +150,10 @@ export default class Carrousel extends BreakpointMixin {
     const { transform } = this.handleTransform();
     return {
       flexBasis: `100%`,
-      ...(!this.isDragging && {
-        transition: `transform 0.5s ease-in-out`,
-      }),
+      ...(!this.isDragging &&
+        this.isReady && {
+          transition: `transform 0.5s ease-in-out`,
+        }),
       transform,
     };
   }
@@ -233,6 +236,9 @@ export default class Carrousel extends BreakpointMixin {
     this.slider.addEventListener('touchend', this.handleTouchEnd, { passive: false });
     this.slider.addEventListener('touchmove', this.handleTouchMove, { passive: false });
     this.breakpointChanged(this.calculatedItemsPerView);
+    setTimeout(() => {
+      this.isReady = true;
+    }, 300);
   }
 
   beforeDestroy() {

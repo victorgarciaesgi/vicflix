@@ -6,7 +6,7 @@
   </Modal>
   <div
     v-else-if="show"
-    class="h-screen-ios fixed top-0 left-0 z-40 flex flex-col w-screen h-screen overflow-y-auto bg-black"
+    class="h-screen-ios bg-g20 fixed top-0 left-0 z-40 flex flex-col w-screen h-screen overflow-y-auto"
   >
     <PreviewContent v-if="project" :project="project" />
   </div>
@@ -59,13 +59,12 @@ export default class ProjectPreview extends BreakpointMixin {
       AuthModule.updateState({ hideNav: false });
     }
   }
-}
-</script>
 
-<style lang="postcss" scoped>
-div.Picture-Wrapper {
-  .VImg {
-    mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 5%, black 60%);
+  mounted() {
+    window.addEventListener('resize', this.showWatch);
+  }
+  beforeDestroy() {
+    window.removeEventListener('resize', this.showWatch);
   }
 }
-</style>
+</script>

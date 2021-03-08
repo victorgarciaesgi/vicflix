@@ -15,11 +15,13 @@ import { Component, Vue, Prop } from 'nuxt-property-decorator';
 @Component({})
 export default class TechnoItem extends Vue {
   @Prop({ required: true }) techno!: TechnosList;
-  @Prop({ default: 'lg' }) size!: 'md' | 'lg';
+  @Prop({ default: 'lg' }) size!: 'sm' | 'md' | 'lg';
 
   get getSize() {
     if (this.size === 'lg') {
       return 50;
+    } else if (this.size === 'md') {
+      return 36;
     } else {
       return 26;
     }

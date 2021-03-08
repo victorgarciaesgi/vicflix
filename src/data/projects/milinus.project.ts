@@ -1,12 +1,13 @@
 import { TechnosList } from '@constants';
 import { Project, ProjectType } from '@models';
-import * as videos from '../videos/milinus.videos';
+import { milinusVideos } from '../videos/milinus.videos';
+
 export const milinusProject: Project = {
   picture: 'milinus.png',
   description: 'Le meilleur du fitness dans votre poche ! Prêt à decoller ?',
   title: 'Milinus',
   logo: 'milinus.svg',
-  videos: Object.values(videos),
+  videos: Object.values(milinusVideos).flat(),
   year: 2020,
   links: [
     {
@@ -20,6 +21,9 @@ export const milinusProject: Project = {
   ],
   type: ProjectType.App,
   id: 'Tv7aAl',
+  info: `Aucun lien ou accès d'application administrateur ne sera fourni.
+    Toutes les vidéos sont issues de fausses données de test et ne correspondent pas à des vraies données client.
+  `,
   technos: [
     TechnosList.Nuxt,
     TechnosList.Vue,

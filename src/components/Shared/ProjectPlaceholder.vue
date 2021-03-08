@@ -7,7 +7,7 @@
     @mouseleave="cancelMouseEnter"
   >
     <VImg :src="picture" class="rounded" />
-    <img :src="logo" class="left-3 top-3 absolute w-6" />
+    <img :src="logo" class="left-3 top-3 absolute h-6" />
     <Portal v-if="init" to="Preview-Outlet">
       <div
         v-show="showPreview"
@@ -18,7 +18,7 @@
         @mouseleave="handleMouseLeave"
       >
         <VImg ref="pictureRef" :src="picture" fill="both" type="default" />
-        <img :src="logo" class="left-3 top-3 absolute w-6 h-6" />
+        <img :src="logo" class="left-3 top-3 absolute h-6" />
         <div ref="previewBlock" class="Block / bg-bg2 flex-nowrap flex flex-row p-2">
           <div class="flex flex-col flex-1">
             <h4 class="leading-5">{{ project.title }}</h4>
@@ -28,7 +28,7 @@
               <span>{{ project.year }}</span>
             </div>
             <div class="flex flex-row items-center justify-start">
-              <Techno v-for="techno of project.technos" :key="techno" :techno="techno" size="md" />
+              <Techno v-for="techno of project.technos" :key="techno" :techno="techno" size="sm" />
             </div>
           </div>
           <div class="flex-nowrap flex-0 flex flex-row items-center">
@@ -166,18 +166,30 @@ export default class ProjectPlaceholder extends Vue {
       const scaleZoom = 1.5;
       const previewRect = this.preview.getBoundingClientRect();
       const rootRect = this.root.getBoundingClientRect();
-      const ph = previewRect.height * scaleZoom;
-      const mt = (ph - previewRect.height) / 2;
-      const xPadding = (ph - rootRect.height) / 2 - mt;
-      const ty = rootRect.top - xPadding;
-      // console.log(ph, mt, pt, tY, xPadding, rootRect.top - xPadding);
+
+      const previewWidthScale = previewRect.width * scaleZoom;
+      const positionPreviewLeft = rootRect.left - (previewWidthScale - rootRect.width) / 2;
+      let finalTranslateX = previewRect.left;
+      if (positionPreviewLeft < 10) {
+        finalTranslateX = finalTranslateX + 10 - positionPreviewLeft;
+      } else if (positionPreviewLeft + previewWidthScale > window.innerWidth - 10) {
+        finalTranslateX =
+          finalTranslateX - (positionPreviewLeft + previewWidthScale - window.innerWidth) - 10;
+      }
+
+      const previewHeightScale = previewRect.height * scaleZoom;
+      const previewMarginTop = (previewHeightScale - previewRect.height) / 2;
+      const yPadding = (previewHeightScale - rootRect.height) / 2 - previewMarginTop;
+      const finalTranslateY = rootRect.top - yPadding;
+
       const placeholderImage = new Image();
       placeholderImage.onload = (ev) => {
         this.root.style.opacity = '0';
         anime({
           targets: this.preview,
           scale: scaleZoom,
-          translateY: ty,
+          translateY: finalTranslateY,
+          translateX: finalTranslateX,
           duration: 200,
           easing: 'cubicBezier(.5, .05, .1, .3)',
         });
@@ -216,6 +228,7 @@ export default class ProjectPlaceholder extends Vue {
         targets: this.preview,
         scale: 1,
         translateY: top,
+        translateX: left,
         duration: 200,
         easing: 'cubicBezier(.5, .05, .1, .3)',
         complete: () => {

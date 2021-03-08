@@ -1,5 +1,5 @@
 <template>
-  <div class="c-row-y flex w-full py-3 pl-2">
+  <div class="c-row-y flex w-full py-3 pl-4">
     <h3 class="font-semibold">
       <slot />
     </h3>

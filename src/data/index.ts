@@ -1,21 +1,14 @@
 import { Project } from '@models';
 import * as projects from './projects';
-import { milinusProject } from './projects';
+import { milinusProject, profeelProject } from './projects';
 import * as videos from './videos';
 
-export const allVideos = Object.values(videos);
+console.log(Object.values(videos));
+
+export const allVideos = Object.values(videos).flat();
 
 export const allProjects = Object.values(projects);
 
-export const coverProject = milinusProject;
+export const coverProject = profeelProject;
 
-export const featuredProject: Project[] = [
-  projects.milinusProject,
-  projects.milinusProject,
-  projects.milinusProject,
-  projects.milinusProject,
-  projects.milinusProject,
-  projects.milinusProject,
-  projects.milinusProject,
-  projects.milinusProject,
-];
+export const featuredProject: Project[] = [projects.milinusProject, projects.profeelProject];

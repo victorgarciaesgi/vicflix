@@ -1,13 +1,20 @@
 <template>
   <div class="flex-nowrap flex flex-col overflow-y-auto">
     <div class="Picture-Wrapper / h-96 flex-0 flex">
-      <VImg :src="picture" type="default" />
-      <div class="bottom-16 sm:bottom-8 left-8 absolute flex flex-col items-start">
+      <VImg class="Cover" :src="picture" type="default" />
+      <div class="bottom-8 sm:bottom-8 left-8 absolute flex flex-col items-start">
         <img
           :src="logo"
           class="sm:h-24 h-32"
-          style="filter: drop-shadow(3px 2px 3px rgba(0, 0, 0, 0.2))"
+          style="filter: drop-shadow(3px 2px 3px rgba(0, 0, 0, 0.4))"
         />
+        <div
+          class="sm:hidden flex flex-row items-center"
+          style="filter: drop-shadow(3px 2px 3px rgba(0, 0, 0, 0.4))"
+        >
+          <img src="/icon.png" width="16" />
+          <span class="text-w240 ml-2 text-sm font-semibold tracking-widest">PROJECT</span>
+        </div>
         <div class="sm:hidden flex flex-row items-center mt-4">
           <Action icon="actions/play" theme="white" @click="playFirstVideo">Lecture</Action>
           <Popin mode="hover" theme="white">
@@ -56,6 +63,7 @@
               <SvgIcon src="actions/open_in" class="ml-1" :size="16" />
             </a>
           </div>
+          <p v-if="project.info" class="text-w140 py-5 text-sm">{{ project.info }}</p>
         </div>
         <div class="flex-0 sm:flex-row sm:w-full sm:py-4 flex flex-col w-1/3 text-sm">
           <div class="sm:mr-2 relative mb-4">
@@ -73,7 +81,7 @@
         </div>
       </div>
       <div class="flex flex-col">
-        <div class="flex flex-row justify-between">
+        <div class="flex flex-col justify-between">
           <h2 class="mb-4">Épisodes</h2>
           <div class="flex flex-col">
             <VideoPreviewBanner
@@ -126,3 +134,11 @@ export default class PreviewContent extends Vue {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+div.Picture-Wrapper {
+  .Cover >>> img {
+    mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(20, 20, 20, 1) 40%);
+  }
+}
+</style>

@@ -1,1 +1,2 @@
-export * from './milinus';
+export * from './milinus.project';
+export * from './profeel.project';

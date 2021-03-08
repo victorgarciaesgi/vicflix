@@ -4,11 +4,9 @@
 
     <template v-if="isDesktop">
       <ProjectList :projects="featuredProjects"> Projets en vedette </ProjectList>
-      <ProjectList :projects="featuredProjects"> Populaires en ce moment </ProjectList>
     </template>
     <template v-else>
       <MobileProjectList :projects="featuredProjects"> Projets en vedette </MobileProjectList>
-      <MobileProjectList :projects="featuredProjects"> Populaires en ce moment </MobileProjectList>
     </template>
   </div>
 </template>

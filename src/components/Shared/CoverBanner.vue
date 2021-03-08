@@ -16,7 +16,7 @@
       <div class="sm:w-full sm:items-center flex flex-col items-start py-5">
         <img
           :src="logo"
-          class="sm:max-h-40 sm:h-auto sm:max-w-xs max-h-40 object-contain object-left w-full"
+          class="sm:max-h-40 sm:h-auto sm:max-w-xs max-h-40 sm:object-center object-contain object-left w-full"
           style="filter: drop-shadow(3px 2px 3px rgba(0, 0, 0, 0.4))"
         />
         <span class="sm:text-sm" style="text-shadow: 1px 2px 1px rgba(0, 0, 0, 0.2)">{{

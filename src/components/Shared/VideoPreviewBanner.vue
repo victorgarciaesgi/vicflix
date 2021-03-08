@@ -2,23 +2,35 @@
   <NuxtLink
     :to="toVideoLink"
     class="VideoPreviewBanner / group flex-nowrap sm:px-0 flex flex-row items-center h-32 px-5 py-3"
+    :class="{ '!px-3 !h-24': sm }"
   >
-    <div class="pr-3 text-2xl">{{ video.episode }}</div>
-    <div class="flex-0 sm:w-20 sm:h-12 relative w-40 h-20 overflow-hidden rounded-md">
+    <div class="w-6 pr-3 text-2xl">{{ video.episode }}</div>
+    <div
+      class="flex-0 sm:w-20 sm:h-12 relative w-40 h-20 overflow-hidden rounded-md"
+      :class="{ '!w-20 !h-12': sm }"
+    >
       <VImg :src="video.preview" />
-      <div class="group-hover:flex center absolute top-0 left-0 hidden w-full h-full">
-        <div class="center flex p-1 border border-white rounded-full">
-          <SvgIcon src="actions/play" :size="40" />
+      <div
+        class="group-hover:flex center bg-opacity-30 absolute top-0 left-0 hidden w-full h-full bg-black"
+      >
+        <div class="p-1 border border-white rounded-full">
+          <SvgIcon class="w-9 h-9 sm:w-7 sm:h-7" :class="{ '!h-7 !w-7': sm }" src="actions/play" />
         </div>
       </div>
     </div>
-    <div class="sm:pr-0 flex flex-col justify-center px-5">
-      <div class="sm:flex-col flex flex-row justify-between">
-        <span class="text-md font-semibold">{{ video.title }}</span>
-        <span class="sm:hidden">{{ video.duration }} min</span>
+    <div class="sm:pr-0 flex flex-col justify-center px-5" :class="{ '!pr-0': sm }">
+      <div class="sm:flex-col flex flex-row justify-between" :class="{ '!flex-col': sm }">
+        <span class="text-md font-semibold" :class="{ '!text-sm': sm }">{{ video.title }}</span>
+        <span class="sm:hidden" :class="{ '!hidden': sm }">{{ video.duration }} min</span>
       </div>
-      <span class="text-text9 sm:line-clamp-2 mt-1 text-sm">{{ video.description }}</span>
-      <span class="-sm:hidden text-grey text-md mt-1">{{ video.duration }} min</span>
+      <span
+        class="text-text9 sm:line-clamp-2 mt-1 text-sm"
+        :class="{ '!line-clamp-2 !text-xs': sm }"
+        >{{ video.description }}</span
+      >
+      <span class="-sm:hidden text-grey text-md mt-1" :class="{ '!hidden': !sm }"
+        >{{ video.duration }} min</span
+      >
     </div>
   </NuxtLink>
 </template>
@@ -31,6 +43,7 @@ import { Location } from 'vue-router';
 @Component({})
 export default class VideoPreviewBanner extends Vue {
   @Prop() video!: ProjectVideo;
+  @Prop({ type: Boolean, required: false }) sm?: boolean;
 
   get toVideoLink(): Location {
     return {
@@ -44,10 +57,15 @@ export default class VideoPreviewBanner extends Vue {
 </script>
 
 <style lang="postcss" scoped>
-div.VideoPreviewBanner {
-  border-width: 1px 0;
-  border-color: var(--bg6);
-  border-style: solid;
+a.VideoPreviewBanner {
+  border-bottom: 1px var(--bg6) solid;
+
+  &:hover:not(.nuxt-link-active) {
+    background-color: var(--bg4);
+  }
+  &.nuxt-link-active {
+    background-color: var(--bg5);
+  }
 
   &:last-child {
     border-bottom: none;

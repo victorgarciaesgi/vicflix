@@ -76,7 +76,28 @@
             </div>
           </div>
           <div class="flex-nowrap flex flex-row items-center">
-            <SvgIcon class="ButtonAction / mr-6" src="videos/episodes" :size="45" />
+            <Popin
+              v-if="projectRelated"
+              :mode="isMobile ? 'click' : 'hover'"
+              :debounce="true"
+              :offset="2"
+              :width="isMobile ? 300 : 350"
+              theme="g40"
+            >
+              <template #content>
+                <div class="flex flex-col">
+                  <VideoPreviewBanner
+                    v-for="video of projectRelated.videos"
+                    :key="video.id"
+                    :video="video"
+                    :sm="true"
+                  />
+                </div>
+              </template>
+              <template #button>
+                <SvgIcon class="ButtonAction / mr-6" src="videos/episodes" :size="45" />
+              </template>
+            </Popin>
             <SvgIcon
               v-if="!isFullScreen"
               class="ButtonAction"
@@ -126,6 +147,7 @@ import { BreakPointsValues, ProjectVideo } from '@models';
 import { secondsToHoursAndMinutes } from '@utils';
 import { allProjects } from '@data';
 import { BreakpointMixin } from '@mixins';
+import VideoPreviewBanner from '../VideoPreviewBanner.vue';
 import VolumeSlider from './VolumeSlider.vue';
 import PlayerTrackBar from './PlayerTrackBar.vue';
 
@@ -134,6 +156,7 @@ import PlayerTrackBar from './PlayerTrackBar.vue';
   components: {
     VolumeSlider,
     PlayerTrackBar,
+    VideoPreviewBanner,
   },
 })
 export default class VideoPlayer extends BreakpointMixin {

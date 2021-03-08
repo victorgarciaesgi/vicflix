@@ -1,5 +1,5 @@
 <template>
-  <NuxtChild />
+  <NuxtChild :key="$route.params.id" />
 </template>
 
 <script lang="ts">

@@ -82,7 +82,7 @@
       </div>
       <div class="flex flex-col">
         <div class="flex flex-col justify-between">
-          <h2 class="mb-4">Épisodes</h2>
+          <h2 class="border-g80 py-2 mb-2 border-b">Épisodes</h2>
           <div class="flex flex-col">
             <VideoPreviewBanner
               v-for="(video, index) of project.videos"

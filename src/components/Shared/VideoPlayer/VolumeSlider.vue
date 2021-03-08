@@ -1,5 +1,5 @@
 <template>
-  <div class="VolumeSlider / bg-bg3 flex p-3 rounded" style="height: 150px">
+  <div class="VolumeSlider / bg-bg3 flex px-3 py-4 rounded" style="height: 150px">
     <div
       ref="sliderRef"
       class="bg-bg6 relative h-full cursor-pointer"

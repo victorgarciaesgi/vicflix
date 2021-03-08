@@ -37,7 +37,7 @@
               /> -->
                 <path
                   class="st1"
-                  :fill="theme"
+                  :fill="colorList[theme]"
                   d="M24.5,13h-23L12.47,1.71c0.29-0.3,0.77-0.3,1.06,0L24.5,13z"
                 />
               </g>
@@ -69,7 +69,7 @@
 import { Vue, Prop, Component, Emit } from 'nuxt-property-decorator';
 import { EventBus, Events } from '@services';
 import { nanoid } from 'nanoid';
-import { debounce } from 'lodash-es';
+import colorsModule from '@colors';
 import { getPopupComputedOutputMesures, getScrollParent } from './utils';
 import { PopupPlacement, PopupAlignement } from './types';
 import PopinButton from './PopinButton';
@@ -109,7 +109,7 @@ export default class Popin extends Vue {
   @Prop({ required: false }) alignement?: PopupAlignement;
   @Prop({ default: false, type: Boolean }) inHeader?: boolean;
   @Prop({ required: false, type: Boolean }) debounce?: boolean;
-  @Prop({ default: 'black' }) theme!: 'black' | 'white';
+  @Prop({ default: 'black' }) theme!: string;
 
   @Emit()
   focus(event: Event) {
@@ -128,6 +128,8 @@ export default class Popin extends Vue {
     arrow: HTMLElement;
   };
   button: HTMLElement | null = null;
+
+  colorList = colorsModule;
 
   initButtonRoot(el: HTMLElement) {
     this.button = el;
@@ -191,7 +193,6 @@ export default class Popin extends Vue {
 
   debounceClosePopup() {
     this.timeout = setTimeout(() => {
-      console.log('close1');
       this.closePopup();
     }, 200);
   }

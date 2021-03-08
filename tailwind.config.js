@@ -127,6 +127,7 @@ module.exports = {
   variants: {
     extend: {
       backgroundColor: ['important', 'active'],
+      flexDirection: ['important'],
       backgroundOpacity: ['important'],
       display: ['important', 'group-hover'],
       margin: ['first', 'last', 'important'],
@@ -144,6 +145,7 @@ module.exports = {
       minWidth: ['important'],
       ringColor: ['hover', 'group-hover'],
       ringWidth: ['hover', 'group-hover'],
+      lineClamp: ['important'],
     },
   },
   plugins: [

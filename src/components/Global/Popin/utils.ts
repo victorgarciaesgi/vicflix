@@ -202,7 +202,7 @@ function getPopupAlignement({
     containerMesures.left + containerMesures.width - popupSize.width + THRESHOLD <
     containerMesures.left
   ) {
-    processedAlignement = PopupAlignement.ContainerEnd;
+    processedAlignement = PopupAlignement.ContainerStart;
   } else {
     processedAlignement = PopupAlignement.Full;
   }
@@ -232,7 +232,7 @@ function getPopupCoordinatesAndSize({
   minWidth: number | null;
   arrowPosition: string;
 } {
-  const popupFinalWidth = full ? originMesure.width : null;
+  const popupFinalWidth = full ? originMesure.width : popupSize.width;
 
   let outputLeft: number;
   let outputTop: number;
@@ -240,15 +240,16 @@ function getPopupCoordinatesAndSize({
   if (full || alignement === PopupAlignement.Full) {
     outputLeft = originMesure.left;
   } else if (alignement === PopupAlignement.End) {
-    outputLeft = originMesure.left + originMesure.width - popupSize.width;
+    outputLeft = originMesure.left + originMesure.width - popupFinalWidth;
   } else if (alignement === PopupAlignement.ContainerEnd) {
-    outputLeft = containerMesures.left + containerMesures.width + THRESHOLD;
+    outputLeft = containerMesures.left + containerMesures.width - popupFinalWidth - THRESHOLD;
+    console.log(outputLeft);
   } else if (alignement === PopupAlignement.Start) {
     outputLeft = originMesure.left;
   } else if (alignement === PopupAlignement.ContainerStart) {
     outputLeft = containerMesures.left + THRESHOLD;
   } else {
-    outputLeft = originMesure.left - popupSize.width / 2 + originMesure.width / 2;
+    outputLeft = originMesure.left - popupFinalWidth / 2 + originMesure.width / 2;
   }
   if (placement === PopupPlacement.Top) {
     outputTop = originMesure.top - targetOffset - popupSize.height;

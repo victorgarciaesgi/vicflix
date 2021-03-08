@@ -12,8 +12,9 @@
       name="Preview-Outlet"
     />
 
-    <div id="rootView">
+    <div id="rootView" class="c-row-y flex flex-row">
       <Nuxt />
+      <FooterComponent />
     </div>
     <transition name="fade">
       <ProfileSelect v-if="!loggedIn" />
@@ -23,7 +24,13 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator';
-import { AlertsContainer, ToastContainer, HeaderComponent, ProfileSelect } from '@components';
+import {
+  AlertsContainer,
+  ToastContainer,
+  HeaderComponent,
+  ProfileSelect,
+  FooterComponent,
+} from '@components';
 import { AuthModule, DarkModeModule, DisplayTheme, RouterModule } from '@store';
 
 @Component({
@@ -32,6 +39,7 @@ import { AuthModule, DarkModeModule, DisplayTheme, RouterModule } from '@store';
     ToastContainer,
     HeaderComponent,
     ProfileSelect,
+    FooterComponent,
   },
 })
 export default class App extends Vue {
@@ -70,7 +78,6 @@ div#app {
     width: 100%;
     max-width: 100%;
     flex: 1;
-    display: flex;
     /* padding-top: var(--headerHeight); */
   }
 }

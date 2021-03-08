@@ -10,7 +10,7 @@
     <img
       :src="logo"
       class="left-3 top-3 absolute h-6"
-      style="filter: drop-shadow(3px 2px 2px rgba(0, 0, 0, 0.6))"
+      style="filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6))"
     />
     <Portal v-if="init" to="Preview-Outlet">
       <div
@@ -21,8 +21,12 @@
         :data-show="showPreview"
         @mouseleave="handleMouseLeave"
       >
-        <VImg ref="pictureRef" :src="picture" fill="both" type="default" />
-        <img :src="logo" class="left-3 top-3 absolute h-6" />
+        <img ref="pictureRef" :src="picture" class="object-cover w-full" />
+        <img
+          :src="logo"
+          class="left-3 top-3 absolute h-6"
+          style="filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6))"
+        />
         <div ref="previewBlock" class="Block / bg-bg2 flex-nowrap flex flex-row p-2 -mt-1">
           <div class="flex flex-col flex-1">
             <h4 class="leading-5">{{ project.title }}</h4>
@@ -84,7 +88,7 @@ export default class ProjectPlaceholder extends Vue {
 
   @Ref() root!: HTMLDivElement;
   @Ref() preview?: HTMLDivElement;
-  @Ref() pictureRef?: VImg;
+  @Ref() pictureRef?: HTMLImageElement;
   @Ref() previewBlock?: HTMLDivElement;
 
   public init = false;
@@ -157,7 +161,7 @@ export default class ProjectPlaceholder extends Vue {
         width: `${rootPosition.width}px`,
         transform: `translateX(${rootPosition.left}px) translateY(${rootPosition.top}px)`,
       });
-      Object.assign((this.pictureRef.$el as HTMLDivElement).style, {
+      Object.assign(this.pictureRef.style, {
         height: `${rootPosition.height}px`,
       });
     }
@@ -170,15 +174,21 @@ export default class ProjectPlaceholder extends Vue {
       const scaleZoom = 1.5;
       const previewRect = this.preview.getBoundingClientRect();
       const rootRect = this.root.getBoundingClientRect();
+      const limitDistanceBorder = 52;
 
       const previewWidthScale = previewRect.width * scaleZoom;
       const positionPreviewLeft = rootRect.left - (previewWidthScale - rootRect.width) / 2;
       let finalTranslateX = previewRect.left;
-      if (positionPreviewLeft < 10) {
-        finalTranslateX = finalTranslateX + 10 - positionPreviewLeft;
-      } else if (positionPreviewLeft + previewWidthScale > window.innerWidth - 10) {
+      if (positionPreviewLeft < limitDistanceBorder) {
+        finalTranslateX = finalTranslateX + limitDistanceBorder - positionPreviewLeft;
+      } else if (
+        positionPreviewLeft + previewWidthScale >
+        window.innerWidth - limitDistanceBorder
+      ) {
         finalTranslateX =
-          finalTranslateX - (positionPreviewLeft + previewWidthScale - window.innerWidth) - 10;
+          finalTranslateX -
+          (positionPreviewLeft + previewWidthScale - window.innerWidth) -
+          limitDistanceBorder;
       }
 
       const previewHeightScale = previewRect.height * scaleZoom;

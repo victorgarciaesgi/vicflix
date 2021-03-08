@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col w-full pb-6">
+  <div class="flex flex-col w-full pb-20">
     <CoverBanner :data="coverProject" />
 
     <component :is="isDesktop ? 'ProjectList' : 'MobileProjectList'" :projects="featuredProjects">

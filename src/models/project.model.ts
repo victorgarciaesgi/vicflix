@@ -5,6 +5,13 @@ export interface ProjectLink {
   link: string;
 }
 
+export interface ProgressList {
+  timestamp: number;
+  duration: number;
+  episode: number;
+  videoId: string;
+}
+
 export interface ProjectVideo {
   title: string;
   duration: string;

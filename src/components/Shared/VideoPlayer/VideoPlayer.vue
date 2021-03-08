@@ -81,7 +81,7 @@
               :mode="isMobile ? 'click' : 'hover'"
               :debounce="true"
               :offset="2"
-              :width="isMobile ? 300 : 350"
+              :width="400"
               theme="g40"
             >
               <template #content>
@@ -137,16 +137,23 @@
         </div>
       </div>
     </transition>
+    <PortalTarget
+      multiple
+      style="z-index: 11000"
+      class="absolute top-0 left-0"
+      name="Popup-Outlet"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Ref } from 'vue-property-decorator';
+import { Component, Vue, Prop, Ref, Watch } from 'vue-property-decorator';
 import { EventBus } from '@services';
 import { BreakPointsValues, ProjectVideo } from '@models';
 import { secondsToHoursAndMinutes } from '@utils';
 import { allProjects } from '@data';
 import { BreakpointMixin } from '@mixins';
+import { VideoProgressModule } from '@store';
 import VideoPreviewBanner from '../VideoPreviewBanner.vue';
 import VolumeSlider from './VolumeSlider.vue';
 import PlayerTrackBar from './PlayerTrackBar.vue';
@@ -223,17 +230,17 @@ export default class VideoPlayer extends BreakpointMixin {
 
   playVideo() {
     EventBus.$emit('pauseVideos', this.pauseVideo);
-    this.videoPlayer.play();
+    this.videoPlayer?.play();
     this.videoPlaying = true;
   }
   pauseVideo() {
-    this.videoPlayer.pause();
+    this.videoPlayer?.pause();
     this.videoPlaying = false;
   }
 
   replayVideo() {
     this.videoPlayer.load();
-    this.videoPlayer.play();
+    this.videoPlayer?.play();
     this.videoEnded = false;
     this.videoPlaying = true;
   }
@@ -254,7 +261,6 @@ export default class VideoPlayer extends BreakpointMixin {
   }
 
   handleFullScreenChange() {
-    console.log('pute');
     if (!document.fullscreenElement) {
       this.isFullScreen = false;
       this.debounceHideToolbar();
@@ -306,6 +312,15 @@ export default class VideoPlayer extends BreakpointMixin {
 
   //! Video Time
 
+  @Watch('currentTime') timeChanged(value: number) {
+    VideoProgressModule.mutations.updateVideoProgress({
+      videoId: this.video.id,
+      timestamp: value,
+      duration: this.totalTime,
+      episode: this.video.episode,
+    });
+  }
+
   addVideoTime(seconds: number) {
     this.loading = true;
     this.videoPlayer.currentTime = this.videoPlayer.currentTime + seconds;
@@ -347,6 +362,17 @@ export default class VideoPlayer extends BreakpointMixin {
     this.handleVideoProgress();
   }
 
+  async handleLoadedMetadata() {
+    this.totalTime = this.videoPlayer?.duration ?? 0;
+    this.loading = false;
+    const progress = await VideoProgressModule.actions.getVideoProgress(this.video.id);
+    console.log(progress);
+    if (progress) {
+      this.videoPlayer.currentTime = progress;
+    }
+    this.playVideo();
+  }
+
   //! Toolbar
 
   hideToolBar() {
@@ -367,11 +393,7 @@ export default class VideoPlayer extends BreakpointMixin {
       this.videoPlayer.addEventListener('ended', this.endOfVideo);
       this.videoPlayer.addEventListener('timeupdate', this.timeUpdate);
       this.videoPlayer.addEventListener('seeked', this.handleSeeked);
-      this.videoPlayer.addEventListener('loadedmetadata', () => {
-        this.totalTime = this.videoPlayer?.duration ?? 0;
-        this.loading = false;
-        this.playVideo();
-      });
+      this.videoPlayer.addEventListener('loadedmetadata', this.handleLoadedMetadata);
       document.addEventListener('fullscreenchange', this.handleFullScreenChange);
       this.volume = this.videoPlayer.volume;
       window.addEventListener('keydown', this.handleKeyUp);
@@ -387,7 +409,10 @@ export default class VideoPlayer extends BreakpointMixin {
     if (this.videoPlayer) {
       this.videoPlayer.removeEventListener('ended', this.endOfVideo);
       this.videoPlayer.removeEventListener('timeupdate', this.timeUpdate);
+      this.videoPlayer.removeEventListener('seeked', this.handleSeeked);
+      this.videoPlayer.removeEventListener('loadedmetadata', this.handleLoadedMetadata);
     }
+    document.removeEventListener('fullscreenchange', this.handleFullScreenChange);
   }
 }
 </script>

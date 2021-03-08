@@ -10,5 +10,5 @@ import { Component, Vue } from 'nuxt-property-decorator';
     title: 'Studies',
   },
 })
-export default class __Page extends Vue {}
+export default class Studies extends Vue {}
 </script>

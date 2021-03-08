@@ -2,7 +2,6 @@
   <div id="app" class="flex">
     <ToastContainer />
     <AlertsContainer />
-    <PortalTarget multiple style="z-index: 11000" class="fixed top-0 left-0" name="Popup-Outlet" />
     <PortalTarget multiple style="z-index: 10600" class="fixed top-0 left-0" name="Modal-Outlet" />
 
     <div id="rootView">
@@ -17,7 +16,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator';
 import { AlertsContainer, ToastContainer, HeaderComponent, ProfileSelect } from '@components';
-import { AuthModule, DarkModeModule, DisplayTheme, RouterModule } from '@store';
+import { AuthModule, DarkModeModule, DisplayTheme } from '@store';
 
 @Component({
   components: {

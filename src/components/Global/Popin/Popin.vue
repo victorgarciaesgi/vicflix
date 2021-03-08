@@ -147,7 +147,7 @@ export default class Popin extends Vue {
 
   get getPopupStyle(): Partial<CSSStyleDeclaration> | null {
     if (!this.width) return { width: 'max-content' };
-    return { width: this.width + 'px' };
+    return { width: this.width + 'px', maxWidth: '100vw' };
   }
 
   get isTop() {
@@ -287,7 +287,7 @@ export default class Popin extends Vue {
         const popupStyle = popupTarget.style;
         popupStyle.transform = `translate3d(${left}, ${top}, 0)`;
         popupStyle.maxHeight = `${maxHeight}px`;
-        if (minWidth) popupStyle.minWidth = `${minWidth}px`;
+        if (minWidth) popupStyle.width = `${minWidth}px`;
 
         if (this.arrow) {
           const arrow = this.$refs?.arrow as HTMLElement;

@@ -6,6 +6,7 @@ export enum PopupPlacement {
 export enum PopupAlignement {
   Center = 'Center',
   Start = 'Start',
+  ContainerFull = 'ContainerFull',
   ContainerStart = 'ContainerStart',
   ContainerEnd = 'ContainerEnd',
   End = 'End',

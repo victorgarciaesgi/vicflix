@@ -4,7 +4,8 @@ import { milinusVideos } from '../videos/milinus.videos';
 
 export const milinusProject: Project = {
   picture: 'milinus.png',
-  description: 'Le meilleur du fitness dans votre poche ! Prêt à decoller ?',
+  slogan: 'Le meilleur du fitness dans votre poche ! Prêt à decoller ?',
+  description: '',
   title: 'Milinus',
   logo: 'milinus.svg',
   videos: Object.values(milinusVideos).flat(),
@@ -19,7 +20,7 @@ export const milinusProject: Project = {
       link: 'https://apps.apple.com/us/app/milinus/id1506570411',
     },
   ],
-  type: ProjectType.App,
+  type: [ProjectType.Mobile, ProjectType.App, ProjectType.Site],
   id: 'Tv7aAl',
   info: `Aucun lien ou accès d'application administrateur ne sera fourni.
     Toutes les vidéos sont issues de fausses données de test et ne correspondent pas à des vraies données client.

@@ -17,6 +17,7 @@ export interface ProjectVideo {
 }
 export interface Project {
   title: string;
+  slogan?: string;
   description: string;
   picture: string;
   logo: string;
@@ -24,7 +25,7 @@ export interface Project {
   links?: ProjectLink[];
   year: number;
   videos: ProjectVideo[];
-  type: ProjectType;
+  type: ProjectType[];
   id: string;
   info?: string;
 }
@@ -36,4 +37,5 @@ export interface Techno {
 export enum ProjectType {
   Site = 'Website',
   App = 'App',
+  Mobile = 'Mobile',
 }

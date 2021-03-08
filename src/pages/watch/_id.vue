@@ -21,7 +21,6 @@ export default class WatchId extends Vue {
 
   asyncData({ params: { id }, redirect }: Context): Partial<WatchId> | void {
     const video = allVideos.find((f) => f.id === id);
-    console.log(allVideos);
     if (video) {
       return { video };
     } else {

@@ -4,7 +4,11 @@
     class="MobileProjectPlaceholder / flex-0 flex w-32 h-48 mr-2 cursor-pointer"
   >
     <VImg :src="picture" class="rounded" />
-    <img :src="logo" class="left-1/2 bottom-3 absolute w-10 transform -translate-x-1/2" />
+    <img
+      :src="logo"
+      style="filter: drop-shadow(3px 2px 2px rgba(0, 0, 0, 0.6))"
+      class="left-1/2 bottom-3 absolute h-8 transform -translate-x-1/2"
+    />
   </NuxtLink>
 </template>
 

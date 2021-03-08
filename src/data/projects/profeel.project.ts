@@ -4,8 +4,9 @@ import { profeelVideos } from '../videos/profeel.videos';
 
 export const profeelProject: Project = {
   picture: 'profeel.png',
-  description: 'Optimiser et sécuriser les process des professionnels',
-  title: 'Profeel',
+  slogan: 'Optimiser et sécuriser les process des professionnels',
+  description: '',
+  title: 'Profeel Back-office',
   logo: 'profeel.png',
   videos: Object.values(profeelVideos).flat(),
   year: 2021,
@@ -19,7 +20,7 @@ export const profeelProject: Project = {
       link: 'https://apps.apple.com/us/app/milinus/id1506570411',
     },
   ],
-  type: ProjectType.App,
+  type: [ProjectType.App, ProjectType.Site, ProjectType.Mobile],
   id: 'LAtFkd',
   info: `Aucun lien ou accès d'application administrateur ne sera fourni.
     Toutes les vidéos sont issues de fausses données de test et ne correspondent pas à des vraies données client.

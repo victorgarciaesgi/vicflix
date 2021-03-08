@@ -9,7 +9,7 @@
           style="filter: drop-shadow(3px 2px 3px rgba(0, 0, 0, 0.4))"
         />
         <div
-          class="sm:hidden flex flex-row items-center"
+          class="sm:hidden flex flex-row items-center mt-4"
           style="filter: drop-shadow(3px 2px 3px rgba(0, 0, 0, 0.4))"
         >
           <img src="/icon.png" width="16" />
@@ -50,7 +50,8 @@
             <span class="ml-2">{{ project.year }}</span>
             <span class="border-bg9 px-1 py-px ml-2 text-sm border">16+</span>
           </div>
-          <p class="mt-5">{{ project.description }}</p>
+          <p class="mt-5">{{ project.slogan }}</p>
+          <p class="mt-2">{{ project.description }}</p>
           <div v-if="project.links" class="flex flex-row mt-4">
             <a
               v-for="link of project.links"
@@ -65,14 +66,14 @@
           </div>
           <p v-if="project.info" class="text-w140 py-5 text-sm">{{ project.info }}</p>
         </div>
-        <div class="flex-0 sm:flex-row sm:w-full sm:py-4 flex flex-col w-1/3 text-sm">
+        <div class="flex-0 sm:flex-row sm:w-full sm:py-4 flex flex-col w-1/3 ml-2 text-sm">
           <div class="sm:mr-2 relative mb-4">
             <span class="text-bg8">Distribution: </span>
             <span>Victor Garcia</span>
           </div>
           <div class="relative mb-4">
             <span class="text-bg8">Genre: </span>
-            <span>{{ project.type }}</span>
+            <span>{{ project.type.join(', ') }}</span>
           </div>
           <div class="sm:flex-row sm:items-center relative flex flex-col mb-4">
             <span class="text-bg8">Technologies: </span>
@@ -117,7 +118,7 @@ export default class PreviewContent extends Vue {
     if (this.project) {
       const match = /^(.+)(\.\w+)$/.exec(this.project.picture);
       if (match) {
-        return `/projects/${match[1]}_placeholder${match[2]}`;
+        return `/projects/${match[1]}${match[2]}`;
       }
       return null;
     }

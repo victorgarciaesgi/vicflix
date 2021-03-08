@@ -7,7 +7,11 @@
     @mouseleave="cancelMouseEnter"
   >
     <VImg background="bg3" :src="picture" class="rounded" />
-    <img :src="logo" class="left-3 top-3 absolute h-6" />
+    <img
+      :src="logo"
+      class="left-3 top-3 absolute h-6"
+      style="filter: drop-shadow(3px 2px 2px rgba(0, 0, 0, 0.6))"
+    />
     <Portal v-if="init" to="Preview-Outlet">
       <div
         v-show="showPreview"
@@ -23,7 +27,7 @@
           <div class="flex flex-col flex-1">
             <h4 class="leading-5">{{ project.title }}</h4>
             <div class="text-text9 text-xxs flex flex-row items-center">
-              <span>{{ project.type }}</span>
+              <span>{{ project.type.join(', ') }}</span>
               <span class="px-1">•</span>
               <span>{{ project.year }}</span>
             </div>

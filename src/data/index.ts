@@ -14,8 +14,17 @@ export const coverProject = milinusProject;
 export const featuredProject: Project[] = [
   projects.milinusProject,
   projects.profeelProject,
+  projects.crecheslibProject,
+  projects.bigupProject,
   projects.profeelProject,
+  projects.crecheslibProject,
+  projects.bigupProject,
   projects.milinusProject,
 ];
 
-export const popularProject: Project[] = [projects.profeelProject, projects.milinusProject];
+export const popularProject: Project[] = [
+  projects.bigupProject,
+  projects.crecheslibProject,
+  projects.profeelProject,
+  projects.milinusProject,
+];

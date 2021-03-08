@@ -3,7 +3,7 @@
     <h3 class="font-semibold">
       <slot />
     </h3>
-    <div class="flex-nowrap flex-0 flex flex-row pr-2 overflow-x-auto">
+    <div class="List / flex-nowrap flex-0 flex flex-row pr-2 overflow-x-auto">
       <MobileProjectPlaceholder
         v-for="(project, index) of projects"
         :key="index"
@@ -31,3 +31,17 @@ export default class MobileProjectList extends Vue {
   public totalSlides = 0;
 }
 </script>
+
+<style lang="postcss" scoped>
+div.List {
+  &::after {
+    content: '';
+    display: block;
+    position: relative;
+    right: -0.25rem;
+    width: 0.25rem;
+    height: 1px;
+    flex-shrink: 0;
+  }
+}
+</style>

@@ -5,8 +5,12 @@
     :style="getContainerStyle"
   >
     <ClientOnly>
-      <div v-if="loading" class="client-rendered flex justify-center w-full p-1">
-        <Spinner :size="20" />
+      <div
+        v-if="loading"
+        class="client-rendered flex justify-center p-1"
+        style="width: 10%; min-width: 20px; max-width: 40px"
+      >
+        <Spinner color="red" />
       </div>
 
       <template v-else-if="imageLoaded || error">
@@ -42,7 +46,7 @@ enum ImageType {
   Default = 'default',
 }
 @Component({})
-export default class Vimg extends Vue {
+export default class VImg extends Vue {
   @Prop({ required: true }) src!: string;
   @Prop({ default: ImageType.Background }) type!: ImageType;
   @Prop({ required: false }) srcFallback?: string;
@@ -51,6 +55,7 @@ export default class Vimg extends Vue {
   @Prop({ default: 'image' }) alt!: string;
   @Prop({ required: false }) width?: number;
   @Prop({ required: false }) height?: number;
+  @Prop({ default: 'bg1', type: String }) background!: string;
 
   public loading = true;
   public imageLoaded = false;
@@ -65,12 +70,15 @@ export default class Vimg extends Vue {
   }
 
   get getContainerClass() {
+    const commonClasses = { [`bg-${this.background}`]: this.loading };
+
     if (this.type === ImageType.Background) {
+      return [`z-0 absolute top-0 left-0 object-${this.fit} w-full h-full `, commonClasses];
+    } else
       return [
-        `z-0 absolute top-0 left-0 object-${this.fit} w-full h-full `,
-        { 'bg-bg1': this.loading },
+        'max-h-inh',
+        { 'w-full': this.isFillWidth, 'h-full': this.isFillHeight, ...commonClasses },
       ];
-    } else return ['max-h-inh', { 'w-full': this.isFillWidth, 'h-full': this.isFillHeight }];
   }
 
   get getImageClass() {
@@ -103,15 +111,18 @@ export default class Vimg extends Vue {
   async initLoad() {
     try {
       if (this.src && process.browser) {
-        const imgBackground = new Image();
-        imgBackground.onload = (event) => {
-          this.imageLoaded = true;
-        };
-        imgBackground.onerror = (e: any) => {
-          console.log(e);
-          this.error = true;
-        };
-        imgBackground.src = this.src;
+        await new Promise<void>((resolve, reject) => {
+          const imgBackground = new Image();
+          imgBackground.onload = (event) => {
+            this.imageLoaded = true;
+            // setTimeout(resolve, 2000);
+            resolve();
+          };
+          imgBackground.onerror = (e: any) => {
+            reject();
+          };
+          imgBackground.src = this.src;
+        });
       } else {
         this.error = true;
         this.imageLoaded = true;

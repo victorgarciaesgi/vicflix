@@ -6,7 +6,7 @@
     @mouseenter="handleMouseEnter"
     @mouseleave="cancelMouseEnter"
   >
-    <VImg :src="picture" class="rounded" />
+    <VImg background="bg3" :src="picture" class="rounded" />
     <img :src="logo" class="left-3 top-3 absolute h-6" />
     <Portal v-if="init" to="Preview-Outlet">
       <div
@@ -19,7 +19,7 @@
       >
         <VImg ref="pictureRef" :src="picture" fill="both" type="default" />
         <img :src="logo" class="left-3 top-3 absolute h-6" />
-        <div ref="previewBlock" class="Block / bg-bg2 flex-nowrap flex flex-row p-2">
+        <div ref="previewBlock" class="Block / bg-bg2 flex-nowrap flex flex-row p-2 -mt-1">
           <div class="flex flex-col flex-1">
             <h4 class="leading-5">{{ project.title }}</h4>
             <div class="text-text9 text-xxs flex flex-row items-center">

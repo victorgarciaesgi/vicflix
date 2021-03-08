@@ -74,9 +74,11 @@
             <span class="text-bg8">Genre: </span>
             <span>{{ project.type }}</span>
           </div>
-          <div class="relative flex flex-row items-center mb-4">
+          <div class="sm:flex-row sm:items-center relative flex flex-col mb-4">
             <span class="text-bg8">Technologies: </span>
-            <Techno v-for="techno of project.technos" :key="techno" :techno="techno" size="md" />
+            <div class="flex flex-row items-center">
+              <Techno v-for="techno of project.technos" :key="techno" :techno="techno" size="md" />
+            </div>
           </div>
         </div>
       </div>

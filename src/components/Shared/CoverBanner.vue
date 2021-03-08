@@ -4,7 +4,7 @@
       <VImg class="ImgWrapper" type="default" :src="picture" />
     </div>
     <div
-      class="pt-28 sm:ml-0 sm:mt-20 sm:w-full flex flex-col items-start max-w-lg pb-10 mt-10 ml-10"
+      class="pt-28 sm:ml-0 sm:mt-20 sm:w-full flex flex-col items-start max-w-md pb-10 mt-10 ml-10"
     >
       <div
         class="sm:hidden flex flex-row items-center"
@@ -17,7 +17,7 @@
         <img
           :src="logo"
           height="180"
-          class="sm:max-h-40 sm:h-auto sm:max-w-xs h-40"
+          class="sm:max-h-40 sm:h-auto sm:max-w-xs max-h-40"
           style="filter: drop-shadow(3px 2px 3px rgba(0, 0, 0, 0.4))"
         />
         <span class="sm:text-sm" style="text-shadow: 1px 2px 1px rgba(0, 0, 0, 0.2)">{{

@@ -11,4 +11,11 @@ export const allProjects = Object.values(projects);
 
 export const coverProject = profeelProject;
 
-export const featuredProject: Project[] = [projects.milinusProject, projects.profeelProject];
+export const featuredProject: Project[] = [
+  projects.milinusProject,
+  projects.profeelProject,
+  projects.profeelProject,
+  projects.milinusProject,
+];
+
+export const popularProject: Project[] = [projects.profeelProject, projects.milinusProject];

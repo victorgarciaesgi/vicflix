@@ -2,19 +2,19 @@
   <div class="flex flex-col w-full pb-6">
     <CoverBanner :data="coverProject" />
 
-    <template v-if="isDesktop">
-      <ProjectList :projects="featuredProjects"> Projets en vedette </ProjectList>
-    </template>
-    <template v-else>
-      <MobileProjectList :projects="featuredProjects"> Projets en vedette </MobileProjectList>
-    </template>
+    <component :is="isDesktop ? 'ProjectList' : 'MobileProjectList'" :projects="featuredProjects">
+      Projets en vedette
+    </component>
+    <component :is="isDesktop ? 'ProjectList' : 'MobileProjectList'" :projects="popularProjects">
+      Populaires en ce moment
+    </component>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator';
 import { CoverBanner, MobileProjectList, ProjectList } from '@components';
-import { featuredProject, coverProject } from '@data';
+import { featuredProject, coverProject, popularProject } from '@data';
 import { BreakpointMixin } from '@mixins';
 import { BreakPointsValues } from '@models';
 
@@ -31,6 +31,7 @@ import { BreakPointsValues } from '@models';
 export default class Home extends BreakpointMixin {
   public coverProject = coverProject;
   public featuredProjects = featuredProject;
+  public popularProjects = popularProject;
 
   get isDesktop() {
     return this.windowWidth > BreakPointsValues.Small;

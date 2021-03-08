@@ -370,6 +370,7 @@ export default class VideoPlayer extends BreakpointMixin {
       this.videoPlayer.addEventListener('loadedmetadata', () => {
         this.totalTime = this.videoPlayer?.duration ?? 0;
         this.loading = false;
+        this.playVideo();
       });
       document.addEventListener('fullscreenchange', this.handleFullScreenChange);
       this.volume = this.videoPlayer.volume;

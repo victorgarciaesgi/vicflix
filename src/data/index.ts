@@ -9,7 +9,7 @@ export const allVideos = Object.values(videos).flat();
 
 export const allProjects = Object.values(projects);
 
-export const coverProject = profeelProject;
+export const coverProject = milinusProject;
 
 export const featuredProject: Project[] = [
   projects.milinusProject,

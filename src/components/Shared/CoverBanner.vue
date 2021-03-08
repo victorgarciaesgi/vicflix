@@ -1,5 +1,5 @@
 <template>
-  <div class="CoverBanner / flex flex-col">
+  <div class="CoverBanner / flex flex-col" style="min-height: 50vh">
     <div class="BannerWrapper / absolute w-full h-full">
       <VImg class="ImgWrapper" type="default" :src="picture" />
     </div>
@@ -16,8 +16,7 @@
       <div class="sm:w-full sm:items-center flex flex-col items-start py-5">
         <img
           :src="logo"
-          height="180"
-          class="sm:max-h-40 sm:h-auto sm:max-w-xs max-h-40"
+          class="sm:max-h-40 sm:h-auto sm:max-w-xs max-h-40 object-contain object-left w-full"
           style="filter: drop-shadow(3px 2px 3px rgba(0, 0, 0, 0.4))"
         />
         <span class="sm:text-sm" style="text-shadow: 1px 2px 1px rgba(0, 0, 0, 0.2)">{{

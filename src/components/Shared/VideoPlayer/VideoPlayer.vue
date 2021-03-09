@@ -120,8 +120,13 @@
       <div
         class="TopBar / top-5 flex-nowrap absolute left-0 flex flex-row items-center justify-between w-full px-5"
       >
-        <div v-if="showToolbar" class="ButtonAction / group flex flex-row items-center">
-          <SvgIcon src="videos/back" :size="45" @click="goBack" />
+        <div
+          style="filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.6))"
+          v-if="showToolbar"
+          class="ButtonAction / group flex flex-row items-center"
+          @click="goBack"
+        >
+          <SvgIcon src="videos/back" :size="45" />
           <span
             class="group-hover:opacity-100 sm:hidden ml-2 text-lg transition-opacity duration-200 opacity-0"
             >Retour a la navigation</span
@@ -314,10 +319,9 @@ export default class VideoPlayer extends BreakpointMixin {
 
   @Watch('currentTime') timeChanged(value: number) {
     VideoProgressModule.mutations.updateVideoProgress({
-      videoId: this.video.id,
+      video: this.video,
       timestamp: value,
       duration: this.totalTime,
-      episode: this.video.episode,
     });
   }
 
@@ -410,6 +414,7 @@ export default class VideoPlayer extends BreakpointMixin {
       this.videoPlayer.removeEventListener('timeupdate', this.timeUpdate);
       this.videoPlayer.removeEventListener('seeked', this.handleSeeked);
       this.videoPlayer.removeEventListener('loadedmetadata', this.handleLoadedMetadata);
+      this.videoPlayer.pause();
     }
     document.removeEventListener('fullscreenchange', this.handleFullScreenChange);
   }

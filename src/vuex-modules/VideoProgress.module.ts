@@ -1,5 +1,5 @@
 import { allProjects } from '@data';
-import { ProgressList } from '@models';
+import { ProgressList, ProjectVideo } from '@models';
 import { VuexModule } from 'vuex-typed-modules';
 
 interface VideoProgress {
@@ -16,20 +16,15 @@ export const VideoProgressModule = new VuexModule({
   mutations: {
     updateVideoProgress(
       { progressList },
-      {
-        timestamp,
-        videoId,
-        duration,
-        episode,
-      }: { videoId: string; timestamp: number; duration: number; episode: number }
+      { video, timestamp, duration }: { video: ProjectVideo; timestamp: number; duration: number }
     ) {
-      const existingProject = progressList.find((f) => f.videoId === videoId);
+      const existingProject = progressList.find((f) => f.video.id === video.id);
       const percentage = (timestamp / duration) * 100;
       if (existingProject) {
         existingProject.timestamp = timestamp;
         existingProject.percentage = percentage;
       } else {
-        progressList.push({ timestamp, videoId, duration, episode, percentage });
+        progressList.push({ timestamp, video, percentage, duration });
       }
     },
   },
@@ -38,7 +33,7 @@ export const VideoProgressModule = new VuexModule({
       { state: { progressList } },
       videoId: string
     ): Promise<ProgressList | undefined> {
-      const videoProgress = progressList.find((f) => f.videoId === videoId);
+      const videoProgress = progressList.find((f) => f.video.id === videoId);
       return videoProgress;
     },
     async getProjectProgress(
@@ -48,8 +43,8 @@ export const VideoProgressModule = new VuexModule({
       const project = allProjects.find((f) => f.id === projectId);
       if (project) {
         const videos = progressList
-          .filter(({ videoId }) => project.videos.find((f) => f.id === videoId))
-          .sort((a, b) => a.episode - b.episode);
+          .filter(({ video }) => project.videos.find((f) => f.id === video.id))
+          .sort((a, b) => a.video.episode - b.video.episode);
         const pendingVideo = videos.find(({ percentage }) => {
           return percentage < 95;
         });

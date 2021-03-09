@@ -41,6 +41,7 @@
 
 <script lang="ts">
 import { Project, routerPagesNames } from '@models';
+import { VideoProgressModule } from '@store';
 import { Component, Vue, Prop } from 'nuxt-property-decorator';
 import { Location } from 'vue-router';
 import TechnoItem from './Techno.vue';
@@ -70,10 +71,15 @@ export default class CoverBanner extends Vue {
     };
   }
 
-  playFirstVideo() {
-    const { videos } = this.data;
-    if (videos[0]) {
-      this.$router.push({ name: routerPagesNames.watch.id, params: { id: videos[0].id } });
+  async playFirstVideo() {
+    const progress = await VideoProgressModule.actions.getProjectProgress(this.data.id);
+    if (progress) {
+      this.$router.push({ name: routerPagesNames.watch.id, params: { id: progress.video.id } });
+    } else {
+      this.$router.push({
+        name: routerPagesNames.watch.id,
+        params: { id: this.data.videos[0].id },
+      });
     }
   }
 }

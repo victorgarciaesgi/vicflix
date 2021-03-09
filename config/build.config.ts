@@ -36,7 +36,6 @@ export const build: NuxtOptionsBuild = {
   postcss: {
     plugins: {
       autoprefixer: {},
-      tailwindcss: {},
       'postcss-mixins': {
         mixins: {
           light: {

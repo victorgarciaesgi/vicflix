@@ -8,8 +8,7 @@ export interface ProjectLink {
 export interface ProgressList {
   timestamp: number;
   duration: number;
-  episode: number;
-  videoId: string;
+  video: ProjectVideo;
   percentage: number;
 }
 

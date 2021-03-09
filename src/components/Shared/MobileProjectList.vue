@@ -8,6 +8,7 @@
         v-for="(project, index) of projects"
         :key="index"
         :project="project"
+        :showProgress="showProgress"
       />
     </div>
   </div>
@@ -26,6 +27,7 @@ import MobileProjectPlaceholder from './MobileProjectPlaceholder.vue';
 })
 export default class MobileProjectList extends Vue {
   @Prop({ required: true }) projects!: Project[];
+  @Prop({ default: false, type: Boolean }) showProgress!: boolean;
 
   public currentIndex = 0;
   public totalSlides = 0;

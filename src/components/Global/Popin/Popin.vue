@@ -256,6 +256,7 @@ export default class Popin extends Vue {
         top,
         minWidth,
         maxHeight,
+        maxWidth,
         arrowPosition,
       } = getPopupComputedOutputMesures({
         buttonOrigin,
@@ -287,8 +288,8 @@ export default class Popin extends Vue {
         const popupStyle = popupTarget.style;
         popupStyle.transform = `translate3d(${left}, ${top}, 0)`;
         popupStyle.maxHeight = `${maxHeight}px`;
-        if (minWidth) popupStyle.width = `${minWidth}px`;
-
+        if (minWidth) popupStyle.minWidth = `${minWidth}px`;
+        popupStyle.maxWidth = `${maxWidth}px`;
         if (this.arrow) {
           const arrow = this.$refs?.arrow as HTMLElement;
           arrow.style.transform = `translate3d(${arrowPosition}, 0, 0) ${
@@ -397,7 +398,7 @@ div.Popup-Box {
       top: calc(-$arrowHeight + 1px);
     }
     &.Top {
-      top: calc(100% - 1px);
+      top: calc(100%);
     }
   }
 }

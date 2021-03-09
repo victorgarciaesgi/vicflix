@@ -118,27 +118,27 @@
 .slide-top-leave-active,
 .slide-bottom-enter-active,
 .slide-bottom-leave-active {
-  transition: opacity 0.1s, transform 0.1s;
+  transition: opacity 0.3s, transform 0.3s;
 }
 
 .slide-left-enter,
 .slide-right-leave-active {
   opacity: 0;
-  transform: translate3d(30px, 0, 0);
+  transform: translate3d(100%, 0, 0);
 }
 .slide-left-leave-active,
 .slide-right-enter {
   opacity: 0;
-  transform: translate3d(-30px, 0, 0);
+  transform: translate3d(100%, 0, 0);
 }
 
 .slide-bottom-enter,
 .slide-top-leave-active {
   opacity: 0;
-  transform: translate3d(0, -30px, 0);
+  transform: translate3d(0, -100%, 0);
 }
 .slide-bottom-leave-active,
 .slide-top-enter {
   opacity: 0;
-  transform: translate3d(0, 30px, 0);
+  transform: translate3d(0, 100%, 0);
 }

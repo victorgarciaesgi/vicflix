@@ -36,7 +36,7 @@ export function getPopupComputedOutputMesures(args: getPopupComputedOutputMesure
     full: args.full,
     alignement: args.alignement,
   });
-  const { arrowPosition, left, top, minWidth } = getPopupCoordinatesAndSize({
+  const { arrowPosition, left, top, minWidth, maxWidth } = getPopupCoordinatesAndSize({
     ...elementsMesures,
     placement,
     alignement,
@@ -50,6 +50,7 @@ export function getPopupComputedOutputMesures(args: getPopupComputedOutputMesure
     minWidth,
     maxHeight,
     arrowPosition,
+    maxWidth,
   };
 }
 
@@ -231,10 +232,12 @@ function getPopupCoordinatesAndSize({
 }: getPopupCoordinatesAndSize): {
   left: string;
   top: string;
-  minWidth: number | null;
+  minWidth: number;
   arrowPosition: string;
+  maxWidth: number;
 } {
   let popupFinalWidth = full ? originMesure.width : popupSize.width;
+  let maxWidth = containerMesures.width - THRESHOLD * 2;
 
   let outputLeft: number;
   let outputTop: number;
@@ -269,6 +272,7 @@ function getPopupCoordinatesAndSize({
     top: outputTop + 'px',
     minWidth: popupFinalWidth,
     arrowPosition,
+    maxWidth,
   };
 }
 

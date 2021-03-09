@@ -1,8 +1,8 @@
 <template>
-  <div class="ProjectPlaceholder / flex flex-col h-40">
+  <div class="ProjectPlaceholder / flex flex-col w-64 h-40">
     <div
       ref="root"
-      class="h-36 flex w-64 cursor-pointer"
+      class="h-36 flex w-full cursor-pointer"
       :data-show="showPreview"
       @mouseenter="handleMouseEnter"
       @mouseleave="cancelMouseEnter"

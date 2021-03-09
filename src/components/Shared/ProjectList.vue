@@ -21,7 +21,7 @@
       :arrows="true"
       :bullets="false"
       :center="true"
-      :items-per-view="[[500, 1], [800, 2], [1100, 3], [1200, 4], [1500, 5], 6]"
+      :items-per-view="[[500, 1], [750, 2], [1100, 3], [1200, 4], [1500, 5], 6]"
       class="h-40"
       @update:index="currentIndex = $event"
       @update:slides="totalSlides = $event"

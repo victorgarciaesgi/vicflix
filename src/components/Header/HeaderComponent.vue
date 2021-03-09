@@ -5,7 +5,11 @@
   >
     <div class="flex-0 flex flex-row items-center">
       <NuxtLink to="/">
-        <img class="sm:hidden" src="@images/vicflix.png" width="90" />
+        <img
+          class="sm:hidden hover:scale-105 transition-transform duration-200 transform"
+          src="@images/vicflix.png"
+          width="90"
+        />
         <img v-if="!hideNavBar" class="-sm:hidden" src="/icon.png" width="24" />
         <SvgIcon v-else class="-sm:hidden" src="videos/back" :size="34" />
       </NuxtLink>

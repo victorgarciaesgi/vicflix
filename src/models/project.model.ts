@@ -10,6 +10,7 @@ export interface ProgressList {
   duration: number;
   episode: number;
   videoId: string;
+  percentage: number;
 }
 
 export interface ProjectVideo {

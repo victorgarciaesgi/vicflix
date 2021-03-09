@@ -17,6 +17,9 @@
           <SvgIcon class="w-9 h-9 sm:w-7 sm:h-7" :class="{ '!h-7 !w-7': sm }" src="actions/play" />
         </div>
       </div>
+      <div v-if="progress" class="bg-w120 absolute bottom-0 left-0 w-full h-1">
+        <div class="bg-red absolute top-0 left-0 h-full" :style="{ width: `${progress}%` }"></div>
+      </div>
     </div>
     <div class="sm:pr-0 flex flex-col justify-center flex-1 px-5" :class="{ '!pr-0': sm }">
       <div class="sm:flex-col flex flex-row justify-between" :class="{ '!flex-col': sm }">
@@ -37,6 +40,7 @@
 
 <script lang="ts">
 import { ProjectVideo, routerPagesNames } from '@models';
+import { VideoProgressModule } from '@store';
 import { Component, Vue, Prop } from 'nuxt-property-decorator';
 import { Location } from 'vue-router';
 
@@ -45,6 +49,8 @@ export default class VideoPreviewBanner extends Vue {
   @Prop() video!: ProjectVideo;
   @Prop({ type: Boolean, required: false }) sm?: boolean;
 
+  public progress = 0;
+
   get toVideoLink(): Location {
     return {
       name: routerPagesNames.watch.id,
@@ -52,6 +58,13 @@ export default class VideoPreviewBanner extends Vue {
         id: this.video.id,
       },
     };
+  }
+
+  async created() {
+    const video = await VideoProgressModule.actions.getVideoProgress(this.video.id);
+    if (video) {
+      this.progress = video.percentage;
+    }
   }
 }
 </script>

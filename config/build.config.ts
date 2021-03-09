@@ -2,9 +2,16 @@ import path from 'path';
 import { NuxtOptionsBuild } from '@nuxt/types/config/build';
 import chalk from 'chalk';
 import { IgnorePlugin } from 'webpack';
+import dotenv from 'dotenv';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
+
+// Load envs from 'env.${STAGE}'
+const stage = process.env.NUXT_ENV_STAGE;
+dotenv.config({ path: `./.env.defaults` });
+dotenv.config({ path: `./.env.${stage}` });
+process.env.DEBUG = 'nuxt:*';
 
 type nodeEnvs = 'development' | 'production' | 'testing' | 'staging';
 

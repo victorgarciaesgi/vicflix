@@ -22,11 +22,16 @@
       :bullets="false"
       :center="true"
       :items-per-view="[[500, 1], [800, 2], [1100, 3], [1200, 4], [1500, 5], 6]"
-      class="h-36"
+      class="h-40"
       @update:index="currentIndex = $event"
       @update:slides="totalSlides = $event"
     >
-      <ProjectPlaceholder v-for="(project, index) of projects" :key="index" :project="project" />
+      <ProjectPlaceholder
+        :showProgress="showProgress"
+        v-for="(project, index) of projects"
+        :key="index"
+        :project="project"
+      />
     </Carrousel>
   </div>
 </template>
@@ -44,6 +49,7 @@ import ProjectPlaceholder from './ProjectPlaceholder.vue';
 })
 export default class ProjectList extends Vue {
   @Prop({ required: true }) projects!: Project[];
+  @Prop({ default: false, type: Boolean }) showProgress!: boolean;
 
   public currentIndex = 0;
   public totalSlides = 0;

@@ -1,12 +1,6 @@
 import { NuxtConfig } from '@nuxt/types';
 import dotenv from 'dotenv-extended';
 
-// Load envs from 'env.${STAGE}'
-const stage = process.env.NUXT_ENV_STAGE;
-console.log(stage);
-dotenv.load({ path: `.env.${stage}` });
-process.env.DEBUG = 'nuxt:*';
-
 import { build } from './config/build.config';
 import head from './config/head.config';
 import { modules } from './config/modules.config';

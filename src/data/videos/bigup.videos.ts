@@ -1,10 +1,10 @@
 import { ProjectVideo } from '@models';
 
-const projectId = 'LJu8Bj';
+const projectId = 'PN9kzl';
 
 export const bigupVideos: ProjectVideo[] = [
   {
-    id: 'PN9kzl',
+    id: 'PIlMZkm',
     title: 'Présentation du site',
     description: 'Découverte du site client de Big Up',
     duration: '2:00',

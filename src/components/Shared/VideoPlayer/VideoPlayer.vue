@@ -348,7 +348,7 @@ export default class VideoPlayer extends BreakpointMixin {
     const time = this.videoPlayer?.currentTime;
 
     if (bf && time) {
-      while (!(bf.start(range) <= time && time <= bf.end(range))) {
+      while (range < 3 && !(bf.start(range) <= time && time <= bf.end(range))) {
         range += 1;
       }
       const loadStartPercentage = bf.start(range) / this.videoPlayer.duration;
@@ -365,10 +365,9 @@ export default class VideoPlayer extends BreakpointMixin {
   async handleLoadedMetadata() {
     this.totalTime = this.videoPlayer?.duration ?? 0;
     this.loading = false;
-    const progress = await VideoProgressModule.actions.getVideoProgress(this.video.id);
-    console.log(progress);
-    if (progress) {
-      this.videoPlayer.currentTime = progress;
+    const progressItem = await VideoProgressModule.actions.getVideoProgress(this.video.id);
+    if (progressItem) {
+      this.videoPlayer.currentTime = progressItem.timestamp;
     }
     this.playVideo();
   }

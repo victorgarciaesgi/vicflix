@@ -24,30 +24,36 @@ export const VideoProgressModule = new VuexModule({
       }: { videoId: string; timestamp: number; duration: number; episode: number }
     ) {
       const existingProject = progressList.find((f) => f.videoId === videoId);
+      const percentage = (timestamp / duration) * 100;
       if (existingProject) {
         existingProject.timestamp = timestamp;
+        existingProject.percentage = percentage;
       } else {
-        progressList.push({ timestamp, videoId, duration, episode });
+        progressList.push({ timestamp, videoId, duration, episode, percentage });
       }
     },
   },
   actions: {
-    getVideoProgress({ state: { progressList } }, videoId: string): number | undefined {
-      return progressList.find((f) => f.videoId === videoId)?.timestamp;
+    async getVideoProgress(
+      { state: { progressList } },
+      videoId: string
+    ): Promise<ProgressList | undefined> {
+      const videoProgress = progressList.find((f) => f.videoId === videoId);
+      return videoProgress;
     },
-    getProjectProgress({ state: { progressList } }, projectId: string): number | undefined {
+    async getProjectProgress(
+      { state: { progressList } },
+      projectId: string
+    ): Promise<ProgressList | undefined> {
       const project = allProjects.find((f) => f.id === projectId);
       if (project) {
-        const videos = progressList.filter(({ videoId }) =>
-          project.videos.find((f) => f.id === videoId)
-        );
-        const pendingVideo = videos.find(({ duration, timestamp }) => {
-          const percentage = (duration / timestamp) * 100;
+        const videos = progressList
+          .filter(({ videoId }) => project.videos.find((f) => f.id === videoId))
+          .sort((a, b) => a.episode - b.episode);
+        const pendingVideo = videos.find(({ percentage }) => {
           return percentage < 95;
         });
-        if (pendingVideo) {
-          return (pendingVideo.duration / pendingVideo.timestamp) * 100;
-        }
+        return pendingVideo;
       }
     },
   },

@@ -1,72 +1,92 @@
 <template>
-  <div
-    ref="root"
-    class="ProjectPlaceholder / h-36 flex w-64 cursor-pointer"
-    :data-show="showPreview"
-    @mouseenter="handleMouseEnter"
-    @mouseleave="cancelMouseEnter"
-  >
-    <VImg background="bg3" :src="picture" class="rounded" />
-    <img
-      :src="logo"
-      class="left-3 top-3 absolute h-6"
-      style="filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6))"
-    />
-    <Portal v-if="init" to="Preview-Outlet">
-      <div
-        v-show="showPreview"
-        :id="project.id"
-        ref="preview"
-        class="Preview / fixed top-0 left-0 flex flex-col overflow-hidden rounded cursor-pointer"
-        :data-show="showPreview"
-        @mouseleave="handleMouseLeave"
-      >
-        <img ref="pictureRef" :src="picture" class="object-cover w-full" />
-        <img
-          :src="logo"
-          class="left-3 top-3 absolute h-6"
-          style="filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6))"
-        />
-        <div ref="previewBlock" class="Block / bg-bg2 flex-nowrap flex flex-row p-2 -mt-1">
-          <div class="flex flex-col flex-1">
-            <h4 class="leading-5">{{ project.title }}</h4>
-            <div class="text-text9 text-xxs flex flex-row items-center">
-              <span>{{ project.type.join(', ') }}</span>
-              <span class="px-1">•</span>
-              <span>{{ project.year }}</span>
-            </div>
-            <div class="flex flex-row items-center justify-start">
-              <Techno v-for="techno of project.technos" :key="techno" :techno="techno" size="sm" />
-            </div>
+  <div class="ProjectPlaceholder / flex flex-col h-40">
+    <div
+      ref="root"
+      class="h-36 flex w-64 cursor-pointer"
+      :data-show="showPreview"
+      @mouseenter="handleMouseEnter"
+      @mouseleave="cancelMouseEnter"
+    >
+      <VImg background="bg3" :src="picture" class="rounded" />
+      <img
+        :src="logo"
+        class="left-3 bottom-3 absolute h-8"
+        style="filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6))"
+      />
+
+      <Portal v-if="init" to="Preview-Outlet">
+        <div
+          v-show="showPreview"
+          :id="project.id"
+          ref="preview"
+          class="Preview / fixed top-0 left-0 flex flex-col overflow-hidden rounded cursor-pointer"
+          :data-show="showPreview"
+          @mouseleave="handleMouseLeave"
+        >
+          <div class="relative">
+            <img ref="pictureRef" :src="picture" class="object-cover w-full" />
+            <img
+              :src="logo"
+              class="left-3 bottom-3 absolute h-8"
+              style="filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6))"
+            />
           </div>
-          <div class="flex-nowrap flex-0 flex flex-row items-center">
-            <Popin mode="hover" theme="white">
-              <template #content>
-                <span class="px-3 py-1 text-black">Lecture</span>
-              </template>
-              <template #button>
-                <div class="center flex p-1 text-black bg-white border-2 border-white rounded-full">
-                  <SvgIcon src="actions/play" :size="20" @click="playFirstVideo" />
-                </div>
-              </template>
-            </Popin>
-            <Popin mode="hover" theme="white">
-              <template #content>
-                <span class="px-3 py-1 text-black">Plus d'infos</span>
-              </template>
-              <template #button>
-                <NuxtLink
-                  :to="toPreviewLink"
-                  class="center bg-bg4 border-bg10 flex p-1 ml-1 text-white border-2 rounded-full"
-                >
-                  <SvgIcon src="actions/expand" :size="20" />
-                </NuxtLink>
-              </template>
-            </Popin>
+          <div ref="previewBlock" class="Block / bg-bg2 flex-nowrap flex flex-row p-2 -mt-1">
+            <div class="flex flex-col flex-1">
+              <h4 class="leading-5">{{ project.title }}</h4>
+              <div class="text-text9 text-xxs flex flex-row items-center">
+                <span>{{ project.type.join(', ') }}</span>
+                <span class="px-1">•</span>
+                <span>{{ project.year }}</span>
+              </div>
+              <div class="flex flex-row items-center justify-start">
+                <Techno
+                  v-for="techno of project.technos"
+                  :key="techno"
+                  :techno="techno"
+                  size="sm"
+                />
+              </div>
+            </div>
+            <div class="flex-nowrap flex-0 flex flex-row items-center">
+              <Popin mode="hover" theme="white">
+                <template #content>
+                  <span class="px-3 py-1 text-black">Lecture</span>
+                </template>
+                <template #button>
+                  <div
+                    class="center flex p-1 text-black bg-white border-2 border-white rounded-full"
+                  >
+                    <SvgIcon src="actions/play" :size="20" @click="playFirstVideo" />
+                  </div>
+                </template>
+              </Popin>
+              <Popin mode="hover" theme="white">
+                <template #content>
+                  <span class="px-3 py-1 text-black">Plus d'infos</span>
+                </template>
+                <template #button>
+                  <NuxtLink
+                    :to="toPreviewLink"
+                    class="center bg-bg4 border-bg10 flex p-1 ml-1 text-white border-2 rounded-full"
+                  >
+                    <SvgIcon src="actions/expand" :size="20" />
+                  </NuxtLink>
+                </template>
+              </Popin>
+            </div>
           </div>
         </div>
+      </Portal>
+    </div>
+    <div v-if="progress && showProgress" class="flex flex-col items-center justify-center h-4">
+      <div class="bg-g90 flex w-3/4 rounded" style="height: 3px">
+        <div
+          class="bg-red absolute top-0 left-0 h-full rounded"
+          :style="{ width: `${progress}%` }"
+        ></div>
       </div>
-    </Portal>
+    </div>
   </div>
 </template>
 
@@ -77,6 +97,7 @@ import anime from 'animejs';
 import { VImg } from '@components/Global';
 import { Location } from 'vue-router';
 import Techno from './Techno.vue';
+import { VideoProgressModule } from '@store';
 
 @Component({
   components: {
@@ -85,6 +106,7 @@ import Techno from './Techno.vue';
 })
 export default class ProjectPlaceholder extends Vue {
   @Prop() project!: Project;
+  @Prop({ default: false, type: Boolean }) showProgress!: boolean;
 
   @Ref() root!: HTMLDivElement;
   @Ref() preview?: HTMLDivElement;
@@ -95,6 +117,8 @@ export default class ProjectPlaceholder extends Vue {
   public rendered = false;
   public showPreview = false;
   public timeout: NodeJS.Timeout | null = null;
+
+  public progress = 0;
 
   get picture() {
     const match = /^(.+)(\.\w+)$/.exec(this.project.picture);
@@ -256,6 +280,13 @@ export default class ProjectPlaceholder extends Vue {
         opacity: 0,
         easing: 'cubicBezier(.5, .05, .1, .3)',
       });
+    }
+  }
+
+  async created() {
+    const video = await VideoProgressModule.actions.getProjectProgress(this.project.id);
+    if (video) {
+      this.progress = video.percentage;
     }
   }
 

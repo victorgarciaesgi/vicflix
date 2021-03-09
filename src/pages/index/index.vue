@@ -2,6 +2,14 @@
   <div class="flex flex-col w-full pb-20">
     <CoverBanner :data="coverProject" />
 
+    <component
+      v-if="continueProjects.length"
+      :is="isDesktop ? 'ProjectList' : 'MobileProjectList'"
+      :projects="continueProjects"
+      show-progress
+    >
+      Reprendre avec votre profil
+    </component>
     <component :is="isDesktop ? 'ProjectList' : 'MobileProjectList'" :projects="featuredProjects">
       Projets en vedette
     </component>
@@ -14,9 +22,11 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator';
 import { CoverBanner, MobileProjectList, ProjectList } from '@components';
-import { featuredProject, coverProject, popularProject } from '@data';
+import { featuredProject, coverProject, popularProject, allVideos, allProjects } from '@data';
 import { BreakpointMixin } from '@mixins';
-import { BreakPointsValues } from '@models';
+import { BreakPointsValues, Project } from '@models';
+import { VideoProgressModule } from '@store';
+import { groupBy } from 'lodash';
 
 @Component({
   components: {
@@ -32,6 +42,19 @@ export default class Home extends BreakpointMixin {
   public coverProject = coverProject;
   public featuredProjects = featuredProject;
   public popularProjects = popularProject;
+
+  get continueProjects() {
+    const progressList = VideoProgressModule.state.progressList;
+    const projectConcerned = groupBy(progressList, ({ videoId }) => videoId);
+    return Object.entries(projectConcerned)
+      .map(([key, value]) => {
+        const projectId = allVideos.find((f) => f.id === value[0].videoId)?.projectId;
+        if (projectId) {
+          return allProjects.find((f) => f.id === projectId);
+        }
+      })
+      .filter((f): f is Project => !!f);
+  }
 
   get isDesktop() {
     return this.windowWidth > BreakPointsValues.Small;

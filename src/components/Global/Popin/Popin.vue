@@ -111,7 +111,7 @@ export default class Popin extends Vue {
   @Prop({ default: false, type: Boolean }) inHeader?: boolean;
   @Prop({ required: false, type: Boolean }) debounce?: boolean;
   @Prop({ default: false, type: Boolean }) shadow!: boolean;
-  @Prop({ default: false }) stopPropagation!: boolean;
+  @Prop({ default: true }) stopPropagation!: boolean;
 
   @Prop({ default: 'black' }) theme!: string;
 
@@ -406,7 +406,7 @@ div.Popup-Box {
       top: calc(-$arrowHeight + 1px);
     }
     &.Top {
-      top: calc(100%);
+      top: calc(100% - 0.5px);
     }
   }
 }

@@ -231,8 +231,12 @@ export default class VideoPlayer extends BreakpointMixin {
 
   playVideo() {
     EventBus.$emit('pauseVideos', this.pauseVideo);
-    this.videoPlayer?.play();
-    this.videoPlaying = true;
+    try {
+      this.videoPlayer?.play();
+      this.videoPlaying = true;
+    } catch (e) {
+      console.log(e);
+    }
   }
   pauseVideo() {
     this.videoPlayer?.pause();
@@ -343,17 +347,21 @@ export default class VideoPlayer extends BreakpointMixin {
   //! Progress
 
   handleVideoProgress() {
-    let range = 0;
-    const bf = this.videoPlayer?.buffered;
-    const time = this.videoPlayer?.currentTime;
+    try {
+      let range = 0;
+      const bf = this.videoPlayer?.buffered;
+      const time = this.videoPlayer?.currentTime;
 
-    if (bf && time) {
-      while (range < 3 && !(bf.start(range) <= time && time <= bf.end(range))) {
-        range += 1;
+      if (bf && time) {
+        while (range < 3 && !(bf.start(range) <= time && time <= bf.end(range))) {
+          range += 1;
+        }
+        const loadStartPercentage = bf.start(range) / this.videoPlayer.duration;
+        const loadEndPercentage = bf.end(range) / this.videoPlayer.duration;
+        this.currentProgress = loadEndPercentage - loadStartPercentage;
       }
-      const loadStartPercentage = bf.start(range) / this.videoPlayer.duration;
-      const loadEndPercentage = bf.end(range) / this.videoPlayer.duration;
-      this.currentProgress = loadEndPercentage - loadStartPercentage;
+    } catch (e) {
+      console.log(e);
     }
   }
 
@@ -369,7 +377,6 @@ export default class VideoPlayer extends BreakpointMixin {
     if (progressItem) {
       this.videoPlayer.currentTime = progressItem.timestamp;
     }
-    this.playVideo();
   }
 
   //! Toolbar

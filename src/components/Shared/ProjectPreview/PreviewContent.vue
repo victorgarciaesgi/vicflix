@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-nowrap flex flex-col overflow-y-auto">
+  <div class="flex-nowrap bg-g10 flex flex-col overflow-y-auto">
     <div class="Picture-Wrapper / h-96 flex-0 flex">
       <VImg class="Cover" :src="picture" type="default" />
       <div class="bottom-8 sm:bottom-8 left-8 absolute flex flex-col items-start">
@@ -46,7 +46,12 @@
           @click="playFirstVideo"
           >Lecture</Action
         >
-        <Action :src="`${isInWidhList ? 'forms/done' : 'actions/add'}`" :w-full="true" size="md">
+        <Action
+          @click="addToWishList"
+          :icon="`${isInWidhList ? 'forms/done' : 'actions/add'}`"
+          :w-full="true"
+          size="md"
+        >
           {{ isInWidhList ? 'Supprimer de ma liste' : 'Ajouter à ma liste' }}
         </Action>
       </div>
@@ -74,13 +79,17 @@
           <p v-if="project.info" class="text-w140 py-5 text-sm">{{ project.info }}</p>
         </div>
         <div class="flex-0 sm:flex-row sm:w-full sm:py-4 flex flex-col w-1/3 ml-2 text-sm">
-          <div class="sm:mr-2 relative mb-4">
+          <div class="sm:mr-2 relative mb-4 mr-2">
             <span class="text-bg8">Distribution: </span>
             <span>Victor Garcia</span>
           </div>
-          <div class="relative mb-4">
+          <div class="relative mb-4 mr-2">
             <span class="text-bg8">Genre: </span>
             <span>{{ project.type.join(', ') }}</span>
+          </div>
+          <div class="relative mb-4 mr-2">
+            <span class="text-bg8">Contexte: </span>
+            <span>{{ project.context }}</span>
           </div>
           <div class="sm:flex-row sm:items-center relative flex flex-col mb-4">
             <span class="text-bg8">Technologies: </span>
@@ -90,7 +99,7 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-col">
+      <div v-if="project.videos.length" class="flex flex-col">
         <div class="flex flex-col justify-between">
           <h2 class="border-g80 py-2 mb-2 border-b">Épisodes</h2>
           <div class="flex flex-col">
@@ -166,7 +175,7 @@ export default class PreviewContent extends Vue {
 <style lang="postcss" scoped>
 div.Picture-Wrapper {
   .Cover >>> img {
-    mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(20, 20, 20, 1) 40%);
+    mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(10, 10, 10, 1) 40%);
   }
 }
 </style>

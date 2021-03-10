@@ -40,6 +40,7 @@ export function getPopupComputedOutputMesures(args: getPopupComputedOutputMesure
     ...elementsMesures,
     placement,
     alignement,
+    arrow: args.arrow,
     full: args.full,
   });
   return {
@@ -174,6 +175,8 @@ function getPopupAlignement({
   let processedAlignement!: PopupAlignement;
   const popupCenteredPosition = originMesure.left + originMesure.width / 2 - popupSize.width / 2;
 
+  const ArrowWidth = arrow ? TRIANGLE_WIDTH : 5;
+
   if (full) {
     processedAlignement = PopupAlignement.Full;
   } else if (alignement) {
@@ -192,7 +195,7 @@ function getPopupAlignement({
   ) {
     processedAlignement = PopupAlignement.Start;
   } else if (
-    originMesure.left + originMesure.width - popupSize.width >
+    originMesure.left + originMesure.width - popupSize.width + ArrowWidth + THRESHOLD >
     containerMesures.left + THRESHOLD
   ) {
     processedAlignement = PopupAlignement.End;
@@ -220,6 +223,7 @@ interface getPopupCoordinatesAndSize {
   popupSize: Size;
   originMesure: Mesure;
   full: boolean;
+  arrow: boolean;
 }
 function getPopupCoordinatesAndSize({
   originMesure,
@@ -228,6 +232,7 @@ function getPopupCoordinatesAndSize({
   targetOffset,
   placement,
   alignement,
+  arrow,
   full,
 }: getPopupCoordinatesAndSize): {
   left: string;
@@ -243,17 +248,19 @@ function getPopupCoordinatesAndSize({
   let outputTop: number;
   let isLeft = false;
 
+  const ArrowWidth = arrow ? TRIANGLE_WIDTH : 5;
+
   if (full || alignement === PopupAlignement.Full) {
     outputLeft = originMesure.left;
   } else if (alignement === PopupAlignement.ContainerFull) {
     outputLeft = containerMesures.left + THRESHOLD;
     popupFinalWidth = containerMesures.width - THRESHOLD * 2;
   } else if (alignement === PopupAlignement.End) {
-    outputLeft = originMesure.left + originMesure.width - popupFinalWidth + TRIANGLE_WIDTH;
+    outputLeft = originMesure.left + originMesure.width - popupFinalWidth + ArrowWidth;
   } else if (alignement === PopupAlignement.ContainerEnd) {
     outputLeft = containerMesures.left + containerMesures.width - popupFinalWidth - THRESHOLD;
   } else if (alignement === PopupAlignement.Start) {
-    outputLeft = originMesure.left - TRIANGLE_WIDTH;
+    outputLeft = originMesure.left - ArrowWidth;
     isLeft = true;
   } else if (alignement === PopupAlignement.ContainerStart) {
     outputLeft = containerMesures.left + THRESHOLD;

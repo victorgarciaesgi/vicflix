@@ -20,7 +20,7 @@
           <Popin mode="hover" theme="white">
             <template #content>
               <span class="px-3 py-1 text-black">
-                {{ isInWidhList ? 'Supprimer de ma liste' : 'Ajouter à ma liste' }}
+                {{ isInWishList ? 'Supprimer de ma liste' : 'Ajouter à ma liste' }}
               </span>
             </template>
             <template #button>
@@ -28,7 +28,7 @@
                 @click="addToWishList"
                 class="center bg-bg4 border-bg10 flex p-1 ml-2 border-2 rounded-full"
               >
-                <SvgIcon :src="`${isInWidhList ? 'forms/done' : 'actions/add'}`" :size="26" />
+                <SvgIcon :src="`${isInWishList ? 'forms/done' : 'actions/add'}`" :size="26" />
               </div>
             </template>
           </Popin>
@@ -48,11 +48,11 @@
         >
         <Action
           @click="addToWishList"
-          :icon="`${isInWidhList ? 'forms/done' : 'actions/add'}`"
+          :icon="`${isInWishList ? 'forms/done' : 'actions/add'}`"
           :w-full="true"
           size="md"
         >
-          {{ isInWidhList ? 'Supprimer de ma liste' : 'Ajouter à ma liste' }}
+          {{ isInWishList ? 'Supprimer de ma liste' : 'Ajouter à ma liste' }}
         </Action>
       </div>
       <div class="sm:flex-col flex flex-row items-start">
@@ -146,12 +146,12 @@ export default class PreviewContent extends Vue {
     return `/logos/${this.project?.logo}`;
   }
 
-  get isInWidhList() {
+  get isInWishList() {
     return !!VideoProgressModule.state.wishList.find((f) => f.id === this.project.id);
   }
 
   addToWishList() {
-    if (this.isInWidhList) {
+    if (this.isInWishList) {
       VideoProgressModule.mutations.removeProjectFromWishList(this.project);
     } else {
       VideoProgressModule.mutations.addProjectToWishList(this.project);

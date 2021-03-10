@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     :to="toVideoLink"
-    class="VideoPreviewBanner / group flex-nowrap sm:px-0 flex flex-row items-center h-32 px-5 py-3 rounded"
+    class="VideoPreviewBanner / group flex-nowrap sm:px-0 flex flex-row items-center w-full h-32 px-5 py-3 rounded"
     :class="{ '!px-3 !h-24': sm }"
   >
     <div class="w-6 pr-3 text-2xl">{{ video.episode }}</div>
@@ -78,8 +78,10 @@ export default class VideoPreviewBanner extends Vue {
 a.VideoPreviewBanner {
   border-bottom: 1px var(--bg6) solid;
 
-  &:hover:not(.nuxt-link-active) {
-    background-color: var(--bg4);
+  @screen -md {
+    &:hover:not(.nuxt-link-active) {
+      background-color: var(--bg4);
+    }
   }
   &.nuxt-link-active {
     background-color: var(--bg5);

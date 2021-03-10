@@ -193,22 +193,22 @@ function getPopupAlignement({
     originMesure.left + popupSize.width <
     containerMesures.left + containerMesures.width + THRESHOLD
   ) {
-    processedAlignement = PopupAlignement.Start;
+    processedAlignement = PopupAlignement.ContainerStart;
   } else if (
     originMesure.left + originMesure.width - popupSize.width + ArrowWidth + THRESHOLD >
     containerMesures.left + THRESHOLD
   ) {
-    processedAlignement = PopupAlignement.End;
+    processedAlignement = PopupAlignement.ContainerEnd;
   } else if (
     containerMesures.left + THRESHOLD + popupSize.width <
     containerMesures.left + containerMesures.width
   ) {
-    processedAlignement = PopupAlignement.ContainerEnd;
+    processedAlignement = PopupAlignement.End;
   } else if (
     containerMesures.left + containerMesures.width - popupSize.width + THRESHOLD <
     containerMesures.left
   ) {
-    processedAlignement = PopupAlignement.ContainerStart;
+    processedAlignement = PopupAlignement.Start;
   } else {
     processedAlignement = PopupAlignement.ContainerFull;
   }
@@ -256,7 +256,7 @@ function getPopupCoordinatesAndSize({
     outputLeft = containerMesures.left + THRESHOLD;
     popupFinalWidth = containerMesures.width - THRESHOLD * 2;
   } else if (alignement === PopupAlignement.End) {
-    outputLeft = originMesure.left + originMesure.width - popupFinalWidth + ArrowWidth;
+    outputLeft = originMesure.left + originMesure.width - popupFinalWidth - ArrowWidth / 2;
   } else if (alignement === PopupAlignement.ContainerEnd) {
     outputLeft = containerMesures.left + containerMesures.width - popupFinalWidth - THRESHOLD;
   } else if (alignement === PopupAlignement.Start) {

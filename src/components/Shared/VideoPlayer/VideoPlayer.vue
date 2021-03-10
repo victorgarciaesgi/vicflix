@@ -85,7 +85,7 @@
               theme="g40"
             >
               <template #content>
-                <div class="flex flex-col">
+                <div class="flex flex-col w-full">
                   <VideoPreviewBanner
                     v-for="video of projectRelated.videos"
                     :key="video.id"

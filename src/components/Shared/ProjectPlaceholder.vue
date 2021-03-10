@@ -2,7 +2,7 @@
   <div class="ProjectPlaceholder / flex flex-col w-64 h-40">
     <div
       ref="root"
-      class="h-36 flex w-full cursor-pointer"
+      class="RootCard / h-36 flex w-full cursor-pointer"
       :data-show="showPreview"
       @mouseenter="handleMouseEnter"
       @mouseleave="cancelMouseEnter"
@@ -344,6 +344,8 @@ export default class ProjectPlaceholder extends Vue {
 </script>
 
 <style lang="postcss" scoped>
+div.RootCard {
+}
 .Preview {
   box-shadow: 0 0 10px rgba(0, 0, 0, 1);
 }

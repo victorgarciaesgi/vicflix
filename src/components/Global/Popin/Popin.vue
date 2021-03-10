@@ -59,6 +59,7 @@
       @mouseenter="handleMouseEnter"
       @mouseleave="handleMouseLeave"
       @element-init="initButtonRoot"
+      :stopPropagation="stopPropagation"
     >
       <slot :active="visible" name="button" />
     </PopinButton>
@@ -109,6 +110,9 @@ export default class Popin extends Vue {
   @Prop({ required: false }) alignement?: PopupAlignement;
   @Prop({ default: false, type: Boolean }) inHeader?: boolean;
   @Prop({ required: false, type: Boolean }) debounce?: boolean;
+  @Prop({ default: false, type: Boolean }) shadow!: boolean;
+  @Prop({ default: false }) stopPropagation!: boolean;
+
   @Prop({ default: 'black' }) theme!: string;
 
   @Emit()
@@ -146,8 +150,13 @@ export default class Popin extends Vue {
   public timeout: NodeJS.Timeout | null = null;
 
   get getPopupStyle(): Partial<CSSStyleDeclaration> | null {
-    if (!this.width) return { width: 'max-content' };
-    return { width: this.width + 'px', maxWidth: '100vw' };
+    return {
+      width: this.width ? this.width + 'px' : 'max-content',
+      maxWidth: '100vw',
+      ...(this.shadow && {
+        boxShadow: '0 0 10px rgba(0,0,0,0.2)',
+      }),
+    };
   }
 
   get isTop() {
@@ -167,7 +176,6 @@ export default class Popin extends Vue {
   }
 
   handleClick(event: UIEvent) {
-    event.stopPropagation();
     if (this.mode === PopupMode.Click && !this.disabled) {
       if (!this.visible) {
         this.showPopup(event);

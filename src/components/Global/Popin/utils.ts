@@ -241,6 +241,7 @@ function getPopupCoordinatesAndSize({
 
   let outputLeft: number;
   let outputTop: number;
+  let isLeft = false;
 
   if (full || alignement === PopupAlignement.Full) {
     outputLeft = originMesure.left;
@@ -248,13 +249,15 @@ function getPopupCoordinatesAndSize({
     outputLeft = containerMesures.left + THRESHOLD;
     popupFinalWidth = containerMesures.width - THRESHOLD * 2;
   } else if (alignement === PopupAlignement.End) {
-    outputLeft = originMesure.left + originMesure.width - popupFinalWidth;
+    outputLeft = originMesure.left + originMesure.width - popupFinalWidth + TRIANGLE_WIDTH;
   } else if (alignement === PopupAlignement.ContainerEnd) {
     outputLeft = containerMesures.left + containerMesures.width - popupFinalWidth - THRESHOLD;
   } else if (alignement === PopupAlignement.Start) {
-    outputLeft = originMesure.left;
+    outputLeft = originMesure.left - TRIANGLE_WIDTH;
+    isLeft = true;
   } else if (alignement === PopupAlignement.ContainerStart) {
     outputLeft = containerMesures.left + THRESHOLD;
+    isLeft = true;
   } else {
     outputLeft = originMesure.left - popupFinalWidth / 2 + originMesure.width / 2;
   }

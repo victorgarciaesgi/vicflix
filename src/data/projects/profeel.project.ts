@@ -1,11 +1,12 @@
 import { TechnosList } from '@constants';
-import { Project, ProjectType } from '@models';
+import { Project, ProjectContext, ProjectType } from '@models';
 import { profeelVideos } from '../videos/profeel.videos';
 
 export const profeelProject: Project = {
   picture: 'profeel.png',
   slogan: 'Optimiser et sécuriser les process des professionnels',
-  description: '',
+  description: `Profeel est un programme CheckReno.
+  Il consistait à realiser une API, un back-office administrateur, une app web client, une application mobile et un site client`,
   title: 'Profeel Back-office',
   logo: 'profeel.png',
   videos: Object.values(profeelVideos).flat(),
@@ -32,4 +33,5 @@ export const profeelProject: Project = {
     TechnosList.GraphQL,
     TechnosList.Tailwind,
   ],
+  context: ProjectContext.Totem,
 };

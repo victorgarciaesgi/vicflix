@@ -1,7 +1,7 @@
 <template>
   <div class="CoverBanner / flex flex-col" style="min-height: 50vh">
     <div class="BannerWrapper / absolute w-full h-full">
-      <VImg class="ImgWrapper" type="default" :src="picture" />
+      <VImg class="ImgWrapper" type="default" :fill="isMobile ? 'both' : 'width'" :src="picture" />
     </div>
     <div
       class="pt-28 sm:ml-0 sm:mt-20 sm:w-full flex flex-col items-start max-w-md pb-10 mt-10 ml-10"
@@ -40,6 +40,7 @@
 </template>
 
 <script lang="ts">
+import { BreakpointMixin } from '@mixins';
 import { Project, routerPagesNames } from '@models';
 import { VideoProgressModule } from '@store';
 import { Component, Vue, Prop } from 'nuxt-property-decorator';
@@ -51,7 +52,7 @@ import TechnoItem from './Techno.vue';
     TechnoItem,
   },
 })
-export default class CoverBanner extends Vue {
+export default class CoverBanner extends BreakpointMixin {
   @Prop({ required: true }) data!: Project;
 
   get picture() {

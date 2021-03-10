@@ -1,5 +1,5 @@
 import { TechnosList } from '@constants';
-import { Project, ProjectType } from '@models';
+import { Project, ProjectContext, ProjectType } from '@models';
 import { crecheslibVideos } from '../videos/crecheslib.videos';
 
 export const crecheslibProject: Project = {
@@ -9,7 +9,7 @@ export const crecheslibProject: Project = {
   title: "Crèches Lib'",
   logo: 'crecheslib.svg',
   videos: Object.values(crecheslibVideos).flat(),
-  year: 2021,
+  year: 2019,
   links: [
     {
       title: "Site client Crèches Lib'",
@@ -28,4 +28,5 @@ export const crecheslibProject: Project = {
     TechnosList.GraphQL,
     TechnosList.Leaflet,
   ],
+  context: ProjectContext.Totem,
 };

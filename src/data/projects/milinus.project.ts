@@ -1,5 +1,5 @@
 import { TechnosList } from '@constants';
-import { Project, ProjectType } from '@models';
+import { Project, ProjectContext, ProjectType } from '@models';
 import { milinusVideos } from '../videos/milinus.videos';
 
 export const milinusProject: Project = {
@@ -32,4 +32,5 @@ export const milinusProject: Project = {
     TechnosList.GraphQL,
     TechnosList.Tailwind,
   ],
+  context: ProjectContext.Totem,
 };

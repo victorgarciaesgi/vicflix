@@ -25,7 +25,7 @@
         :class="{ playing: videoPlaying }"
       >
         <PlayerTrackBar
-          v-bind="{ currentProgress, currentTime, remainingTime, totalTime }"
+          v-bind="{ currentProgress, currentTime, remainingTime, totalTime, video }"
           @update="handleUpdateTime"
         />
         <div class="Actions / flex-nowrap flex flex-row items-center justify-between pt-4">
@@ -207,10 +207,6 @@ export default class VideoPlayer extends BreakpointMixin {
     } else {
       return 'videos/volume_max';
     }
-  }
-
-  get isMobile() {
-    return this.windowWidth < BreakPointsValues.Small;
   }
 
   goBack() {

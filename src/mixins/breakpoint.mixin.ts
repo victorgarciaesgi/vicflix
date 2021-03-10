@@ -1,4 +1,4 @@
-import { BreakPointsTypes } from '@models';
+import { BreakPointsTypes, BreakPointsValues } from '@models';
 import Vue from 'vue';
 import { Mixin } from 'vue-mixin-decorator';
 
@@ -25,6 +25,10 @@ export default class BreakPointsMixin extends Vue {
     } else {
       this.currentBreakPoint = BreakPointsTypes.XLarge;
     }
+  }
+
+  get isMobile() {
+    return this.windowWidth < BreakPointsValues.Small;
   }
 
   mounted() {

@@ -46,10 +46,6 @@ export default class ProjectPreview extends BreakpointMixin {
     }
   }
 
-  get isMobile() {
-    return this.windowWidth < BreakPointsValues.Small;
-  }
-
   goBack() {
     this.$router.push(this.$route.path);
   }

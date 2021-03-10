@@ -1,12 +1,16 @@
-import { Component, Vue } from 'nuxt-property-decorator';
+import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator';
 import { CreateElement } from 'vue';
 
 @Component({})
 export default class PopinButton extends Vue {
+  @Prop() stopPropagation!: boolean;
+
   clickEvent(event: Event) {
-    event.preventDefault();
-    event.stopPropagation();
-    event.stopImmediatePropagation();
+    if (this.stopPropagation) {
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+    }
     this.$emit('click', event);
   }
   mouseEnterEvent(event: Event) {
@@ -16,7 +20,16 @@ export default class PopinButton extends Vue {
     this.$emit('mouseleave', event);
   }
 
-  mounted() {
+  get defaultSlot() {
+    return this.$slots.default;
+  }
+
+  @Watch('defaultSlot', { deep: true }) slotChanged() {
+    console.log(this.$slots);
+    this.$nextTick(this.mountSlotElement);
+  }
+
+  mountSlotElement() {
     const elRoot = this.$el;
     if (elRoot) {
       elRoot.addEventListener('click', this.clickEvent);
@@ -27,6 +40,10 @@ export default class PopinButton extends Vue {
     } else {
       console.warn('No Popin slot content found');
     }
+  }
+
+  mounted() {
+    this.mountSlotElement();
   }
 
   beforeDestroy() {

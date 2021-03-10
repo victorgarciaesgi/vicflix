@@ -50,7 +50,7 @@
                   />
                 </div>
               </div>
-              <div class="flex-nowrap flex-0 flex flex-row items-center">
+              <div class="flex-nowrap flex-0 flex flex-row items-center ml-1">
                 <Popin mode="hover" theme="white">
                   <template #content>
                     <span class="px-3 py-1 text-black">Lecture</span>
@@ -180,10 +180,15 @@ export default class ProjectPlaceholder extends Vue {
     return `/logos/${this.project.logo}`;
   }
 
-  playFirstVideo() {
-    const { videos } = this.project;
-    if (videos[0]) {
-      this.$router.push({ name: routerPagesNames.watch.id, params: { id: videos[0].id } });
+  async playFirstVideo() {
+    const progress = await VideoProgressModule.actions.getProjectProgress(this.project.id);
+    if (progress) {
+      this.$router.push({ name: routerPagesNames.watch.id, params: { id: progress.video.id } });
+    } else {
+      this.$router.push({
+        name: routerPagesNames.watch.id,
+        params: { id: this.project.videos[0].id },
+      });
     }
   }
 

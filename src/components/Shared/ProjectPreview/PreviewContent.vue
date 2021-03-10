@@ -19,11 +19,16 @@
           <Action icon="actions/play" theme="white" @click="playFirstVideo">Lecture</Action>
           <Popin mode="hover" theme="white">
             <template #content>
-              <span class="px-3 py-1 text-black">Ajouter à ma liste</span>
+              <span class="px-3 py-1 text-black">
+                {{ isInWidhList ? 'Supprimer de ma liste' : 'Ajouter à ma liste' }}
+              </span>
             </template>
             <template #button>
-              <div class="center bg-bg4 border-bg10 flex p-1 ml-2 border-2 rounded-full">
-                <SvgIcon src="actions/add" :size="26" />
+              <div
+                @click="addToWishList"
+                class="center bg-bg4 border-bg10 flex p-1 ml-2 border-2 rounded-full"
+              >
+                <SvgIcon :src="`${isInWidhList ? 'forms/done' : 'actions/add'}`" :size="26" />
               </div>
             </template>
           </Popin>
@@ -41,7 +46,9 @@
           @click="playFirstVideo"
           >Lecture</Action
         >
-        <Action icon="actions/add" :w-full="true" size="md">Ajouter à ma liste</Action>
+        <Action :src="`${isInWidhList ? 'forms/done' : 'actions/add'}`" :w-full="true" size="md">
+          {{ isInWidhList ? 'Supprimer de ma liste' : 'Ajouter à ma liste' }}
+        </Action>
       </div>
       <div class="sm:flex-col flex flex-row items-start">
         <div class="flex flex-col flex-1">
@@ -104,6 +111,7 @@ import { Project, routerPagesNames } from '@models';
 import { Component, Vue, Prop } from 'nuxt-property-decorator';
 import VideoPreviewBanner from '../VideoPreviewBanner.vue';
 import Techno from '../Techno.vue';
+import { VideoProgressModule } from '@store';
 
 @Component({
   components: {
@@ -129,10 +137,27 @@ export default class PreviewContent extends Vue {
     return `/logos/${this.project?.logo}`;
   }
 
-  playFirstVideo() {
-    const { videos } = this.project;
-    if (videos[0]) {
-      this.$router.push({ name: routerPagesNames.watch.id, params: { id: videos[0].id } });
+  get isInWidhList() {
+    return !!VideoProgressModule.state.wishList.find((f) => f.id === this.project.id);
+  }
+
+  addToWishList() {
+    if (this.isInWidhList) {
+      VideoProgressModule.mutations.removeProjectFromWishList(this.project);
+    } else {
+      VideoProgressModule.mutations.addProjectToWishList(this.project);
+    }
+  }
+
+  async playFirstVideo() {
+    const progress = await VideoProgressModule.actions.getProjectProgress(this.project.id);
+    if (progress) {
+      this.$router.push({ name: routerPagesNames.watch.id, params: { id: progress.video.id } });
+    } else {
+      this.$router.push({
+        name: routerPagesNames.watch.id,
+        params: { id: this.project.videos[0].id },
+      });
     }
   }
 }

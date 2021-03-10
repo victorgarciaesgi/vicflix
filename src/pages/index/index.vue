@@ -10,6 +10,13 @@
     >
       Reprendre avec votre profil
     </component>
+    <component
+      v-if="wishList.length"
+      :is="isDesktop ? 'ProjectList' : 'MobileProjectList'"
+      :projects="wishList"
+    >
+      Ma Liste
+    </component>
     <component :is="isDesktop ? 'ProjectList' : 'MobileProjectList'" :projects="featuredProjects">
       Projets en vedette
     </component>
@@ -51,6 +58,9 @@ export default class Home extends BreakpointMixin {
         return allProjects.find((f) => f.id === key);
       })
       .filter((f): f is Project => !!f);
+  }
+  get wishList() {
+    return VideoProgressModule.state.wishList;
   }
 
   get isDesktop() {

@@ -1,13 +1,15 @@
 import { allProjects } from '@data';
-import { ProgressList, ProjectVideo } from '@models';
+import { ProgressList, Project, ProjectVideo } from '@models';
 import { VuexModule } from 'vuex-typed-modules';
 
 interface VideoProgress {
   progressList: ProgressList[];
+  wishList: Project[];
 }
 
 const _state: VideoProgress = {
   progressList: [],
+  wishList: [],
 };
 
 export const VideoProgressModule = new VuexModule({
@@ -26,6 +28,15 @@ export const VideoProgressModule = new VuexModule({
       } else {
         progressList.push({ timestamp, video, percentage, duration });
       }
+    },
+    addProjectToWishList({ wishList }, project) {
+      if (!wishList.find((f) => f.id === project.id)) {
+        wishList.push(project);
+      }
+    },
+    removeProjectFromWishList({ wishList }, project) {
+      const index = wishList.findIndex((f) => f.id === project.id);
+      wishList.splice(index, 1);
     },
   },
   actions: {

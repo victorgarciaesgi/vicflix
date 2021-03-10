@@ -7,7 +7,7 @@ export const bigupVideos: ProjectVideo[] = [
     id: 'PIlMZkm',
     title: 'Présentation du site',
     description: 'Découverte du site client de Big Up',
-    duration: '2:00',
+    duration: 120,
     episode: 1,
     projectId,
     videoUrl:

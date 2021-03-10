@@ -7,7 +7,7 @@ export const profeelVideos: ProjectVideo[] = [
     id: 'INiu876',
     title: "Présentation de l'application",
     description: "Petit tour du propriétaire de l'application Profeel Admin",
-    duration: '1:13',
+    duration: 73,
     episode: 1,
     projectId,
     videoUrl:
@@ -19,7 +19,7 @@ export const profeelVideos: ProjectVideo[] = [
     id: 'NLz6HLH',
     title: 'Test second episode',
     description: 'Lorem ipsum blab bla bla',
-    duration: '1:13',
+    duration: 73,
     episode: 2,
     projectId,
     videoUrl:

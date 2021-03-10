@@ -24,7 +24,7 @@
     <div class="sm:pr-0 flex flex-col justify-center flex-1 px-5" :class="{ '!pr-0': sm }">
       <div class="sm:flex-col flex flex-row justify-between" :class="{ '!flex-col': sm }">
         <span class="text-md font-semibold" :class="{ '!text-sm': sm }">{{ video.title }}</span>
-        <span class="sm:hidden" :class="{ '!hidden': sm }">{{ video.duration }} min</span>
+        <span class="sm:hidden" :class="{ '!hidden': sm }">{{ duration }} min</span>
       </div>
       <span
         class="text-text9 sm:line-clamp-2 mt-1 text-sm"
@@ -41,6 +41,7 @@
 <script lang="ts">
 import { ProjectVideo, routerPagesNames } from '@models';
 import { VideoProgressModule } from '@store';
+import { secondsToHoursAndMinutes } from '@utils';
 import { Component, Vue, Prop } from 'nuxt-property-decorator';
 import { Location } from 'vue-router';
 
@@ -58,6 +59,10 @@ export default class VideoPreviewBanner extends Vue {
         id: this.video.id,
       },
     };
+  }
+
+  get duration() {
+    return secondsToHoursAndMinutes(this.video.duration);
   }
 
   async created() {

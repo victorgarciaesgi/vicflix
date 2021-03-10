@@ -14,7 +14,7 @@ export interface ProgressList {
 
 export interface ProjectVideo {
   title: string;
-  duration: string;
+  duration: number;
   description: string;
   episode: number;
   preview: string;

@@ -55,11 +55,26 @@ export const VideoProgressModule = new VuexModule({
       if (project) {
         const videos = progressList
           .filter(({ video }) => project.videos.find((f) => f.id === video.id))
-          .sort((a, b) => a.video.episode - b.video.episode);
+          .sort((a, b) => b.video.episode - a.video.episode);
         const pendingVideo = videos.find(({ percentage }) => {
           return percentage < 95;
         });
-        return pendingVideo;
+        if (pendingVideo) {
+          return pendingVideo;
+        } else {
+          const lastVideo = videos[0];
+          if (lastVideo) {
+            const nextVideo = project.videos.find((f) => f.episode === lastVideo.video.episode + 1);
+            if (nextVideo) {
+              VideoProgressModule.mutations.updateVideoProgress({
+                video: nextVideo,
+                duration: nextVideo.duration,
+                timestamp: 0,
+              });
+              return progressList.find((f) => f.video.id === nextVideo.id);
+            }
+          }
+        }
       }
     },
   },

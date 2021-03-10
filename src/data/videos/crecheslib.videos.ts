@@ -7,7 +7,7 @@ export const crecheslibVideos: ProjectVideo[] = [
     id: 'Ih9Zez',
     title: "Présentation de l'admin",
     description: "Découverte de l'application Admin/Directeur de Creches Lib'",
-    duration: '0:45',
+    duration: 45,
     episode: 1,
     projectId,
     videoUrl:

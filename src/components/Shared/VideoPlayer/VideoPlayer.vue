@@ -401,6 +401,7 @@ export default class VideoPlayer extends BreakpointMixin {
       this.videoPlayer.addEventListener('seeked', this.handleSeeked);
       this.videoPlayer.addEventListener('loadedmetadata', this.handleLoadedMetadata);
       document.addEventListener('fullscreenchange', this.handleFullScreenChange);
+      this.videoPlayer.addEventListener('fullscreenchange', this.handleFullScreenChange);
       this.volume = this.videoPlayer.volume;
       window.addEventListener('keydown', this.handleKeyUp);
       const userAgent = window.navigator.userAgent;

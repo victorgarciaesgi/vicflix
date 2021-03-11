@@ -36,6 +36,9 @@ export default class MobileProjectList extends Vue {
 
 <style lang="postcss" scoped>
 div.List {
+  &::-webkit-scrollbar {
+    display: none;
+  }
   &::after {
     content: '';
     display: block;

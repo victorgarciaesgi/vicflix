@@ -6,7 +6,7 @@ export const profeelProject: Project = {
   picture: 'profeel.png',
   slogan: 'Optimiser et sécuriser les process des professionnels',
   description: `Profeel est un programme CheckReno.
-  Il consistait à realiser une API, un back-office administrateur, une app web client, une application mobile et un site client`,
+  Il consistait à realiser une API, un back-office administrateur, une app web client, une application mobile et un site vitrine`,
   title: 'Profeel Back-office',
   logo: 'profeel.png',
   videos: Object.values(profeelVideos).flat(),

@@ -11,7 +11,7 @@
     >
       <VImg :src="video.preview" />
       <div
-        class="group-hover:flex center bg-opacity-30 absolute top-0 left-0 hidden w-full h-full bg-black"
+        class="-sm:group-hover:flex center bg-opacity-30 absolute top-0 left-0 hidden w-full h-full bg-black"
       >
         <div class="p-1 border border-white rounded-full">
           <SvgIcon class="w-9 h-9 sm:w-7 sm:h-7" :class="{ '!h-7 !w-7': sm }" src="actions/play" />

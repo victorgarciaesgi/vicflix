@@ -181,14 +181,21 @@ export default class ProjectPlaceholder extends Vue {
   }
 
   async playFirstVideo() {
-    const progress = await VideoProgressModule.actions.getProjectProgress(this.project.id);
-    if (progress) {
-      this.$router.push({ name: routerPagesNames.watch.id, params: { id: progress.video.id } });
-    } else {
-      this.$router.push({
-        name: routerPagesNames.watch.id,
-        params: { id: this.project.videos[0].id },
-      });
+    if (this.project.videos.length) {
+      const progress = await VideoProgressModule.actions.getProjectProgress(this.project.id);
+      if (progress) {
+        this.$router.push({ name: routerPagesNames.watch.id, params: { id: progress.video.id } });
+      } else {
+        this.$router.push({
+          name: routerPagesNames.watch.id,
+          params: { id: this.project.videos[0].id },
+        });
+      }
+    } else if (this.project.links) {
+      Object.assign(document.createElement('a'), {
+        target: '_blank',
+        href: this.project.links[0].link,
+      }).click();
     }
   }
 
@@ -344,8 +351,6 @@ export default class ProjectPlaceholder extends Vue {
 </script>
 
 <style lang="postcss" scoped>
-div.RootCard {
-}
 .Preview {
   box-shadow: 0 0 10px rgba(0, 0, 0, 1);
 }

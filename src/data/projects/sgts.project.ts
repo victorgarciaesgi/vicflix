@@ -2,11 +2,12 @@ import { TechnosList } from '@constants';
 import { Project, ProjectContext, ProjectType } from '@models';
 
 export const sgtsProject: Project = {
-  picture: 'crecheslib.png',
-  slogan: 'Des places en crèche en toute liberté !',
-  description: '',
-  title: "Crèches Lib'",
-  logo: 'crecheslib.svg',
+  picture: 'sgts.png',
+  slogan: '🚀 🔄 Simple Typescript interface generator from a GraphQL api schemas or URL',
+  description:
+    'All your Queries and Mutations transformed into functions with a pre-generated GraphQL template',
+  title: 'simple-graphql-to-typescript',
+  logo: 'sgts.svg',
   videos: [],
   year: 2019,
   links: [
@@ -20,7 +21,7 @@ export const sgtsProject: Project = {
     },
   ],
   type: [ProjectType.App, ProjectType.Site],
-  id: '9DNjkLd',
+  id: 'MNJ9OK3jn',
   technos: [TechnosList.Typescript, TechnosList.GraphQL],
   context: ProjectContext.Personal,
 };

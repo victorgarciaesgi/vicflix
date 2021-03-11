@@ -203,7 +203,7 @@ function getPopupAlignement({
     containerMesures.left + THRESHOLD + popupSize.width <
     containerMesures.left + containerMesures.width
   ) {
-    processedAlignement = PopupAlignement.End;
+    processedAlignement = PopupAlignement.ContainerEnd;
   } else if (
     containerMesures.left + containerMesures.width - popupSize.width + THRESHOLD <
     containerMesures.left

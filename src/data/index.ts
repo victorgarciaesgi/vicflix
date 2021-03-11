@@ -3,8 +3,6 @@ import * as projects from './projects';
 import { milinusProject, profeelProject } from './projects';
 import * as videos from './videos';
 
-console.log(Object.values(videos));
-
 export const allVideos = Object.values(videos).flat();
 
 export const allProjects = Object.values(projects);
@@ -14,6 +12,7 @@ export const coverProject = milinusProject;
 export const featuredProject: Project[] = [
   projects.milinusProject,
   projects.profeelProject,
+  projects.sgtsProject,
   projects.crecheslibProject,
   projects.bigupProject,
   projects.profeelProject,
@@ -26,5 +25,6 @@ export const popularProject: Project[] = [
   projects.bigupProject,
   projects.crecheslibProject,
   projects.profeelProject,
+  projects.sgtsProject,
   projects.milinusProject,
 ];

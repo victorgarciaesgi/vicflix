@@ -13,7 +13,7 @@ export const crecheslibProject: Project = {
   links: [
     {
       title: "Site client Crèches Lib'",
-      link: 'https://crecheslib.com',
+      link: 'https://www.crecheslib.com',
     },
   ],
   type: [ProjectType.App, ProjectType.Site],

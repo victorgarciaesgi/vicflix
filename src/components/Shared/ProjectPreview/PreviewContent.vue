@@ -55,7 +55,7 @@
           {{ isInWishList ? 'Supprimer de ma liste' : 'Ajouter à ma liste' }}
         </Action>
       </div>
-      <div class="sm:flex-col flex flex-row items-start">
+      <div class="sm:flex-col flex flex-row items-start py-3">
         <div class="flex flex-col flex-1">
           <div class="flex flex-row items-center">
             <span class="text-green font-bold">Recommandé à 97%</span>
@@ -91,7 +91,7 @@
             <span class="text-bg8">Contexte: </span>
             <span>{{ project.context }}</span>
           </div>
-          <div class="sm:flex-row sm:items-center relative flex flex-col mb-4">
+          <div class="sm:flex-row sm:items-center relative flex flex-row items-center mb-4">
             <span class="text-bg8">Technologies: </span>
             <div class="flex flex-row items-center">
               <Techno v-for="techno of project.technos" :key="techno" :techno="techno" size="md" />

@@ -29,12 +29,16 @@
               profile.name
             }}</span>
           </button>
-          <span class="py-1">Gérer les profils</span>
+          <!-- <span class="py-1">Gérer les profils</span> -->
         </div>
         <div class="bg-w120 w-full h-px"></div>
         <div class="flex flex-col p-3">
-          <span class="py-1">Compte</span>
-          <span class="py-1">Centre d'aide</span>
+          <span class="py-1">Contact</span>
+          <span class="py-1">Github</span>
+          <span class="py-1">Linkedin</span>
+        </div>
+        <div class="bg-w120 w-full h-px"></div>
+        <div class="p-3">
           <button type="button" class="hover:underline py-1" @click="disconnect"
             >Se déconnecter</button
           >

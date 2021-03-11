@@ -20,7 +20,7 @@ export const sgtsProject: Project = {
       link: 'https://sgts.netlify.app/',
     },
   ],
-  type: [ProjectType.App, ProjectType.Site],
+  type: [ProjectType.Library],
   id: 'MNJ9OK3jn',
   technos: [TechnosList.Typescript, TechnosList.GraphQL],
   context: ProjectContext.Personal,

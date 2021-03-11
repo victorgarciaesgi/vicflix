@@ -14,7 +14,6 @@ export const weekDaysConstant = {
 };
 
 export const usersConstant: User[] = [
-  { id: 1, name: 'Victor', picture: '/users/victor.png' },
-  { id: 2, name: 'Mom', picture: '/users/mom.png' },
-  { id: 3, name: 'Dad', picture: '/users/dad.png' },
+  { id: 1, name: 'Victor', picture: '/users/victor.jpg' },
+  { id: 2, name: 'Cooler Victor', picture: '/users/coolervictor.jpg' },
 ];

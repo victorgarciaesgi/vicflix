@@ -156,11 +156,7 @@ export default class ProjectPlaceholder extends Vue {
   }
 
   get picture() {
-    const match = /^(.+)(\.\w+)$/.exec(this.project.picture);
-    if (match) {
-      return `/projects/${match[1]}_placeholder${match[2]}`;
-    }
-    return null;
+    return this.project.placeholder;
   }
 
   navigateToPreview() {

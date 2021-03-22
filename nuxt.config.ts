@@ -54,6 +54,7 @@ const config: NuxtConfig = {
   css: ['~/styles/root.pcss'],
   buildModules: [
     '@nuxt/typescript-build',
+    '@nuxt/postcss8',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/pwa',
     '@nuxtjs/composition-api',

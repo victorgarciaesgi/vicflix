@@ -1,13 +1,13 @@
 <template>
   <div
-    class="PlayerTrackBar / flex-nowrap flex flex-row items-center py-1 pl-2 cursor-pointer"
+    class="PlayerTrackBar / flex-nowrap group flex flex-row items-center py-1 pl-2 cursor-pointer"
     @mouseenter="handleShowIndicator"
     @mousemove="handleIndicatorMove"
     @mouseleave="handleHideIndicator"
   >
     <div
       ref="barRef"
-      class="Bar / bg-bg4 hover:h-3 relative flex-1 h-2 transition-all duration-300"
+      class="Bar / bg-bg4 group-hover:h-3 relative flex-1 h-2 transition-all duration-300"
       @click="handleTimeChange"
     >
       <div

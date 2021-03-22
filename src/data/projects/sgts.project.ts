@@ -2,11 +2,14 @@ import { TechnosList } from '@constants';
 import { Project, ProjectContext, ProjectType } from '@models';
 
 export const sgtsProject: Project = {
-  picture: 'sgts.png',
+  title: 'simple-graphql-to-typescript',
+  picture:
+    'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fsgts%2Fsgts.png?alt=media&token=a3f4251b-8772-4ffb-9864-71e5859a66f3',
+  placeholder:
+    'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fsgts%2Fsgts_placeholder.png?alt=media&token=bc2459c1-a215-4abc-af51-86e2ab54812b',
   slogan: '🚀 🔄 Simple Typescript interface generator from a GraphQL api schemas or URL',
   description:
     'All your Queries and Mutations transformed into functions with a pre-generated GraphQL template',
-  title: 'simple-graphql-to-typescript',
   logo: 'sgts.svg',
   videos: [],
   year: 2019,

@@ -11,7 +11,7 @@
         style="filter: drop-shadow(3px 2px 3px rgba(0, 0, 0, 0.4))"
       >
         <img src="/icon.png" width="18" />
-        <span class="text-w220 ml-2 text-sm font-semibold tracking-widest">PROJECT</span>
+        <span class="text-w240 ml-2 text-sm font-semibold tracking-widest">PROJECT</span>
       </div>
       <div class="sm:w-full sm:items-center flex flex-col items-start py-5">
         <img
@@ -21,7 +21,7 @@
         />
         <span
           v-if="data.slogan"
-          class="sm:text-sm"
+          class="sm:text-sm mt-3"
           style="text-shadow: 1px 2px 1px rgba(0, 0, 0, 0.2)"
           >{{ data.slogan }}</span
         >
@@ -56,7 +56,7 @@ export default class CoverBanner extends BreakpointMixin {
   @Prop({ required: true }) data!: Project;
 
   get picture() {
-    return `/projects/${this.data.picture}`;
+    return this.data.picture;
   }
 
   get logo() {

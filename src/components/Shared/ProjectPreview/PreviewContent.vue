@@ -28,7 +28,8 @@
                 @click="addToWishList"
                 class="center bg-bg4 border-bg10 flex p-1 ml-2 border-2 rounded-full"
               >
-                <SvgIcon :src="`${isInWishList ? 'forms/done' : 'actions/add'}`" :size="26" />
+                <SvgIcon v-if="isInWishList" src="forms/done" :size="26" />
+                <SvgIcon v-else src="actions/add" :size="26" />
               </div>
             </template>
           </Popin>
@@ -132,14 +133,7 @@ export default class PreviewContent extends Vue {
   @Prop({ required: true }) project!: Project;
 
   get picture() {
-    if (this.project) {
-      const match = /^(.+)(\.\w+)$/.exec(this.project.picture);
-      if (match) {
-        return `/projects/${match[1]}${match[2]}`;
-      }
-      return null;
-    }
-    return null;
+    return this.project.picture;
   }
 
   get logo() {

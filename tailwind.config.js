@@ -133,7 +133,7 @@ module.exports = {
       margin: ['first', 'last', 'important'],
       visibility: ['responsive', 'important'],
       width: ['important', 'hover'],
-      height: ['important', 'hover'],
+      height: ['important', 'hover', 'group-hover'],
       padding: ['important'],
       inset: ['important'],
       textColor: ['important'],

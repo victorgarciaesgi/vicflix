@@ -31,8 +31,8 @@
         :class="{ '!line-clamp-2 !text-xs': sm }"
         >{{ video.description }}</span
       >
-      <span class="-sm:hidden text-grey text-md mt-1" :class="{ '!hidden': !sm }"
-        >{{ video.duration }} min</span
+      <span class="-sm:hidden text-grey mt-1 text-sm" :class="{ '!flex': sm }"
+        >{{ duration }} min</span
       >
     </div>
   </NuxtLink>

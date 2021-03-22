@@ -45,7 +45,7 @@
       "@models": ["models/index.ts"],
       "@locales": ["locales/index.ts"]
     },
-    "types": ["@nuxt/types", "nuxt-typed-router", "node", "webpack-env", "jest", "nuxt-i18n"],
+    "types": ["@nuxt/types", "nuxt-typed-router", "node", "webpack-env", "nuxt-i18n"],
     "plugins": [
       {
         "name": "@vuedx/typescript-vetur"

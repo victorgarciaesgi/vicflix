@@ -5,6 +5,7 @@ export interface Project {
   slogan?: string;
   description: string;
   picture: string;
+  placeholder: string;
   logo: string;
   technos: TechnosList[];
   links?: ProjectLink[];

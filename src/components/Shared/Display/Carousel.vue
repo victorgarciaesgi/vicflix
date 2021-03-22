@@ -25,7 +25,7 @@
     </div>
     <template v-if="arrows">
       <div
-        class="Arrow-Left / absolute top-0 left-0 z-10 flex h-full"
+        class="Arrow-Left / absolute top-0 left-0 z-10 flex h-full pb-4"
         :style="{ width: `${slidePadding / 2 - childGap}px` }"
       >
         <div

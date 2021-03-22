@@ -35,11 +35,7 @@ export default class MobileProjectPlaceholder extends Vue {
   public progress = 0;
 
   get picture() {
-    const match = /^(.+)(\.\w+)$/.exec(this.project.picture);
-    if (match) {
-      return `/projects/${match[1]}_placeholder${match[2]}`;
-    }
-    return null;
+    return this.project.placeholder;
   }
 
   get toPreviewLink(): Location {

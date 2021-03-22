@@ -48,7 +48,7 @@
     "portal-vue": "^2.1.7",
     "postcss": "^8.2.8",
     "simple-graphql-to-typescript": "^0.10.11",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+    "tailwindcss": "^2.0.4",
     "ts-loader": "^8.0.18",
     "vue": "^2.6.12",
     "vue-fragment": "^1.5.1",

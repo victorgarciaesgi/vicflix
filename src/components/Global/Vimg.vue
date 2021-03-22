@@ -1,7 +1,7 @@
 <template>
   <div
     :class="getContainerClass"
-    class="VImg / center flex overflow-hidden"
+    class="VImg / center flex min-h-full overflow-hidden"
     :style="getContainerStyle"
   >
     <ClientOnly>

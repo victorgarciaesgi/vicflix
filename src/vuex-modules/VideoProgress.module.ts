@@ -5,11 +5,13 @@ import { VuexModule } from 'vuex-typed-modules';
 interface VideoProgress {
   progressList: ProgressList[];
   wishList: Project[];
+  firstVisit: boolean;
 }
 
 const _state: VideoProgress = {
   progressList: [],
   wishList: [],
+  firstVisit: false,
 };
 
 export const VideoProgressModule = new VuexModule({

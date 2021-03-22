@@ -15,13 +15,13 @@
       <SvgIcon :src="getIcon" :size="100" />
     </div>
     <div
-      class="header flex items-center flex-shrink-0 px-6 pb-4"
+      class="header flex items-center flex-shrink-0 px-8 pb-4"
       :class="{ 'pt-12': !getIcon, 'pt-6': getIcon }"
     >
       <span class="flex-grow text-2xl font-semibold text-center">{{ title }}</span>
     </div>
     <div v-if="description || isForm" class="content scroll-y flex flex-grow px-6 pt-2 pb-6">
-      <span v-if="description" class="description text-center">
+      <span v-if="description" class="description text-left whitespace-pre-line">
         {{ description }}
       </span>
       <form v-if="isForm" class="form column flex">
@@ -72,9 +72,10 @@ import {
 import { EventBus, Events } from '@services';
 import Colors from '@colors';
 import { ButtonTheme } from '@models';
+import { BreakpointMixin } from '@mixins';
 
 @Component({})
-export default class Alert extends Vue {
+export default class Alert extends BreakpointMixin {
   @Prop() readonly alert!: AlertRoot<any>;
 
   get isForm() {
@@ -89,7 +90,11 @@ export default class Alert extends Vue {
     if (this.isForm) {
       return { width: '500px' };
     }
-    return { width: '400px' };
+    if (this.isMobile) {
+      return { minWidth: '250px' };
+    } else {
+      return { minWidth: '400px' };
+    }
   }
   get getIcon() {
     switch (this.alert.type) {
@@ -153,9 +158,14 @@ div.Alert-Window {
   box-shadow: 0 0 20px var(--shadow);
   min-height: 100px;
   min-width: 250px;
-  max-width: 600px;
   max-height: 80vh;
   overflow: hidden;
+
+  max-width: 500px;
+
+  @screen sm {
+    max-width: 100vw;
+  }
 
   @mixin dark {
     background-color: rgba(10, 10, 10, 1);

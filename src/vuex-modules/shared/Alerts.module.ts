@@ -25,7 +25,12 @@ export const AlertsModule = new VuexModule({
       const content = state.alertsList.find((alert) => alert.id === alertId);
       if (content) {
         if (content.onClose && typeof content.onClose === 'function') {
-          await content.onClose();
+          const type = content.onClose.constructor.name as 'Function' | 'AsyncFunction';
+          if (type === 'Function') {
+            content.onClose();
+          } else {
+            await content.onClose();
+          }
         }
         AlertsModule.updateState(({ alertsList }) => ({
           alertsList: alertsList.filter((f) => f.id !== alertId),

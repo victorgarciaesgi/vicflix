@@ -24,7 +24,7 @@ export const profeelProject: Project = {
       link: 'https://apps.apple.com/us/app/milinus/id1506570411',
     },
   ],
-  type: [ProjectType.App, ProjectType.Site, ProjectType.Mobile],
+  type: [ProjectType.App, ProjectType.Mobile],
   id: 'LAtFkd',
   info: `Aucun lien ou accès d'application administrateur ne sera fourni.
     Toutes les vidéos sont issues de fausses données de test et ne correspondent pas à des vraies données client.

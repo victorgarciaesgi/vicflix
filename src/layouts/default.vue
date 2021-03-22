@@ -31,7 +31,13 @@ import {
   ProfileSelect,
   FooterComponent,
 } from '@components';
-import { AuthModule, DarkModeModule, DisplayTheme, RouterModule } from '@store';
+import {
+  AuthModule,
+  DarkModeModule,
+  DisplayTheme,
+  RouterModule,
+  VideoProgressModule,
+} from '@store';
 
 @Component({
   components: {

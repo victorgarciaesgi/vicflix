@@ -52,6 +52,7 @@
       </Popin>
       <div
         :style="{ left: `${currentTimePercent}%` }"
+        ref="ballRef"
         class="Ball / bg-red hover:scale-110 top-1/2 absolute w-5 h-5 transition-transform duration-200 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
         @mousedown="handleMouseDown"
       ></div>
@@ -80,6 +81,7 @@ export default class PlayerTrackBar extends BreakpointMixin {
   @Ref() barRef!: HTMLDivElement;
   @Ref() popinIndicator!: Popin;
   @Ref() miniVideoPlayer?: HTMLVideoElement;
+  @Ref() ballRef!: HTMLDivElement;
 
   @Emit('update') updateTime(time: number) {}
 
@@ -137,7 +139,7 @@ export default class PlayerTrackBar extends BreakpointMixin {
 
   handleMouseMove(event: MouseEvent) {
     if (this.dragging) {
-      this.handleTimeChange(event);
+      this.handleTimeChange(event.clientX);
       document.addEventListener('mouseup', this.handleMouseUp);
     }
   }
@@ -148,15 +150,43 @@ export default class PlayerTrackBar extends BreakpointMixin {
     document.removeEventListener('mouseup', this.handleMouseUp);
   }
 
-  handleTimeChange(event: MouseEvent) {
-    console.log(event);
+  handleTouchStart() {
+    this.dragging = true;
+    this.ballRef.addEventListener('touchmove', this.handleTouchMove);
+  }
+
+  handleTouchMove(event: TouchEvent) {
+    if (this.dragging) {
+      const { pageX } = event.touches[0];
+      this.handleTimeChange(pageX);
+      document.addEventListener('mouseup', this.handleMouseUp);
+    }
+  }
+
+  handleTouchEnd() {
+    this.dragging = false;
+    document.removeEventListener('mousemove', this.handleMouseMove);
+    document.removeEventListener('mouseup', this.handleMouseUp);
+  }
+
+  handleTimeChange(clientX: number) {
     const sliderPos = this.barRef.getBoundingClientRect();
-    let timeValue = (event.clientX - sliderPos.x) / sliderPos.width;
+    let timeValue = (clientX - sliderPos.x) / sliderPos.width;
     timeValue = this.totalTime * timeValue;
 
     if (timeValue >= 0 && timeValue <= this.totalTime) {
       this.updateTime(timeValue);
     }
+  }
+
+  mounted() {
+    this.ballRef.addEventListener('touchstart', this.handleTouchStart);
+    this.ballRef.addEventListener('touchend', this.handleTouchEnd);
+  }
+
+  beforeDestroy() {
+    this.ballRef.removeEventListener('touchstart', this.handleMouseDown);
+    this.ballRef.removeEventListener('touchend', this.handleMouseUp);
   }
 }
 </script>

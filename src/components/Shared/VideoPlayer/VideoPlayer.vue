@@ -280,7 +280,9 @@ export default class VideoPlayer extends BreakpointMixin {
       console.log(e);
       try {
         await (this.videoPlayer as any).webkitEnterFullscreen();
-        this.isFullScreen = true;
+        if (!this.isIos) {
+          this.isFullScreen = true;
+        }
       } catch (e) {
         console.log(e);
       }

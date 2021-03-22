@@ -22,7 +22,7 @@ function createAction({ onClick, ...rest }: DefaultActionArgs): ActionRoot {
     if (onClick && typeof onClick === 'function') {
       await onClick();
     }
-    AlertsModule.actions.deleteAlert(id);
+    await AlertsModule.actions.deleteAlert(id);
   };
 
   return {

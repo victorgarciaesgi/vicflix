@@ -103,6 +103,10 @@ header {
     width: 100%;
     height: 60px;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+
+    @screen sm {
+      height: 100%;
+    }
   }
 
   &.opaque {

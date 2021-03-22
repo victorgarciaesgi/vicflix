@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="Infos-Wrapper / flex-0 flex flex-col px-8 py-5">
-      <div class="-sm:hidden flex flex-col mb-8">
+      <div class="-sm:hidden flex flex-col mb-5">
         <Action
           icon="actions/play"
           class="!mb-2"
@@ -58,7 +58,8 @@
       </div>
       <div class="sm:flex-col flex flex-row items-start py-3">
         <div class="flex flex-col flex-1">
-          <div class="flex flex-row items-center">
+          <ProjectVideoProgress v-if="videoProgress && isMobile" :progress="videoProgress" />
+          <div class="flex flex-row items-center mt-3">
             <span class="text-green font-bold">Recommandé à 97%</span>
             <span class="ml-2">{{ project.year }}</span>
             <span class="border-bg9 px-1 py-px ml-2 text-sm border">16+</span>
@@ -117,20 +118,25 @@
 </template>
 
 <script lang="ts">
-import { Project, routerPagesNames } from '@models';
+import { ProgressList, Project, routerPagesNames } from '@models';
 import { Component, Vue, Prop } from 'nuxt-property-decorator';
 import VideoPreviewBanner from '../VideoPreviewBanner.vue';
 import Techno from '../Techno.vue';
 import { VideoProgressModule } from '@store';
+import ProjectVideoProgress from '../ProjectVideoProgress.vue';
+import { BreakpointMixin } from '@mixins';
 
 @Component({
   components: {
     Techno,
     VideoPreviewBanner,
+    ProjectVideoProgress,
   },
 })
-export default class PreviewContent extends Vue {
+export default class PreviewContent extends BreakpointMixin {
   @Prop({ required: true }) project!: Project;
+
+  public videoProgress: ProgressList | null = null;
 
   get picture() {
     return this.project.picture;
@@ -168,6 +174,13 @@ export default class PreviewContent extends Vue {
         target: '_blank',
         href: this.project.links[0].link,
       }).click();
+    }
+  }
+
+  async created() {
+    const video = await VideoProgressModule.actions.getProjectProgress(this.project.id);
+    if (video) {
+      this.videoProgress = video;
     }
   }
 }

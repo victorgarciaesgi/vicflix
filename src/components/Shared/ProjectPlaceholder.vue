@@ -78,22 +78,7 @@
                 </Popin>
               </div>
             </div>
-            <div v-if="videoProgress" class="flex flex-col py-1">
-              <span class="text-w120 mb-1 text-xs"
-                >S1: Episode {{ videoProgress.video.episode }}</span
-              >
-              <div class="flex-nowrap flex flex-row items-center">
-                <div class="bg-g90 flex flex-1 w-full rounded" style="height: 3px">
-                  <div
-                    class="bg-red absolute top-0 left-0 h-full rounded"
-                    :style="{ width: `${videoProgress.percentage}%` }"
-                  ></div>
-                </div>
-                <span class="text-xxs text-w190 ml-2"
-                  >{{ currentProgressTime }} sur {{ durationTime }}
-                </span>
-              </div>
-            </div>
+            <ProjectVideoProgress :progress="videoProgress" />
           </div>
         </div>
       </Portal>
@@ -117,12 +102,12 @@ import { VImg } from '@components/Global';
 import { Location } from 'vue-router';
 import Techno from './Techno.vue';
 import { VideoProgressModule } from '@store';
-import ProjectList from './ProjectList.vue';
-import { secondsToHoursAndMinutes } from '@utils';
+import ProjectVideoProgress from './ProjectVideoProgress.vue';
 
 @Component({
   components: {
     Techno,
+    ProjectVideoProgress,
   },
 })
 export default class ProjectPlaceholder extends Vue {
@@ -138,22 +123,9 @@ export default class ProjectPlaceholder extends Vue {
   public rendered = false;
   public showPreview = false;
   public timeout: NodeJS.Timeout | null = null;
+  public scaleZoom = 1.5;
 
   public videoProgress: ProgressList | null = null;
-
-  get currentProgressTime() {
-    if (this.videoProgress) {
-      return secondsToHoursAndMinutes(this.videoProgress.timestamp);
-    }
-    return null;
-  }
-
-  get durationTime() {
-    if (this.videoProgress) {
-      return secondsToHoursAndMinutes(this.videoProgress.duration);
-    }
-    return null;
-  }
 
   get picture() {
     return this.project.placeholder;
@@ -240,40 +212,42 @@ export default class ProjectPlaceholder extends Vue {
     this.animateOpenPreview();
   }
 
+  getTranslateValues() {
+    const previewRect = this.preview!.getBoundingClientRect();
+    const rootRect = this.root.getBoundingClientRect();
+    const limitDistanceBorder = 52;
+
+    const previewWidthScale = previewRect.width * this.scaleZoom;
+    const positionPreviewLeft = rootRect.left - (previewWidthScale - rootRect.width) / 2;
+    let finalTranslateX = previewRect.left;
+    if (positionPreviewLeft < limitDistanceBorder) {
+      finalTranslateX = finalTranslateX + limitDistanceBorder - positionPreviewLeft;
+    } else if (positionPreviewLeft + previewWidthScale > window.innerWidth - limitDistanceBorder) {
+      finalTranslateX =
+        finalTranslateX -
+        (positionPreviewLeft + previewWidthScale - window.innerWidth) -
+        limitDistanceBorder;
+    }
+    const previewHeightScale = previewRect.height * this.scaleZoom;
+    const previewMarginTop = (previewHeightScale - previewRect.height) / 2;
+    const yPadding = (previewHeightScale - rootRect.height) / 2 - previewMarginTop;
+    const finalTranslateY = rootRect.top - yPadding;
+
+    return { finalTranslateX, finalTranslateY };
+  }
+
   async animateOpenPreview() {
     if (this.preview) {
       this.rendered = true;
-      const scaleZoom = 1.5;
-      const previewRect = this.preview.getBoundingClientRect();
-      const rootRect = this.root.getBoundingClientRect();
-      const limitDistanceBorder = 52;
 
-      const previewWidthScale = previewRect.width * scaleZoom;
-      const positionPreviewLeft = rootRect.left - (previewWidthScale - rootRect.width) / 2;
-      let finalTranslateX = previewRect.left;
-      if (positionPreviewLeft < limitDistanceBorder) {
-        finalTranslateX = finalTranslateX + limitDistanceBorder - positionPreviewLeft;
-      } else if (
-        positionPreviewLeft + previewWidthScale >
-        window.innerWidth - limitDistanceBorder
-      ) {
-        finalTranslateX =
-          finalTranslateX -
-          (positionPreviewLeft + previewWidthScale - window.innerWidth) -
-          limitDistanceBorder;
-      }
-
-      const previewHeightScale = previewRect.height * scaleZoom;
-      const previewMarginTop = (previewHeightScale - previewRect.height) / 2;
-      const yPadding = (previewHeightScale - rootRect.height) / 2 - previewMarginTop;
-      const finalTranslateY = rootRect.top - yPadding;
+      const { finalTranslateX, finalTranslateY } = this.getTranslateValues();
 
       const placeholderImage = new Image();
       placeholderImage.onload = (ev) => {
         this.root.style.opacity = '0';
         anime({
           targets: this.preview,
-          scale: scaleZoom,
+          scale: this.scaleZoom,
           translateY: finalTranslateY,
           translateX: finalTranslateX,
           duration: 200,
@@ -292,17 +266,16 @@ export default class ProjectPlaceholder extends Vue {
 
   recalculatePreviewPosition() {
     if (this.preview) {
-      const scaleZoom = 1.5;
       const previewRect = this.preview.getBoundingClientRect();
       const rootRect = this.root.getBoundingClientRect();
       const ph = previewRect.height;
-      const mt = (ph - previewRect.height / scaleZoom) / 2;
-      const xPadding = (ph - rootRect.height) / 2 - mt;
-      const pt = rootRect.top - mt;
+      const mt = (ph - previewRect.height / this.scaleZoom) / 2;
+      const yPadding = (ph - rootRect.height) / 2 - mt;
+
       Object.assign(this.preview.style, {
-        transform: `translateX(${rootRect.left}px) translateY(${
-          rootRect.top - xPadding
-        }px) scale(${scaleZoom})`,
+        transform: `translateX(${rootRect.left}px) translateY(${rootRect.top - yPadding}px) scale(${
+          this.scaleZoom
+        })`,
       });
     }
   }

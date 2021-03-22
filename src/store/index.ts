@@ -1,6 +1,5 @@
 import { Database } from 'vuex-typed-modules';
 import { Context, NuxtAppOptions } from '@nuxt/types';
-import { clearToken, getToken } from '@services';
 import VuexPersistence from 'vuex-persist';
 import * as Modules from '../vuex-modules';
 
@@ -10,7 +9,7 @@ const modules = Object.entries(Modules).map(([key, value]) => value);
 
 const persistLocal = new VuexPersistence({
   reducer: (state: any) => {
-    return { VideoProgressModule: state.VideoProgressModule };
+    return { VideoProgressModule: state.VideoProgressModule, AuthModule: state.AuthModule };
   },
   storage: window.localStorage,
 });
@@ -22,7 +21,7 @@ export const strict = false;
 
 export const actions = {
   async nuxtClientInit(_: any, { $cookies }: NuxtAppOptions) {
-    const user = await getToken();
+    const user = await Modules.AuthModule.state.user;
     if (user) {
       try {
         Modules.AuthModule.mutations.connectUser(user);

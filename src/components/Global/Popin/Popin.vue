@@ -383,8 +383,6 @@ export default class Popin extends Vue {
 </script>
 
 <style lang="postcss">
-$arrowHeight: 10px;
-
 button.Button-Root {
   width: -webkit-fill-available;
   height: -webkit-fill-available;
@@ -394,6 +392,7 @@ div.Popup-Box {
   visibility: visible;
   position: absolute;
   margin: 0px;
+  --arrowHeight: 10px;
 
   .Arrow {
     top: -1px;
@@ -403,7 +402,7 @@ div.Popup-Box {
     filter: drop-shadow(0 0 20px var(--shadow));
     &.Bottom {
       /* stylelint-disable-next-line */
-      top: calc(-$arrowHeight + 1px);
+      top: calc(var(--arrowHeight) * -1 + 1px);
     }
     &.Top {
       top: calc(100% - 0.5px);

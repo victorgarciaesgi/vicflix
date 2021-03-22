@@ -1,18 +1,16 @@
 import { NuxtOptionsModule } from '@nuxt/types/config/module';
 import 'nuxt-typed-router';
-import 'cookie-universal-nuxt';
 
 const isProd = process.env.NODE_ENV === 'production';
 
 export const modules: NuxtOptionsModule[] = [
   'nuxt-client-init-module',
   'nuxt-typed-router',
-  'cookie-universal-nuxt',
   'portal-vue/nuxt',
   'nuxt-i18n',
   '@nuxtjs/robots',
   // '~/plugins/custom/iconPaths.generator.ts',
-  // '@nuxtjs/sitemap',
+  '@nuxtjs/sitemap',
   ...(isProd
     ? ([
         [

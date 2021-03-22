@@ -1,6 +1,4 @@
 import { NuxtConfig } from '@nuxt/types';
-import dotenv from 'dotenv-extended';
-
 import { build } from './config/build.config';
 import head from './config/head.config';
 import { modules } from './config/modules.config';
@@ -38,7 +36,6 @@ const config: NuxtConfig = {
     port: process.env.NUXT_ENV_PORT,
     host: '0.0.0.0',
   },
-  serverMiddleware: ['~/api/server.middleware'],
   plugins: [
     { src: '~/plugins/global.plugin.ts' },
     { src: '~/plugins/mounted.plugin.ts', ssr: false },

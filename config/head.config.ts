@@ -38,7 +38,7 @@ const head: MetaInfo = {
 
 const robots = {
   UserAgent: '*',
-  Disallow: ['/admin/', '/client/', '/reset-password', '/register'],
+  Disallow: ['/watch/'],
 };
 
 const pwa = {
@@ -57,7 +57,7 @@ const pwa = {
 
 const sitemap = {
   hostname: process.env.NUXT_ENV_CLIENT_URL,
-  exclude: ['/admin/**', '/client/**', '/reset-password', '/register'],
+  exclude: ['/watch/**'],
   path: '/sitemap.xml',
 };
 

@@ -53,6 +53,7 @@ export default class ProjectPreview extends BreakpointMixin {
   @Watch('show', { immediate: true }) showWatch() {
     if (this.show) {
       document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
       this.transitionName = 'slide-left';
       if (this.windowWidth < BreakPointsValues.Small) {
         AuthModule.updateState({ hideNav: true });
@@ -60,6 +61,8 @@ export default class ProjectPreview extends BreakpointMixin {
     } else {
       this.transitionName = 'slide-right';
       document.body.style.overflow = 'auto';
+      document.body.style.position = 'relative';
+
       AuthModule.updateState({ hideNav: false });
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="Profile / bg-g20 flex-nowrap fixed left-0 right-0 flex flex-col w-screen h-screen">
+  <div class="Profile / bg-g20 flex-nowrap fixed left-0 right-0 flex flex-col w-screen">
     <div class="flex-0 relative px-8 py-4">
       <img src="@images/vicflix.png" class="w-28 h-auto" />
     </div>
@@ -47,6 +47,15 @@ export default class ProfileSelect extends Vue {
   selectProfile(profile: User) {
     AuthModule.actions.connexionRequest(profile);
   }
+  mounted() {
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+  }
+
+  destroyed() {
+    document.body.style.overflow = 'auto';
+    document.body.style.position = 'relative';
+  }
 }
 </script>
 
@@ -64,6 +73,8 @@ export default class ProfileSelect extends Vue {
 
 div.Profile {
   z-index: 20000;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
 
   &::before {
     content: '';

@@ -17,3 +17,5 @@ export const usersConstant: User[] = [
   { id: 1, name: 'Victor', picture: '/users/victor.jpg' },
   { id: 2, name: 'Cooler Victor', picture: '/users/coolervictor.jpg' },
 ];
+
+export const cubicTransition = 'cubicBezier(.5, .05, .1, .3)';

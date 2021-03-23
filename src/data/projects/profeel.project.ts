@@ -3,7 +3,7 @@ import { Project, ProjectContext, ProjectType } from '@models';
 import { profeelVideos } from '../videos/profeel.videos';
 
 export const profeelProject: Project = {
-  title: 'Profeel Back-office',
+  title: 'Profeel App & Admin',
   picture:
     'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fprofeel%2Fprofeel.png?alt=media&token=8b1bf32f-66fd-4557-b28d-516a796ad996',
   placeholder:

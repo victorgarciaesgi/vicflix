@@ -3,7 +3,7 @@ import { Project, ProjectContext, ProjectType } from '@models';
 import { milinusVideos } from '../videos/milinus.videos';
 
 export const milinusProject: Project = {
-  title: 'Milinus',
+  title: 'Milinus Admin',
   picture:
     'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fmilinus%2Fmilinus.png?alt=media&token=38b19775-622c-46fb-85d5-763e16190983',
   placeholder:

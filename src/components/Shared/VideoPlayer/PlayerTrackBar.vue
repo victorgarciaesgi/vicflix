@@ -8,7 +8,7 @@
     <div
       ref="barRef"
       class="Bar / bg-bg4 group-hover:h-3 relative flex-1 h-2 transition-all duration-300"
-      @click="handleTimeChange"
+      @click="handleTimeChange($event.clientX)"
     >
       <div
         class="Progress / bg-bg8 absolute top-0 left-0 h-full"
@@ -159,11 +159,10 @@ export default class PlayerTrackBar extends BreakpointMixin {
     if (this.dragging) {
       const { pageX } = event.touches[0];
       this.handleTimeChange(pageX);
-      document.addEventListener('mouseup', this.handleMouseUp);
     }
   }
 
-  handleTouchEnd() {
+  handleTouchEnd(event: TouchEvent) {
     this.dragging = false;
     document.removeEventListener('mousemove', this.handleMouseMove);
     document.removeEventListener('mouseup', this.handleMouseUp);

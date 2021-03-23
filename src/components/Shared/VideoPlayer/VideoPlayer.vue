@@ -7,6 +7,7 @@
     <video
       ref="videoPlayer"
       class="VideoElement / w-full h-full"
+      style="transform-origin: top left"
       playsinline
       preload="metadata"
       @progress="handleVideoProgress"
@@ -24,6 +25,11 @@
         class="ToolBar / absolute bottom-0 left-0 z-10 flex-col w-full px-5 py-8"
         :class="{ playing: videoPlaying }"
       >
+        <transition name="fade">
+          <div v-if="isVideoEnding && nextEpisode" class="flex flex-row justify-end pb-4">
+            <Action theme="white" :next="nextEpisodeLink">Épisode suivant</Action>
+          </div>
+        </transition>
         <PlayerTrackBar
           v-bind="{ currentProgress, currentTime, remainingTime, totalTime, video }"
           @update="handleUpdateTime"
@@ -154,7 +160,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Ref, Watch } from 'vue-property-decorator';
 import { EventBus } from '@services';
-import { BreakPointsValues, ProjectVideo } from '@models';
+import { BreakPointsValues, Project, ProjectVideo, routerPagesNames } from '@models';
 import { secondsToHoursAndMinutes } from '@utils';
 import { allProjects } from '@data';
 import { BreakpointMixin } from '@mixins';
@@ -162,6 +168,10 @@ import { VideoProgressModule } from '@store';
 import VideoPreviewBanner from '../VideoPreviewBanner.vue';
 import VolumeSlider from './VolumeSlider.vue';
 import PlayerTrackBar from './PlayerTrackBar.vue';
+import { debounce, DebouncedFunc } from 'lodash';
+import { Location } from 'vue-router';
+import anime from 'animejs';
+import { cubicTransition } from '@constants';
 
 @Component({
   transition: 'bounce',
@@ -177,11 +187,11 @@ export default class VideoPlayer extends BreakpointMixin {
   @Ref() containerRef!: HTMLDivElement;
   @Ref() videoPlayer!: HTMLVideoElement;
 
-  private videoPlaying = false;
-  private videoEnded = false;
-  private currentTime = 0;
-  private currentProgress = 0;
-  private totalTime = 1;
+  public videoPlaying = false;
+  public videoEnded = false;
+  public currentTime = 0;
+  public currentProgress = 0;
+  public totalTime = 1;
   public loading = true;
   public isFullScreen = false;
   public volume = 0;
@@ -191,21 +201,41 @@ export default class VideoPlayer extends BreakpointMixin {
   public showToolbar = true;
   public toolBarTimeOut: NodeJS.Timeout | null = null;
 
-  get remainingTime() {
+  get remainingTime(): string {
     return secondsToHoursAndMinutes(this.totalTime - this.currentTime);
   }
 
-  get projectRelated() {
+  get projectRelated(): Project | undefined {
     return allProjects.find((f) => f.id === this.video.projectId);
   }
 
-  get volumeIcon() {
+  get volumeIcon(): string {
     if (this.volume <= 0.05) {
       return 'videos/volume_mute';
     } else if (this.volume < 0.6) {
       return 'videos/volume_down';
     } else {
       return 'videos/volume_max';
+    }
+  }
+
+  get isVideoEnding(): boolean {
+    return this.currentTime > this.totalTime - 10;
+  }
+
+  get nextEpisode(): ProjectVideo | undefined {
+    const project = this.projectRelated;
+    return project?.videos.find((video) => video.episode === this.video.episode + 1);
+  }
+
+  get nextEpisodeLink(): Location | undefined {
+    if (this.nextEpisode) {
+      return {
+        name: routerPagesNames.watch.id,
+        params: {
+          id: this.nextEpisode?.id,
+        },
+      };
     }
   }
 
@@ -327,6 +357,16 @@ export default class VideoPlayer extends BreakpointMixin {
     });
   }
 
+  @Watch('isVideoEnding', { immediate: true }) videoEndingChanged() {
+    if (this.isVideoEnding) {
+      anime({
+        targets: this.videoPlayer,
+        duration: 300,
+        easing: cubicTransition,
+      });
+    }
+  }
+
   addVideoTime(seconds: number) {
     this.loading = true;
     this.videoPlayer.currentTime = this.videoPlayer.currentTime + seconds;
@@ -334,13 +374,15 @@ export default class VideoPlayer extends BreakpointMixin {
 
   setVideoTime(time: number) {
     this.loading = true;
-    this.videoPlayer.currentTime = time;
+    this.handlePlayerUpdateTime?.(time);
     this.currentTime = time;
   }
 
   handleUpdateTime(time: number) {
     this.setVideoTime(time);
   }
+
+  handlePlayerUpdateTime: DebouncedFunc<(time: number) => void> | null = null;
 
   timeUpdate(event: Event) {
     this.currentTime = this.videoPlayer.currentTime;
@@ -413,6 +455,9 @@ export default class VideoPlayer extends BreakpointMixin {
       this.volume = this.videoPlayer.volume;
       window.addEventListener('keydown', this.handleKeyUp);
       const userAgent = window.navigator.userAgent;
+      this.handlePlayerUpdateTime = debounce((time: number) => {
+        this.videoPlayer.currentTime = time;
+      }, 50);
 
       if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i)) {
         this.isIos = true;

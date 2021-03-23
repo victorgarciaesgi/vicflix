@@ -19,20 +19,27 @@
           v-show="showPreview"
           :id="project.id"
           ref="preview"
-          class="Preview / fixed top-0 left-0 flex flex-col overflow-hidden rounded cursor-pointer"
+          class="Preview / fixed top-0 left-0 flex flex-col bg-transparent rounded cursor-pointer"
           :data-show="showPreview"
           @mouseleave="handleMouseLeave"
           @click="navigateToPreview"
         >
-          <div class="relative">
-            <img ref="pictureRef" :src="picture" class="object-cover w-full" />
+          <div class="relative overflow-hidden">
+            <img
+              ref="pictureRef"
+              :src="picture"
+              class="object-cover w-full rounded-tl rounded-tr"
+            />
             <img
               :src="logo"
-              class="left-3 bottom-3 absolute h-8"
+              class="left-3 bottom-3 absolute h-8 overflow-hidden"
               style="filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6))"
             />
           </div>
-          <div ref="previewBlock" class="bg-bg2 flex flex-col p-2 -mt-1 opacity-0">
+          <div
+            ref="previewBlock"
+            class="bg-bg2 flex flex-col p-2 -mt-1 rounded-bl rounded-br opacity-0"
+          >
             <div class="Block / flex-nowrap flex flex-row">
               <div class="flex flex-col flex-1">
                 <h4 class="leading-5">{{ project.title }}</h4>
@@ -98,11 +105,12 @@
 import { ProgressList, Project, routerPagesNames } from '@models';
 import { Component, Vue, Prop, Ref } from 'nuxt-property-decorator';
 import anime from 'animejs';
-import { VImg } from '@components/Global';
 import { Location } from 'vue-router';
 import Techno from './Techno.vue';
 import { VideoProgressModule } from '@store';
 import ProjectVideoProgress from './ProjectVideoProgress.vue';
+import { EventBus, Events } from '@services';
+import { cubicTransition } from '@constants';
 
 @Component({
   components: {
@@ -198,6 +206,8 @@ export default class ProjectPlaceholder extends Vue {
     const rootPosition = this.root.getBoundingClientRect();
     this.init = true;
     this.showPreview = true;
+    EventBus.$emit(Events.ClosePreviews);
+    EventBus.$on(Events.ClosePreviews, this.closePreview);
 
     await Promise.all([this.$nextTick, Vue.nextTick]);
     if (this.preview && this.pictureRef && this.previewBlock) {
@@ -254,13 +264,13 @@ export default class ProjectPlaceholder extends Vue {
             translateY: finalTranslateY,
             translateX: finalTranslateX,
             duration: 200,
-            easing: 'cubicBezier(.5, .05, .1, .3)',
+            easing: cubicTransition,
           });
           anime({
             targets: this.previewBlock,
             duration: 50,
             opacity: 1,
-            easing: 'cubicBezier(.5, .05, .1, .3)',
+            easing: cubicTransition,
           });
         };
         placeholderImage.src = this.picture;
@@ -276,8 +286,11 @@ export default class ProjectPlaceholder extends Vue {
       const mt = (ph - previewRect.height / this.scaleZoom) / 2;
       const yPadding = (ph - rootRect.height) / 2 - mt;
 
+      const style = window.getComputedStyle(this.preview);
+      var { m41 } = new WebKitCSSMatrix(style.transform);
+
       Object.assign(this.preview.style, {
-        transform: `translateX(${rootRect.left}px) translateY(${rootRect.top - yPadding}px) scale(${
+        transform: `translateX(${m41}px) translateY(${rootRect.top - yPadding}px) scale(${
           this.scaleZoom
         })`,
       });
@@ -286,6 +299,7 @@ export default class ProjectPlaceholder extends Vue {
 
   closePreview() {
     if (this.preview) {
+      EventBus.$off(Events.ClosePreviews, this.closePreview);
       const { height, width, left, top } = this.root.getBoundingClientRect();
       if (this.preview) this.preview.classList.remove('hasShadow');
       anime({
@@ -294,7 +308,7 @@ export default class ProjectPlaceholder extends Vue {
         translateY: top,
         translateX: left,
         duration: 200,
-        easing: 'cubicBezier(.5, .05, .1, .3)',
+        easing: cubicTransition,
         complete: () => {
           this.root.style.opacity = '1';
           this.showPreview = false;
@@ -304,7 +318,7 @@ export default class ProjectPlaceholder extends Vue {
         targets: this.previewBlock,
         duration: 200,
         opacity: 0,
-        easing: 'cubicBezier(.5, .05, .1, .3)',
+        easing: cubicTransition,
       });
     }
   }
@@ -317,15 +331,35 @@ export default class ProjectPlaceholder extends Vue {
   }
 
   mounted() {
-    window.addEventListener('scroll', () => {
-      this.recalculatePreviewPosition();
-    });
+    window.addEventListener('scroll', this.recalculatePreviewPosition);
+  }
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.recalculatePreviewPosition);
   }
 }
 </script>
 
 <style lang="postcss" scoped>
-.Preview.hasShadow {
-  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.4);
+.Preview {
+  &:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    background-color: transparent;
+    @apply rounded;
+  }
+
+  &.hasShadow {
+    &::after {
+      opacity: 1;
+    }
+  }
 }
 </style>

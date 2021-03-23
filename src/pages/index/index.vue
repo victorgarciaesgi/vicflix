@@ -17,11 +17,12 @@
     >
       Ma Liste
     </component>
-    <component :is="isDesktop ? 'ProjectList' : 'MobileProjectList'" :projects="featuredProjects">
-      Projets en vedette
-    </component>
+
     <component :is="isDesktop ? 'ProjectList' : 'MobileProjectList'" :projects="popularProjects">
       Populaires en ce moment
+    </component>
+    <component :is="isDesktop ? 'ProjectList' : 'MobileProjectList'" :projects="allProjects">
+      Tous les projets
     </component>
   </div>
 </template>
@@ -29,7 +30,7 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator';
 import { CoverBanner, MobileProjectList, ProjectList } from '@components';
-import { featuredProject, coverProject, popularProject, allVideos, allProjects } from '@data';
+import { coverProject, popularProject, allProjects } from '@data';
 import { BreakpointMixin } from '@mixins';
 import { BreakPointsValues, Project } from '@models';
 import { VideoProgressModule } from '@store';
@@ -47,8 +48,8 @@ import { groupBy } from 'lodash';
 })
 export default class Home extends BreakpointMixin {
   public coverProject = coverProject;
-  public featuredProjects = featuredProject;
   public popularProjects = popularProject;
+  public allProjects = allProjects;
 
   get continueProjects() {
     const progressList = VideoProgressModule.state.progressList;

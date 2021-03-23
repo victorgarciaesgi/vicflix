@@ -20,7 +20,12 @@
 
     <div class="Menus / flex items-center flex-shrink-0 ml-5">
       <SvgIcon src="actions/search" :size="28" class="mx-2" />
-      <SvgIcon src="alerts/notif" :size="28" class="mx-2" />
+      <a href="https://github.com/victorgarciaesgi" target="_blank">
+        <SvgIcon src="social/github" :size="20" class="mx-1" />
+      </a>
+      <a href="https://www.linkedin.com/in/victor-garcia-1793b2a9/" class="ml-4" target="_blank">
+        <SvgIcon src="social/linkedin" :size="20" class="mr-2" />
+      </a>
       <div class="flex ml-3">
         <UserPopup />
       </div>

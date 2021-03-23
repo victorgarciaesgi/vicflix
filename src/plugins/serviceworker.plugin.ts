@@ -7,17 +7,7 @@ export default defineNuxtPlugin(({ toast }) => {
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       ToastModule.actions.addToast({
         type: IToastNotificationType.INFO,
-        timer: false,
-        message: "Une nouvelle version de l'application est disponible",
-        actions: [
-          {
-            handler: () => {
-              console.log('Reloading...');
-              window.location.reload();
-            },
-            text: 'Mettre à jour',
-          },
-        ],
+        message: 'Une nouvelle version de Vicflix a été installée',
       });
     });
   }

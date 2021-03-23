@@ -32,7 +32,7 @@
               style="filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6))"
             />
           </div>
-          <div ref="previewBlock" class="bg-bg2 flex flex-col p-2 -mt-1">
+          <div ref="previewBlock" class="bg-bg2 flex flex-col p-2 -mt-1 opacity-0">
             <div class="Block / flex-nowrap flex flex-row">
               <div class="flex flex-col flex-1">
                 <h4 class="leading-5">{{ project.title }}</h4>
@@ -242,25 +242,29 @@ export default class ProjectPlaceholder extends Vue {
 
       const { finalTranslateX, finalTranslateY } = this.getTranslateValues();
 
-      const placeholderImage = new Image();
-      placeholderImage.onload = (ev) => {
-        this.root.style.opacity = '0';
-        anime({
-          targets: this.preview,
-          scale: this.scaleZoom,
-          translateY: finalTranslateY,
-          translateX: finalTranslateX,
-          duration: 200,
-          easing: 'cubicBezier(.5, .05, .1, .3)',
-        });
-        anime({
-          targets: this.previewBlock,
-          duration: 200,
-          opacity: 1,
-          easing: 'cubicBezier(.5, .05, .1, .3)',
-        });
-      };
-      if (this.picture) placeholderImage.src = this.picture;
+      if (this.picture && this.previewBlock) {
+        const placeholderImage = new Image();
+        placeholderImage.onload = (ev) => {
+          this.root.style.opacity = '0';
+          if (this.preview) this.preview.classList.add('hasShadow');
+
+          anime({
+            targets: this.preview,
+            scale: this.scaleZoom,
+            translateY: finalTranslateY,
+            translateX: finalTranslateX,
+            duration: 200,
+            easing: 'cubicBezier(.5, .05, .1, .3)',
+          });
+          anime({
+            targets: this.previewBlock,
+            duration: 50,
+            opacity: 1,
+            easing: 'cubicBezier(.5, .05, .1, .3)',
+          });
+        };
+        placeholderImage.src = this.picture;
+      }
     }
   }
 
@@ -283,6 +287,7 @@ export default class ProjectPlaceholder extends Vue {
   closePreview() {
     if (this.preview) {
       const { height, width, left, top } = this.root.getBoundingClientRect();
+      if (this.preview) this.preview.classList.remove('hasShadow');
       anime({
         targets: this.preview,
         scale: 1,
@@ -320,7 +325,7 @@ export default class ProjectPlaceholder extends Vue {
 </script>
 
 <style lang="postcss" scoped>
-.Preview {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+.Preview.hasShadow {
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.4);
 }
 </style>

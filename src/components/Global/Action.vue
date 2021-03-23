@@ -274,6 +274,10 @@ export default class Action extends Vue {
     }
   }
 
+  &:focus {
+    @apply ring-2;
+  }
+
   /* Theme */
   &.theme {
     &-inverted {
@@ -283,6 +287,7 @@ export default class Action extends Vue {
       &:hover,
       &:focus {
         background-color: var(--text5);
+        @apply ring-bg1;
       }
       &:active {
         background-color: var(--text6);
@@ -296,6 +301,7 @@ export default class Action extends Vue {
       &:hover,
       &:focus {
         background-color: var(--bg2);
+        @apply ring-w220;
       }
       &:active {
         background-color: var(--bg3);
@@ -309,6 +315,7 @@ export default class Action extends Vue {
       &:hover,
       &:focus {
         background-color: var(--w245);
+        @apply ring-w220;
       }
       &:active {
         background-color: var(--w230);
@@ -322,6 +329,7 @@ export default class Action extends Vue {
       &:hover,
       &:focus {
         background-color: var(--w130);
+        @apply ring-white;
       }
       &:active {
         background-color: var(--w110);
@@ -332,6 +340,8 @@ export default class Action extends Vue {
       background-color: var(--g40);
       border-color: transparent;
       color: white;
+      @apply ring-white;
+
       &:hover,
       &:focus {
         background-color: var(--g50);

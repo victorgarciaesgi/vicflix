@@ -51,9 +51,9 @@ export default class IndexRoot extends TransitionMixin {
       createAlert({
         type: AlertType.Info,
         title: 'Bienvenue sur Vicflix!',
-        description: `Je suis Victor Garcia, développeur Front-end traivaillant principalement avec Vue.js/Nuxt, Typescript et GraphQL.
+        description: `Je suis Victor Garcia, développeur Front-end travaillant principalement avec Vue.js/Nuxt, Typescript et GraphQL.
         
-        Vicflix est un de me projets faisant office de portfolio et vous permet de découvrir mes projets réalisés, mes compétences ainsi que ainsi que mes expériences dans une interface familière inspirée d'un grand site de streaming video dont je ne citerais pas le nom.
+        Vicflix est un de mes projets faisant office de portfolio et il permet de découvrir mes projets réalisés, mes compétences ainsi que ainsi que mes expériences dans une interface familière inspirée d'un grand site de streaming video dont je ne citerais pas le nom.
         
         Bonne visite!`,
         actions: ({ confirm }) => [confirm({ theme: ButtonTheme.Red, content: "C'est parti!" })],

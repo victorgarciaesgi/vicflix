@@ -41,7 +41,7 @@
         </div>
       </div>
       <div
-        class="Arrow-Right / absolute top-0 right-0 z-10 flex h-full"
+        class="Arrow-Right / absolute top-0 right-0 z-10 flex h-full pb-4"
         :style="{ width: `${slidePadding / 2 - childGap}px` }"
       >
         <div

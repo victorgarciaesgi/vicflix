@@ -381,10 +381,14 @@ export default class VideoPlayer extends BreakpointMixin {
     }
   }
 
+  handleLoad() {
+    this.playVideo();
+  }
+
   //! Toolbar
 
   hideToolBar() {
-    // this.showToolbar = false;
+    this.showToolbar = false;
   }
 
   debounceHideToolbar() {
@@ -402,6 +406,8 @@ export default class VideoPlayer extends BreakpointMixin {
       this.videoPlayer.addEventListener('timeupdate', this.timeUpdate);
       this.videoPlayer.addEventListener('seeked', this.handleSeeked);
       this.videoPlayer.addEventListener('loadedmetadata', this.handleLoadedMetadata);
+      this.videoPlayer.addEventListener('loadeddata', this.handleLoad);
+
       document.addEventListener('fullscreenchange', this.handleFullScreenChange);
       this.videoPlayer.addEventListener('fullscreenchange', this.handleFullScreenChange);
       this.volume = this.videoPlayer.volume;
@@ -420,9 +426,13 @@ export default class VideoPlayer extends BreakpointMixin {
       this.videoPlayer.removeEventListener('timeupdate', this.timeUpdate);
       this.videoPlayer.removeEventListener('seeked', this.handleSeeked);
       this.videoPlayer.removeEventListener('loadedmetadata', this.handleLoadedMetadata);
+      this.videoPlayer.removeEventListener('loadeddata', this.handleLoad);
+      this.videoPlayer.removeEventListener('fullscreenchange', this.handleFullScreenChange);
+
       this.videoPlayer.pause();
     }
     document.removeEventListener('fullscreenchange', this.handleFullScreenChange);
+    window.removeEventListener('keydown', this.handleKeyUp);
   }
 }
 </script>

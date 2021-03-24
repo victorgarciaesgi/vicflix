@@ -4,7 +4,7 @@ export const routerPagesNames = {
     index: 'index',
     experience: 'index-experience',
     projects: 'index-projects',
-    studies: 'index-studies',
+    skills: 'index-skills',
   },
   all: 'all',
 };

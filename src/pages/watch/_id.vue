@@ -1,6 +1,6 @@
 <template>
   <div class="VideoRoot / relative w-screen bg-black">
-    <VideoPlayer :video="video" />
+    <VideoPlayer :video="video" :replay="replay" />
   </div>
 </template>
 
@@ -18,11 +18,12 @@ import { allVideos } from '@data';
 })
 export default class WatchId extends Vue {
   public video!: ProjectVideo;
+  public replay = false;
 
-  asyncData({ params: { id }, redirect }: Context): Partial<WatchId> | void {
+  asyncData({ params: { id }, query: { replay }, redirect }: Context): Partial<WatchId> | void {
     const video = allVideos.find((f) => f.id === id);
     if (video) {
-      return { video };
+      return { video, replay: !!replay };
     } else {
       redirect({ name: routerPagesNames.index.index });
     }

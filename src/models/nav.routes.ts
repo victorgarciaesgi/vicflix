@@ -21,9 +21,9 @@ export const navRoutes: NavLink[] = [
     },
   },
   {
-    label: AppTrads.Nav.Studies,
+    label: AppTrads.Nav.Skills,
     link: {
-      name: routerPagesNames.index.studies,
+      name: routerPagesNames.index.skills,
     },
   },
 ];

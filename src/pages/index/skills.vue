@@ -7,7 +7,7 @@ import { Component, Vue } from 'nuxt-property-decorator';
 
 @Component({
   head: {
-    title: 'Studies',
+    title: 'Skills',
   },
 })
 export default class Studies extends Vue {}

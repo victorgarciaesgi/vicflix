@@ -8,7 +8,7 @@ export default {
     Home: 'Home',
     Projects: 'Projects',
     Experience: 'Experience',
-    Studies: 'Studies',
+    Skills: 'Skills',
   },
   config: {
     code: 'en',

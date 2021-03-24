@@ -8,7 +8,7 @@ export const locale: LanguageConfig = {
     Home: 'Accueil',
     Projects: 'Projets',
     Experience: 'Expérience',
-    Studies: 'Études',
+    Skills: 'Compétences',
   },
   config: {
     code: 'fr',

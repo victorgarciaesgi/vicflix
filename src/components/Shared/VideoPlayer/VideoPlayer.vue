@@ -219,6 +219,7 @@ import { cubicTransition } from '@constants';
 })
 export default class VideoPlayer extends BreakpointMixin {
   @Prop({ required: true }) video!: ProjectVideo;
+  @Prop() replay!: boolean;
 
   @Ref() containerRef!: HTMLDivElement;
   @Ref() videoPlayer!: HTMLVideoElement;
@@ -280,6 +281,9 @@ export default class VideoPlayer extends BreakpointMixin {
         params: {
           id: this.nextEpisode?.id,
         },
+        query: {
+          replay: 'replayStart',
+        },
       };
     }
   }
@@ -297,6 +301,9 @@ export default class VideoPlayer extends BreakpointMixin {
         name: routerPagesNames.watch.id,
         params: {
           id: this.nextProject.videos[0].id,
+        },
+        query: {
+          replay: 'replayStart',
         },
       };
     }
@@ -470,7 +477,7 @@ export default class VideoPlayer extends BreakpointMixin {
 
   addVideoTime(seconds: number) {
     this.loading = true;
-    this.videoPlayer.currentTime = this.videoPlayer.currentTime + seconds;
+    this.setVideoTime(this.videoPlayer.currentTime + seconds);
   }
 
   setVideoTime(time: number) {
@@ -519,9 +526,11 @@ export default class VideoPlayer extends BreakpointMixin {
   async handleLoadedMetadata() {
     this.totalTime = this.videoPlayer?.duration ?? 0;
     this.loading = false;
-    const progressItem = await VideoProgressModule.actions.getVideoProgress(this.video.id);
-    if (progressItem) {
-      this.videoPlayer.currentTime = progressItem.timestamp;
+    if (!this.replay) {
+      const progressItem = await VideoProgressModule.actions.getVideoProgress(this.video.id);
+      if (progressItem) {
+        this.setVideoTime(progressItem.timestamp);
+      }
     }
   }
 

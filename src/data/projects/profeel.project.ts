@@ -9,8 +9,19 @@ export const profeelProject: Project = {
   placeholder:
     'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fprofeel%2Fprofeel_placeholder.png?alt=media&token=b57f1349-cce1-479e-9ef1-3a3c90a955f1',
   slogan: 'Optimiser et sécuriser les process des professionnels',
-  description: `Profeel est un programme CheckReno.
-  Il consistait à realiser une API, un back-office administrateur, une app web client, une application mobile et un site vitrine`,
+  description: `Profeel est un programme CheckReno permettant de gérer les fiches d'autocontrôles de chantiers.
+  Il consistait à realiser une API, un back-office administrateur, une app web client, une application mobile et un site vitrine.
+
+  Ce projet permettait entre autres à :
+  - Inscrire sa société avec son numéro de Siret
+  - Ajouter d'autre utilsateurs à sa société avec une gestion de rôles
+  - Créer les fiches de chantier et pouvoir générer les pdf de fiches d'autocontrôles
+  - Télécharger, uploader les documents pour chaque point de contrôles triés par localisation
+  
+  Rôle: Lead developpeur front
+
+  Équipe: 2 developpeurs back, 2 developpeurs front, 2 developpeurs mobile
+  `,
   logo: 'profeel.png',
   videos: Object.values(profeelVideos).flat(),
   year: 2021,

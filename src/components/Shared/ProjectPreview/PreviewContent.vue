@@ -66,8 +66,24 @@
             <span class="border-bg9 px-1 py-px ml-2 text-sm border">16+</span>
           </div>
           <p class="mt-5">{{ project.slogan }}</p>
-          <p class="mt-2">{{ project.description }}</p>
-          <div v-if="project.links" class="flex flex-row mt-4">
+          <div
+            ref="descriptionRef"
+            v-if="project.description"
+            class="relative mt-2 whitespace-pre-line"
+            :class="{ 'line-clamp-4': !collapseDescription }"
+          >
+            {{ project.description }}
+            <div
+              v-if="!collapseDescription"
+              class="text-w160 hover:underline absolute bottom-0 right-0 pl-6 cursor-pointer"
+              style="
+                background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 30%);
+              "
+              @click="collapseDescription = true"
+              >Voir plus</div
+            >
+          </div>
+          <div v-if="project.links" class="flex flex-row mt-6">
             <a
               v-for="link of project.links"
               :key="link.link"
@@ -81,7 +97,9 @@
           </div>
           <p v-if="project.info" class="text-w140 py-5 text-sm">{{ project.info }}</p>
         </div>
-        <div class="flex-0 sm:flex-row sm:w-full sm:py-4 flex flex-col w-1/3 ml-2 text-sm">
+        <div
+          class="flex-0 sm:flex-row sm:w-full sm:py-4 -sm:sticky -sm:top-10 flex flex-col w-1/3 ml-2 text-sm"
+        >
           <div class="sm:mr-2 relative mb-4 mr-2">
             <span class="text-bg8">Distribution: </span>
             <span>Victor Garcia</span>
@@ -120,7 +138,7 @@
 
 <script lang="ts">
 import { ProgressList, Project, routerPagesNames } from '@models';
-import { Component, Vue, Prop } from 'nuxt-property-decorator';
+import { Component, Vue, Prop, Ref } from 'nuxt-property-decorator';
 import VideoPreviewBanner from '../VideoPreviewBanner.vue';
 import Techno from '../Techno.vue';
 import { VideoProgressModule } from '@store';
@@ -137,7 +155,10 @@ import { BreakpointMixin } from '@mixins';
 export default class PreviewContent extends BreakpointMixin {
   @Prop({ required: true }) project!: Project;
 
+  @Ref() descriptionRef!: HTMLDivElement;
+
   public videoProgress: ProgressList | null = null;
+  public collapseDescription = false;
 
   get picture() {
     return this.project.picture;
@@ -175,6 +196,17 @@ export default class PreviewContent extends BreakpointMixin {
         target: '_blank',
         href: this.project.links[0].link,
       }).click();
+    }
+  }
+
+  mounted() {
+    if (
+      this.descriptionRef &&
+      this.descriptionRef.offsetHeight < this.descriptionRef.scrollHeight
+    ) {
+      this.collapseDescription = false;
+    } else {
+      this.collapseDescription = true;
     }
   }
 

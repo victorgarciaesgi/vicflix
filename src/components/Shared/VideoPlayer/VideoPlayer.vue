@@ -528,7 +528,7 @@ export default class VideoPlayer extends BreakpointMixin {
     this.loading = false;
     if (!this.replay) {
       const progressItem = await VideoProgressModule.actions.getVideoProgress(this.video.id);
-      if (progressItem) {
+      if (progressItem && progressItem.timestamp < progressItem.duration) {
         this.setVideoTime(progressItem.timestamp);
       }
     }

@@ -258,7 +258,7 @@ export default class VideoPlayer extends BreakpointMixin {
   }
 
   get isVideoEnding(): boolean {
-    return this.currentTime > this.totalTime - 10 && !this.continuePlaying;
+    return this.currentTime > this.totalTime - 5 && !this.continuePlaying;
   }
 
   get isVideoEndingHasNextEspisode() {

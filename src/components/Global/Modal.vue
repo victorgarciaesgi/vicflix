@@ -88,7 +88,6 @@ export default class UIModal extends Vue {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
   z-index: 100500;
 
   &.full {

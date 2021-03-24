@@ -4,15 +4,23 @@
     class="VideoPlayer / absolute flex w-full h-full"
     @mousemove="debounceHideToolbar"
   >
+    <VImg
+      v-if="isVideoEndingHasNextProject && nextProject && !isVideoEndingHasNextEspisode"
+      :src="nextProject.picture"
+    />
     <video
       ref="videoPlayer"
       class="VideoElement / w-full h-full"
       style="transform-origin: top left"
       playsinline
       preload="metadata"
+      :class="{
+        'rounded-3xl border-white cursor-pointer border-4 hover:border-8 bg-black':
+          isVideoEnding && !nextEpisode,
+      }"
       @progress="handleVideoProgress"
-      @click="toggleVideoPlay"
       @dblclick="toggleFullScreen"
+      @click="toggleVideoPlay"
     >
       <source :src="video.videoUrl" type="video/mp4" />
     </video>
@@ -21,20 +29,48 @@
     </div>
     <transition name="fade">
       <div
-        v-if="showToolbar"
+        v-if="showToolbar || isVideoEnding"
         class="ToolBar / absolute bottom-0 left-0 z-10 flex-col w-full px-5 py-8"
         :class="{ playing: videoPlaying }"
       >
-        <transition name="fade">
+        <transition name="fade" mode="out-in">
           <div v-if="isVideoEnding && nextEpisode" class="flex flex-row justify-end pb-4">
-            <Action theme="white" :next="nextEpisodeLink">Épisode suivant</Action>
+            <Action theme="white" :to="nextEpisodeLink">Épisode suivant</Action>
+          </div>
+          <div
+            v-else-if="isVideoEnding && nextProject"
+            class="sm:justify-start flex flex-row justify-end pb-4"
+          >
+            <div class="flex flex-col">
+              <div>
+                <img
+                  :src="`/logos/${nextProject.logo}`"
+                  class="sm:h-12 w-auto h-24"
+                  style="filter: drop-shadow(3px 2px 3px rgba(0, 0, 0, 0.4))"
+                />
+                <h2 class="pt-4">{{ nextProject.title }}</h2>
+                <p class="text-w220 pt-2 pb-4">{{ nextProject.slogan }}</p>
+              </div>
+              <div class="sm:grid-cols-1 grid grid-cols-2 gap-2">
+                <Action theme="white" icon="actions/play" :wFull="true" :to="nextProjectLink"
+                  >Regarder S1: E1</Action
+                >
+                <Action theme="gray" class="!ml-0" :wFull="true" icon="actions/play" to="/"
+                  >Retourner à l'accueil</Action
+                >
+              </div>
+            </div>
           </div>
         </transition>
         <PlayerTrackBar
+          v-if="!isVideoEnding || nextEpisode"
           v-bind="{ currentProgress, currentTime, remainingTime, totalTime, video }"
           @update="handleUpdateTime"
         />
-        <div class="Actions / flex-nowrap flex flex-row items-center justify-between pt-4">
+        <div
+          v-if="!isVideoEnding || nextEpisode"
+          class="Actions / flex-nowrap flex flex-row items-center justify-between pt-4"
+        >
           <div class="flex-nowrap flex flex-row items-center">
             <SvgIcon
               v-if="!videoPlaying"
@@ -124,11 +160,11 @@
     </transition>
     <transition name="fade">
       <div
-        class="TopBar / top-5 flex-nowrap absolute left-0 flex flex-row items-center justify-between w-full px-5"
+        class="TopBar / flex-nowrap absolute left-0 flex flex-row items-center justify-between w-full px-5 py-4"
       >
         <div
           style="filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.6))"
-          v-if="showToolbar"
+          v-if="showToolbar || isVideoEnding"
           class="ButtonAction / group flex flex-row items-center"
           @click="goBack"
         >
@@ -143,8 +179,8 @@
           class="ellipsis flex-nowrap -sm:hidden flex flex-row items-center flex-shrink ml-10 leading-5"
         >
           <span class="sm:text-md text-xl font-semibold">{{ projectRelated.title }}</span>
-          <span class="text-w140 sm:text-sm mt-px ml-2 text-lg">S1:E{{ video.episode }}</span>
-          <span class="text-w140 sm:text-sm mt-px ml-2 text-lg">{{ video.title }}</span>
+          <span class="text-w160 sm:text-sm mt-px ml-2 text-lg">S1:E{{ video.episode }}</span>
+          <span class="text-w180 sm:text-sm mt-px ml-2 text-lg">{{ video.title }}</span>
         </div>
       </div>
     </transition>
@@ -168,7 +204,7 @@ import { VideoProgressModule } from '@store';
 import VideoPreviewBanner from '../VideoPreviewBanner.vue';
 import VolumeSlider from './VolumeSlider.vue';
 import PlayerTrackBar from './PlayerTrackBar.vue';
-import { debounce, DebouncedFunc } from 'lodash';
+import { debounce, DebouncedFunc, sample } from 'lodash';
 import { Location } from 'vue-router';
 import anime from 'animejs';
 import { cubicTransition } from '@constants';
@@ -191,10 +227,11 @@ export default class VideoPlayer extends BreakpointMixin {
   public videoEnded = false;
   public currentTime = 0;
   public currentProgress = 0;
-  public totalTime = 1;
+  public totalTime = 100000;
   public loading = true;
   public isFullScreen = false;
   public volume = 0;
+  public continuePlaying = false;
 
   public isIos = false;
 
@@ -220,7 +257,15 @@ export default class VideoPlayer extends BreakpointMixin {
   }
 
   get isVideoEnding(): boolean {
-    return this.currentTime > this.totalTime - 10;
+    return this.currentTime > this.totalTime - 10 && !this.continuePlaying;
+  }
+
+  get isVideoEndingHasNextEspisode() {
+    return this.isVideoEnding && this.nextEpisode;
+  }
+
+  get isVideoEndingHasNextProject() {
+    return this.isVideoEnding && this.nextProject;
   }
 
   get nextEpisode(): ProjectVideo | undefined {
@@ -234,6 +279,24 @@ export default class VideoPlayer extends BreakpointMixin {
         name: routerPagesNames.watch.id,
         params: {
           id: this.nextEpisode?.id,
+        },
+      };
+    }
+  }
+
+  get nextProject(): Project | undefined {
+    const projectsWithVideos = allProjects
+      .filter((f) => f.id !== this.projectRelated?.id)
+      .filter((f) => f.videos.length);
+    return sample(projectsWithVideos);
+  }
+
+  get nextProjectLink(): Location | undefined {
+    if (this.nextProject) {
+      return {
+        name: routerPagesNames.watch.id,
+        params: {
+          id: this.nextProject.videos[0].id,
         },
       };
     }
@@ -255,21 +318,36 @@ export default class VideoPlayer extends BreakpointMixin {
   //! Video controls
 
   toggleVideoPlay() {
-    if (this.videoPlaying) this.pauseVideo();
-    else this.playVideo();
+    if (this.videoEnded) {
+      this.setVideoTime(0);
+      this.playVideo();
+    } else if (this.isVideoEnding) {
+      this.continuePlaying = true;
+    } else {
+      if (this.videoPlaying) this.pauseVideo();
+      else this.playVideo();
+    }
   }
 
   playVideo() {
-    EventBus.$emit('pauseVideos', this.pauseVideo);
     try {
       this.videoPlayer?.play();
-      this.videoPlaying = true;
+      this.handlePlayVideo();
     } catch (e) {
       console.log(e);
     }
   }
+
+  handlePlayVideo() {
+    this.videoPlaying = true;
+  }
+
   pauseVideo() {
     this.videoPlayer?.pause();
+    this.handlePauseVideo();
+  }
+
+  handlePauseVideo() {
     this.videoPlaying = false;
   }
 
@@ -355,15 +433,38 @@ export default class VideoPlayer extends BreakpointMixin {
       timestamp: value,
       duration: this.totalTime,
     });
+    if (value < this.totalTime) {
+      this.videoEnded = false;
+    }
   }
 
   @Watch('isVideoEnding', { immediate: true }) videoEndingChanged() {
-    if (this.isVideoEnding) {
-      anime({
-        targets: this.videoPlayer,
-        duration: 300,
-        easing: cubicTransition,
-      });
+    if (this.videoPlayer) {
+      if (this.isVideoEnding && !this.nextEpisode) {
+        const placeholderSize = this.isMobile ? 250 : 400;
+        const scale = placeholderSize / this.videoPlayer.clientWidth;
+        const height = this.videoPlayer.clientWidth * 0.6;
+
+        anime({
+          targets: this.videoPlayer,
+          scale,
+          height,
+          translateY: 150 / scale,
+          translateX: 50,
+          duration: 300,
+          easing: cubicTransition,
+        });
+      } else {
+        anime({
+          targets: this.videoPlayer,
+          scale: 1,
+          height: window.innerHeight,
+          translateY: 0,
+          translateX: 0,
+          duration: 300,
+          easing: cubicTransition,
+        });
+      }
     }
   }
 
@@ -376,6 +477,7 @@ export default class VideoPlayer extends BreakpointMixin {
     this.loading = true;
     this.handlePlayerUpdateTime?.(time);
     this.currentTime = time;
+    this.continuePlaying = false;
   }
 
   handleUpdateTime(time: number) {
@@ -430,7 +532,9 @@ export default class VideoPlayer extends BreakpointMixin {
   //! Toolbar
 
   hideToolBar() {
-    this.showToolbar = false;
+    if (!this.isVideoEnding) {
+      this.showToolbar = false;
+    }
   }
 
   debounceHideToolbar() {
@@ -449,6 +553,8 @@ export default class VideoPlayer extends BreakpointMixin {
       this.videoPlayer.addEventListener('seeked', this.handleSeeked);
       this.videoPlayer.addEventListener('loadedmetadata', this.handleLoadedMetadata);
       this.videoPlayer.addEventListener('loadeddata', this.handleLoad);
+      this.videoPlayer.addEventListener('pause', this.handlePauseVideo);
+      this.videoPlayer.addEventListener('play', this.handlePlayVideo);
 
       document.addEventListener('fullscreenchange', this.handleFullScreenChange);
       this.videoPlayer.addEventListener('fullscreenchange', this.handleFullScreenChange);
@@ -473,6 +579,8 @@ export default class VideoPlayer extends BreakpointMixin {
       this.videoPlayer.removeEventListener('loadedmetadata', this.handleLoadedMetadata);
       this.videoPlayer.removeEventListener('loadeddata', this.handleLoad);
       this.videoPlayer.removeEventListener('fullscreenchange', this.handleFullScreenChange);
+      this.videoPlayer.removeEventListener('pause', this.handlePauseVideo);
+      this.videoPlayer.removeEventListener('play', this.handlePlayVideo);
 
       this.videoPlayer.pause();
     }
@@ -486,6 +594,10 @@ export default class VideoPlayer extends BreakpointMixin {
 div.VideoPlayer {
   div.ToolBar {
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9));
+  }
+
+  div.TopBar {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
   }
 
   .ButtonAction {

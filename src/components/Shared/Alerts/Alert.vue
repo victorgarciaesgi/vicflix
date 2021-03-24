@@ -18,9 +18,9 @@
       class="header flex items-center flex-shrink-0 px-8 pb-4"
       :class="{ 'pt-12': !getIcon, 'pt-6': getIcon }"
     >
-      <span class="flex-grow text-2xl font-semibold text-center">{{ title }}</span>
+      <span class="flex-grow text-3xl font-semibold text-center">{{ title }}</span>
     </div>
-    <div v-if="description || isForm" class="content scroll-y flex flex-grow px-6 pt-2 pb-6">
+    <div v-if="description || isForm" class="content scroll-y flex flex-grow px-8 pt-2 pb-6">
       <span v-if="description" class="description text-left whitespace-pre-line">
         {{ description }}
       </span>

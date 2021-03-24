@@ -3,7 +3,7 @@
     :is="getComponentType"
     ref="button"
     tabindex="0"
-    class="ButtonAction leading-1 flex"
+    class="ActionButton leading-1 flex"
     v-bind="getAttrs"
     :class="getClass"
     @click="handleClick"
@@ -201,7 +201,7 @@ export default class Action extends Vue {
 </script>
 
 <style lang="postcss" scoped>
-.ButtonAction {
+.ActionButton {
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;

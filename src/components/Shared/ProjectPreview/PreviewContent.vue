@@ -59,6 +59,7 @@
       <div class="sm:flex-col flex flex-row items-start py-3">
         <div class="flex flex-col flex-1">
           <ProjectVideoProgress v-if="videoProgress && isMobile" :progress="videoProgress" />
+          <h1 class="">{{ project.title }}</h1>
           <div class="flex flex-row items-center mt-3">
             <span class="text-green font-bold">Recommandé à 97%</span>
             <span class="ml-2">{{ project.year }}</span>

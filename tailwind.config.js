@@ -140,6 +140,7 @@ module.exports = {
       fontSize: ['important'],
       fontWeight: ['important'],
       rotate: ['important'],
+      borderWidth: ['hover'],
       borderColor: ['important', 'first', 'last'],
       boxShadow: ['important'],
       minWidth: ['important'],

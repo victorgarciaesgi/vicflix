@@ -129,7 +129,7 @@ export default class PlayerTrackBar extends BreakpointMixin {
 
   handleHideIndicator() {
     this.showIndicator = false;
-    this.popinIndicator.closePopup();
+    this.popinIndicator?.closePopup();
   }
 
   handleMouseDown() {

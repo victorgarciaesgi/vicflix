@@ -1,7 +1,12 @@
 <template>
-  <div class="CoverBanner / flex flex-col" style="min-height: 50vh">
+  <div class="CoverBanner / flex flex-col">
     <div class="BannerWrapper / absolute w-full h-full min-h-full">
-      <VImg class="ImgWrapper" type="default" :fill="isMobile ? 'both' : 'width'" :src="picture" />
+      <VImg
+        class="ImgWrapper"
+        style="min-height: 80vh"
+        :fill="isMobile ? 'both' : 'both'"
+        :src="picture"
+      />
     </div>
     <div
       class="pt-28 sm:ml-0 sm:mt-20 sm:w-full flex flex-col items-start max-w-md pb-10 mt-10 ml-10"

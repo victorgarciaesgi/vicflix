@@ -18,8 +18,8 @@
       </div>
     </div>
 
-    <div class="Menus / flex items-center flex-shrink-0 ml-5">
-      <SvgIcon src="actions/search" :size="28" class="mx-2" />
+    <div class="Menus / flex flex-row items-center flex-shrink-0 ml-5">
+      <SearchBar />
       <a href="https://github.com/victorgarciaesgi" target="_blank">
         <SvgIcon src="social/github" :size="20" class="mx-1" />
       </a>
@@ -43,9 +43,10 @@ import { navRoutes } from '@models';
 import BurgerMenu from './BurgerMenu.vue';
 import NavBar from './NavBar.vue';
 import UserPopup from './UserPopup.vue';
+import SearchBar from './SearchBar.vue';
 
 @Component({
-  components: { NavBar, BurgerMenu, UserPopup },
+  components: { NavBar, BurgerMenu, UserPopup, SearchBar },
 })
 export default class HeaderComponent extends Vue {
   public showBurger = false;

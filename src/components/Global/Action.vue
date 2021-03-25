@@ -9,7 +9,7 @@
     @click="handleClick"
   >
     <div v-if="icon" class="ButtonIcon mr-2" :class="{ 'pr-1 ml-1': !isOnlyIcon }">
-      <SvgIcon :src="icon" color="currentColor" :size="getIconSize" />
+      <SvgIcon :key="icon" :src="icon" color="currentColor" :size="getIconSize" />
     </div>
     <span v-if="$slots.default || $scopedSlots.default" class="ButtonText">
       <slot :loading="isLoading" />

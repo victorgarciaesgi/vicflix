@@ -31,6 +31,10 @@ export default class BreakPointsMixin extends Vue {
     return this.windowWidth < BreakPointsValues.Small;
   }
 
+  get isLarge() {
+    return this.windowWidth < BreakPointsValues.Large;
+  }
+
   mounted() {
     window.addEventListener('resize', this.handleResize);
     this.handleResize();

@@ -13,12 +13,12 @@ export const kazeProject: Project = {
   description: '',
   videos: [],
   year: 2020,
-  // links: [
-  //   {
-  //     title: 'Site marketing Peppy',
-  //     link: 'https://peppy-group.com/',
-  //   },
-  // ],
+  links: [
+    {
+      title: 'Site de Kazé',
+      link: 'https://client.kaze-staging.devtotem.team/',
+    },
+  ],
   type: [ProjectType.App, ProjectType.Site],
   info: `Aucun lien ou accès d'application administrateur ne sera fourni.
     Toutes les vidéos sont issues de fausses données de test et ne correspondent pas à des vraies données client.

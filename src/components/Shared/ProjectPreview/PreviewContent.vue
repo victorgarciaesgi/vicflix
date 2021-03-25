@@ -48,12 +48,16 @@
           >Lecture</Action
         >
         <Action
+          v-if="isInWishList"
           @click="addToWishList"
-          :icon="`${isInWishList ? 'forms/done' : 'actions/add'}`"
+          icon="forms/done"
           :w-full="true"
           size="md"
         >
-          {{ isInWishList ? 'Supprimer de ma liste' : 'Ajouter à ma liste' }}
+          Supprimer de ma liste
+        </Action>
+        <Action v-else @click="addToWishList" icon="actions/add" :w-full="true" size="md">
+          Ajouter à ma liste
         </Action>
       </div>
       <div class="sm:flex-col flex flex-row items-start py-3">

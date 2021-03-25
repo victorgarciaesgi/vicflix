@@ -58,8 +58,8 @@ export const VideoProgressModule = new VuexModule({
         const videos = progressList
           .filter(({ video }) => project.videos.find((f) => f.id === video.id))
           .sort((a, b) => b.video.episode - a.video.episode);
-        const pendingVideo = videos.find(({ percentage }) => {
-          return percentage < 95;
+        const pendingVideo = videos.find(({ percentage, duration, timestamp }) => {
+          return timestamp < duration - 5;
         });
         if (pendingVideo) {
           return pendingVideo;

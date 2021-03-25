@@ -31,9 +31,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Ref, Prop } from 'nuxt-property-decorator';
-import { AuthModule } from '@store';
-import { BreakPointsTypes, NavLink } from '@models';
+import { Component, Prop } from 'nuxt-property-decorator';
+import { NavLink } from '@models';
 import NavTab from './NavTab.vue';
 import { BreakpointMixin } from '@mixins';
 

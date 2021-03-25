@@ -3,6 +3,7 @@ import { EventBus, Events } from '@services';
 import { AuthModule, RouterModule } from '@store';
 import { Route } from 'vue-router';
 import colorsModule from '@colors';
+import { defineNuxtMiddleware } from '@nuxtjs/composition-api';
 
 interface MetaOptions {
   hideHeader: boolean;
@@ -25,29 +26,23 @@ const routerLogger = (to: Route, from: Route) => {
   console.groupEnd();
 };
 
-const routePlugin: Middleware = ({ route, app, from }) => {
+export default defineNuxtMiddleware(({ route, app, from }) => {
   if (process.browser) {
     routerLogger(route, from);
-    if (route.meta.some((m: MetaOptions) => m.disconnect)) {
-      AuthModule.actions.disconnectUser();
-    }
   }
-  if (route.fullPath === from?.fullPath) {
-    if (!route.meta.some((m: MetaOptions) => m.indexable === false)) {
-      RouterModule.actions.updateCurrentRoute(route);
-    }
-  } else if (app.router) {
-    if (!RouterModule.state.currentTitle) {
-      RouterModule.actions.updateCurrentRoute(route);
-    }
-    const afterEachHook = app.router.afterEach(() => {
+  if (route.fullPath !== RouterModule.state.currentRoute?.fullPath) {
+    if (route.fullPath === from.fullPath) {
       if (!route.meta.some((m: MetaOptions) => m.indexable === false)) {
-        RouterModule.actions.updateCurrentRoute(route);
+        RouterModule.mutations.updateCurrentRoute(route);
       }
-      afterEachHook();
-    });
+    } else if (app.router) {
+      const afterEachHook = app.router.afterEach(() => {
+        if (!route.meta.some((m: MetaOptions) => m.indexable === false)) {
+          RouterModule.mutations.updateCurrentRoute(route);
+        }
+        afterEachHook();
+      });
+    }
   }
   EventBus.$emit(Events.CLOSE_POPUPS);
-};
-
-export default routePlugin;
+});

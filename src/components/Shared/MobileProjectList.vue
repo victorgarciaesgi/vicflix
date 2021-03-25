@@ -5,8 +5,8 @@
     </h3>
     <div class="List / flex-nowrap flex-0 flex flex-row pr-2 overflow-x-auto">
       <MobileProjectPlaceholder
-        v-for="(project, index) of projects"
-        :key="index"
+        v-for="project of projects"
+        :key="project.id"
         :project="project"
         :showProgress="showProgress"
       />

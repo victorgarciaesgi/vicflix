@@ -14,11 +14,11 @@
 
     <div id="rootView" class="c-row-y flex flex-row">
       <Nuxt />
-      <FooterComponent />
     </div>
     <transition name="fade">
       <ProfileSelect v-if="!loggedIn" />
     </transition>
+    <ProjectPreview :id="projectId" :show="showPreview" />
   </div>
 </template>
 
@@ -29,15 +29,9 @@ import {
   ToastContainer,
   HeaderComponent,
   ProfileSelect,
-  FooterComponent,
+  ProjectPreview,
 } from '@components';
-import {
-  AuthModule,
-  DarkModeModule,
-  DisplayTheme,
-  RouterModule,
-  VideoProgressModule,
-} from '@store';
+import { AuthModule, DarkModeModule, DisplayTheme } from '@store';
 
 @Component({
   components: {
@@ -45,13 +39,32 @@ import {
     ToastContainer,
     HeaderComponent,
     ProfileSelect,
-    FooterComponent,
+    ProjectPreview,
   },
 })
 export default class App extends Vue {
   get loggedIn() {
     return AuthModule.state.loggedIn;
   }
+
+  public showPreview = false;
+  public projectId = '';
+
+  get routeParam() {
+    return this.$route.query;
+  }
+
+  @Watch('routeParam', { deep: true, immediate: true }) routeChanged() {
+    const jbv = this.$route.query.jbv;
+    if (jbv && typeof jbv === 'string') {
+      this.showPreview = true;
+      this.projectId = jbv;
+    } else {
+      this.showPreview = false;
+      this.projectId = '';
+    }
+  }
+
   created() {
     if (process.browser) {
       const storedPreference = localStorage.getItem('displayMode');

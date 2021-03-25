@@ -28,8 +28,8 @@
     >
       <ProjectPlaceholder
         :showProgress="showProgress"
-        v-for="(project, index) of projects"
-        :key="index"
+        v-for="project of projects"
+        :key="project.id"
         :project="project"
       />
     </Carrousel>

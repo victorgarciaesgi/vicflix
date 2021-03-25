@@ -34,9 +34,21 @@
         </div>
         <div class="bg-w120 w-full h-px"></div>
         <div class="flex flex-col p-3">
-          <span class="py-1">Contact</span>
-          <span class="py-1">Github</span>
-          <span class="py-1">Linkedin</span>
+          <span class="hover:underline py-1">Contact</span>
+          <a
+            href="https://github.com/victorgarciaesgi"
+            target="_blank"
+            class="hover:underline py-1"
+          >
+            Github
+          </a>
+          <a
+            href="https://www.linkedin.com/in/victor-garcia-1793b2a9/"
+            target="_blank"
+            class="hover:underline py-1"
+          >
+            Linkedin
+          </a>
         </div>
         <div class="bg-w120 w-full h-px"></div>
         <div class="p-3">

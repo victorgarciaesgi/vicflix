@@ -28,17 +28,15 @@ export const RouterModule = new VuexModule({
       return '';
     },
   },
-  actions: {
-    updateCurrentRoute({ state }, route: Route) {
+  mutations: {
+    updateCurrentRoute(state, route: Route) {
       const previousRoute = state.currentRoute;
       const [meta] = route.meta.filter((m: ObjectLiteral) => !!m.title);
-      RouterModule.updateState(() => ({
-        currentRoute: route,
-        previousRoute,
-        ...(meta?.title && {
-          currentTitle: meta.title,
-        }),
-      }));
+      state.currentRoute = route;
+      state.previousRoute = previousRoute;
+      if (meta?.title) {
+        state.currentTitle = meta.title;
+      }
     },
   },
   logger: false,

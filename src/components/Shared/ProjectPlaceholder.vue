@@ -147,6 +147,7 @@ export default class ProjectPlaceholder extends Vue {
     return {
       path: this.$route.path,
       query: {
+        ...this.$route.query,
         jbv: this.project.id,
       },
     };
@@ -255,7 +256,9 @@ export default class ProjectPlaceholder extends Vue {
       if (this.picture && this.previewBlock) {
         const placeholderImage = new Image();
         placeholderImage.onload = (ev) => {
-          this.root.style.opacity = '0';
+          if (this.root) {
+            this.root.style.opacity = '0';
+          }
           if (this.preview) this.preview.classList.add('hasShadow');
 
           anime({
@@ -324,9 +327,11 @@ export default class ProjectPlaceholder extends Vue {
   }
 
   async created() {
-    const video = await VideoProgressModule.actions.getProjectProgress(this.project.id);
-    if (video) {
-      this.videoProgress = video;
+    if (this.showProgress) {
+      const video = await VideoProgressModule.actions.getProjectProgress(this.project.id);
+      if (video) {
+        this.videoProgress = video;
+      }
     }
   }
 

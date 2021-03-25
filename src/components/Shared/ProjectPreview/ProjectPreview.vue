@@ -42,12 +42,16 @@ export default class ProjectPreview extends BreakpointMixin {
     if (project) {
       this.project = project;
     } else {
-      this.$router.push(this.$route.path);
+      this.$router.push(this.$route.fullPath);
     }
   }
 
   goBack() {
-    this.$router.push(this.$route.path);
+    const { jbv, ...rest } = this.$route.query;
+    this.$router.push({
+      path: this.$route.path,
+      query: rest,
+    });
   }
 
   @Watch('show', { immediate: true }) showWatch() {

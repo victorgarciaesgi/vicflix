@@ -10,21 +10,25 @@
     />
     <div
       ref="inputContainerRef"
-      class="InputContainer / w-72 max-w-none bg-opacity-95 -top-1 absolute z-0 flex flex-row p-1 mr-2 bg-black border border-white"
+      class="InputContainer / w-72 sm:w-52 max-w-none bg-opacity-95 -top-px flex-nowrap absolute z-0 flex flex-row p-1 mr-2 bg-black border border-white"
     >
       <SvgIcon class="IconSearch / mr-1" src="actions/search" :size="26" />
       <input
         ref="inputRef"
         @blur="toggleShowInput"
-        class="flex-1 bg-transparent"
+        class="text-md flex-1 bg-transparent"
         placeholder="Titres, languages, genre"
+        @input="handleInput"
+        :value="searchValue"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Ref } from 'nuxt-property-decorator';
+import { routerPagesNames } from '@models';
+import { Component, Vue, Ref, Watch } from 'nuxt-property-decorator';
+import { Route } from 'vue-router';
 
 @Component({})
 export default class SearchBar extends Vue {
@@ -33,28 +37,72 @@ export default class SearchBar extends Vue {
 
   public searchValue = '';
   public showInput = false;
+  public previousRoute: Route | null = null;
+
+  get isInSearchRoute() {
+    return this.$route.name === routerPagesNames.search;
+  }
+
+  @Watch('isInSearchRoute') routeChanged(value: boolean) {
+    if (value) this.displayInput();
+  }
+
+  handleInput(event: any) {
+    const value = event.target.value as string;
+    this.searchValue = value;
+    console.log(value);
+    this.$nextTick(() => {
+      if (value.length) {
+        if (this.isInSearchRoute) {
+          this.$router.replace({ query: { ...this.$route.query, q: value } });
+        } else {
+          this.previousRoute = this.$route;
+          this.$router.push({ name: routerPagesNames.search, query: { q: value } });
+        }
+      } else if (this.previousRoute) {
+        this.$router.push(this.previousRoute.fullPath);
+      } else {
+        this.$router.push('/');
+      }
+    });
+  }
+
+  displayInput() {
+    this.showInput = true;
+    this.$nextTick(() => {
+      if (this.inputContainerRef) {
+        // this.inputContainerRef.style.display = 'flex';
+        this.inputContainerRef.style.transform = 'scaleX(1)';
+        this.inputContainerRef.style.opacity = '1';
+
+        this.inputRef?.focus();
+      }
+    });
+  }
+
+  hideInput() {
+    if (this.inputContainerRef && !this.isInSearchRoute) {
+      this.inputContainerRef.style.transform = 'scaleX(0.15)';
+      this.inputContainerRef.style.opacity = '0';
+      setTimeout(() => {
+        // if (this.inputContainerRef) this.inputContainerRef.style.display = 'none';
+        this.showInput = false;
+      }, 290);
+    }
+  }
 
   toggleShowInput() {
     if (!this.showInput) {
-      this.showInput = true;
-      this.$nextTick(() => {
-        if (this.inputContainerRef) {
-          // this.inputContainerRef.style.display = 'flex';
-          this.inputContainerRef.style.transform = 'scaleX(1)';
-          this.inputContainerRef.style.opacity = '1';
-
-          this.inputRef?.focus();
-        }
-      });
+      this.displayInput();
     } else {
-      if (this.inputContainerRef) {
-        this.inputContainerRef.style.transform = 'scaleX(0.15)';
-        this.inputContainerRef.style.opacity = '0';
-        setTimeout(() => {
-          // if (this.inputContainerRef) this.inputContainerRef.style.display = 'none';
-          this.showInput = false;
-        }, 290);
-      }
+      this.hideInput();
+    }
+  }
+
+  mounted() {
+    if (this.isInSearchRoute) {
+      this.displayInput();
+      this.searchValue = this.$route.query.q as string;
     }
   }
 }

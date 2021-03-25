@@ -52,9 +52,11 @@ export default class MobileProjectPlaceholder extends Vue {
   }
 
   async created() {
-    const video = await VideoProgressModule.actions.getProjectProgress(this.project.id);
-    if (video) {
-      this.progress = video.percentage;
+    if (this.showProgress) {
+      const video = await VideoProgressModule.actions.getProjectProgress(this.project.id);
+      if (video) {
+        this.progress = video.percentage;
+      }
     }
   }
 }

@@ -200,7 +200,7 @@ import { BreakPointsValues, Project, ProjectVideo, routerPagesNames } from '@mod
 import { secondsToHoursAndMinutes } from '@utils';
 import { allProjects } from '@data';
 import { BreakpointMixin } from '@mixins';
-import { VideoProgressModule } from '@store';
+import { RouterModule, VideoProgressModule } from '@store';
 import VideoPreviewBanner from '../VideoPreviewBanner.vue';
 import VolumeSlider from './VolumeSlider.vue';
 import PlayerTrackBar from './PlayerTrackBar.vue';
@@ -310,7 +310,12 @@ export default class VideoPlayer extends BreakpointMixin {
   }
 
   goBack() {
-    if (this.projectRelated) {
+    const fromRoute = RouterModule.state.previousRoute;
+    if (fromRoute && fromRoute.name) {
+      this.$router.push({
+        path: fromRoute.fullPath,
+      });
+    } else if (this.projectRelated) {
       this.$router.push({
         name: this.$routesNames.index.index,
         query: {

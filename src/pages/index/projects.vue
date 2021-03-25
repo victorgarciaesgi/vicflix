@@ -60,6 +60,7 @@ export default class Home extends BreakpointMixin {
     const progressList = VideoProgressModule.state.progressList;
     const projectConcerned = groupBy(progressList, ({ video }) => video.projectId);
     return Object.entries(projectConcerned)
+      .filter(([key, value]) => value.some((s) => s.timestamp < s.duration - 5))
       .map(([key, value]) => {
         return allProjects.find((f) => f.id === key);
       })

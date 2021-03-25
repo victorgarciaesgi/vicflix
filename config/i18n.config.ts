@@ -1,7 +1,7 @@
-import { NuxtVueI18n } from 'nuxt-i18n';
+import { Options, LocaleObject } from 'nuxt-i18n';
 import * as LocaleFiles from '../src/locales';
 
-const locales = Object.entries(LocaleFiles).map<NuxtVueI18n.Options.LocaleObject>(
+const locales = Object.entries(LocaleFiles).map<LocaleObject>(
   ([
     key,
     {
@@ -16,7 +16,7 @@ const locales = Object.entries(LocaleFiles).map<NuxtVueI18n.Options.LocaleObject
   }
 );
 
-export const i18n: NuxtVueI18n.Options.AllOptionsInterface = {
+export const i18n: Options = {
   locales,
   defaultLocale: process.env.NUXT_ENV_I18N_LOCALE,
   vueI18n: {

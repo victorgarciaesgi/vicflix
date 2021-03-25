@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col w-full">
     <NuxtChild />
-    <ProjectPreview :id="projectId" :show="showPreview" />
+    <FooterComponent />
   </div>
 </template>
 
@@ -10,14 +10,14 @@ import { authMiddleware } from '@middleware';
 import { TransitionMixin } from '@mixins';
 import { ButtonTheme, navRoutes, TransitionDirection, TransitionType } from '@models';
 import { Component, Watch } from 'nuxt-property-decorator';
-import { ProjectPreview } from '@components';
+import { FooterComponent } from '@components';
 import { VideoProgressModule } from '@store';
 import { AlertType, createAlert } from '@constructors';
 
 @Component({
   middleware: authMiddleware,
   components: {
-    ProjectPreview,
+    FooterComponent,
   },
   scrollToTop: true,
 })
@@ -25,26 +25,6 @@ export default class IndexRoot extends TransitionMixin {
   transitionType = TransitionType.List;
   transitionDirection = TransitionDirection.Horizontal;
   listRoutes = navRoutes;
-
-  public showPreview = false;
-  public projectId = '';
-
-  public cardOrigin: HTMLDivElement | null = null;
-
-  get routeParam() {
-    return this.$route.query;
-  }
-
-  @Watch('routeParam', { deep: true, immediate: true }) routeChanged() {
-    const jbv = this.$route.query.jbv;
-    if (jbv && typeof jbv === 'string') {
-      this.showPreview = true;
-      this.projectId = jbv;
-    } else {
-      this.showPreview = false;
-      this.projectId = '';
-    }
-  }
 
   mounted() {
     if (!VideoProgressModule.state.firstVisit) {

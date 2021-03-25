@@ -20,10 +20,14 @@
 
     <div class="Menus / sm:flex-grow sm:justify-end flex flex-row items-center flex-shrink-0 ml-5">
       <SearchBar />
-      <a href="https://github.com/victorgarciaesgi" target="_blank">
+      <a href="https://github.com/victorgarciaesgi" target="_blank" class="sm:hidden">
         <SvgIcon src="social/github" :size="20" class="mx-1" />
       </a>
-      <a href="https://www.linkedin.com/in/victor-garcia-1793b2a9/" class="ml-4" target="_blank">
+      <a
+        href="https://www.linkedin.com/in/victor-garcia-1793b2a9/"
+        class="sm:hidden ml-4"
+        target="_blank"
+      >
         <SvgIcon src="social/linkedin" :size="20" class="mr-2" />
       </a>
       <div class="flex ml-3">

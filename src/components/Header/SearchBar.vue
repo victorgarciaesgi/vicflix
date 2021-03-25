@@ -10,9 +10,9 @@
     />
     <div
       ref="inputContainerRef"
-      class="InputContainer / w-72 sm:w-full max-w-none bg-opacity-95 -top-px flex-nowrap absolute z-0 flex flex-row p-1 mr-2 bg-black border border-white"
+      class="InputContainer / w-72 sm:w-full max-w-none bg-opacity-95 -top-px flex-nowrap absolute z-0 flex flex-row p-1 mr-2 overflow-hidden bg-black border border-white"
     >
-      <SvgIcon class="IconSearch / mr-1" src="actions/search" :size="26" />
+      <SvgIcon class="IconSearch / sm:ml-1 mr-1" src="actions/search" :size="26" />
       <input
         ref="inputRef"
         @blur="toggleShowInput"

@@ -9,7 +9,7 @@ export const kazeProject: Project = {
   placeholder:
     'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fkaze%2F5633-Header_KazeHikaru_2000x800%201.png?alt=media&token=080f907f-bd81-44cb-a800-5b86a79204a0',
   logo: 'kaze.png',
-  slogan: "Éditeur de mangas et d'animes ",
+  slogan: "Éditeur de mangas et d'animes",
   description: '',
   videos: [],
   year: 2020,

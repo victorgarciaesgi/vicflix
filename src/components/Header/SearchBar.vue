@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row items-center justify-end h-8">
+  <div class="sm:flex-grow flex flex-row items-center justify-end h-8">
     <SvgIcon
       v-if="!showInput"
       class="IconSearch / z-10 mx-2"
@@ -10,7 +10,7 @@
     />
     <div
       ref="inputContainerRef"
-      class="InputContainer / w-72 sm:w-52 max-w-none bg-opacity-95 -top-px flex-nowrap absolute z-0 flex flex-row p-1 mr-2 bg-black border border-white"
+      class="InputContainer / w-72 sm:w-full max-w-none bg-opacity-95 -top-px flex-nowrap absolute z-0 flex flex-row p-1 mr-2 bg-black border border-white"
     >
       <SvgIcon class="IconSearch / mr-1" src="actions/search" :size="26" />
       <input
@@ -18,8 +18,9 @@
         @blur="toggleShowInput"
         class="text-md flex-1 bg-transparent"
         placeholder="Titres, languages, genre"
-        @input="handleInput"
+        @input="handleInput($event.target.value)"
         :value="searchValue"
+        @keydown.enter="handleInput(searchValue)"
       />
     </div>
   </div>
@@ -43,16 +44,25 @@ export default class SearchBar extends Vue {
     return this.$route.name === routerPagesNames.search;
   }
 
+  get routeName() {
+    return this.$route.name;
+  }
+
+  @Watch('routeName') routeNameChanged(value: string) {
+    if (value !== routerPagesNames.search) {
+      this.hideInput();
+    }
+  }
+
   @Watch('isInSearchRoute') routeChanged(value: boolean) {
     if (value) this.displayInput();
   }
 
-  handleInput(event: any) {
-    const value = event.target.value as string;
+  handleInput(value: string) {
     this.searchValue = value;
-    console.log(value);
+    const currentQ = this.$route.query.q;
     this.$nextTick(() => {
-      if (value.length) {
+      if ((value.length && typeof currentQ === 'string' && currentQ !== value) || !currentQ) {
         if (this.isInSearchRoute) {
           this.$router.replace({ query: { ...this.$route.query, q: value } });
         } else {
@@ -84,6 +94,7 @@ export default class SearchBar extends Vue {
     if (this.inputContainerRef && !this.isInSearchRoute) {
       this.inputContainerRef.style.transform = 'scaleX(0.15)';
       this.inputContainerRef.style.opacity = '0';
+      this.inputRef?.blur();
       setTimeout(() => {
         // if (this.inputContainerRef) this.inputContainerRef.style.display = 'none';
         this.showInput = false;

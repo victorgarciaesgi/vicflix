@@ -311,7 +311,7 @@ export default class VideoPlayer extends BreakpointMixin {
 
   goBack() {
     const fromRoute = RouterModule.state.previousRoute;
-    if (fromRoute && fromRoute.name) {
+    if (fromRoute && fromRoute.name !== routerPagesNames.watch.id) {
       this.$router.push({
         path: fromRoute.fullPath,
       });
@@ -333,7 +333,7 @@ export default class VideoPlayer extends BreakpointMixin {
     if (this.videoEnded) {
       this.setVideoTime(0);
       this.playVideo();
-    } else if (this.isVideoEnding) {
+    } else if (this.isVideoEnding && !this.nextEpisode) {
       this.continuePlaying = true;
     } else {
       if (this.videoPlaying) this.pauseVideo();

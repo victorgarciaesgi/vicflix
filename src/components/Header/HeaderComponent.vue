@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <div class="Menus / flex flex-row items-center flex-shrink-0 ml-5">
+    <div class="Menus / sm:flex-grow sm:justify-end flex flex-row items-center flex-shrink-0 ml-5">
       <SearchBar />
       <a href="https://github.com/victorgarciaesgi" target="_blank">
         <SvgIcon src="social/github" :size="20" class="mx-1" />

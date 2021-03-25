@@ -16,6 +16,7 @@
       <input
         ref="inputRef"
         @blur="toggleShowInput"
+        @focus="handleFocus"
         class="text-md flex-1 bg-transparent"
         placeholder="Titres, languages, genre"
         @input="handleInput($event.target.value)"
@@ -39,6 +40,7 @@ export default class SearchBar extends Vue {
   public searchValue = '';
   public showInput = false;
   public previousRoute: Route | null = null;
+  public isFocused = false;
 
   get isInSearchRoute() {
     return this.$route.name === routerPagesNames.search;
@@ -49,13 +51,17 @@ export default class SearchBar extends Vue {
   }
 
   @Watch('routeName') routeNameChanged(value: string) {
-    if (value !== routerPagesNames.search) {
+    if (value !== routerPagesNames.search && !this.isFocused) {
       this.hideInput();
     }
   }
 
   @Watch('isInSearchRoute') routeChanged(value: boolean) {
     if (value) this.displayInput();
+  }
+
+  handleFocus() {
+    this.isFocused = true;
   }
 
   handleInput(value: string) {
@@ -103,6 +109,7 @@ export default class SearchBar extends Vue {
   }
 
   toggleShowInput() {
+    this.isFocused = false;
     if (!this.showInput) {
       this.displayInput();
     } else {

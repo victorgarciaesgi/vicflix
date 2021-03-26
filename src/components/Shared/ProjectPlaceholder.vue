@@ -248,9 +248,6 @@ export default class ProjectPlaceholder extends Vue {
       Object.assign(this.pictureRef.style, {
         height: `${rootPosition.height}px`,
       });
-      if (this.root) {
-        // this.root.style.opacity = '0';
-      }
     }
     this.animateOpenPreview();
   }
@@ -279,6 +276,9 @@ export default class ProjectPlaceholder extends Vue {
           easing: cubicTransition,
           complete: () => {
             if (this.preview) this.preview.classList.add('hasShadow');
+            if (this.root) {
+              this.root.style.opacity = '0';
+            }
           },
         });
         anime({

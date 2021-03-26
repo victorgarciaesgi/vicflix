@@ -8,3 +8,4 @@ export * from './rewind.project';
 export * from './ahera.project';
 export * from './kaze.project';
 export * from './nuxttypedrouter.project';
+export * from './vuextyped.project';

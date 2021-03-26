@@ -3,7 +3,7 @@
     <transition name="bounce">
       <div
         v-if="show"
-        class="ModalBase / center"
+        class="ModalBase / center flex"
         :class="{ full: !isPopup, fitWindow }"
         @click="closeModal"
         @scroll.stop
@@ -83,8 +83,7 @@ export default class UIModal extends Vue {
   top: 0;
   width: 100%;
   background-color: rgba(20, 20, 20, 0.7);
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,7 +102,6 @@ export default class UIModal extends Vue {
     width: auto;
     flex-flow: column nowrap;
     overflow: hidden;
-    transition: height 0.2s;
     max-height: 90%;
 
     div.header {

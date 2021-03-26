@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col items-center w-full pt-40 pb-20">
-    <div v-if="results.length" class="ProjectGrid / sm:px-2 sm:gap-1 grid px-12">
+  <div class="relative block w-full pt-40 pb-20">
+    <div v-if="results.length" class="ProjectGrid / sm:px-2 sm:gap-1 grid justify-center px-12">
       <component
         :is="isMobile ? 'MobileProjectPlaceholder' : 'ProjectPlaceholder'"
         :showProgress="false"
@@ -72,7 +72,8 @@ export default class Search extends BreakpointMixin {
 <style lang="postcss" scoped>
 div.ProjectGrid {
   grid-gap: 8px;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, 230px);
+  grid-auto-flow: row dense;
 
   @screen sm {
     grid-template-columns: repeat(auto-fill, 8rem);

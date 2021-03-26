@@ -204,28 +204,6 @@ export default class ProjectPlaceholder extends Vue {
     }, 100);
   }
 
-  async displayPreview() {
-    if (this.timeout) clearTimeout(this.timeout);
-    const rootPosition = this.root.getBoundingClientRect();
-    this.init = true;
-    this.showPreview = true;
-    EventBus.$emit(Events.ClosePreviews);
-    EventBus.$on(Events.ClosePreviews, this.closePreview);
-    window.addEventListener('mousemove', this.closePreview);
-
-    await Promise.all([this.$nextTick, Vue.nextTick]);
-    if (this.preview && this.pictureRef && this.previewBlock) {
-      Object.assign(this.preview.style, {
-        width: `${rootPosition.width}px`,
-        transform: `translateX(${rootPosition.left}px) translateY(${rootPosition.top}px)`,
-      });
-      Object.assign(this.pictureRef.style, {
-        height: `${rootPosition.height}px`,
-      });
-    }
-    this.animateOpenPreview();
-  }
-
   getTranslateValues() {
     const previewRect = this.preview!.getBoundingClientRect();
     const rootRect = this.root.getBoundingClientRect();
@@ -250,6 +228,41 @@ export default class ProjectPlaceholder extends Vue {
     return { finalTranslateX, finalTranslateY };
   }
 
+  async displayPreview() {
+    if (this.timeout) clearTimeout(this.timeout);
+    const rootPosition = this.root.getBoundingClientRect();
+    await Promise.all([this.awaitImageLoad(this.picture), this.awaitImageLoad(this.logo)]);
+    this.init = true;
+    this.showPreview = true;
+    EventBus.$emit(Events.ClosePreviews);
+    EventBus.$on(Events.ClosePreviews, this.closePreview);
+    window.addEventListener('mousemove', this.closePreview);
+
+    await Promise.all([this.$nextTick, Vue.nextTick]);
+
+    if (this.preview && this.pictureRef && this.previewBlock) {
+      Object.assign(this.preview.style, {
+        width: `${rootPosition.width}px`,
+        transform: `translateX(${rootPosition.left}px) translateY(${rootPosition.top}px)`,
+      });
+      Object.assign(this.pictureRef.style, {
+        height: `${rootPosition.height}px`,
+      });
+      if (this.root) {
+        // this.root.style.opacity = '0';
+      }
+    }
+    this.animateOpenPreview();
+  }
+
+  async awaitImageLoad(src: string) {
+    return new Promise((resolve, reject) => {
+      const placeholderImage = new Image();
+      placeholderImage.onload = resolve;
+      placeholderImage.src = src;
+    });
+  }
+
   async animateOpenPreview() {
     if (this.preview) {
       this.rendered = true;
@@ -257,29 +270,23 @@ export default class ProjectPlaceholder extends Vue {
       const { finalTranslateX, finalTranslateY } = this.getTranslateValues();
 
       if (this.picture && this.previewBlock) {
-        const placeholderImage = new Image();
-        placeholderImage.onload = (ev) => {
-          if (this.root) {
-            this.root.style.opacity = '0';
-          }
-          if (this.preview) this.preview.classList.add('hasShadow');
-
-          anime({
-            targets: this.preview,
-            scale: this.scaleZoom,
-            translateY: finalTranslateY,
-            translateX: finalTranslateX,
-            duration: 200,
-            easing: cubicTransition,
-          });
-          anime({
-            targets: this.previewBlock,
-            duration: 50,
-            opacity: 1,
-            easing: cubicTransition,
-          });
-        };
-        placeholderImage.src = this.picture;
+        anime({
+          targets: this.preview,
+          scale: this.scaleZoom,
+          translateY: finalTranslateY,
+          translateX: finalTranslateX,
+          duration: 200,
+          easing: cubicTransition,
+          complete: () => {
+            if (this.preview) this.preview.classList.add('hasShadow');
+          },
+        });
+        anime({
+          targets: this.previewBlock,
+          duration: 50,
+          opacity: 1,
+          easing: cubicTransition,
+        });
       }
     }
   }

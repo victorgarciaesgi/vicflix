@@ -23,6 +23,6 @@ export const kazeProject: Project = {
   info: `Aucun lien ou accès d'application administrateur ne sera fourni.
     Toutes les vidéos sont issues de fausses données de test et ne correspondent pas à des vraies données client.
   `,
-  technos: [TechnosList.Nuxt, TechnosList.Typescript, TechnosList.GraphQL],
+  technos: [TechnosList.Nuxt, TechnosList.Vue, TechnosList.Typescript, TechnosList.GraphQL],
   context: ProjectContext.Totem,
 };

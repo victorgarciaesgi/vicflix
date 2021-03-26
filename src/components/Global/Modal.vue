@@ -9,7 +9,7 @@
         @scroll.stop
       >
         <div
-          class="ModalWindow to-animate"
+          class="ModalWindow to-animate c-row-y"
           :style="{
             height: height ? `${height}px` : '',
             width: width ? `${width}px` : '',

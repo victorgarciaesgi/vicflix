@@ -9,7 +9,7 @@
         @scroll.stop
       >
         <div
-          class="ModalWindow to-animate c-row-y"
+          class="ModalWindow / to-animate c-row-y flex"
           :style="{
             height: height ? `${height}px` : '',
             width: width ? `${width}px` : '',
@@ -81,7 +81,7 @@ export default class UIModal extends Vue {
   height: calc(var(--vh, 1vh) * 100);
   left: 0;
   top: 0;
-  width: 100%;
+  width: 100vw;
   background-color: rgba(20, 20, 20, 0.7);
   overflow: hidden;
   display: flex;

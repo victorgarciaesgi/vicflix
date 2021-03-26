@@ -3,13 +3,13 @@
     <transition name="bounce">
       <div
         v-if="show"
-        class="modal-base center"
+        class="ModalBase / center"
         :class="{ full: !isPopup, fitWindow }"
         @click="closeModal"
         @scroll.stop
       >
         <div
-          class="modal-window to-animate"
+          class="ModalWindow to-animate"
           :style="{
             height: height ? `${height}px` : '',
             width: width ? `${width}px` : '',
@@ -74,7 +74,7 @@ export default class UIModal extends Vue {
 </script>
 
 <style lang="postcss">
-.modal-base {
+.ModalBase {
   position: fixed;
   height: 100%;
   height: 100vh;
@@ -90,16 +90,7 @@ export default class UIModal extends Vue {
   justify-content: center;
   z-index: 100500;
 
-  &.full {
-    z-index: 2;
-    background-color: var(--bg2);
-
-    .modal-window {
-      border-radius: 5px;
-    }
-  }
-
-  .modal-window {
+  .ModalWindow {
     display: flex;
     position: relative;
     background-color: var(--bg1);
@@ -163,12 +154,21 @@ export default class UIModal extends Vue {
     }
   }
 
+  &.full {
+    z-index: 2;
+    background-color: var(--bg2);
+
+    .ModalWindow {
+      border-radius: 5px;
+    }
+  }
+
   &.fitWindow {
     max-height: 100vh;
     max-width: 100vw;
     overflow: hidden;
 
-    .modal-window {
+    .ModalWindow {
       max-height: calc(100vh - 40px);
       max-width: calc(100vw - 40px);
       justify-content: center;

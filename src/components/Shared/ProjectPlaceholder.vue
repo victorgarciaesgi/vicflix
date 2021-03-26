@@ -4,7 +4,7 @@
       ref="root"
       class="RootCard / h-36 flex w-full cursor-pointer"
       :data-show="showPreview"
-      @mouseenter="handleMouseEnter"
+      @mouseenter.stop="handleMouseEnter"
       @mouseleave="cancelMouseEnter"
     >
       <VImg background="bg3" :src="picture" class="rounded" />
@@ -22,6 +22,7 @@
           class="Preview / fixed top-0 left-0 flex flex-col bg-transparent rounded cursor-pointer"
           :data-show="showPreview"
           @mouseleave="handleMouseLeave"
+          @mousemove.stop
           @click="navigateToPreview"
         >
           <div class="relative overflow-hidden">
@@ -184,6 +185,7 @@ export default class ProjectPlaceholder extends Vue {
   handleMouseLeave() {
     if (this.rendered) {
       this.debounceClosePreview();
+      window.removeEventListener('mousemove', this.closePreview);
     }
   }
   cancelMouseEnter() {
@@ -209,6 +211,7 @@ export default class ProjectPlaceholder extends Vue {
     this.showPreview = true;
     EventBus.$emit(Events.ClosePreviews);
     EventBus.$on(Events.ClosePreviews, this.closePreview);
+    window.addEventListener('mousemove', this.closePreview);
 
     await Promise.all([this.$nextTick, Vue.nextTick]);
     if (this.preview && this.pictureRef && this.previewBlock) {
@@ -305,6 +308,7 @@ export default class ProjectPlaceholder extends Vue {
       EventBus.$off(Events.ClosePreviews, this.closePreview);
       const { height, width, left, top } = this.root.getBoundingClientRect();
       if (this.preview) this.preview.classList.remove('hasShadow');
+      window.removeEventListener('mousemove', this.closePreview);
       anime({
         targets: this.preview,
         scale: 1,

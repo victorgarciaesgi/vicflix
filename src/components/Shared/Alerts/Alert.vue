@@ -159,6 +159,7 @@ div.Alert-Window {
   min-height: 100px;
   min-width: 250px;
   max-height: 80vh;
+  max-height: calc(var(--vh, 1vh) * 80);
   overflow: hidden;
 
   max-width: 500px;

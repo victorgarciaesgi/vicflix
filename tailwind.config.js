@@ -160,6 +160,7 @@ module.exports = {
         '.h-screen-ios': {
           '@supports (-webkit-touch-callout: none)': {
             height: '-webkit-fill-available',
+            height: 'calc(var(--vh, 1vh) * 100)',
           },
         },
       });

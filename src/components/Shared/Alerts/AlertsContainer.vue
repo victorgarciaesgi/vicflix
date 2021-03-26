@@ -9,10 +9,9 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Component, Prop, Watch } from 'nuxt-property-decorator';
 import { AlertsModule } from '@store';
-import Colors from '@colors';
+import { Component } from 'nuxt-property-decorator';
+import Vue from 'vue';
 import Alert from './Alert.vue';
 
 @Component({
@@ -45,6 +44,7 @@ div.Alert-Container {
   top: 0;
   left: 0;
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   width: 100vw;
   display: flex;
   justify-content: center;

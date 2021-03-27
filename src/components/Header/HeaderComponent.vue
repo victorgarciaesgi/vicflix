@@ -4,14 +4,16 @@
     :class="{ opaque, hideNavBar }"
   >
     <div class="flex-0 flex flex-row items-center">
-      <NuxtLink to="/">
+      <NuxtLink v-if="!hideNavBar" to="/">
         <img
           class="sm:hidden hover:scale-105 transition-transform duration-200 transform"
           src="@images/vicflix.png"
           width="90"
         />
-        <img v-if="!hideNavBar" class="-sm:hidden" src="/icon.png" width="24" />
-        <SvgIcon v-else class="-sm:hidden" src="videos/back" :size="34" />
+        <img class="-sm:hidden" src="/icon.png" width="24" />
+      </NuxtLink>
+      <NuxtLink v-else :to="previousLink">
+        <SvgIcon class="-sm:hidden" src="videos/back" :size="34" />
       </NuxtLink>
       <div class="sm:hidden px-8">
         <NavBar :routes="navRoutes" />
@@ -48,6 +50,7 @@ import BurgerMenu from './BurgerMenu.vue';
 import NavBar from './NavBar.vue';
 import UserPopup from './UserPopup.vue';
 import SearchBar from './SearchBar.vue';
+import { Location, RawLocation } from 'vue-router';
 
 @Component({
   components: { NavBar, BurgerMenu, UserPopup, SearchBar },
@@ -71,6 +74,17 @@ export default class HeaderComponent extends Vue {
 
   get userInfos() {
     return AuthModule.state.user;
+  }
+
+  get previousLink(): RawLocation {
+    const previous = RouterModule.state.previousRoute;
+    if (previous) {
+      return {
+        path: previous.path,
+        params: previous.params,
+      };
+    }
+    return '/';
   }
 
   checkHeaderOpaque() {

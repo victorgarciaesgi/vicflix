@@ -27,6 +27,10 @@ export default class BreakPointsMixin extends Vue {
     }
   }
 
+  get isSmallScreen() {
+    return this.windowWidth < BreakPointsValues.XSmall;
+  }
+
   get isMobile() {
     return this.windowWidth < BreakPointsValues.Small;
   }

@@ -132,13 +132,17 @@ export default class PlayerTrackBar extends BreakpointMixin {
     this.popinIndicator?.closePopup();
   }
 
+  //! Mouse
+
   handleMouseDown() {
     this.dragging = true;
-    document.addEventListener('mousemove', this.handleMouseMove);
+    if (this.isMobile) {
+      document.addEventListener('mousemove', this.handleMouseMove);
+    }
   }
 
   handleMouseMove(event: MouseEvent) {
-    if (this.dragging) {
+    if (this.dragging && this.isMobile) {
       this.handleTimeChange(event.clientX);
       document.addEventListener('mouseup', this.handleMouseUp);
     }
@@ -149,6 +153,8 @@ export default class PlayerTrackBar extends BreakpointMixin {
     document.removeEventListener('mousemove', this.handleMouseMove);
     document.removeEventListener('mouseup', this.handleMouseUp);
   }
+
+  //! Touch
 
   handleTouchStart() {
     this.dragging = true;

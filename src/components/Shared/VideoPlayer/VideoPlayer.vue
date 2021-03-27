@@ -20,7 +20,7 @@
       }"
       @progress="handleVideoProgress"
       @dblclick="toggleFullScreen"
-      @click="toggleVideoPlay"
+      @click="toggleVideoPlay(false)"
     >
       <source :src="video.videoUrl" type="video/mp4" />
     </video>
@@ -41,7 +41,7 @@
             v-else-if="isVideoEnding && nextProject"
             class="sm:justify-start flex flex-row justify-end pb-4"
           >
-            <div class="flex flex-col">
+            <div class="sm:w-full flex flex-col">
               <div>
                 <img
                   :src="`/logos/${nextProject.logo}`"
@@ -51,7 +51,7 @@
                 <h2 class="pt-4">{{ nextProject.title }}</h2>
                 <p class="text-w220 pt-2 pb-4">{{ nextProject.slogan }}</p>
               </div>
-              <div class="sm:grid-cols-1 grid grid-cols-2 gap-2">
+              <div class="grid w-full gap-2" style="grid-template-columns: repeat(auto-fit, 1fr)">
                 <Action theme="white" icon="actions/play" :wFull="true" :to="nextProjectLink"
                   >Regarder S1: E1</Action
                 >
@@ -76,26 +76,26 @@
               v-if="!videoPlaying"
               class="ButtonAction"
               src="videos/play"
-              :size="50"
+              :size="isSmallScreen ? 40 : 50"
               @click="playVideo"
             />
             <SvgIcon
               v-else-if="videoPlaying"
               class="ButtonAction"
               src="videos/pause"
-              :size="50"
+              :size="isSmallScreen ? 40 : 50"
               @click="pauseVideo"
             />
             <SvgIcon
               class="ButtonAction / ml-6"
               src="videos/replay"
-              :size="45"
+              :size="isSmallScreen ? 35 : 45"
               @click="addVideoTime(-10)"
             />
             <SvgIcon
               class="ButtonAction / ml-6"
               src="videos/forward"
-              :size="45"
+              :size="isSmallScreen ? 35 : 45"
               @click="addVideoTime(10)"
             />
             <Popin v-if="!isMobile" mode="hover" :debounce="true" :arrow="false" :offset="2">
@@ -103,7 +103,11 @@
                 <VolumeSlider :volume="volume" @update="handleUpdateVolume" />
               </template>
               <template #button>
-                <SvgIcon class="ButtonAction / ml-6" :src="volumeIcon" :size="45" />
+                <SvgIcon
+                  class="ButtonAction / ml-6"
+                  :src="volumeIcon"
+                  :size="isSmallScreen ? 35 : 45"
+                />
               </template>
             </Popin>
             <div
@@ -144,14 +148,14 @@
               v-if="!isFullScreen"
               class="ButtonAction"
               src="videos/fullscreen"
-              :size="50"
+              :size="isSmallScreen ? 40 : 50"
               @click="toggleFullScreen"
             />
             <SvgIcon
               v-else
               class="ButtonAction"
               src="videos/fullscreen_exit"
-              :size="50"
+              :size="isSmallScreen ? 40 : 50"
               @click="toggleFullScreen"
             />
           </div>
@@ -329,22 +333,24 @@ export default class VideoPlayer extends BreakpointMixin {
 
   //! Video controls
 
-  toggleVideoPlay() {
+  toggleVideoPlay(mobile = false) {
     if (this.videoEnded) {
       this.setVideoTime(0);
       this.playVideo();
     } else if (this.isVideoEnding && !this.nextEpisode) {
       this.continuePlaying = true;
     } else {
-      if (this.videoPlaying) this.pauseVideo();
-      else this.playVideo();
+      console.log(mobile, this.isMobile);
+      if ((!mobile && !this.isMobile) || mobile) {
+        if (this.videoPlaying) this.pauseVideo();
+        else this.playVideo();
+      }
     }
   }
 
   playVideo() {
     try {
       this.videoPlayer?.play();
-      this.handlePlayVideo();
     } catch (e) {
       console.log(e);
     }
@@ -356,7 +362,6 @@ export default class VideoPlayer extends BreakpointMixin {
 
   pauseVideo() {
     this.videoPlayer?.pause();
-    this.handlePauseVideo();
   }
 
   handlePauseVideo() {
@@ -428,7 +433,7 @@ export default class VideoPlayer extends BreakpointMixin {
     this.debounceHideToolbar();
     switch (event.code) {
       case 'Space': {
-        this.toggleVideoPlay();
+        this.toggleVideoPlay(true);
         break;
       }
       case 'Escape': {

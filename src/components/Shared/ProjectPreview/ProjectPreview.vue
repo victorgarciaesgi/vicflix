@@ -8,7 +8,8 @@
     <transition :name="'slide-left'" mode="out-in">
       <div
         v-if="show"
-        class="h-screen-ios bg-g20 fixed top-0 left-0 z-40 flex flex-col w-screen overflow-y-auto"
+        class="h-screen-ios bg-g20 fixed top-0 left-0 z-40 flex flex-col w-screen h-screen overflow-y-auto"
+        @scroll.stop
       >
         <PreviewContent v-if="project" :project="project" />
       </div>
@@ -58,7 +59,7 @@ export default class ProjectPreview extends BreakpointMixin {
     if (this.show) {
       document.body.style.overflow = 'hidden';
       if (this.isMobile) {
-        document.body.style.position = 'fixed';
+        // document.body.style.position = 'fixed';
       }
       this.transitionName = 'slide-left';
       if (this.windowWidth < BreakPointsValues.Small) {

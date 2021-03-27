@@ -19,17 +19,3 @@ module.exports = {
     })),
   ],
 };
-
-{
-  uuid;
-  created;
-  section;
-  section_1_name;
-  seciton_1_places;
-  section_2_name;
-  seciton_1_places;
-  section_3_name;
-  seciton_1_places;
-  section_4_name;
-  seciton_1_places;
-}

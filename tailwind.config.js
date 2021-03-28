@@ -34,6 +34,7 @@ module.exports = {
           /grid-cols-/,
           /grid-cols-/,
           /object-/,
+          /bg-/,
         ],
       },
     },

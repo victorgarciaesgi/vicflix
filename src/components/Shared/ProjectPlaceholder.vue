@@ -59,19 +59,25 @@
                 </div>
               </div>
               <div class="flex-nowrap flex-0 flex flex-row items-center ml-1">
-                <Popin mode="hover" theme="white">
+                <Popin mode="hover" :offset="2" theme="white">
                   <template #content>
-                    <span class="px-3 py-1 text-black">Lecture</span>
+                    <span class="px-3 py-1 text-black">{{
+                      hasProjectVideos ? 'Lecture' : 'Consulter'
+                    }}</span>
                   </template>
                   <template #button>
                     <div
                       class="center flex p-1 text-black bg-white border-2 border-white rounded-full"
                     >
-                      <SvgIcon src="actions/play" :size="20" @click.stop="playFirstVideo" />
+                      <SvgIcon
+                        :src="hasProjectVideos ? 'actions/play' : 'actions/open_in'"
+                        :size="20"
+                        @click.stop="playFirstVideo"
+                      />
                     </div>
                   </template>
                 </Popin>
-                <Popin mode="hover" theme="white">
+                <Popin mode="hover" :offset="2" theme="white">
                   <template #content>
                     <span class="px-3 py-1 text-black">Plus d'infos</span>
                   </template>
@@ -152,6 +158,10 @@ export default class ProjectPlaceholder extends Vue {
         jbv: this.project.id,
       },
     };
+  }
+
+  get hasProjectVideos(): boolean {
+    return !!this.project.videos.length;
   }
 
   get logo() {

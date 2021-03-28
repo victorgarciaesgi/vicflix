@@ -16,7 +16,12 @@
           <span class="text-w240 ml-2 text-sm font-semibold tracking-widest">PROJECT</span>
         </div>
         <div class="sm:hidden flex flex-row items-center mt-4">
-          <Action icon="actions/play" theme="white" @click="playFirstVideo">Lecture</Action>
+          <Action
+            :icon="hasProjectVideos ? 'actions/play' : 'actions/open_in'"
+            theme="white"
+            @click="playFirstVideo"
+            >{{ hasProjectVideos ? 'Lecture' : 'Consulter' }}</Action
+          >
           <Popin mode="hover" theme="white">
             <template #content>
               <span class="px-3 py-1 text-black">
@@ -39,13 +44,13 @@
     <div class="Infos-Wrapper / flex-0 flex flex-col px-8 py-5">
       <div class="-sm:hidden flex flex-col mb-5">
         <Action
-          icon="actions/play"
+          :icon="hasProjectVideos ? 'actions/play' : 'actions/open_in'"
           class="!mb-2"
           :w-full="true"
           theme="white"
           size="md"
           @click="playFirstVideo"
-          >Lecture</Action
+          >{{ hasProjectVideos ? 'Lecture' : 'Consulter' }}</Action
         >
         <Action
           v-if="isInWishList"
@@ -65,9 +70,9 @@
           <ProjectVideoProgress v-if="videoProgress && isMobile" :progress="videoProgress" />
           <h1 class="">{{ project.title }}</h1>
           <div class="flex flex-row items-center mt-3">
-            <span class="text-green font-bold">Recommandé à 97%</span>
+            <span class="text-green font-bold">Recommandé à 99.9%</span>
             <span class="ml-2">{{ project.year }}</span>
-            <span class="border-bg9 px-1 py-px ml-2 text-sm border">16+</span>
+            <span class="border-bg9 px-1 py-px ml-2 text-sm border">12+</span>
           </div>
           <p class="mt-5">{{ project.slogan }}</p>
           <div
@@ -182,6 +187,10 @@ export default class PreviewContent extends BreakpointMixin {
     } else {
       VideoProgressModule.mutations.addProjectToWishList(this.project);
     }
+  }
+
+  get hasProjectVideos(): boolean {
+    return !!this.project.videos.length;
   }
 
   async playFirstVideo() {

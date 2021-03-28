@@ -2,7 +2,7 @@ import { TechnosList } from '@constants';
 import { Project, ProjectContext, ProjectType } from '@models';
 
 export const kazeProject: Project = {
-  title: 'Kazé',
+  title: 'Kazé France',
   id: 'CNXqpj',
   picture:
     'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fkaze%2Fchez_kaze_guide_book_artbook_et_roman_pour_blue_exorcist_2378%201.png?alt=media&token=ff6d181d-717d-4b37-b6a5-ec50c929e2a7',

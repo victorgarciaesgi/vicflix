@@ -39,7 +39,7 @@
           </div>
           <div
             v-else-if="isVideoEnding && nextProject"
-            class="sm:justify-start flex flex-row justify-end pb-4"
+            class="sm:justify-start -sm:max-w-sm flex flex-row justify-end pb-4"
           >
             <div class="sm:w-full flex flex-col">
               <div>
@@ -55,7 +55,7 @@
                 <Action theme="white" icon="actions/play" :wFull="true" :to="nextProjectLink"
                   >Regarder S1: E1</Action
                 >
-                <Action theme="gray" class="!ml-0" :wFull="true" icon="actions/play" to="/"
+                <Action theme="gray" class="!ml-0" :wFull="true" to="/"
                   >Retourner à l'accueil</Action
                 >
               </div>
@@ -340,7 +340,6 @@ export default class VideoPlayer extends BreakpointMixin {
     } else if (this.isVideoEnding && !this.nextEpisode) {
       this.continuePlaying = true;
     } else {
-      console.log(mobile, this.isMobile);
       if ((!mobile && !this.isMobile) || mobile) {
         if (this.videoPlaying) this.pauseVideo();
         else this.playVideo();

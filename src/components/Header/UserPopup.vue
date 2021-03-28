@@ -7,7 +7,7 @@
     :arrow="true"
     :offset="4"
     :rounded="false"
-    theme="g10"
+    theme="g20"
     alignement="End"
   >
     <template #content>

@@ -10,7 +10,7 @@
           :style="getPopupStyle"
           class="Popup-Box / absolute"
           @click.stop
-          @mouseenter="handlePopupMouseEnter"
+          @mouseenter.stop="handlePopupMouseEnter"
           @mouseleave="handlePopupMouseLeave"
         >
           <div
@@ -249,7 +249,7 @@ export default class Popin extends Vue {
     await Vue.nextTick();
     const success = this.processPopupPlacement(event);
     await Vue.nextTick();
-    if (success && this.mode !== PopupMode.Hover) this.addListeners();
+    if (success) this.addListeners();
   }
 
   processPopupPlacement(event?: Event): boolean {

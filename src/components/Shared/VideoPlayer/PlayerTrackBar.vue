@@ -53,7 +53,7 @@
       <div
         :style="{ left: `${currentTimePercent}%` }"
         ref="ballRef"
-        class="Ball / bg-red hover:scale-110 top-1/2 absolute w-5 h-5 transition-transform duration-200 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+        class="Ball / bg-red hover:scale-110 top-1/2 sm:h-6 sm:w-6 absolute w-5 h-5 transition-transform duration-200 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
         @mousedown="handleMouseDown"
       ></div>
     </div>

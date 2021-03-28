@@ -77,14 +77,11 @@ export default class HeaderComponent extends Vue {
   }
 
   get previousLink(): RawLocation {
-    const previous = RouterModule.state.previousRoute;
-    if (previous) {
-      return {
-        path: previous.path,
-        params: previous.params,
-      };
-    }
-    return '/';
+    const route = this.$route;
+    return {
+      path: route.path,
+      params: route.params,
+    };
   }
 
   checkHeaderOpaque() {

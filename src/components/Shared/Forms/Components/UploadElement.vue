@@ -96,7 +96,6 @@
 <script lang="ts">
 import { Prop, Ref, Watch } from 'nuxt-property-decorator';
 import { Component } from 'vue-mixin-decorator';
-import { InputFileSystem } from 'webpack';
 import { FormMixin } from '@mixins';
 import { UnPackField, UploadField } from '@constructors';
 

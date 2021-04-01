@@ -21,6 +21,9 @@
           @click="navigateToPreview"
         >
           <div class="relative overflow-hidden">
+            <div ref="pictureRef" class="relative w-full rounded-t rounded-tl">
+              <slot name="picture" />
+            </div>
             <slot name="preview" />
           </div>
           <div
@@ -60,7 +63,7 @@ import { cubicTransition } from '@constants';
     ProjectVideoProgress,
   },
 })
-export default class ProjectPlaceholder extends Vue {
+export default class PlaceholderAnimatedItem extends Vue {
   @Prop({ required: true }) baseInfo!: BaseItemInterface;
   @Prop({ required: false }) picture?: string;
   @Prop({ required: true }) logo?: string;
@@ -69,7 +72,7 @@ export default class ProjectPlaceholder extends Vue {
 
   @Ref() root!: HTMLDivElement;
   @Ref() preview?: HTMLDivElement;
-  @Ref() pictureRef?: HTMLImageElement;
+  @Ref() pictureRef?: HTMLDivElement;
   @Ref() previewBlock?: HTMLDivElement;
 
   public init = false;

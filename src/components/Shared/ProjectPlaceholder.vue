@@ -1,111 +1,81 @@
 <template>
-  <div class="ProjectPlaceholder / flex flex-col w-64 h-40">
-    <div
-      ref="root"
-      class="RootCard / h-36 flex w-full cursor-pointer"
-      :data-show="showPreview"
-      @mouseenter.stop="handleMouseEnter"
-      @mouseleave="cancelMouseEnter"
-    >
+  <PlaceholderAnimatedItem
+    :baseInfo="project"
+    :logo="logo"
+    :picture="picture"
+    :showProgress="showProgress"
+    :videoProgress="videoProgress"
+  >
+    <template #card>
       <VImg background="bg3" :src="picture" class="rounded" />
       <img
         :src="logo"
         class="left-3 bottom-3 absolute h-8"
         style="filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6))"
       />
-
-      <Portal v-if="init" to="Preview-Outlet">
-        <div
-          v-show="showPreview"
-          :id="project.id"
-          ref="preview"
-          class="Preview / fixed top-0 left-0 flex flex-col bg-transparent rounded cursor-pointer"
-          :data-show="showPreview"
-          @mouseleave="handleMouseLeave"
-          @mousemove.stop
-          @click="navigateToPreview"
-        >
-          <div class="relative overflow-hidden">
-            <img
-              ref="pictureRef"
-              :src="picture"
-              class="object-cover w-full rounded-tl rounded-tr"
-            />
-            <img
-              :src="logo"
-              class="left-3 bottom-3 absolute h-8 overflow-hidden"
-              style="filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6))"
-            />
+    </template>
+    <template #preview>
+      <img
+        :src="logo"
+        class="left-3 bottom-3 absolute h-8 overflow-hidden"
+        style="filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6))"
+      />
+    </template>
+    <template #picture>
+      <img
+        ref="pictureRef"
+        :src="picture"
+        class="object-cover w-full h-full rounded-tl rounded-tr"
+      />
+    </template>
+    <template #previewBlock>
+      <div class="Block / flex-nowrap flex flex-row">
+        <div class="flex flex-col flex-1">
+          <h4 class="leading-5">{{ project.title }}</h4>
+          <div class="text-text9 text-xxs flex flex-row items-center">
+            <span>{{ project.type.join(', ') }}</span>
+            <span class="px-1">•</span>
+            <span>{{ project.year }}</span>
           </div>
-          <div
-            ref="previewBlock"
-            class="bg-bg2 flex flex-col p-2 -mt-1 rounded-bl rounded-br opacity-0"
-          >
-            <div class="Block / flex-nowrap flex flex-row">
-              <div class="flex flex-col flex-1">
-                <h4 class="leading-5">{{ project.title }}</h4>
-                <div class="text-text9 text-xxs flex flex-row items-center">
-                  <span>{{ project.type.join(', ') }}</span>
-                  <span class="px-1">•</span>
-                  <span>{{ project.year }}</span>
-                </div>
-                <div class="flex flex-row items-center justify-start">
-                  <Techno
-                    v-for="techno of project.technos"
-                    :key="techno"
-                    :techno="techno"
-                    size="sm"
-                  />
-                </div>
-              </div>
-              <div class="flex-nowrap flex-0 flex flex-row items-center ml-1">
-                <Popin mode="hover" :offset="2" theme="white">
-                  <template #content>
-                    <span class="px-3 py-1 text-black">{{
-                      hasProjectVideos ? 'Lecture' : 'Consulter'
-                    }}</span>
-                  </template>
-                  <template #button>
-                    <div
-                      class="center flex p-1 text-black bg-white border-2 border-white rounded-full"
-                    >
-                      <SvgIcon
-                        :src="hasProjectVideos ? 'actions/play' : 'actions/open_in'"
-                        :size="20"
-                        @click.stop="playFirstVideo"
-                      />
-                    </div>
-                  </template>
-                </Popin>
-                <Popin mode="hover" :offset="2" theme="white">
-                  <template #content>
-                    <span class="px-3 py-1 text-black">Plus d'infos</span>
-                  </template>
-                  <template #button>
-                    <NuxtLink
-                      :to="toPreviewLink"
-                      class="center bg-bg4 border-bg10 flex p-1 ml-1 text-white border-2 rounded-full"
-                    >
-                      <SvgIcon src="actions/expand" :size="20" />
-                    </NuxtLink>
-                  </template>
-                </Popin>
-              </div>
-            </div>
-            <ProjectVideoProgress :progress="videoProgress" />
+          <div class="flex flex-row items-center justify-start">
+            <Techno v-for="techno of project.technos" :key="techno" :techno="techno" size="sm" />
           </div>
         </div>
-      </Portal>
-    </div>
-    <div v-if="videoProgress && showProgress" class="flex flex-col items-center justify-center h-4">
-      <div class="bg-g90 flex w-3/4 rounded" style="height: 3px">
-        <div
-          class="bg-red absolute top-0 left-0 h-full rounded"
-          :style="{ width: `${videoProgress.percentage}%` }"
-        ></div>
+        <div class="flex-nowrap flex-0 flex flex-row items-center ml-1">
+          <Popin mode="hover" :offset="2" theme="white">
+            <template #content>
+              <span class="px-3 py-1 text-black">{{
+                hasProjectVideos ? 'Lecture' : 'Consulter'
+              }}</span>
+            </template>
+            <template #button>
+              <div class="center flex p-1 text-black bg-white border-2 border-white rounded-full">
+                <SvgIcon
+                  :src="hasProjectVideos ? 'actions/play' : 'actions/open_in'"
+                  :size="20"
+                  @click.stop="playFirstVideo"
+                />
+              </div>
+            </template>
+          </Popin>
+          <Popin mode="hover" :offset="2" theme="white">
+            <template #content>
+              <span class="px-3 py-1 text-black">Plus d'infos</span>
+            </template>
+            <template #button>
+              <NuxtLink
+                :to="toPreviewLink"
+                class="center bg-bg4 border-bg10 flex p-1 ml-1 text-white border-2 rounded-full"
+              >
+                <SvgIcon src="actions/expand" :size="20" />
+              </NuxtLink>
+            </template>
+          </Popin>
+        </div>
       </div>
-    </div>
-  </div>
+      <ProjectVideoProgress :progress="videoProgress" />
+    </template>
+  </PlaceholderAnimatedItem>
 </template>
 
 <script lang="ts">
@@ -118,11 +88,13 @@ import { VideoProgressModule } from '@store';
 import ProjectVideoProgress from './ProjectVideoProgress.vue';
 import { EventBus, Events } from '@services';
 import { cubicTransition } from '@constants';
+import PlaceholderAnimatedItem from './PlaceholderAnimatedItem.vue';
 
 @Component({
   components: {
     Techno,
     ProjectVideoProgress,
+    PlaceholderAnimatedItem,
   },
 })
 export default class ProjectPlaceholder extends Vue {

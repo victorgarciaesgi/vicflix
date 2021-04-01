@@ -1,18 +1,22 @@
 import { TechnosList } from '@constants';
 
-export interface Project {
+export interface BaseItemInterface {
+  id: string;
   title: string;
+  logo: string;
+}
+
+export interface Project extends BaseItemInterface {
   slogan?: string;
   description: string;
-  picture: string;
   placeholder: string;
+  picture: string;
   logo: string;
   technos: TechnosList[];
   links?: ProjectLink[];
   year: number;
   videos: ProjectVideo[];
   type: ProjectType[];
-  id: string;
   info?: string;
   context: ProjectContext;
 }

@@ -156,6 +156,10 @@ export default class Popin extends Vue {
       ...(this.shadow && {
         boxShadow: '0 0 10px rgba(0,0,0,0.2)',
       }),
+      ...(!this.debounce &&
+        this.mode === PopupMode.Hover && {
+          pointerEvents: 'none',
+        }),
     };
   }
 

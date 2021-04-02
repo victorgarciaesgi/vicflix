@@ -1,18 +1,5 @@
-import { Techno } from '@models';
-
-export const TechnosConstant: Techno[] = [
-  { title: 'React', logo: 'technos/ReactJs' },
-  { title: 'Vue', logo: 'technos/Vue.js' },
-  { title: 'Nuxt', logo: 'technos/Nuxt' },
-  { title: 'Gatsby', logo: 'technos/Gatsby' },
-  { title: 'Tailwind', logo: 'technos/Tailwind' },
-  { title: 'GraphQL', logo: 'technos/GraphQL' },
-  { title: 'Netlify', logo: 'technos/Netlify' },
-  { title: 'Typescript', logo: 'technos/Typescript' },
-  { title: 'Stripe', logo: 'technos/Stripe' },
-  { title: 'MapBox', logo: 'technos/Mapbox' },
-  { title: 'Leaflet', logo: 'technos/Leaflet' },
-];
+import { Skill, Techno } from '@models';
+import { nanoid } from 'nanoid';
 
 export enum TechnosList {
   React = 'React',
@@ -26,4 +13,20 @@ export enum TechnosList {
   Stripe = 'Stripe',
   MapBox = 'MapBox',
   Leaflet = 'Leaflet',
+  Gitlab = 'Gitlab CI',
 }
+
+export const TechnosConstant: Skill[] = [
+  { title: TechnosList.Vue, logo: 'technos/Vue.js', color: '#4fc08d', id: nanoid(4) },
+  { title: TechnosList.Nuxt, logo: 'technos/Nuxt', color: '#00c58e', id: nanoid(4) },
+  { title: TechnosList.Typescript, logo: 'technos/Typescript', color: '#3178c6', id: nanoid(4) },
+  { title: TechnosList.GraphQL, logo: 'technos/GraphQL', color: '#e10098', id: nanoid(4) },
+  { title: TechnosList.Tailwind, logo: 'technos/Tailwind', color: '#06B6D4', id: nanoid(4) },
+  { title: TechnosList.React, logo: 'technos/ReactJs', color: '#61dafb', id: nanoid(4) },
+  { title: TechnosList.Gatsby, logo: 'technos/Gatsby', color: '#663399', id: nanoid(4) },
+  { title: TechnosList.Gitlab, logo: 'technos/GitLab', color: '#fa7035', id: nanoid(4) },
+  { title: TechnosList.Netlify, logo: 'technos/Netlify', color: '#00AD9F', id: nanoid(4) },
+  { title: TechnosList.Stripe, logo: 'technos/Stripe', color: '#635bff', id: nanoid(4) },
+  { title: TechnosList.MapBox, logo: 'technos/Mapbox', color: '#4264fb', id: nanoid(4) },
+  { title: TechnosList.Leaflet, logo: 'technos/Leaflet', color: '#199900', id: nanoid(4) },
+];

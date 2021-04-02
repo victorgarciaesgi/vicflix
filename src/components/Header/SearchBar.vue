@@ -19,6 +19,7 @@
         @focus="handleFocus"
         class="text-md flex-1 bg-transparent"
         placeholder="Titres, languages, genre"
+        type="search"
         @input="handleInput($event.target.value)"
         :value="searchValue"
         @keydown.enter="handleInput(searchValue)"
@@ -56,8 +57,17 @@ export default class SearchBar extends Vue {
     }
   }
 
-  @Watch('isInSearchRoute') routeChanged(value: boolean) {
+  @Watch('isInSearchRoute') searchRouteChanged(value: boolean) {
     if (value) this.displayInput();
+  }
+
+  @Watch('$route', { deep: true, immediate: true }) routeChanged(value: Route) {
+    if (this.isInSearchRoute) {
+      this.displayInput();
+      this.searchValue = this.$route.query.q as string;
+    } else {
+      this.previousRoute = this.$route;
+    }
   }
 
   handleFocus() {
@@ -72,10 +82,9 @@ export default class SearchBar extends Vue {
         if (this.isInSearchRoute) {
           this.$router.replace({ query: { ...this.$route.query, q: value } });
         } else {
-          this.previousRoute = this.$route;
           this.$router.push({ name: routerPagesNames.search, query: { q: value } });
         }
-      } else if (this.previousRoute) {
+      } else if (this.previousRoute && !value.length) {
         this.$router.push(this.previousRoute.fullPath);
       } else {
         this.$router.push('/');
@@ -114,13 +123,6 @@ export default class SearchBar extends Vue {
       this.displayInput();
     } else {
       this.hideInput();
-    }
-  }
-
-  mounted() {
-    if (this.isInSearchRoute) {
-      this.displayInput();
-      this.searchValue = this.$route.query.q as string;
     }
   }
 }

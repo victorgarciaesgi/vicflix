@@ -4,17 +4,19 @@
     :class="{ opaque, hideNavBar }"
   >
     <div class="flex-0 flex flex-row items-center">
-      <NuxtLink v-if="!hideNavBar" to="/">
-        <img
-          class="sm:hidden hover:scale-105 transition-transform duration-200 transform"
-          src="@images/vicflix.png"
-          width="90"
-        />
-        <img class="-sm:hidden" src="/icon.png" width="24" />
-      </NuxtLink>
-      <NuxtLink v-else :to="previousLink">
-        <SvgIcon class="-sm:hidden" src="videos/back" :size="34" />
-      </NuxtLink>
+      <div class="flex flex-row items-center w-10 h-10">
+        <NuxtLink v-if="!hideNavBar" to="/">
+          <img
+            class="sm:hidden hover:scale-105 transition-transform duration-200 transform"
+            src="@images/vicflix.png"
+            width="90"
+          />
+          <img class="-sm:hidden" src="/icon.png" width="24" />
+        </NuxtLink>
+        <NuxtLink v-else :to="previousLink">
+          <SvgIcon class="-sm:hidden" src="videos/back" :size="34" />
+        </NuxtLink>
+      </div>
       <div class="sm:hidden px-8">
         <NavBar :routes="navRoutes" />
       </div>
@@ -78,9 +80,11 @@ export default class HeaderComponent extends Vue {
 
   get previousLink(): RawLocation {
     const route = this.$route;
+    const { jbv, ...rest } = this.$route.query;
     return {
       path: route.path,
       params: route.params,
+      query: rest,
     };
   }
 

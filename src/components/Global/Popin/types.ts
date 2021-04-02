@@ -18,6 +18,12 @@ export type Position = {
   top: number;
 };
 
+export enum PopupMode {
+  Click = 'click',
+  Hover = 'hover',
+  Manual = 'manual',
+}
+
 export interface Size {
   width: number;
   height: number;

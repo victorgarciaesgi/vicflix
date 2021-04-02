@@ -1,61 +1,63 @@
 <template>
-  <div
-    class="PlayerTrackBar / flex-nowrap group flex flex-row items-center py-1 pl-2 cursor-pointer"
-    @mouseenter="handleShowIndicator"
-    @mousemove="handleIndicatorMove"
-    @mouseleave="handleHideIndicator"
-  >
+  <div class="PlayerTrackBar / flex-nowrap flex flex-row items-center pl-2 cursor-pointer">
     <div
-      ref="barRef"
-      class="Bar / bg-bg4 group-hover:h-3 relative flex-1 h-2 transition-all duration-300"
+      class="group flex flex-row flex-1 py-1"
+      @mouseenter="handleShowIndicator"
+      @mousemove="handleIndicatorMove"
+      @mouseleave="handleHideIndicator"
       @click="handleTimeChange($event.clientX)"
     >
       <div
-        class="Progress / bg-bg8 absolute top-0 left-0 h-full"
-        :style="{ width: `${currentProgressPercent}%` }"
-      ></div>
-
-      <div
-        class="CurrentTime / bg-red absolute top-0 left-0 h-full"
-        :style="{ width: `${currentTimePercent}%` }"
-      ></div>
-      <Popin
-        ref="popinIndicator"
-        theme="g40"
-        mode="manual"
-        :shadow="true"
-        v-if="!isMobile"
-        :width="250"
-        :arrow="false"
-        :offset="10"
-        :stopPropagation="false"
+        ref="barRef"
+        class="Bar / bg-bg4 group-hover:h-3 relative flex-1 h-2 transition-all duration-300"
       >
-        <template #content>
-          <div class="flex flex-col w-full">
-            <video
-              ref="miniVideoPlayer"
-              class="object-cover w-full h-32"
-              preload="metadata"
-              :src="video.videoUrl"
-            >
-              <source :src="video.videoUrl" type="video/mp4" />
-            </video>
-            <span class="px-2 py-1 text-center">{{ indicatorTimeValue }}</span>
-          </div>
-        </template>
-        <template #button>
-          <div :style="{ left: `${indicatorPosition}%` }" class="Indicator / absolute h-full">
-            <div v-if="showIndicator" style="width: 2px" class="bg-text6 h-full"></div>
-            <span v-else></span>
-          </div>
-        </template>
-      </Popin>
-      <div
-        :style="{ left: `${currentTimePercent}%` }"
-        ref="ballRef"
-        class="Ball / bg-red hover:scale-110 top-1/2 sm:h-6 sm:w-6 absolute w-5 h-5 transition-transform duration-200 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
-        @mousedown="handleMouseDown"
-      ></div>
+        <div
+          class="Progress / bg-bg8 absolute top-0 left-0 h-full"
+          :style="{ width: `${currentProgressPercent}%` }"
+        ></div>
+
+        <div
+          class="CurrentTime / bg-red absolute top-0 left-0 h-full"
+          :style="{ width: `${currentTimePercent}%` }"
+        ></div>
+        <Popin
+          ref="popinIndicator"
+          theme="g40"
+          mode="manual"
+          :shadow="true"
+          v-if="!isMobile"
+          :width="250"
+          :arrow="false"
+          :offset="10"
+          :stopPropagation="false"
+        >
+          <template #content>
+            <div class="flex flex-col w-full">
+              <video
+                ref="miniVideoPlayer"
+                class="object-cover w-full h-32"
+                preload="metadata"
+                :src="video.videoUrl"
+              >
+                <source :src="video.videoUrl" type="video/mp4" />
+              </video>
+              <span class="px-2 py-1 text-center">{{ indicatorTimeValue }}</span>
+            </div>
+          </template>
+          <template #button>
+            <div :style="{ left: `${indicatorPosition}%` }" class="Indicator / absolute h-full">
+              <div v-if="showIndicator" style="width: 2px" class="bg-text6 h-full"></div>
+              <span v-else></span>
+            </div>
+          </template>
+        </Popin>
+        <div
+          :style="{ left: `${currentTimePercent}%` }"
+          ref="ballRef"
+          class="Ball / bg-red hover:scale-110 top-1/2 sm:h-6 sm:w-6 absolute w-5 h-5 transition-transform duration-200 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+          @mousedown="handleMouseDown"
+        ></div>
+      </div>
     </div>
     <div class="Remaining / center flex w-20 pl-3">
       <span>{{ remainingTime }}</span>
@@ -136,13 +138,13 @@ export default class PlayerTrackBar extends BreakpointMixin {
 
   handleMouseDown() {
     this.dragging = true;
-    if (this.isMobile) {
+    if (!this.isMobile) {
       document.addEventListener('mousemove', this.handleMouseMove);
     }
   }
 
   handleMouseMove(event: MouseEvent) {
-    if (this.dragging && this.isMobile) {
+    if (this.dragging && !this.isMobile) {
       this.handleTimeChange(event.clientX);
       document.addEventListener('mouseup', this.handleMouseUp);
     }

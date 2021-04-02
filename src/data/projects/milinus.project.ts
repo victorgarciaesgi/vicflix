@@ -34,6 +34,7 @@ export const milinusProject: Project = {
     TechnosList.Typescript,
     TechnosList.GraphQL,
     TechnosList.Tailwind,
+    TechnosList.Gitlab,
   ],
   context: ProjectContext.Totem,
 };

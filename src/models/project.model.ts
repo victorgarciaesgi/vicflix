@@ -2,10 +2,11 @@ import { TechnosList } from '@constants';
 
 export interface BaseItemInterface {
   id: string;
-  title: string;
   logo: string;
+  title: any;
 }
 
+//! Project
 export interface Project extends BaseItemInterface {
   slogan?: string;
   description: string;
@@ -19,6 +20,7 @@ export interface Project extends BaseItemInterface {
   type: ProjectType[];
   info?: string;
   context: ProjectContext;
+  title: string;
 }
 export interface ProjectLink {
   title: string;
@@ -58,4 +60,11 @@ export enum ProjectType {
   App = 'App',
   Mobile = 'Mobile',
   Library = 'Library',
+}
+
+//! Skill
+
+export interface Skill extends BaseItemInterface {
+  color: string;
+  title: TechnosList;
 }

@@ -74,7 +74,7 @@ module.exports = {
   text10: 'var(--text10)',
   text11: 'var(--text11)',
   text12: 'var(--text12)',
-  shadow: 'var(--shadow)',
+  // shadow: 'var(--shadow)',
   textLink: 'var(--textLink)',
   transparent: 'transparent',
 };

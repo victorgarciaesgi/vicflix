@@ -9,3 +9,4 @@ export * from './ahera.project';
 export * from './kaze.project';
 export * from './nuxttypedrouter.project';
 export * from './vuextyped.project';
+export * from './totem.project';

@@ -23,6 +23,12 @@ export const peppyProject: Project = {
   info: `Aucun lien ou accès d'application administrateur ne sera fourni.
     Toutes les vidéos sont issues de fausses données de test et ne correspondent pas à des vraies données client.
   `,
-  technos: [TechnosList.Vue, TechnosList.Typescript, TechnosList.GraphQL, TechnosList.Stripe],
+  technos: [
+    TechnosList.Vue,
+    TechnosList.Typescript,
+    TechnosList.GraphQL,
+    TechnosList.Stripe,
+    TechnosList.Gitlab,
+  ],
   context: ProjectContext.Totem,
 };

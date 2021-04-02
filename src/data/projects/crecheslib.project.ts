@@ -29,7 +29,9 @@ export const crecheslibProject: Project = {
     TechnosList.Vue,
     TechnosList.Typescript,
     TechnosList.GraphQL,
+    TechnosList.MapBox,
     TechnosList.Leaflet,
+    TechnosList.Gitlab,
   ],
   context: ProjectContext.Totem,
 };

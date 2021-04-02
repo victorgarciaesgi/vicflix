@@ -10,7 +10,7 @@
         class="!mr-0"
       />
     </div>
-    <div v-else class="flex flex-col items-start">
+    <div v-else class="flex flex-col items-center">
       <span>Aucun résultat pour votre recherche: "{{ q }}".</span>
       <br />
       <span>Suggestions:</span>

@@ -28,10 +28,6 @@ export default class MobileProjectPlaceholder extends Vue {
   @Prop() project!: Project;
   @Prop({ default: false, type: Boolean }) showProgress!: boolean;
 
-  public init = false;
-  public rendered = false;
-  public showPreview = false;
-
   public progress = 0;
 
   get picture() {
@@ -43,6 +39,7 @@ export default class MobileProjectPlaceholder extends Vue {
       path: this.$route.path,
       query: {
         jbv: this.project.id,
+        ...this.$route.query,
       },
     };
   }

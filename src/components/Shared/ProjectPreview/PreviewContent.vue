@@ -92,7 +92,8 @@
               >Voir plus</div
             >
           </div>
-          <div v-if="project.links" class="flex flex-row mt-6">
+          <span class="text-red2 mt-6 mb-1 font-normal">Liens</span>
+          <div v-if="project.links" class="flex flex-row">
             <a
               v-for="link of project.links"
               :key="link.link"

@@ -1,5 +1,5 @@
 <template>
-  <div class="ProjectPlaceholder / flex flex-col w-64 h-40">
+  <div class="ProjectPlaceholder / flex flex-col w-64">
     <div
       ref="root"
       class="RootCard / h-36 flex w-full cursor-pointer"
@@ -20,7 +20,10 @@
           @mousemove.stop
           @click="navigateToPreview"
         >
-          <div class="relative overflow-hidden">
+          <div
+            class="relative overflow-hidden"
+            style="-webkit-backface-visibility: hidden; -webkit-transform: perspective(1000px)"
+          >
             <div ref="pictureRef" class="relative w-full rounded-t rounded-tl">
               <slot name="picture" />
             </div>
@@ -66,7 +69,7 @@ import { cubicTransition } from '@constants';
 export default class PlaceholderAnimatedItem extends Vue {
   @Prop({ required: true }) baseInfo!: BaseItemInterface;
   @Prop({ required: false }) picture?: string;
-  @Prop({ required: true }) logo?: string;
+  @Prop({ required: false }) logo?: string;
   @Prop({ required: false }) videoProgress?: ProgressList;
   @Prop({ default: false, type: Boolean }) showProgress!: boolean;
 
@@ -157,7 +160,6 @@ export default class PlaceholderAnimatedItem extends Vue {
     window.addEventListener('mousemove', this.closePreview);
 
     await Promise.all([this.$nextTick, Vue.nextTick]);
-
     if (this.preview && this.pictureRef && this.previewBlock) {
       Object.assign(this.preview.style, {
         width: `${rootPosition.width}px`,
@@ -175,6 +177,7 @@ export default class PlaceholderAnimatedItem extends Vue {
       return new Promise((resolve, reject) => {
         const placeholderImage = new Image();
         placeholderImage.onload = resolve;
+        placeholderImage.onerror = reject;
         placeholderImage.src = src;
       });
     }
@@ -186,8 +189,9 @@ export default class PlaceholderAnimatedItem extends Vue {
       this.rendered = true;
 
       const { finalTranslateX, finalTranslateY } = this.getTranslateValues();
+      if (this.preview) this.preview.classList.add('hasShadow');
 
-      if (this.picture && this.previewBlock) {
+      if (this.previewBlock) {
         anime({
           targets: this.preview,
           scale: this.scaleZoom,
@@ -196,7 +200,6 @@ export default class PlaceholderAnimatedItem extends Vue {
           duration: 200,
           easing: cubicTransition,
           complete: () => {
-            if (this.preview) this.preview.classList.add('hasShadow');
             if (this.root) {
               this.root.style.opacity = '0';
             }

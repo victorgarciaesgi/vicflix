@@ -1,7 +1,13 @@
 <template>
-  <Popin theme="g40" v-if="technoContent" class="Techno" mode="hover" :debounce="false">
+  <Popin
+    :theme="technoContent.color"
+    v-if="technoContent"
+    class="Techno"
+    mode="hover"
+    :debounce="false"
+  >
     <template #content>
-      <span class="px-3 py-2 text-sm">{{ technoContent.title }}</span>
+      <span class="text-w240 text-shadow px-3 py-2">{{ technoContent.title }}</span>
     </template>
     <template #button>
       <SvgIcon :src="technoContent.logo" :size="getSize" />

@@ -1,9 +1,11 @@
 import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator';
 import { CreateElement } from 'vue';
+import { PopupMode } from './types';
 
 @Component({})
 export default class PopinButton extends Vue {
   @Prop() stopPropagation!: boolean;
+  @Prop() mode!: PopupMode;
 
   clickEvent(event: Event) {
     if (this.stopPropagation) {
@@ -25,14 +27,15 @@ export default class PopinButton extends Vue {
   }
 
   @Watch('defaultSlot', { deep: true }) slotChanged() {
-    console.log(this.$slots);
     this.$nextTick(this.mountSlotElement);
   }
 
   mountSlotElement() {
     const elRoot = this.$el;
     if (elRoot) {
-      elRoot.addEventListener('click', this.clickEvent);
+      if (this.mode === PopupMode.Click) {
+        elRoot.addEventListener('click', this.clickEvent);
+      }
       elRoot.addEventListener('mouseenter', this.mouseEnterEvent);
       elRoot.addEventListener('mouseleave', this.mouseLeaveEvent);
       elRoot.classList.add('cursor-pointer');

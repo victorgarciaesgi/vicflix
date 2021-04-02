@@ -23,6 +23,13 @@ export const rewindProject: Project = {
   info: `Aucun lien ou accès d'application administrateur ne sera fourni.
     Toutes les vidéos sont issues de fausses données de test et ne correspondent pas à des vraies données client.
   `,
-  technos: [TechnosList.Vue, TechnosList.Typescript, TechnosList.GraphQL, TechnosList.Leaflet],
+  technos: [
+    TechnosList.Vue,
+    TechnosList.Typescript,
+    TechnosList.GraphQL,
+    TechnosList.MapBox,
+    TechnosList.Leaflet,
+    TechnosList.Gitlab,
+  ],
   context: ProjectContext.Totem,
 };

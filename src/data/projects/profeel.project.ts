@@ -46,6 +46,7 @@ export const profeelProject: Project = {
     TechnosList.Typescript,
     TechnosList.GraphQL,
     TechnosList.Tailwind,
+    TechnosList.Gitlab,
   ],
   context: ProjectContext.Totem,
 };

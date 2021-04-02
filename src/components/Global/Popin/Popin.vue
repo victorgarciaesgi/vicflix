@@ -37,7 +37,7 @@
               /> -->
                 <path
                   class="st1"
-                  :fill="colorList[theme]"
+                  :fill="themeColor"
                   d="M24.5,13h-23L12.47,1.71c0.29-0.3,0.77-0.3,1.06,0L24.5,13z"
                 />
               </g>
@@ -45,7 +45,8 @@
           </div>
           <div
             class="max-h-inh flex overflow-x-hidden overflow-y-auto"
-            :class="[`bg-${theme}`, { 'rounded-md': rounded }]"
+            :class="[{ 'rounded-md': rounded }]"
+            :style="{ backgroundColor: themeColor }"
           >
             <slot :alignement="alignement" name="content" />
           </div>
@@ -60,6 +61,7 @@
       @mouseleave="handleMouseLeave"
       @element-init="initButtonRoot"
       :stopPropagation="stopPropagation"
+      :mode="mode"
     >
       <slot :active="visible" name="button" />
     </PopinButton>
@@ -72,15 +74,9 @@ import { EventBus, Events } from '@services';
 import { nanoid } from 'nanoid';
 import colorsModule from '@colors';
 import { getPopupComputedOutputMesures, getScrollParent } from './utils';
-import { PopupPlacement, PopupAlignement } from './types';
+import { PopupPlacement, PopupMode, PopupAlignement } from './types';
 import PopinButton from './PopinButton';
 const { Fragment } = require('vue-fragment');
-
-enum PopupMode {
-  Click = 'click',
-  Hover = 'hover',
-  Manual = 'manual',
-}
 
 @Component({
   components: {
@@ -137,6 +133,12 @@ export default class Popin extends Vue {
 
   initButtonRoot(el: HTMLElement) {
     this.button = el;
+  }
+
+  get themeColor() {
+    if (this.colorList[this.theme]) {
+      return this.colorList[this.theme];
+    } else return this.theme;
   }
 
   public rendered = false;

@@ -14,6 +14,7 @@ export enum TechnosList {
   MapBox = 'MapBox',
   Leaflet = 'Leaflet',
   Gitlab = 'Gitlab CI',
+  Jest = 'Jest',
 }
 
 export const TechnosConstant: Skill[] = [
@@ -29,4 +30,5 @@ export const TechnosConstant: Skill[] = [
   { title: TechnosList.Stripe, logo: 'technos/Stripe', color: '#635bff', id: nanoid(4) },
   { title: TechnosList.MapBox, logo: 'technos/Mapbox', color: '#4264fb', id: nanoid(4) },
   { title: TechnosList.Leaflet, logo: 'technos/Leaflet', color: '#199900', id: nanoid(4) },
+  { title: TechnosList.Jest, logo: 'technos/Jest', color: '#99424f', id: nanoid(4) },
 ];

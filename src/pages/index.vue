@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col w-full">
+  <div class="flex flex-col w-full min-h-screen">
     <NuxtChild />
     <FooterComponent />
   </div>

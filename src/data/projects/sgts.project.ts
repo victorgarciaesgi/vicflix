@@ -25,6 +25,6 @@ export const sgtsProject: Project = {
   ],
   type: [ProjectType.Library],
   id: 'MNJ9OK3jn',
-  technos: [TechnosList.Typescript, TechnosList.GraphQL],
+  technos: [TechnosList.Typescript, TechnosList.GraphQL, TechnosList.Jest],
   context: ProjectContext.Personal,
 };

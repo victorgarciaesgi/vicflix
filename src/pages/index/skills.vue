@@ -1,6 +1,7 @@
 <template>
-  <div class="relative block w-full pt-40 pb-20">
-    <div class="ProjectGrid / sm:px-2 sm:gap-1 grid justify-center px-12">
+  <div class="relative block w-full px-10 pt-40 pb-20">
+    <h2 class="mb-5 font-semibold"> Principales technologies utilisées </h2>
+    <div class="ProjectGrid / sm:px-2 sm:gap-1 grid justify-start">
       <component
         :is="isMobile ? 'MobileSkillPlaceholder' : 'SkillPlaceholder'"
         v-for="skill of skills"
@@ -35,11 +36,11 @@ export default class Skills extends BreakpointMixin {
 <style lang="postcss" scoped>
 div.ProjectGrid {
   gap: 8px;
-  grid-template-columns: repeat(auto-fit, 230px);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-auto-flow: row dense;
 
-  @screen sm {
-    grid-template-columns: repeat(auto-fill, 8rem);
+  @screen md {
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
   }
 }
 </style>

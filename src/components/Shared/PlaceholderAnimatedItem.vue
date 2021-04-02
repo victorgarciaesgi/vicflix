@@ -55,7 +55,6 @@ import { Component, Vue, Prop, Ref } from 'nuxt-property-decorator';
 import anime from 'animejs';
 import { Location } from 'vue-router';
 import Techno from './Techno.vue';
-import { VideoProgressModule } from '@store';
 import ProjectVideoProgress from './ProjectVideoProgress.vue';
 import { EventBus, Events } from '@services';
 import { cubicTransition } from '@constants';
@@ -72,6 +71,7 @@ export default class PlaceholderAnimatedItem extends Vue {
   @Prop({ required: false }) logo?: string;
   @Prop({ required: false }) videoProgress?: ProgressList;
   @Prop({ default: false, type: Boolean }) showProgress!: boolean;
+  @Prop({ default: true }) inCarrousel!: boolean;
 
   @Ref() root!: HTMLDivElement;
   @Ref() preview?: HTMLDivElement;
@@ -128,7 +128,7 @@ export default class PlaceholderAnimatedItem extends Vue {
   getTranslateValues() {
     const previewRect = this.preview!.getBoundingClientRect();
     const rootRect = this.root.getBoundingClientRect();
-    const limitDistanceBorder = 52;
+    const limitDistanceBorder = this.inCarrousel ? 52 : 10;
 
     const previewWidthScale = previewRect.width * this.scaleZoom;
     const positionPreviewLeft = rootRect.left - (previewWidthScale - rootRect.width) / 2;

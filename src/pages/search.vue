@@ -7,6 +7,7 @@
         v-for="project of results"
         :key="project.id"
         :project="project"
+        :inCarrousel="false"
         class="!mr-0"
       />
     </div>

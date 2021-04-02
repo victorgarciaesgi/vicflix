@@ -29,48 +29,51 @@
       />
     </template>
     <template #previewBlock>
-      <div class="Block / flex-nowrap flex flex-row">
+      <div class="Block / flex-nowrap flex flex-col">
+        <div class="flex-nowrap flex flex-row">
+          <h4 class="flex-1 leading-5">{{ project.title }}</h4>
+
+          <div class="flex-nowrap flex-0 flex flex-row items-center ml-2">
+            <Popin mode="hover" :offset="2" theme="white">
+              <template #content>
+                <span class="px-3 py-1 text-black">{{
+                  hasProjectVideos ? 'Lecture' : 'Consulter'
+                }}</span>
+              </template>
+              <template #button>
+                <div class="center flex p-1 text-black bg-white border-2 border-white rounded-full">
+                  <SvgIcon
+                    :src="hasProjectVideos ? 'actions/play' : 'actions/open_in'"
+                    :size="20"
+                    @click.stop="playFirstVideo"
+                  />
+                </div>
+              </template>
+            </Popin>
+            <Popin mode="hover" :offset="2" theme="white">
+              <template #content>
+                <span class="px-3 py-1 text-black">Plus d'infos</span>
+              </template>
+              <template #button>
+                <NuxtLink
+                  :to="toPreviewLink"
+                  class="center bg-bg4 border-bg10 flex p-1 ml-1 text-white border-2 rounded-full"
+                >
+                  <SvgIcon src="actions/expand" :size="20" />
+                </NuxtLink>
+              </template>
+            </Popin>
+          </div>
+        </div>
         <div class="flex flex-col flex-1">
-          <h4 class="leading-5">{{ project.title }}</h4>
           <div class="text-text9 text-xxs flex flex-row items-center">
             <span>{{ project.type.join(', ') }}</span>
             <span class="px-1">•</span>
             <span>{{ project.year }}</span>
           </div>
-          <div class="flex flex-row items-center justify-start">
+          <div class="flex flex-row items-center justify-start -ml-1">
             <Techno v-for="techno of project.technos" :key="techno" :techno="techno" size="sm" />
           </div>
-        </div>
-        <div class="flex-nowrap flex-0 flex flex-row items-center ml-1">
-          <Popin mode="hover" :offset="2" theme="white">
-            <template #content>
-              <span class="px-3 py-1 text-black">{{
-                hasProjectVideos ? 'Lecture' : 'Consulter'
-              }}</span>
-            </template>
-            <template #button>
-              <div class="center flex p-1 text-black bg-white border-2 border-white rounded-full">
-                <SvgIcon
-                  :src="hasProjectVideos ? 'actions/play' : 'actions/open_in'"
-                  :size="20"
-                  @click.stop="playFirstVideo"
-                />
-              </div>
-            </template>
-          </Popin>
-          <Popin mode="hover" :offset="2" theme="white">
-            <template #content>
-              <span class="px-3 py-1 text-black">Plus d'infos</span>
-            </template>
-            <template #button>
-              <NuxtLink
-                :to="toPreviewLink"
-                class="center bg-bg4 border-bg10 flex p-1 ml-1 text-white border-2 rounded-full"
-              >
-                <SvgIcon src="actions/expand" :size="20" />
-              </NuxtLink>
-            </template>
-          </Popin>
         </div>
       </div>
       <ProjectVideoProgress :progress="videoProgress" />
@@ -100,6 +103,7 @@ import PlaceholderAnimatedItem from './PlaceholderAnimatedItem.vue';
 export default class ProjectPlaceholder extends Vue {
   @Prop() project!: Project;
   @Prop({ default: false, type: Boolean }) showProgress!: boolean;
+  @Prop({ default: true }) inCarrousel!: boolean;
 
   @Ref() root!: HTMLDivElement;
   @Ref() preview?: HTMLDivElement;

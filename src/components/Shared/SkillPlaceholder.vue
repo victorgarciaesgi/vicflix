@@ -1,5 +1,5 @@
 <template>
-  <PlaceholderAnimatedItem :baseInfo="skill" :showProgress="false">
+  <PlaceholderAnimatedItem :baseInfo="skill" :showProgress="false" :inCarrousel="false">
     <template #card>
       <div class="center flex w-full h-full rounded" :style="{ backgroundColor: skill.color }">
         <SvgIcon :src="logo" color="w230" :size="110" />

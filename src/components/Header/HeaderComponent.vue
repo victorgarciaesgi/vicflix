@@ -118,7 +118,8 @@ header {
   width: 100%;
   z-index: 10003;
   flex-flow: row nowrap;
-  transition: background-color 0.4s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
+  background-color: transparent;
 
   &::before {
     content: '';
@@ -128,6 +129,7 @@ header {
     width: 100%;
     height: 60px;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+    transition: opacity 0.3s;
 
     @screen sm {
       height: 100%;
@@ -135,7 +137,10 @@ header {
   }
 
   &.opaque {
-    background: black;
+    background-color: black;
+    &::before {
+      opacity: 0;
+    }
   }
 
   &.hideNavBar {

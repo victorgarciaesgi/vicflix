@@ -16,6 +16,7 @@ module.exports = {
           'dark',
           'define-mixin',
           'mixin',
+          'layer',
           '@mixin-content',
         ],
       },

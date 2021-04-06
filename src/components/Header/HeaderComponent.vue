@@ -22,7 +22,9 @@
       </div>
     </div>
 
-    <div class="Menus / sm:flex-grow sm:justify-end flex flex-row items-center flex-shrink-0 ml-5">
+    <div
+      class="Menus / sm:flex-grow sm:justify-end text-bg1 flex flex-row items-center flex-shrink-0 ml-5"
+    >
       <SearchBar />
       <a href="https://github.com/victorgarciaesgi" target="_blank" class="sm:hidden">
         <SvgIcon src="social/github" :size="20" class="mx-2" />
@@ -40,6 +42,7 @@
         :mode="isMobile ? 'click' : 'hover'"
         :debounce="true"
         :arrow="false"
+        :shadow="true"
         :offset="14"
       >
         <template #content>
@@ -60,7 +63,7 @@
           </div>
         </template>
         <template #button>
-          <SvgIcon src="actions/translate" color="white" :size="20" class="sm:ml-1 ml-4 mr-1" />
+          <SvgIcon src="actions/translate" :size="20" class="sm:ml-1 ml-4 mr-1" />
         </template>
       </Popin>
       <div class="flex ml-3">

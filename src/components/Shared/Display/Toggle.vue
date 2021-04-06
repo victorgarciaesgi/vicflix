@@ -96,7 +96,7 @@ $boule: 24px;
         background-color: var(--primary);
       }
       &.darkmode {
-        background-color: #5882b7;
+        background-color: var(--red);
       }
 
       .boule {

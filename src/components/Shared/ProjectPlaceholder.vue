@@ -37,7 +37,7 @@
             <Popin mode="hover" :offset="2" theme="white">
               <template #content>
                 <span class="px-3 py-1 text-black">{{
-                  hasProjectVideos ? 'Lecture' : 'Consulter'
+                  hasProjectVideos ? $t($messages.Actions.Play) : $t($messages.Actions.Consult)
                 }}</span>
               </template>
               <template #button>
@@ -52,7 +52,7 @@
             </Popin>
             <Popin mode="hover" :offset="2" theme="white">
               <template #content>
-                <span class="px-3 py-1 text-black">Plus d'infos</span>
+                <span class="px-3 py-1 text-black">{{ $t($messages.Actions.MoreInfo) }}</span>
               </template>
               <template #button>
                 <NuxtLink

@@ -18,7 +18,7 @@
         @blur="toggleShowInput"
         @focus="handleFocus"
         class="text-md flex-1 bg-transparent"
-        placeholder="Titres, languages, genre"
+        :placeholder="$t($messages.Search.Placeholder)"
         type="search"
         @input="handleInput($event.target.value)"
         :value="searchValue"

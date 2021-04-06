@@ -22,18 +22,30 @@ export const locale: LanguageConfig = {
     MyList: 'Ma Liste',
     Popular: 'Populaires en ce moment',
     All: 'Tous les projets',
+    Apps: 'Applications',
+    Sites: 'Sites web',
+    Libs: 'Librairies',
   },
   Search: {
-    Placeholder: 'Titles, languages, genre...',
+    Placeholder: 'Titres, langages, genre...',
   },
   Actions: {
     Play: 'Lecture',
     MoreInfo: "Plus d'infos",
     LetsGo: "C'est parti!",
+    AddToList: 'Ajouter à ma liste',
+    Consult: 'Consulter',
+  },
+  Skills: {
+    Project: 'Aucun projet | {count} projet | {count} projets',
   },
   Projects: {
     Info: `Aucun lien ou accès d'application administrateur ne sera fourni.
     Toutes les vidéos sont issues de fausses données de test et ne correspondent pas à des vraies données client.`,
+    SeeMore: 'Voir plus',
+    SeeLess: 'Voir moins',
+    Recommended: 'Recommandé à 99.9%',
+    Episode: 'Épisodes',
   },
   config: {
     code: 'fr',

@@ -20,18 +20,30 @@ export default {
     MyList: 'My List',
     Popular: 'Popular',
     All: 'All projects',
+    Apps: 'Applications',
+    Sites: 'Websites',
+    Libs: 'Libraries',
   },
   Search: {
     Placeholder: 'Titles, languages, genre...',
+  },
+  Skills: {
+    Project: 'No project | {count} project | {count} projects',
   },
   Actions: {
     Play: 'Play',
     MoreInfo: 'More info',
     LetsGo: "Let's go!",
+    AddToList: 'Add to my list',
+    Consult: 'Visit',
   },
   Projects: {
     Info: `No links or access to Admin applications provided.
     All videos are based on fake data and are not assimilitated to real user information.`,
+    SeeMore: 'See more',
+    SeeLess: 'See less',
+    Recommended: '99.9% recommended',
+    Episode: 'Episodes',
   },
   config: {
     code: 'en',

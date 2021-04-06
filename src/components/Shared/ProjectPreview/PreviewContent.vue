@@ -70,7 +70,7 @@
           <ProjectVideoProgress v-if="videoProgress && isMobile" :progress="videoProgress" />
           <h1 class="">{{ project.title }}</h1>
           <div class="flex flex-row items-center mt-3">
-            <span class="text-green font-bold">Recommandé à 99.9%</span>
+            <span class="text-green font-bold">{{ $t($messages.Projects.Recommended) }}</span>
             <span class="ml-2">{{ project.year }}</span>
             <span class="border-bg9 px-1 py-px ml-2 text-sm border">12+</span>
           </div>
@@ -93,7 +93,11 @@
               }"
               :class="{ 'pt-0': collapseDescription }"
               @click="collapseDescription = !collapseDescription"
-              >Voir {{ collapseDescription ? 'moins' : 'plus' }}</div
+              >{{
+                collapseDescription
+                  ? $t($messages.Projects.SeeLess)
+                  : $t($messages.Projects.SeeMore)
+              }}</div
             >
           </div>
           <span class="text-red2 mt-6 mb-1 font-normal">Liens</span>
@@ -136,7 +140,7 @@
       </div>
       <div v-if="project.videos.length" class="flex flex-col">
         <div class="flex flex-col justify-between">
-          <h2 class="border-g80 py-2 mb-2 border-b">Épisodes</h2>
+          <h2 class="border-g80 py-2 mb-2 border-b">{{ $t($messages.Projects.Episode) }}</h2>
           <div class="flex flex-col">
             <VideoPreviewBanner
               v-for="(video, index) of project.videos"

@@ -14,11 +14,12 @@
           v-show="showPreview"
           :id="baseInfo.id"
           ref="preview"
-          class="Preview / fixed top-0 left-0 flex flex-col bg-transparent rounded cursor-pointer"
+          class="Preview / fixed top-0 left-0 flex flex-col bg-transparent rounded"
           :data-show="showPreview"
           @mouseleave="handleMouseLeave"
           @mousemove.stop
           @click="navigateToPreview"
+          :class="{ 'cursor-pointer': navigate }"
         >
           <div
             class="relative overflow-hidden"
@@ -72,6 +73,7 @@ export default class PlaceholderAnimatedItem extends Vue {
   @Prop({ required: false }) videoProgress?: ProgressList;
   @Prop({ default: false, type: Boolean }) showProgress!: boolean;
   @Prop({ default: true }) inCarrousel!: boolean;
+  @Prop({ default: true }) navigate!: boolean;
 
   @Ref() root!: HTMLDivElement;
   @Ref() preview?: HTMLDivElement;
@@ -85,7 +87,9 @@ export default class PlaceholderAnimatedItem extends Vue {
   public scaleZoom = 1.5;
 
   navigateToPreview() {
-    this.$router.push(this.toPreviewLink);
+    if (this.navigate) {
+      this.$router.push(this.toPreviewLink);
+    }
   }
 
   get toPreviewLink(): Location {

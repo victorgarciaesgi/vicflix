@@ -1,5 +1,10 @@
 <template>
-  <PlaceholderAnimatedItem :baseInfo="skill" :showProgress="false" :inCarrousel="false">
+  <PlaceholderAnimatedItem
+    :baseInfo="skill"
+    :showProgress="false"
+    :inCarrousel="false"
+    :navigate="false"
+  >
     <template #card>
       <div class="center flex w-full h-full rounded" :style="{ backgroundColor: skill.color }">
         <SvgIcon :src="logo" color="w230" :size="110" />
@@ -22,9 +27,9 @@
       <div class="Block / flex-nowrap flex flex-row">
         <div class="flex flex-col flex-1">
           <h4 class="leading-5">{{ skill.title }}</h4>
-          <span class="text-w160 text-xs"
-            >{{ projectConcerned }} {{ $plural('projet', projectConcerned) }}</span
-          >
+          <span class="text-w160 text-xs">{{
+            $tc($messages.Skills.Project, projectConcerned, { count: projectConcerned })
+          }}</span>
         </div>
         <div class="flex-nowrap flex-0 flex flex-row items-center ml-1">
           <Popin mode="hover" :offset="2" theme="white">

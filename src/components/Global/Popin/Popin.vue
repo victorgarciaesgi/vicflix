@@ -156,7 +156,7 @@ export default class Popin extends Vue {
       width: this.width ? this.width + 'px' : 'max-content',
       maxWidth: '100vw',
       ...(this.shadow && {
-        boxShadow: '0 0 10px rgba(0,0,0,0.2)',
+        boxShadow: '0 0 10px var(--shadowColor)',
       }),
       ...(!this.debounce &&
         this.mode === PopupMode.Hover && {

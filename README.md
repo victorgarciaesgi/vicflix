@@ -12,7 +12,7 @@
 # Dependencies Installation
 
 ```bash
-yarn
+ yarn
 ```
 
 # Change API url endpoint

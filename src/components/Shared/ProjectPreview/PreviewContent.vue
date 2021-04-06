@@ -78,18 +78,22 @@
           <div
             ref="descriptionRef"
             v-if="project.description"
-            class="relative mt-2 whitespace-pre-line"
-            :class="{ 'line-clamp-4': !collapseDescription }"
-          >
-            {{ project.description }}
+            class="whitespace-pre-wrap-line relative mt-4"
+            :class="{ 'line-clamp-4': !collapseDescription, 'pb-6': collapseDescription }"
+            >{{ project.description }}
+
             <div
-              v-if="!collapseDescription"
-              class="text-w160 hover:underline absolute bottom-0 right-0 pl-6 cursor-pointer"
-              style="
-                background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 30%);
-              "
-              @click="collapseDescription = true"
-              >Voir plus</div
+              class="text-w200 hover:underline absolute bottom-0 left-0 w-full pt-6 pl-6 text-center cursor-pointer"
+              :style="{
+                background: `linear-gradient(
+                  to bottom,
+                  rgba(10, 10, 10, 0) 0%,
+                  rgba(10, 10, 10, 1) 90%
+                )`,
+              }"
+              :class="{ 'pt-0': collapseDescription }"
+              @click="collapseDescription = !collapseDescription"
+              >Voir {{ collapseDescription ? 'moins' : 'plus' }}</div
             >
           </div>
           <span class="text-red2 mt-6 mb-1 font-normal">Liens</span>

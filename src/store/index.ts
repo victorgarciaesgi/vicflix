@@ -9,7 +9,11 @@ const modules = Object.entries(Modules).map(([key, value]) => value);
 
 const persistLocal = new VuexPersistence({
   reducer: (state: any) => {
-    return { VideoProgressModule: state.VideoProgressModule, AuthModule: state.AuthModule };
+    return {
+      VideoProgressModule: state.VideoProgressModule,
+      AuthModule: state.AuthModule,
+      i18n: state.i18n,
+    };
   },
   storage: window.localStorage,
 });

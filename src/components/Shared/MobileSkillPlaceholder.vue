@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     :to="toPreviewLink"
-    class="MobileProjectPlaceholder / flex-0 flex w-32 h-48 mr-2 overflow-hidden rounded cursor-pointer"
+    class="MobileProjectPlaceholder / flex-0 justify-self-center flex w-32 h-48 mr-2 overflow-hidden rounded cursor-pointer"
   >
     <div class="center flex w-full h-full rounded" :style="{ backgroundColor: skill.color }">
       <SvgIcon :src="logo" color="w230" :size="110" />

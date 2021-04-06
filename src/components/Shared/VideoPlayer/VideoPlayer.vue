@@ -30,7 +30,7 @@
     <transition name="fade">
       <div
         v-if="showToolbar || isVideoEnding"
-        class="ToolBar / absolute bottom-0 left-0 z-10 flex-col w-full px-5 py-8"
+        class="ToolBar / absolute bottom-0 left-0 z-10 flex flex-col w-full px-5 py-8"
         :class="{ playing: videoPlaying }"
       >
         <transition name="fade" mode="out-in">
@@ -39,9 +39,9 @@
           </div>
           <div
             v-else-if="isVideoEnding && nextProject"
-            class="sm:justify-start -sm:max-w-sm flex flex-row justify-end pb-4"
+            class="sm:justify-start flex flex-row justify-end w-full pb-4"
           >
-            <div class="sm:w-full flex flex-col">
+            <div class="sm:w-full -sm:max-w-sm flex flex-col">
               <div>
                 <img
                   :src="`/logos/${nextProject.logo}`"
@@ -437,6 +437,15 @@ export default class VideoPlayer extends BreakpointMixin {
       }
       case 'Escape': {
         this.exitFullScreen();
+        break;
+      }
+      case 'ArrowLeft': {
+        this.addVideoTime(-5);
+        break;
+      }
+      case 'ArrowRight': {
+        this.addVideoTime(5);
+        break;
       }
     }
   }
@@ -581,7 +590,7 @@ export default class VideoPlayer extends BreakpointMixin {
       const userAgent = window.navigator.userAgent;
       this.handlePlayerUpdateTime = debounce((time: number) => {
         this.videoPlayer.currentTime = time;
-      }, 50);
+      }, 20);
 
       if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i)) {
         this.isIos = true;

@@ -34,7 +34,7 @@
         </div>
         <div class="bg-w120 w-full h-px"></div>
         <div class="flex flex-col p-3">
-          <span class="hover:underline py-1">Contact</span>
+          <a href="mailto:victorgarciaparis13@gmail.com" class="hover:underline py-1"> Contact </a>
           <a
             href="https://github.com/victorgarciaesgi"
             target="_blank"

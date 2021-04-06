@@ -4,6 +4,7 @@ const colors = require('./src/styles/colors.module');
 module.exports = {
   important: false,
   darkMode: 'class',
+  mode: 'jit',
   future: {
     removeDeprecatedGapUtilities: true,
     purgeLayersByDefault: true,

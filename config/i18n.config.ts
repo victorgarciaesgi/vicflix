@@ -26,5 +26,9 @@ export const i18n: Options = {
   lazy: true,
   langDir: 'locales/',
   seo: false,
+  vuex: {
+    moduleName: 'i18n',
+    syncLocale: true,
+  },
   detectBrowserLanguage: false,
 };

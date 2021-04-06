@@ -1,4 +1,5 @@
 import * as Locales from '@locales';
+import { LocaleObject } from 'nuxt-i18n';
 import { IConstant, ObjectLiteral } from './shared.model';
 
 const defaultLocale = process.env.NUXT_ENV_I18N_LOCALE as AvailableLocales;
@@ -36,11 +37,19 @@ export type LanguageConfig = FormatMessages<DefaultMessages> & { config: IsoConf
 export interface IsoConfig {
   code: string;
   iso: string;
+  name: string;
 }
 
 export const AppTrads: LocalesMessages = formatMessages(Locales.fr, '');
 
 export type AvailableLocales = keyof typeof Locales;
+
+export const AllLocalesArray = Object.entries(Locales).map<LocaleObject>(([key, { config }]) => {
+  return {
+    ...config,
+    file: `${key}.ts`,
+  };
+});
 
 export const LocalesConstant: IConstant<keyof typeof Locales> = {
   en: 'en',

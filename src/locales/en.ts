@@ -3,6 +3,11 @@ import { LanguageConfig } from '@models';
 export default {
   Login: {
     WhoAreYou: "Who's watching?",
+    Logout: 'Logout',
+    Welcome: 'Welcome to Vicflix!',
+    WelcomeDesc: `I'm Victor Garcia, front-end developer working primarely with Vue.js/Nuxt, Typescript and GraphQL.
+    
+    Vicflix is one of my project that act as my portfolio and it lets you discover my projects, my skills and my experience thought a familiar UI inspired by a popular streaming video website I will not quote the name`,
   },
   Nav: {
     Home: 'Home',
@@ -10,8 +15,27 @@ export default {
     Experience: 'Experience',
     Skills: 'Skills',
   },
+  Home: {
+    ContinueWithProfile: `Continue with your profile`,
+    MyList: 'My List',
+    Popular: 'Popular',
+    All: 'All projects',
+  },
+  Search: {
+    Placeholder: 'Titles, languages, genre...',
+  },
+  Actions: {
+    Play: 'Play',
+    MoreInfo: 'More info',
+    LetsGo: "Let's go!",
+  },
+  Projects: {
+    Info: `No links or access to Admin applications provided.
+    All videos are based on fake data and are not assimilitated to real user information.`,
+  },
   config: {
     code: 'en',
     iso: 'en-US',
+    name: 'English',
   },
 };

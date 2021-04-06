@@ -18,7 +18,7 @@
             ref="arrow"
             :src="getArrowSrc"
             :class="[PopupPlacement, alignement]"
-            class="Arrow / absolute"
+            class="Arrow / absolute z-0"
           >
             <svg
               :height="10"
@@ -44,7 +44,7 @@
             </svg>
           </div>
           <div
-            class="max-h-inh flex overflow-x-hidden overflow-y-auto"
+            class="max-h-inh z-10 flex overflow-x-hidden overflow-y-auto"
             :class="[{ 'rounded-md': rounded }]"
             :style="{ backgroundColor: themeColor }"
           >
@@ -334,7 +334,7 @@ export default class Popin extends Vue {
       parentScrollNode.addEventListener('scroll', this.processPopupPlacement);
     }
 
-    if (!this.nested && this.mode !== PopupMode.Hover) {
+    if (!this.nested) {
       EventBus.$on(Events.CLOSE_POPUPS, this.closePopup);
     } else if (this.nestedNamespace) {
       EventBus.$on(`${Events.CLOSE_POPUPS}-${this.nestedNamespace}`, this.closePopup);
@@ -411,7 +411,7 @@ div.Popup-Box {
       top: calc(var(--arrowHeight) * -1 + 1px);
     }
     &.Top {
-      top: calc(100% - 0.5px);
+      top: calc(100% - 0.8px);
     }
   }
 }

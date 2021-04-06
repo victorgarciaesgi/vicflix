@@ -34,10 +34,12 @@
           <TechnoItem v-for="tech of data.technos" :key="tech" :techno="tech" />
         </div>
         <div class="sm:justify-center flex flex-row py-4">
-          <Action icon="actions/play" theme="white" @click="playFirstVideo">Lecture</Action>
-          <Action class="sm:hidden" icon="alerts/info" theme="gray" :to="toPreviewLink"
-            >Plus d'infos</Action
-          >
+          <Action icon="actions/play" theme="white" @click="playFirstVideo">{{
+            $t($messages.Actions.Play)
+          }}</Action>
+          <Action class="sm:hidden" icon="alerts/info" theme="gray" :to="toPreviewLink">{{
+            $t($messages.Actions.MoreInfo)
+          }}</Action>
         </div>
       </div>
     </div>

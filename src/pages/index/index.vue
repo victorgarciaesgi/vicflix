@@ -8,21 +8,21 @@
       :projects="continueProjects"
       show-progress
     >
-      Reprendre avec votre profil
+      {{ $t($messages.Home.ContinueWithProfile) }}
     </component>
     <component
       v-if="wishList.length"
       :is="isDesktop ? 'ProjectList' : 'MobileProjectList'"
       :projects="wishList"
     >
-      Ma Liste
+      {{ $t($messages.Home.MyList) }}
     </component>
 
     <component :is="isDesktop ? 'ProjectList' : 'MobileProjectList'" :projects="popularProjects">
-      Populaires en ce moment
+      {{ $t($messages.Home.Popular) }}
     </component>
     <component :is="isDesktop ? 'ProjectList' : 'MobileProjectList'" :projects="allProjects">
-      Tous les projets
+      {{ $t($messages.Home.Popular) }}
     </component>
   </div>
 </template>

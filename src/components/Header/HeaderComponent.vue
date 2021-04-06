@@ -4,7 +4,7 @@
     :class="{ opaque, hideNavBar }"
   >
     <div class="flex-0 flex flex-row items-center">
-      <div class="flex flex-row items-center w-10 h-10">
+      <div class="sm:w-10 flex flex-row items-center h-10">
         <NuxtLink v-if="!hideNavBar" to="/">
           <img
             class="sm:hidden hover:scale-105 transition-transform duration-200 transform"
@@ -25,15 +25,44 @@
     <div class="Menus / sm:flex-grow sm:justify-end flex flex-row items-center flex-shrink-0 ml-5">
       <SearchBar />
       <a href="https://github.com/victorgarciaesgi" target="_blank" class="sm:hidden">
-        <SvgIcon src="social/github" :size="20" class="mx-1" />
+        <SvgIcon src="social/github" :size="20" class="mx-2" />
       </a>
       <a
         href="https://www.linkedin.com/in/victor-garcia-1793b2a9/"
-        class="sm:hidden ml-4"
+        class="sm:hidden ml-3"
         target="_blank"
       >
-        <SvgIcon src="social/linkedin" :size="20" class="mr-2" />
+        <SvgIcon src="social/linkedin" :size="20" />
       </a>
+      <Popin
+        :width="180"
+        theme="g20"
+        :mode="isMobile ? 'click' : 'hover'"
+        :debounce="true"
+        :arrow="false"
+        :offset="14"
+      >
+        <template #content>
+          <div class="flex flex-col w-full">
+            <div
+              class="flex-nowrap hover:bg-bg3 text-w180 first:pt-3 last:pb-3 flex flex-row items-center justify-between px-3 py-2 cursor-pointer"
+              v-for="locale of allLocales"
+              :key="locale.code"
+              @click="setLanguage(locale.code)"
+              :class="{ '!text-white': $i18n.locale === locale.code }"
+            >
+              <div class="flex flex-row items-center">
+                <img class="h-5 mr-3" :src="`/flags/${locale.iso}.png`" />
+                <span class="font-semibold">{{ locale.name }}</span>
+              </div>
+              <SvgIcon src="forms/done" :size="18" v-if="$i18n.locale === locale.code" />
+            </div>
+          </div>
+        </template>
+        <template #button>
+          <SvgIcon src="actions/translate" color="white" :size="20" class="sm:ml-1 ml-4 mr-1" />
+        </template>
+      </Popin>
       <div class="flex ml-3">
         <UserPopup />
       </div>
@@ -45,22 +74,25 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator';
+import { BreakpointMixin } from '@mixins';
+import { AllLocalesArray, navRoutes } from '@models';
 import { AuthModule, RouterModule } from '@store';
-import { navRoutes } from '@models';
+import { Component } from 'nuxt-property-decorator';
+import { RawLocation } from 'vue-router';
 import BurgerMenu from './BurgerMenu.vue';
 import NavBar from './NavBar.vue';
-import UserPopup from './UserPopup.vue';
 import SearchBar from './SearchBar.vue';
-import { Location, RawLocation } from 'vue-router';
+import UserPopup from './UserPopup.vue';
 
 @Component({
   components: { NavBar, BurgerMenu, UserPopup, SearchBar },
 })
-export default class HeaderComponent extends Vue {
+export default class HeaderComponent extends BreakpointMixin {
   public showBurger = false;
   public navRoutes = navRoutes;
   public opaque = false;
+
+  public allLocales = AllLocalesArray;
 
   get isLoggedIn() {
     return AuthModule.state.loggedIn;
@@ -72,6 +104,10 @@ export default class HeaderComponent extends Vue {
 
   get currentTitle() {
     return RouterModule.state.currentTitle;
+  }
+
+  get availableLanguages() {
+    return;
   }
 
   get userInfos() {
@@ -86,6 +122,10 @@ export default class HeaderComponent extends Vue {
       params: route.params,
       query: rest,
     };
+  }
+
+  setLanguage(code: string) {
+    this.$i18n.setLocale(code);
   }
 
   checkHeaderOpaque() {

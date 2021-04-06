@@ -24,55 +24,55 @@
     font-weight: bold;
     margin: 3px 0;
   }
+
+  @responsive {
+    .center {
+      justify-content: center;
+      align-items: center;
+    }
+    .flex {
+      position: relative;
+      min-width: 0;
+      min-height: 0;
+      max-width: 100%;
+
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    .grid {
+      position: relative;
+      min-width: 0;
+      min-height: 0;
+      max-width: 100%;
+    }
+
+    .scroll-y {
+      overflow-y: auto;
+    }
+    .scroll-x {
+      overflow-x: auto;
+    }
+    .scroll-y > *,
+    .scroll-x > * {
+      width: 100%;
+    }
+
+    .c-row-y > *,
+    .c-row-x > * {
+      width: 100%;
+    }
+
+    .--GradientText {
+      background-image: linear-gradient(354.37deg, #2f8975 24.52%, #0078a3 72.78%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-right: auto;
+    }
+  }
 }
 
 /* Components */
 @tailwind components;
-
-@responsive {
-  .center {
-    justify-content: center;
-    align-items: center;
-  }
-  .flex {
-    position: relative;
-    min-width: 0;
-    min-height: 0;
-    max-width: 100%;
-
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-  .grid {
-    position: relative;
-    min-width: 0;
-    min-height: 0;
-    max-width: 100%;
-  }
-
-  .scroll-y {
-    overflow-y: auto;
-  }
-  .scroll-x {
-    overflow-x: auto;
-  }
-  .scroll-y > *,
-  .scroll-x > * {
-    width: 100%;
-  }
-
-  .c-row-y > *,
-  .c-row-x > * {
-    width: 100%;
-  }
-
-  .--GradientText {
-    background-image: linear-gradient(354.37deg, #2f8975 24.52%, #0078a3 72.78%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    margin-right: auto;
-  }
-}
 
 @tailwind utilities;

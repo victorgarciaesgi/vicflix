@@ -1,13 +1,13 @@
 <template>
   <div class="flex flex-row items-center justify-between">
-    <Popin mode="hover" :width="200" :nested="true">
+    <Popin mode="hover" theme="g40" :width="200" :nested="true">
       <template #content>
-        <span class="px-2 py-2 text-sm"
+        <span class="px-2 py-2 text-sm text-center text-white"
           >L'application basera le mode clair/sombre en fonction de vos réglages système</span
         >
       </template>
       <template #button>
-        <span class="font-semibold">Auto</span>
+        <span>Auto</span>
       </template>
     </Popin>
     <Toggle v-model="value" />

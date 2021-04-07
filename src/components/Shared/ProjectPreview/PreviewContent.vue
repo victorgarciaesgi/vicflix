@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-nowrap bg-g10 flex flex-col overflow-y-auto">
+  <div class="flex-nowrap bg-bg2 flex flex-col overflow-y-auto">
     <div class="Picture-Wrapper / h-96 flex-0 flex">
       <VImg class="Cover" :src="picture" type="default" />
       <div class="bottom-8 sm:bottom-8 left-8 absolute flex flex-col items-start">

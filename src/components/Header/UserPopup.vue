@@ -8,7 +8,7 @@
     :offset="4"
     :rounded="false"
     :shadow="true"
-    theme="bg2"
+    theme="bg1"
     alignement="End"
   >
     <template #content>
@@ -18,7 +18,7 @@
             v-for="profile of profiles"
             :key="profile.id"
             type="button"
-            class="User / group flex flex-row items-center py-2"
+            class="User / group text-text1 flex flex-row items-center py-2"
             @click="selectProfile(profile)"
           >
             <div class="Picture / relative w-8 h-8">
@@ -27,9 +27,7 @@
                 class="absolute top-0 left-0 object-cover w-full h-full rounded"
               />
             </div>
-            <span class="Name / group-hover:underline ml-2 text-center text-white">{{
-              profile.name
-            }}</span>
+            <span class="Name / group-hover:underline ml-2 text-center">{{ profile.name }}</span>
           </button>
           <!-- <span class="py-1">Gérer les profils</span> -->
         </div>
@@ -68,7 +66,7 @@
       </div>
     </template>
     <template #button>
-      <button type="button" class="flex flex-row items-center">
+      <button type="button" class="flex flex-row items-center text-white">
         <div class="Picture / relative w-8 h-8">
           <img
             :src="picture"

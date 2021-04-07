@@ -23,7 +23,7 @@
     </div>
 
     <div
-      class="Menus / sm:flex-grow sm:justify-end text-bg1 flex flex-row items-center flex-shrink-0 ml-5"
+      class="Menus / sm:flex-grow sm:justify-end flex flex-row items-center flex-shrink-0 ml-5 text-white"
     >
       <SearchBar />
       <a href="https://github.com/victorgarciaesgi" target="_blank" class="sm:hidden">

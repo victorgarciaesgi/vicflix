@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="px-5p border-g60 bg-g20 top-full sticky flex flex-row items-center justify-between w-full py-8 border-t"
+    class="px-5p border-bg6 bg-bg2 top-full sticky flex flex-row items-center justify-between w-full py-8 border-t"
   >
     <span>Made with ❤ & 🍺 by Victor Garcia </span>
     <div class="flex flex-row">

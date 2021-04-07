@@ -88,10 +88,12 @@ export default class SvgIcon extends Vue {
 .svg-container {
   flex: 0 0 auto;
   float: left;
+  color: inherit;
 
   svg {
     height: 100%;
     width: 100%;
+    fill: inherit;
   }
 }
 </style>

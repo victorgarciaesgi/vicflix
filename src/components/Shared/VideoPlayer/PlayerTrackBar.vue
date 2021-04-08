@@ -9,10 +9,10 @@
     >
       <div
         ref="barRef"
-        class="Bar / bg-bg4 group-hover:h-3 relative flex-1 h-2 transition-all duration-300"
+        class="Bar / bg-g50 group-hover:h-3 relative flex-1 h-2 transition-all duration-300"
       >
         <div
-          class="Progress / bg-bg8 absolute top-0 left-0 h-full"
+          class="Progress / bg-w100 absolute top-0 left-0 h-full"
           :style="{ width: `${currentProgressPercent}%` }"
         ></div>
 
@@ -46,7 +46,7 @@
           </template>
           <template #button>
             <div :style="{ left: `${indicatorPosition}%` }" class="Indicator / absolute h-full">
-              <div v-if="showIndicator" style="width: 2px" class="bg-text6 h-full"></div>
+              <div v-if="showIndicator" style="width: 2px" class="bg-w220 h-full"></div>
               <span v-else></span>
             </div>
           </template>

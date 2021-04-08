@@ -34,14 +34,14 @@
           <h4 class="flex-1 leading-5">{{ project.title }}</h4>
 
           <div class="flex-nowrap flex-0 flex flex-row items-center ml-2">
-            <Popin mode="hover" :offset="2" theme="white">
+            <Popin mode="hover" :offset="2" theme="text1">
               <template #content>
-                <span class="px-3 py-1 text-black">{{
+                <span class="text-bg1 px-3 py-1">{{
                   hasProjectVideos ? $t($messages.Actions.Play) : $t($messages.Actions.Consult)
                 }}</span>
               </template>
               <template #button>
-                <div class="center flex p-1 text-black bg-white border-2 border-white rounded-full">
+                <div class="center text-bg1 bg-text1 border-text1 flex p-1 border-2 rounded-full">
                   <SvgIcon
                     :src="hasProjectVideos ? 'actions/play' : 'actions/open_in'"
                     :size="20"
@@ -50,14 +50,14 @@
                 </div>
               </template>
             </Popin>
-            <Popin mode="hover" :offset="2" theme="white">
+            <Popin mode="hover" :offset="2" theme="text1">
               <template #content>
-                <span class="px-3 py-1 text-black">{{ $t($messages.Actions.MoreInfo) }}</span>
+                <span class="text-bg1 px-3 py-1">{{ $t($messages.Actions.MoreInfo) }}</span>
               </template>
               <template #button>
                 <NuxtLink
                   :to="toPreviewLink"
-                  class="center bg-bg4 border-bg10 flex p-1 ml-1 text-white border-2 rounded-full"
+                  class="center bg-bg2 border-bg10 text-text1 flex p-1 ml-1 border-2 rounded-full"
                 >
                   <SvgIcon src="actions/expand" :size="20" />
                 </NuxtLink>

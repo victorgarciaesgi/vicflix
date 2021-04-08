@@ -1,4 +1,4 @@
-import { Skill, Techno } from '@models';
+import { Skill } from '@models';
 import { nanoid } from 'nanoid';
 
 export enum TechnosList {

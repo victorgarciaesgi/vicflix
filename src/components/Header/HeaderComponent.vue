@@ -169,7 +169,7 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    height: 60px;
+    height: calc(100% + 30px);
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
     transition: opacity 0.3s;
 

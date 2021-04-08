@@ -41,9 +41,9 @@ div.ProjectGrid {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-auto-flow: row dense;
 
-  @screen md {
+  /* @screen md {
     grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-  }
+  } */
   @screen sm {
     gap: 4px;
     grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));

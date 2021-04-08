@@ -21,6 +21,10 @@ export interface Project extends BaseItemInterface {
   info?: string;
   context: ProjectContext;
   title: string;
+  badges?: {
+    link?: string;
+    img: string;
+  }[];
 }
 export interface ProjectLink {
   title: string;
@@ -43,11 +47,6 @@ export interface ProjectVideo {
   id: string;
   projectId: string;
   videoUrl: string;
-}
-
-export interface Techno {
-  title: string;
-  logo: string;
 }
 
 export enum ProjectContext {

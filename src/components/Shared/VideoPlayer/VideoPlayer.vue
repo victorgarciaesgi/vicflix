@@ -1,7 +1,7 @@
 <template>
   <div
     ref="containerRef"
-    class="VideoPlayer / absolute flex w-full h-full"
+    class="VideoPlayer / absolute flex w-full h-full text-white"
     @mousemove="debounceHideToolbar"
   >
     <VImg
@@ -98,7 +98,14 @@
               :size="isSmallScreen ? 35 : 45"
               @click="addVideoTime(10)"
             />
-            <Popin v-if="!isMobile" mode="hover" :debounce="true" :arrow="false" :offset="2">
+            <Popin
+              theme="g20"
+              v-if="!isMobile"
+              mode="hover"
+              :debounce="true"
+              :arrow="false"
+              :offset="2"
+            >
               <template #content>
                 <VolumeSlider :volume="volume" @update="handleUpdateVolume" />
               </template>
@@ -128,7 +135,6 @@
               :debounce="true"
               :offset="2"
               :width="400"
-              theme="g40"
             >
               <template #content>
                 <div class="flex flex-col w-full">

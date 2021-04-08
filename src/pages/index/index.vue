@@ -21,8 +21,15 @@
     <component :is="isDesktop ? 'ProjectList' : 'MobileProjectList'" :projects="popularProjects">
       {{ $t($messages.Home.Popular) }}
     </component>
-    <component :is="isDesktop ? 'ProjectList' : 'MobileProjectList'" :projects="allProjects">
-      {{ $t($messages.Home.Popular) }}
+    <component :is="isDesktop ? 'ProjectList' : 'MobileProjectList'" :projects="featuredProjects">
+      {{ $t($messages.Home.Featured) }}
+    </component>
+    <component
+      :is="isDesktop ? 'ProjectList' : 'MobileProjectList'"
+      :projects="skills"
+      type="skill"
+    >
+      {{ $t($messages.Home.Skills) }}
     </component>
   </div>
 </template>
@@ -34,7 +41,8 @@ import { coverProject, popularProject, allProjects } from '@data';
 import { BreakpointMixin } from '@mixins';
 import { BreakPointsValues, Project } from '@models';
 import { VideoProgressModule } from '@store';
-import { groupBy } from 'lodash';
+import { groupBy, sampleSize } from 'lodash';
+import { TechnosConstant } from '@constants';
 
 @Component({
   components: {
@@ -49,7 +57,12 @@ import { groupBy } from 'lodash';
 export default class Home extends BreakpointMixin {
   public coverProject = coverProject;
   public popularProjects = popularProject;
-  public allProjects = allProjects;
+  public featuredProjects = sampleSize(allProjects, 7);
+  public skills = TechnosConstant.sort((a, b) => {
+    const aP = allProjects.filter((f) => f.technos.includes(a.title)).length;
+    const bP = allProjects.filter((f) => f.technos.includes(b.title)).length;
+    return bP - aP;
+  }).slice(0, 10);
 
   get continueProjects() {
     const progressList = VideoProgressModule.state.progressList;

@@ -1,5 +1,5 @@
 <template>
-  <div class="ProjectPlaceholder / flex flex-col w-64">
+  <div class="ProjectPlaceholder / flex flex-col">
     <div
       ref="root"
       class="RootCard / h-36 flex w-full cursor-pointer"

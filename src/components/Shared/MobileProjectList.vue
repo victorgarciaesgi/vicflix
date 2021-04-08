@@ -4,11 +4,13 @@
       <slot />
     </h3>
     <div class="List / flex-nowrap flex-0 flex flex-row pr-2 overflow-x-auto">
-      <MobileProjectPlaceholder
+      <component
+        :is="type === 'project' ? 'MobileProjectPlaceholder' : 'MobileSkillPlaceholder'"
+        :showProgress="showProgress"
         v-for="project of projects"
         :key="project.id"
         :project="project"
-        :showProgress="showProgress"
+        :skill="project"
       />
     </div>
   </div>
@@ -19,15 +21,18 @@ import { Project } from '@models';
 import { Component, Prop, Vue } from 'nuxt-property-decorator';
 import Carrousel from './Display/Carousel.vue';
 import MobileProjectPlaceholder from './MobileProjectPlaceholder.vue';
+import MobileSkillPlaceholder from './MobileSkillPlaceholder.vue';
 @Component({
   components: {
     Carrousel,
     MobileProjectPlaceholder,
+    MobileSkillPlaceholder,
   },
 })
 export default class MobileProjectList extends Vue {
   @Prop({ required: true }) projects!: Project[];
   @Prop({ default: false, type: Boolean }) showProgress!: boolean;
+  @Prop({ default: 'project' }) type!: 'project' | 'skill';
 
   public currentIndex = 0;
   public totalSlides = 0;

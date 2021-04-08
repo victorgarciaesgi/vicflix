@@ -4,16 +4,16 @@
     class="VideoPreviewBanner / group flex-nowrap sm:px-0 flex flex-row items-center w-full h-32 px-5 py-3 rounded"
     :class="{ '!px-3 !h-24': sm }"
   >
-    <div class="w-6 pr-3 text-2xl">{{ video.episode }}</div>
+    <div class="text-text1 w-6 pr-3 text-2xl">{{ video.episode }}</div>
     <div
-      class="flex-0 sm:w-20 sm:h-12 relative w-40 h-20 overflow-hidden rounded-md"
+      class="flex-0 sm:w-20 sm:h-12 relative w-40 h-20 overflow-hidden rounded-md shadow"
       :class="{ '!w-20 !h-12': sm }"
     >
       <VImg :src="video.preview" />
       <div
         class="-sm:group-hover:flex center bg-opacity-30 absolute top-0 left-0 hidden w-full h-full bg-black"
       >
-        <div class="p-1 border border-white rounded-full">
+        <div class="p-1 text-white border border-white rounded-full">
           <SvgIcon class="w-9 h-9 sm:w-7 sm:h-7" :class="{ '!h-7 !w-7': sm }" src="actions/play" />
         </div>
       </div>
@@ -23,7 +23,9 @@
     </div>
     <div class="sm:pr-0 flex flex-col justify-center flex-1 px-5" :class="{ '!pr-0': sm }">
       <div class="sm:flex-col flex flex-row justify-between" :class="{ '!flex-col': sm }">
-        <span class="text-md font-semibold" :class="{ '!text-sm': sm }">{{ video.title }}</span>
+        <span class="text-md text-text1 font-semibold" :class="{ '!text-sm': sm }">{{
+          video.title
+        }}</span>
         <span class="sm:hidden" :class="{ '!hidden': sm }">{{ duration }} min</span>
       </div>
       <span

@@ -3,7 +3,7 @@
     <nuxt-link
       :to="route.link"
       :exact="route.exact"
-      class="NavLink text-w200 sm:px-1 flex items-center px-2 py-2 font-normal"
+      class="NavLink text-w230 sm:px-1 flex items-center px-2 py-2 font-normal"
     >
       <span class="text-md ml-3">{{ $t(route.label) }}</span>
     </nuxt-link>

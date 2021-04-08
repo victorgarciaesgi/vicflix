@@ -26,30 +26,36 @@
       @update:index="currentIndex = $event"
       @update:slides="totalSlides = $event"
     >
-      <ProjectPlaceholder
+      <component
+        :is="type === 'project' ? 'ProjectPlaceholder' : 'SkillPlaceholder'"
         :showProgress="showProgress"
         v-for="project of projects"
         :key="project.id"
         :project="project"
+        :skill="project"
       />
     </Carrousel>
   </div>
 </template>
 
 <script lang="ts">
-import { Project } from '@models';
+import { Project, Skill } from '@models';
 import { Component, Prop, Vue } from 'nuxt-property-decorator';
 import Carrousel from './Display/Carousel.vue';
 import ProjectPlaceholder from './ProjectPlaceholder.vue';
+import SkillPlaceholder from './SkillPlaceholder.vue';
+
 @Component({
   components: {
     Carrousel,
     ProjectPlaceholder,
+    SkillPlaceholder,
   },
 })
 export default class ProjectList extends Vue {
-  @Prop({ required: true }) projects!: Project[];
+  @Prop({ required: true }) projects!: Project[] | Skill[];
   @Prop({ default: false, type: Boolean }) showProgress!: boolean;
+  @Prop({ default: 'project' }) type!: 'project' | 'skill';
 
   public currentIndex = 0;
   public totalSlides = 0;

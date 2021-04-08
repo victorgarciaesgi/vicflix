@@ -18,11 +18,13 @@
         <div class="sm:hidden flex flex-row items-center mt-4">
           <Action
             :icon="hasProjectVideos ? 'actions/play' : 'actions/open_in'"
-            theme="white"
+            theme="inverted"
             @click="playFirstVideo"
-            >{{ hasProjectVideos ? 'Lecture' : 'Consulter' }}</Action
+            >{{
+              hasProjectVideos ? $t($messages.Actions.Play) : $t($messages.Actions.Consult)
+            }}</Action
           >
-          <Popin mode="hover" theme="white">
+          <Popin mode="hover" theme="inverted">
             <template #content>
               <span class="px-3 py-1 text-black">
                 {{ isInWishList ? 'Supprimer de ma liste' : 'Ajouter à ma liste' }}
@@ -47,10 +49,12 @@
           :icon="hasProjectVideos ? 'actions/play' : 'actions/open_in'"
           class="!mb-2"
           :w-full="true"
-          theme="white"
+          theme="inverted"
           size="md"
           @click="playFirstVideo"
-          >{{ hasProjectVideos ? 'Lecture' : 'Consulter' }}</Action
+          >{{
+            hasProjectVideos ? $t($messages.Actions.Play) : $t($messages.Actions.Consult)
+          }}</Action
         >
         <Action
           v-if="isInWishList"
@@ -74,24 +78,26 @@
             <span class="ml-2">{{ project.year }}</span>
             <span class="border-bg9 px-1 py-px ml-2 text-sm border">12+</span>
           </div>
+          <div v-if="project.badges" class="flex flex-row items-center py-2">
+            <component
+              v-for="badge of project.badges"
+              :key="badge.img"
+              :is="badge.link ? 'a' : 'div'"
+            >
+              <img :src="badge.img" class="mt-1 mr-1" />
+            </component>
+          </div>
           <p class="mt-5">{{ project.slogan }}</p>
           <div
             ref="descriptionRef"
             v-if="project.description"
-            class="whitespace-pre-wrap-line relative mt-4"
+            class="relative mt-4 whitespace-pre-line"
             :class="{ 'line-clamp-4': !collapseDescription, 'pb-6': collapseDescription }"
             >{{ project.description }}
 
             <div
-              class="text-w200 hover:underline absolute bottom-0 left-0 w-full pt-6 pl-6 text-center cursor-pointer"
-              :style="{
-                background: `linear-gradient(
-                  to bottom,
-                  rgba(10, 10, 10, 0) 0%,
-                  rgba(10, 10, 10, 1) 90%
-                )`,
-              }"
-              :class="{ 'pt-0': collapseDescription }"
+              class="DescriptionBlock / text-text5 hover:underline absolute bottom-0 left-0 w-full pt-6 pl-6 text-center cursor-pointer"
+              :class="{ '!pt-0': collapseDescription }"
               @click="collapseDescription = !collapseDescription"
               >{{
                 collapseDescription
@@ -107,7 +113,7 @@
               :key="link.link"
               :href="link.link"
               target="_blank"
-              class="text-bg6 flex flex-row items-center px-3 py-1 mb-2 mr-2 text-sm bg-white rounded-full"
+              class="text-bg6 bg-text1 flex flex-row items-center px-3 py-1 mb-2 mr-2 text-sm rounded-full"
             >
               <span>{{ link.title }}</span>
               <SvgIcon src="actions/open_in" class="ml-1" :size="16" />
@@ -119,19 +125,19 @@
           class="flex-0 sm:flex-row sm:w-full sm:py-4 -sm:sticky -sm:top-10 sm:items-center flex flex-col w-1/3 ml-2 text-sm"
         >
           <div class="sm:mr-2 relative mb-4 mr-2">
-            <span class="text-bg8">Distribution: </span>
+            <span class="text-bg10">Distribution: </span>
             <span>Victor Garcia</span>
           </div>
           <div class="relative mb-4 mr-2">
-            <span class="text-bg8">Genre: </span>
+            <span class="text-bg10">Genre: </span>
             <span>{{ project.type.join(', ') }}</span>
           </div>
           <div class="relative mb-4 mr-2">
-            <span class="text-bg8">Contexte: </span>
+            <span class="text-bg10">Contexte: </span>
             <span>{{ project.context }}</span>
           </div>
           <div class="sm:flex-row sm:items-center relative flex flex-row items-center mb-4">
-            <span class="text-bg8">Technologies: </span>
+            <span class="text-bg10">Technologies: </span>
             <div class="flex flex-row items-center">
               <Techno v-for="techno of project.technos" :key="techno" :techno="techno" size="md" />
             </div>
@@ -245,6 +251,15 @@ export default class PreviewContent extends BreakpointMixin {
 div.Picture-Wrapper {
   .Cover >>> img {
     mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(10, 10, 10, 1) 40%);
+  }
+}
+
+div.DescriptionBlock {
+  @mixin dark {
+    background: linear-gradient(to bottom, rgba(10, 10, 10, 0) 0%, rgba(10, 10, 10, 1) 90%);
+  }
+  @mixin light {
+    background: linear-gradient(to bottom, rgba(250, 250, 250, 0) 0%, rgba(250, 250, 250, 1) 90%);
   }
 }
 </style>

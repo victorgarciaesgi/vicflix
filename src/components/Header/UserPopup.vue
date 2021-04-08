@@ -31,7 +31,7 @@
           </button>
           <!-- <span class="py-1">Gérer les profils</span> -->
         </div>
-        <div class="bg-bg8 w-full h-px"></div>
+        <div class="bg-bg4 w-full h-px"></div>
         <div class="flex flex-col p-3">
           <a href="mailto:victorgarciaparis13@gmail.com" class="hover:underline py-1"> Contact </a>
           <a
@@ -49,14 +49,14 @@
             Linkedin
           </a>
         </div>
-        <div class="bg-bg8 w-full h-px"></div>
+        <div class="bg-bg4 w-full h-px"></div>
         <div class="flex flex-col px-3 py-2">
           <DarkModeButton />
         </div>
         <div class="flex flex-col px-3 py-2">
           <AutoDarkModeButton />
         </div>
-        <div class="bg-bg8 w-full h-px"></div>
+        <div class="bg-bg4 w-full h-px"></div>
 
         <div class="p-3">
           <button type="button" class="hover:underline py-1" @click="disconnect"

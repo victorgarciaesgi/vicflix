@@ -136,7 +136,7 @@ module.exports = {
       visibility: ['responsive', 'important'],
       width: ['important', 'hover'],
       height: ['important', 'hover', 'group-hover'],
-      padding: ['important'],
+      padding: ['important', 'first', 'last'],
       inset: ['important'],
       textColor: ['important'],
       fontSize: ['important'],

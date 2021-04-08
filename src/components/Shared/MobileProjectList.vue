@@ -36,6 +36,7 @@ export default class MobileProjectList extends Vue {
 
 <style lang="postcss" scoped>
 div.List {
+  scroll-snap-type: x mandatory;
   &::-webkit-scrollbar {
     display: none;
   }

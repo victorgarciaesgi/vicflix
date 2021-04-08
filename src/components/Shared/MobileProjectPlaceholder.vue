@@ -60,7 +60,7 @@ export default class MobileProjectPlaceholder extends Vue {
 </script>
 
 <style lang="postcss" scoped>
-.Preview {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+.MobileProjectPlaceholder {
+  scroll-snap-align: start;
 }
 </style>

@@ -38,21 +38,20 @@
       </a>
       <Popin
         :width="180"
-        theme="g20"
+        theme="bg3"
         :mode="isMobile ? 'click' : 'hover'"
         :debounce="true"
-        :arrow="false"
         :shadow="true"
-        :offset="14"
+        :offset="8"
       >
         <template #content>
           <div class="flex flex-col w-full">
             <div
-              class="flex-nowrap hover:bg-bg3 text-w180 first:pt-3 last:pb-3 flex flex-row items-center justify-between px-3 py-2 cursor-pointer"
+              class="flex-nowrap hover:bg-bg5 text-text10 first:pt-3 last:pb-3 flex flex-row items-center justify-between px-3 py-2 cursor-pointer"
               v-for="locale of allLocales"
               :key="locale.code"
               @click="setLanguage(locale.code)"
-              :class="{ '!text-white': $i18n.locale === locale.code }"
+              :class="{ '!text-text1': $i18n.locale === locale.code }"
             >
               <div class="flex flex-row items-center">
                 <img class="h-5 mr-3" :src="`/flags/${locale.iso}.png`" />

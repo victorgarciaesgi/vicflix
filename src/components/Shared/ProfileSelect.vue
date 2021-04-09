@@ -1,5 +1,5 @@
 <template>
-  <div class="Profile / bg-g20 flex-nowrap fixed left-0 right-0 flex flex-col w-screen">
+  <div class="Profile / bg-g20 flex-nowrap fixed left-0 right-0 flex flex-col w-screen text-white">
     <div class="flex-0 relative px-8 py-4">
       <img src="@images/vicflix.png" class="w-28 h-auto" />
     </div>

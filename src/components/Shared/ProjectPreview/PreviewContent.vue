@@ -24,9 +24,9 @@
               hasProjectVideos ? $t($messages.Actions.Play) : $t($messages.Actions.Consult)
             }}</Action
           >
-          <Popin mode="hover" theme="inverted">
+          <Popin mode="hover" theme="text1">
             <template #content>
-              <span class="px-3 py-1 text-black">
+              <span class="text-bg1 px-3 py-1">
                 {{ isInWishList ? 'Supprimer de ma liste' : 'Ajouter à ma liste' }}
               </span>
             </template>

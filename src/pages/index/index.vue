@@ -58,11 +58,13 @@ export default class Home extends BreakpointMixin {
   public coverProject = coverProject;
   public popularProjects = popularProject;
   public featuredProjects = sampleSize(allProjects, 7);
-  public skills = TechnosConstant.sort((a, b) => {
-    const aP = allProjects.filter((f) => f.technos.includes(a.title)).length;
-    const bP = allProjects.filter((f) => f.technos.includes(b.title)).length;
-    return bP - aP;
-  }).slice(0, 10);
+  public skills = TechnosConstant.slice()
+    .sort((a, b) => {
+      const aP = allProjects.filter((f) => f.technos.includes(a.title)).length;
+      const bP = allProjects.filter((f) => f.technos.includes(b.title)).length;
+      return bP - aP;
+    })
+    .slice(0, 10);
 
   get continueProjects() {
     const progressList = VideoProgressModule.state.progressList;

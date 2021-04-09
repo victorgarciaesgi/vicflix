@@ -10,14 +10,14 @@
     />
     <div
       ref="inputContainerRef"
-      class="InputContainer / w-72 sm:w-full max-w-none bg-opacity-95 -top-px flex-nowrap absolute z-0 flex flex-row p-1 mr-2 overflow-hidden bg-black border border-white"
+      class="InputContainer / w-72 sm:w-full max-w-none bg-opacity-95 -top-px flex-nowrap absolute z-0 flex flex-row p-1 mr-2 overflow-hidden text-white bg-black border border-white"
     >
       <SvgIcon class="IconSearch / sm:ml-1 mr-1" src="actions/search" :size="26" />
       <input
         ref="inputRef"
         @blur="toggleShowInput"
         @focus="handleFocus"
-        class="text-md flex-1 bg-transparent"
+        class="text-md flex-1 text-white bg-transparent"
         :placeholder="$t($messages.Search.Placeholder)"
         type="search"
         @input="handleInput($event.target.value)"

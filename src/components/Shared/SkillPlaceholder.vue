@@ -2,7 +2,7 @@
   <PlaceholderAnimatedItem
     :baseInfo="skill"
     :showProgress="false"
-    :inCarrousel="false"
+    :inCarrousel="inCarrousel"
     :navigate="false"
   >
     <template #card>
@@ -64,6 +64,7 @@ import PlaceholderAnimatedItem from './PlaceholderAnimatedItem.vue';
 })
 export default class SkillPlaceholder extends Vue {
   @Prop() skill!: Skill;
+  @Prop({ default: false }) inCarrousel!: boolean;
 
   toSearchLocation() {
     this.$router.push({

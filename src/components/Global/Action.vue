@@ -287,7 +287,7 @@ export default class Action extends Vue {
       &:hover,
       &:focus {
         background-color: var(--text5);
-        @apply ring-bg1;
+        @apply ring-text1;
       }
       &:active {
         background-color: var(--text6);

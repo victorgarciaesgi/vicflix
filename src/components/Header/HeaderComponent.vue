@@ -54,7 +54,7 @@
               :class="{ '!text-text1': $i18n.locale === locale.code }"
             >
               <div class="flex flex-row items-center">
-                <img class="h-5 mr-3" :src="`/flags/${locale.iso}.png`" />
+                <img class="w-6 mr-3" :src="`/flags/${locale.iso}.png`" />
                 <span class="font-semibold">{{ locale.name }}</span>
               </div>
               <SvgIcon src="forms/done" :size="18" v-if="$i18n.locale === locale.code" />

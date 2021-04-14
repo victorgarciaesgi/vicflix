@@ -28,6 +28,7 @@ export const aheraProject: Project = {
     TechnosList.Vue,
     TechnosList.Typescript,
     TechnosList.GraphQL,
+    TechnosList.Tailwind,
     TechnosList.Gitlab,
   ],
   context: ProjectContext.Totem,

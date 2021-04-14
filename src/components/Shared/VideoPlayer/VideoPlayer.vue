@@ -483,7 +483,7 @@ export default class VideoPlayer extends BreakpointMixin {
           translateY: 150 / scale,
           translateX: 50,
           duration: 300,
-          easing: cubicTransition,
+          easing: 'linear',
         });
       } else {
         anime({
@@ -493,7 +493,7 @@ export default class VideoPlayer extends BreakpointMixin {
           translateY: 0,
           translateX: 0,
           duration: 300,
-          easing: cubicTransition,
+          easing: 'linear',
         });
       }
     }

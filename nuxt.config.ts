@@ -54,7 +54,7 @@ const config: NuxtConfig = {
     '@nuxt/postcss8',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/pwa',
-    '@nuxtjs/composition-api',
+    '@nuxtjs/composition-api/module',
   ],
   render: {
     static: {

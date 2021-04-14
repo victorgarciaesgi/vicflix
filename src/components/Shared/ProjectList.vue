@@ -33,6 +33,7 @@
         :key="project.id"
         :project="project"
         :skill="project"
+        :in-carrousel="true"
       />
     </Carrousel>
   </div>

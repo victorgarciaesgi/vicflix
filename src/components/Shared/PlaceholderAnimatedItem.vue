@@ -228,7 +228,7 @@ export default class PlaceholderAnimatedItem extends Vue {
       const yPadding = (ph - rootRect.height) / 2 - mt;
 
       const style = window.getComputedStyle(this.preview);
-      var { m41 } = new WebKitCSSMatrix(style.transform);
+      var { m41 } = new DOMMatrix(style.transform);
 
       Object.assign(this.preview.style, {
         transform: `translateX(${m41}px) translateY(${rootRect.top - yPadding}px) scale(${

@@ -12,7 +12,7 @@
       />
     </div>
     <div v-else class="flex flex-col items-center">
-      <span>Aucun résultat pour votre recherche: "{{ q }}".</span>
+      <span>{{ $t($messages.Search.NoResults) }} "{{ q }}".</span>
       <br />
       <span>Suggestions:</span>
       <ul class="px-8 mt-2">
@@ -37,11 +37,13 @@ import { Component, Watch } from 'nuxt-property-decorator';
     ProjectPlaceholder,
     MobileProjectPlaceholder,
   },
-  head: {
-    title: 'Recherche',
-  },
 })
 export default class Search extends BreakpointMixin {
+  head() {
+    return {
+      title: this.$t(this.$messages.Search.Title),
+    };
+  }
   public results: Project[] = [];
   public q = '';
 

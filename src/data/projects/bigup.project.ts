@@ -1,5 +1,5 @@
 import { TechnosList } from '@constants';
-import { Project, ProjectContext, ProjectType } from '@models';
+import { AppTrads, Project, ProjectContext, ProjectType } from '@models';
 import { bigupVideos } from '../videos';
 
 export const bigupProject: Project = {
@@ -10,8 +10,20 @@ export const bigupProject: Project = {
   placeholder:
     'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fbigup%2Fbigup_placeholder.png?alt=media&token=fafbb4e5-5ce3-47e3-ac22-182abd533758',
   logo: 'bigup.png',
-  slogan: 'Demande des dédicaces vidéos à tes célébrités préférées',
-  description: '',
+  slogan: AppTrads.ProjectDescriptions.Bigup.Slogan,
+  description: `Big up est mon premier projet réalisé chez Totem Paris.
+  Il consistait à réaliser une API, un site d'achat, un back office administrateur et une application mobile.
+  
+  Ce projet permettait entre autres à :
+  - Acheter une vidéo à un influenceur (site)
+  - Télécharger sa vidéo depuis le site (site)
+  - Naviguer parmis les artistes disponibles (site)
+  - Administrer les artistes ainsi que les demandes de vidéos effectuées (admin)
+  - Lier les comptes Stripe des artistes (admin)
+  - Les artistes pouvaient recevoir les demandes de clients et enregistrer les vidéos (mobile)
+
+  `,
+  duration: 3,
   videos: Object.values(bigupVideos).flat(),
   year: 2018,
   links: [

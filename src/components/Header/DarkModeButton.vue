@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center justify-between">
-    <span>Mode sombre</span>
+    <span>{{ $t($messages.Nav.Darkmode) }}</span>
     <Toggle v-model="value" :darkmode="true" />
   </div>
 </template>

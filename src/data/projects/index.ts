@@ -10,3 +10,4 @@ export * from './kaze.project';
 export * from './nuxttypedrouter.project';
 export * from './vuextyped.project';
 export * from './totem.project';
+export * from './vue-chart-3.project';

@@ -26,11 +26,14 @@ import { Component, Watch } from 'nuxt-property-decorator';
     SkillPlaceholder,
     MobileSkillPlaceholder,
   },
-  head: {
-    title: 'Recherche',
-  },
 })
 export default class Skills extends BreakpointMixin {
+  head() {
+    return {
+      title: this.$t(this.$messages.Nav.Skills),
+    };
+  }
+
   public skills = TechnosConstant;
 }
 </script>

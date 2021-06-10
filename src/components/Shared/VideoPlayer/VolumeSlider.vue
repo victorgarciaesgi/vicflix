@@ -12,7 +12,7 @@
       ></div>
       <div
         :style="{ bottom: `${calculatedVolume}%` }"
-        class="bg-red hover:scale-110 left-1/2 absolute w-4 h-4 transition-transform duration-200 transform -translate-x-1/2 translate-y-1/2 rounded-full"
+        class=" bg-red hover:scale-110 left-1/2 absolute w-4 h-4 transition-transform duration-200 transform -translate-x-1/2 translate-y-1/2 rounded-full"
         @mousedown="handleMouseDown"
       ></div>
     </div>
@@ -28,7 +28,9 @@ export default class VolumeSlider extends Vue {
 
   @Ref() sliderRef!: HTMLDivElement;
 
-  @Emit('update') updateVolume(volume: number) {}
+  @Emit('update') updateVolume(volume: number) {
+    return volume;
+  }
 
   public dragging = false;
 

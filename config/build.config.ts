@@ -11,7 +11,6 @@ const isDev = process.env.NODE_ENV === 'development';
 const stage = process.env.NUXT_ENV_STAGE;
 dotenv.config({ path: `./.env.${stage}` });
 dotenv.config({ path: `./.env.defaults` });
-process.env.DEBUG = 'nuxt:*';
 
 type nodeEnvs = 'development' | 'production' | 'testing' | 'staging';
 

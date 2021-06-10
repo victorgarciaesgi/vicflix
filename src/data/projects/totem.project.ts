@@ -11,7 +11,12 @@ export const totemProject: Project = {
   logo: 'totem.svg',
   slogan: 'Agence de développement web et mobile',
   videos: [],
-  description: '',
+  description: `Ce projet est la refonte du site de mon entreprise Totem.
+  En collaboration avec les UX/UI de Totem, nous avons mis en place un design moderne et élégant qui allait nous permettre d'attirer plus de clients.
+  
+  Rôle: Développeur front
+  
+  Équipe: 1 développeur front`,
   year: 2020,
   links: [
     {

@@ -30,5 +30,7 @@ export const i18n: Options = {
     moduleName: 'i18n',
     syncLocale: true,
   },
-  detectBrowserLanguage: false,
+  detectBrowserLanguage: {
+    onlyOnRoot: true,
+  },
 };

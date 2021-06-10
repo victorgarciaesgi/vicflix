@@ -16,6 +16,7 @@ export interface Project extends BaseItemInterface {
   technos: TechnosList[];
   links?: ProjectLink[];
   year: number;
+  duration?: number;
   videos: ProjectVideo[];
   type: ProjectType[];
   info?: string;

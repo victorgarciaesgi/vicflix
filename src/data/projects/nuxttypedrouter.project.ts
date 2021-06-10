@@ -21,6 +21,23 @@ export const nuxtTypeRouterProject: Project = {
       link: 'https://github.com/victorgarciaesgi/nuxt-typed-router',
     },
   ],
+  badges: [
+    {
+      img: 'https://img.shields.io/npm/v/nuxt-typed-router.svg',
+      link: 'https://www.npmjs.com/package/nuxt-typed-router',
+    },
+    {
+      img: 'https://img.shields.io/npm/dm/nuxt-typed-router.svg',
+      link: 'https://www.npmjs.com/package/nuxt-typed-router',
+    },
+    {
+      img: 'https://img.shields.io/npm/dt/nuxt-typed-router.svg',
+      link: 'https://www.npmjs.com/package/nuxt-typed-router',
+    },
+    {
+      img: 'https://img.shields.io/npm/l/nuxt-typed-router.svg',
+    },
+  ],
   type: [ProjectType.Library],
   id: 'VNVlnnlz',
   technos: [TechnosList.Typescript, TechnosList.Nuxt],

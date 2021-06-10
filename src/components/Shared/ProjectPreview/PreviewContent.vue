@@ -87,7 +87,7 @@
               <img :src="badge.img" class="mt-1 mr-1" />
             </component>
           </div>
-          <p class="mt-5">{{ project.slogan }}</p>
+          <p v-if="project.slogan" class="mt-5">{{ $t(project.slogan) }}</p>
           <div
             ref="descriptionRef"
             v-if="project.description"
@@ -96,7 +96,8 @@
             >{{ project.description }}
 
             <div
-              class="DescriptionBlock / text-text5 hover:underline absolute bottom-0 left-0 w-full pt-6 pl-6 text-center cursor-pointer"
+            v-if="needCollapase"
+              class=" DescriptionBlock / text-text5 hover:underline absolute bottom-0 left-0 w-full pt-6 pl-6 text-center cursor-pointer"
               :class="{ '!pt-0': collapseDescription }"
               @click="collapseDescription = !collapseDescription"
               >{{
@@ -113,7 +114,7 @@
               :key="link.link"
               :href="link.link"
               target="_blank"
-              class="text-bg6 bg-text1 flex flex-row items-center px-3 py-1 mb-2 mr-2 text-sm rounded-full"
+              class=" text-bg6 bg-text1 flex flex-row items-center px-3 py-1 mb-2 mr-2 text-sm rounded-full"
             >
               <span>{{ link.title }}</span>
               <SvgIcon src="actions/open_in" class="ml-1" :size="16" />
@@ -122,10 +123,10 @@
           <p v-if="project.info" class="text-w140 py-5 text-sm">{{ project.info }}</p>
         </div>
         <div
-          class="flex-0 sm:flex-row sm:w-full sm:py-4 -sm:sticky -sm:top-10 sm:items-center flex flex-col w-1/3 ml-2 text-sm"
+          class=" flex-0 sm:flex-row sm:w-full sm:py-4 -sm:sticky -sm:top-10 sm:items-center flex flex-col w-1/3 ml-2 text-sm"
         >
           <div class="sm:mr-2 relative mb-4 mr-2">
-            <span class="text-bg10">Distribution: </span>
+            <span class="text-bg10">{{ $t($messages.Projects.Director) }}: </span>
             <span>Victor Garcia</span>
           </div>
           <div class="relative mb-4 mr-2">
@@ -133,8 +134,12 @@
             <span>{{ project.type.join(', ') }}</span>
           </div>
           <div class="relative mb-4 mr-2">
-            <span class="text-bg10">Contexte: </span>
+            <span class="text-bg10">{{ $t($messages.Projects.Context) }}: </span>
             <span>{{ project.context }}</span>
+          </div>
+          <div v-if="projectDuration" class="relative mb-4 mr-2">
+            <span class="text-bg10">{{ $t($messages.Projects.Duration) }}: </span>
+            <span>{{ projectDuration }}</span>
           </div>
           <div class="sm:flex-row sm:items-center relative flex flex-row items-center mb-4">
             <span class="text-bg10">Technologies: </span>
@@ -168,6 +173,7 @@ import Techno from '../Techno.vue';
 import { VideoProgressModule } from '@store';
 import ProjectVideoProgress from '../ProjectVideoProgress.vue';
 import { BreakpointMixin } from '@mixins';
+import { monthsToYearsAndMonths } from '@utils';
 
 @Component({
   components: {
@@ -183,6 +189,7 @@ export default class PreviewContent extends BreakpointMixin {
 
   public videoProgress: ProgressList | null = null;
   public collapseDescription = false;
+  public needCollapase = true;
 
   get picture() {
     return this.project.picture;
@@ -202,6 +209,13 @@ export default class PreviewContent extends BreakpointMixin {
     } else {
       VideoProgressModule.mutations.addProjectToWishList(this.project);
     }
+  }
+
+  get projectDuration() {
+    if (this.project.duration) {
+      return monthsToYearsAndMonths(this.project.duration);
+    }
+    return null;
   }
 
   get hasProjectVideos(): boolean {
@@ -234,6 +248,7 @@ export default class PreviewContent extends BreakpointMixin {
     ) {
       this.collapseDescription = false;
     } else {
+      this.needCollapase = false;
       this.collapseDescription = true;
     }
   }

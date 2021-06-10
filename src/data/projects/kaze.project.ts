@@ -1,5 +1,5 @@
 import { TechnosList } from '@constants';
-import { Project, ProjectContext, ProjectType } from '@models';
+import { AppTrads, Project, ProjectContext, ProjectType } from '@models';
 
 export const kazeProject: Project = {
   title: 'Kazé France',
@@ -9,8 +9,21 @@ export const kazeProject: Project = {
   placeholder:
     'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fkaze%2F5633-Header_KazeHikaru_2000x800%201.png?alt=media&token=080f907f-bd81-44cb-a800-5b86a79204a0',
   logo: 'kaze.png',
-  slogan: "Éditeur de mangas et d'animes",
-  description: '',
+  slogan: AppTrads.ProjectDescriptions.Kaze.Slogan,
+  description: `Kazé est la refonte du site client et de l'application admin d'éditeur de Manga et Anime Kazé France.
+  Il consistait à refaire de 0 leur vitrine actuelle tout en incluant leurs données déjà existantes.
+  
+  Ce projet permet entre autres à:
+  - Créer et éditer une licence Anime/Manga (admin)
+  - Créer et éditer un produit Anime/Manga (admin)
+  - Visualiser les prochaines sorties (client)
+  - Rechercher parmis le catalogue Anime/Manga (client)
+  - Visualiser toutes les description et liens d'achats des produits
+  
+  Rôle: Développeur front
+
+  Équipe: 1 developpeur back, 1 developpeur front`,
+  duration: 2,
   videos: [],
   year: 2020,
   links: [

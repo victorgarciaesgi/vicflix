@@ -1,5 +1,5 @@
 import { TechnosList } from '@constants';
-import { Project, ProjectContext, ProjectType } from '@models';
+import { AppTrads, Project, ProjectContext, ProjectType } from '@models';
 import { milinusVideos } from '../videos/milinus.videos';
 
 export const milinusProject: Project = {
@@ -8,8 +8,23 @@ export const milinusProject: Project = {
     'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fmilinus%2Fmilinus.png?alt=media&token=38b19775-622c-46fb-85d5-763e16190983',
   placeholder:
     'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fmilinus%2Fmilinus_placeholder.png?alt=media&token=5568a432-acbd-46da-a80e-5b41a3c3b121',
-  slogan: 'Le meilleur du fitness dans votre poche ! Prêt à decoller ?',
-  description: '',
+  slogan: AppTrads.ProjectDescriptions.Milinus.Slogan,
+  description: `Milinus Admin est l'application back office administrateur permettant de gérer et de contrôler le contenu de l'application mobile Milinus.
+  Le projet entier comprennait une API, une application mobile et une application web admin.
+  
+  Cette application suit la charte graphqique donnée par le client pour se rapprocher au plus de l'application mobile.
+  Elle permet entre autre à: 
+  - Créer et personnaliser les programmes
+  - Créer et personnaliser des mouvements et exercices
+  - Bannir des utilisateurs
+  - Administrer les stories des utilisateurs
+  - Envoyer des notifications aux utilisateurs
+
+  Rôle: Developeur front web
+
+  Équipe: 2 développeurs back, 1 developpeurs front, 2 developpeurs mobile
+  `,
+  duration: 6,
   logo: 'milinus.svg',
   videos: Object.values(milinusVideos).flat(),
   year: 2020,

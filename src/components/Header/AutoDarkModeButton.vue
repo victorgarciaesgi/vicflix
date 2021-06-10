@@ -2,9 +2,9 @@
   <div class="flex flex-row items-center justify-between">
     <Popin mode="hover" theme="g40" :width="200" :nested="true">
       <template #content>
-        <span class="px-2 py-2 text-sm text-center text-white"
-          >L'application basera le mode clair/sombre en fonction de vos réglages système</span
-        >
+        <span class="px-2 py-2 text-sm text-center text-white">{{
+          $t($messages.Nav.AutoDescription)
+        }}</span>
       </template>
       <template #button>
         <span>Auto</span>
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'nuxt-property-decorator';
+import { Component, Vue } from 'nuxt-property-decorator';
 import { DarkModeModule } from '@store';
 import Toggle from '../Shared/Display/Toggle.vue';
 

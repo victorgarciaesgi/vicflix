@@ -9,11 +9,17 @@ export default {
     
     Vicflix is one of my project that act as my portfolio and it lets you discover my projects, my skills and my experience thought a familiar UI inspired by a popular streaming video website I will not quote the name`,
   },
+  Dates: {
+    months: '{count} month | {count} months',
+    year: '{count} year | {count} years',
+  },
   Nav: {
     Home: 'Home',
     Projects: 'Projects',
     Experience: 'Experience',
     Skills: 'Skills',
+    Darkmode: 'Dark mode',
+    AutoDescription: 'The app will activate dark/light mode depending on your OS setting',
   },
   Home: {
     ContinueWithProfile: `Continue with your profile`,
@@ -27,7 +33,9 @@ export default {
     Libs: 'Libraries',
   },
   Search: {
+    Title: 'Search',
     Placeholder: 'Titles, languages, genre...',
+    NoResults: 'No results for your search:',
   },
   Skills: {
     Project: 'No project | {count} project | {count} projects',
@@ -46,6 +54,29 @@ export default {
     SeeLess: 'See less',
     Recommended: '99.9% recommended',
     Episode: 'Episodes',
+    Director: 'Director',
+    Context: 'Context',
+    Duration: 'Duration',
+  },
+  ProjectDescriptions: {
+    Milinus: {
+      Slogan: 'The best of the fitness in your pocket ! Ready to go ?',
+    },
+    Profeel: {
+      Slogan: 'Optimize and secure the professionals processes',
+    },
+    Kaze: {
+      Slogan: 'Mangas and Animes publisher',
+    },
+    Bigup: {
+      Slogan: 'Ask for your favorites celebrities big ups',
+    },
+    Ahera: {
+      Slogan: 'Your 360° fitness experience',
+    },
+    Totem: {
+      Slogan: 'Web et mobile development digital agency',
+    },
   },
   config: {
     code: 'en',

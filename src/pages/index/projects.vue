@@ -49,11 +49,14 @@ import { groupBy, shuffle } from 'lodash';
     MobileProjectList,
     ProjectList,
   },
-  head: {
-    title: 'Projects',
-  },
 })
 export default class Home extends BreakpointMixin {
+  head() {
+    return {
+      title: this.$t(this.$messages.Nav.Projects),
+    };
+  }
+
   public coverProject = bigupProject;
 
   get continueProjects() {

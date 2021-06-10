@@ -26,6 +26,23 @@ export const vuexTypedModulesProject: Project = {
       link: 'https://github.com/victorgarciaesgi/vuex-typed-modules',
     },
   ],
+  badges: [
+    {
+      img: 'https://img.shields.io/npm/v/vuex-types-modules.svg',
+      link: 'https://www.npmjs.com/package/vuex-types-modules',
+    },
+    {
+      img: 'https://img.shields.io/npm/dm/vuex-types-modules.svg',
+      link: 'https://www.npmjs.com/package/vuex-types-modules',
+    },
+    {
+      img: 'https://img.shields.io/npm/dt/vuex-types-modules.svg',
+      link: 'https://www.npmjs.com/package/vuex-types-modules',
+    },
+    {
+      img: 'https://img.shields.io/npm/l/vuex-types-modules.svg',
+    },
+  ],
   type: [ProjectType.Library],
   id: 'PZznSclk',
   technos: [TechnosList.Typescript, TechnosList.Nuxt],

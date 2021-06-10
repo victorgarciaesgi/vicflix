@@ -11,11 +11,18 @@ export const locale: LanguageConfig = {
     
     Bonne visite!`,
   },
+  Dates: {
+    months: '| {count} mois | {count} mois',
+    year: '| {count} an | {count} ans',
+  },
   Nav: {
     Home: 'Accueil',
     Projects: 'Projets',
     Experience: 'Expérience',
     Skills: 'Compétences',
+    Darkmode: 'Mode sombre',
+    AutoDescription:
+      "L'application basera le mode clair/sombre en fonction de vos réglages système",
   },
   Home: {
     ContinueWithProfile: `Reprendre avec votre profil`,
@@ -29,7 +36,9 @@ export const locale: LanguageConfig = {
     Libs: 'Librairies',
   },
   Search: {
+    Title: 'Recherche',
     Placeholder: 'Titres, langages, genre...',
+    NoResults: 'Aucun résultat pour votre recherche:',
   },
   Actions: {
     Play: 'Lecture',
@@ -48,6 +57,29 @@ export const locale: LanguageConfig = {
     SeeLess: 'Voir moins',
     Recommended: 'Recommandé à 99.9%',
     Episode: 'Épisodes',
+    Director: 'Réalisateur',
+    Context: 'Contexte',
+    Duration: 'Durée',
+  },
+  ProjectDescriptions: {
+    Milinus: {
+      Slogan: 'Le meilleur du fitness dans votre poche ! Prêt à decoller ?',
+    },
+    Profeel: {
+      Slogan: 'Optimiser et sécuriser les process des professionnels',
+    },
+    Kaze: {
+      Slogan: "Éditeur de mangas et d'animes",
+    },
+    Bigup: {
+      Slogan: 'Demande des dédicaces vidéos à tes célébrités préférées',
+    },
+    Ahera: {
+      Slogan: 'Votre expérience fitness à 360°',
+    },
+    Totem: {
+      Slogan: `Agence de développement web et mobile`,
+    },
   },
   config: {
     code: 'fr',

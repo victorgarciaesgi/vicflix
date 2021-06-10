@@ -50,11 +50,14 @@ import { TechnosConstant } from '@constants';
     MobileProjectList,
     ProjectList,
   },
-  head: {
-    title: 'Home',
-  },
 })
 export default class Home extends BreakpointMixin {
+  head() {
+    return {
+      title: this.$t(this.$messages.Nav.Home),
+    };
+  }
+
   public coverProject = coverProject;
   public popularProjects = popularProject;
   public featuredProjects = sampleSize(allProjects, 7);

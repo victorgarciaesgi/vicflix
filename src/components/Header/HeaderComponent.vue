@@ -23,7 +23,7 @@
     </div>
 
     <div
-      class="Menus / sm:flex-grow sm:justify-end flex flex-row items-center flex-shrink-0 ml-5 text-white"
+      class=" Menus / sm:flex-grow sm:justify-end flex flex-row items-center flex-shrink-0 ml-5 text-white"
     >
       <SearchBar />
       <a href="https://github.com/victorgarciaesgi" target="_blank" class="sm:hidden">
@@ -47,14 +47,14 @@
         <template #content>
           <div class="flex flex-col w-full">
             <div
-              class="flex-nowrap hover:bg-bg5 text-text10 first:pt-3 last:pb-3 flex flex-row items-center justify-between px-3 py-2 cursor-pointer"
+              class=" flex-nowrap hover:bg-bg5 text-text10 first:pt-3 last:pb-3 flex flex-row items-center justify-between px-3 py-2 cursor-pointer"
               v-for="locale of allLocales"
               :key="locale.code"
               @click="setLanguage(locale.code)"
               :class="{ '!text-text1': $i18n.locale === locale.code }"
             >
               <div class="flex flex-row items-center">
-                <img class="w-6 mr-3" :src="`/flags/${locale.iso}.png`" />
+                <img class="w-6 mr-3" :src="`/flags/${locale.code}.png`" />
                 <span class="font-semibold">{{ locale.name }}</span>
               </div>
               <SvgIcon src="forms/done" :size="18" v-if="$i18n.locale === locale.code" />
@@ -62,7 +62,10 @@
           </div>
         </template>
         <template #button>
-          <SvgIcon src="actions/translate" :size="20" class="sm:ml-1 ml-4 mr-1" />
+          <div class="flex">
+            <SvgIcon src="actions/translate" :size="20" class="sm:ml-1 ml-4 mr-1" />
+            <img class="-right-0 -bottom-1 absolute w-3" :src="`/flags/${$i18n.locale}.png`" />
+          </div>
         </template>
       </Popin>
       <div class="flex ml-3">

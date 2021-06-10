@@ -49,7 +49,9 @@
                   style="filter: drop-shadow(3px 2px 3px rgba(0, 0, 0, 0.4))"
                 />
                 <h2 class="pt-4">{{ nextProject.title }}</h2>
-                <p class="text-w220 pt-2 pb-4">{{ nextProject.slogan }}</p>
+                <p v-if="nextProject.slogan" class="text-w220 pt-2 pb-4">{{
+                  $t(nextProject.slogan)
+                }}</p>
               </div>
               <div class="grid w-full gap-2" style="grid-template-columns: repeat(auto-fit, 1fr)">
                 <Action theme="white" icon="actions/play" :wFull="true" :to="nextProjectLink"
@@ -170,7 +172,7 @@
     </transition>
     <transition name="fade">
       <div
-        class="TopBar / flex-nowrap absolute left-0 flex flex-row items-center justify-between w-full px-5 py-4"
+        class=" TopBar / flex-nowrap absolute left-0 flex flex-row items-center justify-between w-full px-5 py-4"
       >
         <div
           style="filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.6))"
@@ -180,13 +182,13 @@
         >
           <SvgIcon src="videos/back" :size="45" />
           <span
-            class="group-hover:opacity-100 sm:hidden ml-2 text-lg transition-opacity duration-200 opacity-0"
+            class=" group-hover:opacity-100 sm:hidden ml-2 text-lg transition-opacity duration-200 opacity-0"
             >Retour a la navigation</span
           >
         </div>
         <div
           v-if="projectRelated"
-          class="ellipsis flex-nowrap -sm:hidden flex flex-row items-center flex-shrink ml-10 leading-5"
+          class=" ellipsis flex-nowrap -sm:hidden flex flex-row items-center flex-shrink ml-10 leading-5"
         >
           <span class="sm:text-md text-xl font-semibold">{{ projectRelated.title }}</span>
           <span class="text-w160 sm:text-sm mt-px ml-2 text-lg">S1:E{{ video.episode }}</span>

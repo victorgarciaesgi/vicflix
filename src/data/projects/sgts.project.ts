@@ -21,6 +21,7 @@ export const sgtsProject: Project = {
     
     Ce projet m'a beaucoup apporté d'expérience en Node, faire un CLI, typescript et GraphQL.
     Je fais évoluer continuellement les fonctionnalités, souvent grâce au besoin des projets en cours.`,
+
   logo: 'sgts.svg',
   videos: [],
   year: 2019,
@@ -48,8 +49,7 @@ export const sgtsProject: Project = {
       link: 'https://www.npmjs.com/package/simple-graphql-to-typescript',
     },
     {
-      img:
-        'https://img.shields.io/github/workflow/status/victorgarciaesgi/simple-graphql-to-typescript/Node.js%20CI',
+      img: 'https://img.shields.io/github/workflow/status/victorgarciaesgi/simple-graphql-to-typescript/Node.js%20CI',
     },
     {
       img: 'https://img.shields.io/npm/l/simple-graphql-to-typescript.svg',

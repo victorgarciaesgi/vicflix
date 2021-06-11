@@ -4,8 +4,8 @@ import { BaseItemInterface } from './project.model';
 export interface Experience extends BaseItemInterface {
   description: string;
   year: number;
-  duration?: number;
+  duration: number;
   title: string;
-  technologies: TechnosList[];
+  technos: TechnosList[];
   role: string;
 }

@@ -2,13 +2,13 @@
   <div
     class="sm:px-2 sm:flex sm:justify-center sm:flex-col relative block w-full px-10 pt-40 pb-20"
   >
-    <h2 class="sm:text-center mb-5 font-semibold"> Principales technologies utilisées </h2>
+    <h2 class="sm:text-center mb-5 font-semibold"> {{ $t($messages.Skills.Title) }} </h2>
     <div class="ProjectGrid / sm:gap-1 sm:self-center grid justify-start">
       <component
         :is="isMobile ? 'MobileSkillPlaceholder' : 'SkillPlaceholder'"
         v-for="skill of skills"
         :key="skill.id"
-        :skill="skill"
+        :data="skill"
         class="!mr-0"
       />
     </div>

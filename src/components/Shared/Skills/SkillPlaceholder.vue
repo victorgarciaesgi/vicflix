@@ -1,19 +1,19 @@
 <template>
   <PlaceholderAnimatedItem
-    :baseInfo="skill"
+    :baseInfo="data"
     :showProgress="false"
     :inCarrousel="inCarrousel"
     :navigate="false"
   >
     <template #card>
-      <div class="center flex w-full h-full rounded" :style="{ backgroundColor: skill.color }">
+      <div class="center flex w-full h-full rounded" :style="{ backgroundColor: data.color }">
         <SvgIcon :src="logo" color="w230" :size="110" />
       </div>
     </template>
     <template #picture>
       <div
         class="center flex w-full h-full rounded-tl rounded-tr"
-        :style="{ backgroundColor: skill.color }"
+        :style="{ backgroundColor: data.color }"
       >
         <SvgIcon
           :src="logo"
@@ -26,7 +26,7 @@
     <template #previewBlock>
       <div class="Block / flex-nowrap flex flex-row">
         <div class="flex flex-col flex-1">
-          <h4 class="leading-5">{{ skill.title }}</h4>
+          <h4 class="leading-5">{{ data.title }}</h4>
           <span class="text-w160 text-xs">{{
             $tc($messages.Skills.Project, projectConcerned)
           }}</span>
@@ -63,24 +63,24 @@ import PlaceholderAnimatedItem from '../PlaceholderAnimatedItem.vue';
   },
 })
 export default class SkillPlaceholder extends Vue {
-  @Prop() skill!: Skill;
+  @Prop() data!: Skill;
   @Prop({ default: false }) inCarrousel!: boolean;
 
   toSearchLocation() {
     this.$router.push({
       name: routerPagesNames.search,
       query: {
-        q: this.skill.title,
+        q: this.data.title,
       },
     });
   }
 
   get projectConcerned() {
-    return allProjects.filter((f) => f.technos.includes(this.skill.title)).length;
+    return allProjects.filter((f) => f.technos.includes(this.data.title)).length;
   }
 
   get logo() {
-    return this.skill.logo;
+    return this.data.logo;
   }
 }
 </script>

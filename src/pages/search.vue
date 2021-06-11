@@ -2,11 +2,11 @@
   <div class="relative block w-full pt-40 pb-20">
     <div v-if="results.length" class="ProjectGrid / sm:px-2 sm:gap-1 grid justify-center px-12">
       <component
-        :is="isMobile ? 'MobileProjectPlaceholder' : 'ProjectPlaceholder'"
+        :is="componentType(data)"
         :showProgress="false"
-        v-for="project of results"
-        :key="project.id"
-        :project="project"
+        v-for="data of results"
+        :key="data.id"
+        :data="data"
         :inCarrousel="false"
         class="!mr-0"
       />
@@ -25,17 +25,26 @@
 </template>
 
 <script lang="ts">
-import { ProjectPlaceholder, MobileProjectPlaceholder } from '@components';
-import { allProjects } from '@data';
+import {
+  ProjectPlaceholder,
+  MobileProjectPlaceholder,
+  ExperiencePlaceholder,
+  MobileExperiencePlaceholder,
+} from '@components';
+import { allExperiences, allProjects } from '@data';
 import { BreakpointMixin } from '@mixins';
 import { Project } from '@models';
+import { isExperience, isProject } from '@utils';
 import { deburr } from 'lodash';
+import { Experience } from 'models/xp.model';
 import { Component, Watch } from 'nuxt-property-decorator';
 
 @Component({
   components: {
     ProjectPlaceholder,
     MobileProjectPlaceholder,
+    ExperiencePlaceholder,
+    MobileExperiencePlaceholder,
   },
 })
 export default class Search extends BreakpointMixin {
@@ -44,18 +53,30 @@ export default class Search extends BreakpointMixin {
       title: this.$t(this.$messages.Search.Title),
     };
   }
-  public results: Project[] = [];
+  public results: (Project | Experience)[] = [];
   public q = '';
 
   get routeQuery() {
     return this.$route.query.q;
   }
 
+  get componentType() {
+    return (data: Project | Experience) => {
+      if (this.isMobile) {
+        if (isProject(data)) return 'MobileProjectPlaceholder';
+        if (isExperience(data)) return 'MobileExperiencePlaceholder';
+      } else {
+        if (isProject(data)) return 'ProjectPlaceholder';
+        if (isExperience(data)) return 'ExperiencePlaceholder';
+      }
+    };
+  }
+
   @Watch('routeQuery', { immediate: true }) queryChanged(q: string) {
     if (typeof q === 'string') {
       this.q = q;
       const lowQ = deburr(q.toLowerCase());
-      const results = allProjects.filter((project) => {
+      const projectResults = allProjects.filter((project) => {
         let compatible = false;
         if (deburr(project.title.toLowerCase()).includes(lowQ)) {
           compatible = true;
@@ -66,7 +87,16 @@ export default class Search extends BreakpointMixin {
         }
         return compatible;
       });
-      this.results = results;
+      const experienceResults = allExperiences.filter((experience) => {
+        let compatible = false;
+        if (deburr(experience.title.toLowerCase()).includes(lowQ)) {
+          compatible = true;
+        } else if (experience.technos.some((s) => deburr(s.toLowerCase()).includes(lowQ))) {
+          compatible = true;
+        }
+        return compatible;
+      });
+      this.results = [...projectResults, ...experienceResults];
     }
   }
 }

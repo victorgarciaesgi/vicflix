@@ -7,7 +7,7 @@ export const totemXp: Experience = {
   logo: 'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FExperiences%2Ftotem.png?alt=media&token=585b7b87-faf1-4bc0-97cc-1ff642801bf3',
   description: 'Totem',
   title: 'Totem',
-  technologies: [
+  technos: [
     TechnosList.Nuxt,
     TechnosList.Vue,
     TechnosList.Typescript,

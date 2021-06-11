@@ -9,8 +9,7 @@
         :showProgress="showProgress"
         v-for="project of projects"
         :key="project.id"
-        :project="project"
-        :skill="project"
+        :data="project"
       />
     </div>
   </div>
@@ -22,14 +21,16 @@ import { isExperience, isProject, isSkill } from '@utils';
 import { Experience } from 'models/xp.model';
 import { Component, Prop, Vue } from 'nuxt-property-decorator';
 import Carrousel from '../Display/Carousel.vue';
-import MobileProjectPlaceholder from '../ProjectPlaceholder/MobileProjectPlaceholder.vue';
-import MobileSkillPlaceholder from '../SkillPlaceholder/MobileSkillPlaceholder.vue';
+import MobileProjectPlaceholder from '../Projects/MobileProjectPlaceholder.vue';
+import MobileSkillPlaceholder from '../Skills/MobileSkillPlaceholder.vue';
+import MobileExperiencePlaceholder from '../Experience/MobileExperiencePlaceholder.vue';
 
 @Component({
   components: {
     Carrousel,
     MobileProjectPlaceholder,
     MobileSkillPlaceholder,
+    MobileExperiencePlaceholder,
   },
 })
 export default class MobileProjectList extends Vue {

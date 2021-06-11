@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     :to="toPreviewLink"
-    class="MobileProjectPlaceholder / flex-0 flex w-32 h-48 mr-2 overflow-hidden rounded cursor-pointer"
+    class=" MobileProjectPlaceholder / flex-0 flex w-32 h-48 mr-2 overflow-hidden rounded cursor-pointer"
   >
     <VImg :src="picture" class="rounded" />
     <img
@@ -25,32 +25,32 @@ import { Location } from 'vue-router';
   components: {},
 })
 export default class MobileProjectPlaceholder extends Vue {
-  @Prop() project!: Project;
+  @Prop() data!: Project;
   @Prop({ default: false, type: Boolean }) showProgress!: boolean;
 
   public progress = 0;
 
   get picture() {
-    return this.project.placeholder;
+    return this.data.placeholder;
   }
 
   get toPreviewLink(): Location {
     return {
       path: this.$route.path,
       query: {
-        jbv: this.project.id,
+        jbv: this.data.id,
         ...this.$route.query,
       },
     };
   }
 
   get logo() {
-    return `/logos/${this.project.logo}`;
+    return `/logos/${this.data.logo}`;
   }
 
   async created() {
     if (this.showProgress) {
-      const video = await VideoProgressModule.actions.getProjectProgress(this.project.id);
+      const video = await VideoProgressModule.actions.getProjectProgress(this.data.id);
       if (video) {
         this.progress = video.percentage;
       }

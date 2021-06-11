@@ -4,8 +4,8 @@ export * from './Forms';
 export { default as ProfileSelect } from './ProfileSelect.vue';
 export { default as CoverBanner } from './CoverBanner.vue';
 
-export * from './ProjectPreview';
+export * from './Projects';
 export * from './VideoPlayer';
 export * from './ProjectList';
-export * from './ProjectPlaceholder';
-export * from './SkillPlaceholder';
+export * from './Skills';
+export * from './Experience';

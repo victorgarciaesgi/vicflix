@@ -8,7 +8,7 @@
     :offset="4"
     :rounded="false"
     :shadow="true"
-    theme="bg1"
+    theme="bg2"
     alignement="End"
   >
     <template #content>
@@ -80,14 +80,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator';
-import { AuthModule } from '@store';
-import { BreakPointsTypes, BreakPointsValues, NavLink, routerPagesNames, User } from '@models';
-import { Location } from 'vue-router';
 import { usersConstant } from '@constants';
 import { BreakpointMixin } from '@mixins';
-import DarkModeButton from './DarkModeButton.vue';
+import { BreakPointsValues, User } from '@models';
+import { AuthModule } from '@store';
+import { Component } from 'nuxt-property-decorator';
 import AutoDarkModeButton from './AutoDarkModeButton.vue';
+import DarkModeButton from './DarkModeButton.vue';
 
 @Component({
   components: { DarkModeButton, AutoDarkModeButton },

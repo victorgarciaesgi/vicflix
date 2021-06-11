@@ -2,13 +2,15 @@ import { shuffle } from 'lodash';
 import * as projects from './projects';
 import { milinusProject, profeelProject } from './projects';
 import * as videos from './videos';
-export * from './experience';
+import * as experiences from './experience';
 
 export * from './projects';
 
 export const allVideos = Object.values(videos).flat();
 
 export const allProjects = Object.values(projects);
+
+export const allExperiences = Object.values(experiences);
 
 export const coverProject = milinusProject;
 

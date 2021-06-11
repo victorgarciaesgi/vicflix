@@ -31,8 +31,7 @@
         :showProgress="showProgress"
         v-for="project of projects"
         :key="project.id"
-        :project="project"
-        :skill="project"
+        :data="project"
         :in-carrousel="true"
       />
     </Carrousel>
@@ -45,14 +44,16 @@ import { isExperience, isProject, isSkill } from '@utils';
 import { Experience } from 'models/xp.model';
 import { Component, Prop, Vue } from 'nuxt-property-decorator';
 import Carrousel from '../Display/Carousel.vue';
-import ProjectPlaceholder from '../ProjectPlaceholder/ProjectPlaceholder.vue';
-import SkillPlaceholder from '../SkillPlaceholder/SkillPlaceholder.vue';
+import ProjectPlaceholder from '../Projects/ProjectPlaceholder.vue';
+import SkillPlaceholder from '../Skills/SkillPlaceholder.vue';
+import ExperiencePlaceholder from '../Experience/ExperiencePlaceholder.vue';
 
 @Component({
   components: {
     Carrousel,
     ProjectPlaceholder,
     SkillPlaceholder,
+    ExperiencePlaceholder,
   },
 })
 export default class ProjectList extends Vue {

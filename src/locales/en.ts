@@ -35,11 +35,12 @@ export default {
   },
   Search: {
     Title: 'Search',
-    Placeholder: 'Titles, languages, genre...',
+    Placeholder: 'Projects, languages, genre...',
     NoResults: 'No results for your search:',
   },
   Skills: {
     Project: 'No project | {count} project | {count} projects',
+    Title: 'Most used technologies',
   },
   Actions: {
     Play: 'Play',

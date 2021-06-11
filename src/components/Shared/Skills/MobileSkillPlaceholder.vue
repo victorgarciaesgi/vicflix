@@ -1,9 +1,9 @@
 <template>
   <NuxtLink
     :to="toPreviewLink"
-    class="MobileProjectPlaceholder / flex-0 justify-self-center flex w-32 h-48 mr-2 overflow-hidden rounded cursor-pointer"
+    class=" MobileProjectPlaceholder / flex-0 justify-self-center flex w-32 h-48 mr-2 overflow-hidden rounded cursor-pointer"
   >
-    <div class="center flex w-full h-full rounded" :style="{ backgroundColor: skill.color }">
+    <div class="center flex w-full h-full rounded" :style="{ backgroundColor: data.color }">
       <SvgIcon :src="logo" color="w230" :size="110" />
     </div>
   </NuxtLink>
@@ -19,17 +19,17 @@ import { Location } from 'vue-router';
   components: {},
 })
 export default class MobileSkillPlaceholder extends Vue {
-  @Prop() skill!: Skill;
+  @Prop() data!: Skill;
 
   get logo() {
-    return this.skill.logo;
+    return this.data.logo;
   }
 
   get toPreviewLink(): Location {
     return {
       path: routerPagesNames.search,
       query: {
-        q: this.skill.title,
+        q: this.data.title,
       },
     };
   }

@@ -38,7 +38,7 @@ export const locale: LanguageConfig = {
   },
   Search: {
     Title: 'Recherche',
-    Placeholder: 'Titres, langages, genre...',
+    Placeholder: 'Projets, langages, genre...',
     NoResults: 'Aucun résultat pour votre recherche:',
   },
   Actions: {
@@ -50,6 +50,7 @@ export const locale: LanguageConfig = {
   },
   Skills: {
     Project: 'Aucun projet | {count} projet | {count} projets',
+    Title: 'Principales technologies utilisées',
   },
   Projects: {
     Info: `Aucun lien ou accès d'application administrateur ne sera fourni.

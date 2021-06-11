@@ -18,8 +18,6 @@ export function monthsToYearsAndMonths(value: number) {
   const years = Math.floor(value / 12);
   const months = Math.floor(value - years * 12);
 
-  console.log(years, months);
-
   return `${years > 0 ? `${window.$nuxt.$tc(AppTrads.Dates.year, years)} ` : ''}${
     months > 0 ? `${window.$nuxt.$tc(AppTrads.Dates.months, months)} ` : ''
   }`;

@@ -5,7 +5,7 @@
     </h3>
     <div class="List / flex-nowrap flex-0 flex flex-row pr-2 overflow-x-auto">
       <component
-        :is="type === 'project' ? 'MobileProjectPlaceholder' : 'MobileSkillPlaceholder'"
+        :is="componentType(project)"
         :showProgress="showProgress"
         v-for="project of projects"
         :key="project.id"
@@ -17,11 +17,14 @@
 </template>
 
 <script lang="ts">
-import { Project } from '@models';
+import { Project, Skill } from '@models';
+import { isExperience, isProject, isSkill } from '@utils';
+import { Experience } from 'models/xp.model';
 import { Component, Prop, Vue } from 'nuxt-property-decorator';
-import Carrousel from './Display/Carousel.vue';
-import MobileProjectPlaceholder from './MobileProjectPlaceholder.vue';
-import MobileSkillPlaceholder from './MobileSkillPlaceholder.vue';
+import Carrousel from '../Display/Carousel.vue';
+import MobileProjectPlaceholder from '../ProjectPlaceholder/MobileProjectPlaceholder.vue';
+import MobileSkillPlaceholder from '../SkillPlaceholder/MobileSkillPlaceholder.vue';
+
 @Component({
   components: {
     Carrousel,
@@ -32,10 +35,17 @@ import MobileSkillPlaceholder from './MobileSkillPlaceholder.vue';
 export default class MobileProjectList extends Vue {
   @Prop({ required: true }) projects!: Project[];
   @Prop({ default: false, type: Boolean }) showProgress!: boolean;
-  @Prop({ default: 'project' }) type!: 'project' | 'skill';
 
   public currentIndex = 0;
   public totalSlides = 0;
+
+  get componentType() {
+    return (data: Project | Skill | Experience) => {
+      if (isProject(data)) return 'MobileProjectPlaceholder';
+      if (isSkill(data)) return 'MobileSkillPlaceholder';
+      if (isExperience(data)) return 'MobileExperiencePlaceholder';
+    };
+  }
 }
 </script>
 

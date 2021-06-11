@@ -11,7 +11,7 @@ export const vueChart3Project: Project = {
   description: `This package is a rewrite of vue-chartjs for Chart.js 3, but written in Typescript with vue-demi and Vue Composition API.`,
   logo: 'github.png',
   videos: [],
-  year: 2019,
+  year: 2021,
   links: [
     {
       title: 'Github homepage',
@@ -37,6 +37,6 @@ export const vueChart3Project: Project = {
   ],
   type: [ProjectType.Library],
   id: 'PuNNEkbnLo',
-  technos: [TechnosList.Typescript, TechnosList.Nuxt],
+  technos: [TechnosList.Typescript, TechnosList.Chartjs],
   context: ProjectContext.Personal,
 };

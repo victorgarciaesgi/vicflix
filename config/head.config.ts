@@ -30,7 +30,7 @@ const head: MetaInfo = {
     {
       hid: 'og:image',
       property: 'og:image',
-      content: `${process.env.NUXT_ENV_URL}/logo.svg`,
+      content: `${process.env.NUXT_ENV_URL}/logo.png`,
     },
   ],
   link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],

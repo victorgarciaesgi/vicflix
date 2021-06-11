@@ -20,6 +20,7 @@ export const locale: LanguageConfig = {
     Projects: 'Projets',
     Experience: 'Expérience',
     Skills: 'Compétences',
+    Disconnect: 'Se déconnecter',
     Darkmode: 'Mode sombre',
     AutoDescription:
       "L'application basera le mode clair/sombre en fonction de vos réglages système",
@@ -60,6 +61,10 @@ export const locale: LanguageConfig = {
     Director: 'Réalisateur',
     Context: 'Contexte',
     Duration: 'Durée',
+    Links: 'Liens',
+    InfoWarning: `Aucun lien ou accès d'application administrateur ne sera fourni.
+    Toutes les vidéos sont issues de fausses données de test et ne correspondent pas à des vraies données client.
+  `,
   },
   ProjectDescriptions: {
     Milinus: {

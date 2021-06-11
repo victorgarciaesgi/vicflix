@@ -33,9 +33,7 @@ export const kazeProject: Project = {
     },
   ],
   type: [ProjectType.App, ProjectType.Site],
-  info: `Aucun lien ou accès d'application administrateur ne sera fourni.
-    Toutes les vidéos sont issues de fausses données de test et ne correspondent pas à des vraies données client.
-  `,
+  info: AppTrads.Projects.InfoWarning,
   technos: [
     TechnosList.Nuxt,
     TechnosList.Vue,

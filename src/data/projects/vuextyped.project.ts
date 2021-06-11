@@ -28,19 +28,19 @@ export const vuexTypedModulesProject: Project = {
   ],
   badges: [
     {
-      img: 'https://img.shields.io/npm/v/vuex-types-modules.svg',
-      link: 'https://www.npmjs.com/package/vuex-types-modules',
+      img: 'https://img.shields.io/npm/v/vuex-typed-modules.svg',
+      link: 'https://www.npmjs.com/package/vuex-typed-modules',
     },
     {
-      img: 'https://img.shields.io/npm/dm/vuex-types-modules.svg',
-      link: 'https://www.npmjs.com/package/vuex-types-modules',
+      img: 'https://img.shields.io/npm/dm/vuex-typed-modules.svg',
+      link: 'https://www.npmjs.com/package/vuex-typed-modules',
     },
     {
-      img: 'https://img.shields.io/npm/dt/vuex-types-modules.svg',
-      link: 'https://www.npmjs.com/package/vuex-types-modules',
+      img: 'https://img.shields.io/npm/dt/vuex-typed-modules.svg',
+      link: 'https://www.npmjs.com/package/vuex-typed-modules',
     },
     {
-      img: 'https://img.shields.io/npm/l/vuex-types-modules.svg',
+      img: 'https://img.shields.io/npm/l/vuex-typed-modules.svg',
     },
   ],
   type: [ProjectType.Library],

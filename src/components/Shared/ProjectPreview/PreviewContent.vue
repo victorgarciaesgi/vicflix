@@ -96,7 +96,7 @@
             >{{ project.description }}
 
             <div
-            v-if="needCollapase"
+              v-if="needCollapase"
               class=" DescriptionBlock / text-text5 hover:underline absolute bottom-0 left-0 w-full pt-6 pl-6 text-center cursor-pointer"
               :class="{ '!pt-0': collapseDescription }"
               @click="collapseDescription = !collapseDescription"
@@ -107,7 +107,7 @@
               }}</div
             >
           </div>
-          <span class="text-red2 mt-6 mb-1 font-normal">Liens</span>
+          <span class="text-red2 mt-6 mb-1 font-normal">{{ $t($messages.Projects.Links) }}</span>
           <div v-if="project.links" class="flex flex-row">
             <a
               v-for="link of project.links"
@@ -120,7 +120,9 @@
               <SvgIcon src="actions/open_in" class="ml-1" :size="16" />
             </a>
           </div>
-          <p v-if="project.info" class="text-w140 py-5 text-sm">{{ project.info }}</p>
+          <p v-if="project.info" class="text-w140 py-5 text-sm whitespace-pre-line">{{
+            $t(project.info)
+          }}</p>
         </div>
         <div
           class=" flex-0 sm:flex-row sm:w-full sm:py-4 -sm:sticky -sm:top-10 sm:items-center flex flex-col w-1/3 ml-2 text-sm"

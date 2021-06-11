@@ -1,5 +1,5 @@
 import { TechnosList } from '@constants';
-import { Project, ProjectContext, ProjectType } from '@models';
+import { AppTrads, Project, ProjectContext, ProjectType } from '@models';
 import { crecheslibVideos } from '../videos/crecheslib.videos';
 
 export const crecheslibProject: Project = {
@@ -37,9 +37,7 @@ export const crecheslibProject: Project = {
   ],
   type: [ProjectType.App, ProjectType.Site],
   id: 'LJu8Bj',
-  info: `Aucun lien ou accès d'application administrateur ne sera fourni.
-    Toutes les vidéos sont issues de fausses données de test et ne correspondent pas à des vraies données client.
-  `,
+  info: AppTrads.Projects.InfoWarning,
   technos: [
     TechnosList.Nuxt,
     TechnosList.Vue,
@@ -47,6 +45,7 @@ export const crecheslibProject: Project = {
     TechnosList.GraphQL,
     TechnosList.MapBox,
     TechnosList.Leaflet,
+    TechnosList.Chartjs,
     TechnosList.Gitlab,
   ],
   context: ProjectContext.Totem,

@@ -1,8 +1,8 @@
 <template>
   <footer
-    class="px-5p border-bg6 bg-bg2 top-full sticky flex flex-row items-center justify-between w-full py-8 border-t"
+    class=" px-5p border-bg6 bg-bg2 top-full sticky flex flex-row items-center justify-between w-full py-8 border-t"
   >
-    <span>Made with ❤ & 🍺 by Victor Garcia </span>
+    <span>Made with ❤ &nbsp; & 🍺 &nbsp; by Victor Garcia </span>
     <div class="flex flex-row">
       <a href="https://github.com/victorgarciaesgi" target="_blank">
         <SvgIcon src="social/github" :size="20" />

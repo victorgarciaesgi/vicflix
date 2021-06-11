@@ -27,7 +27,7 @@
       @update:slides="totalSlides = $event"
     >
       <component
-        :is="type === 'project' ? 'ProjectPlaceholder' : 'SkillPlaceholder'"
+        :is="componentType(project)"
         :showProgress="showProgress"
         v-for="project of projects"
         :key="project.id"
@@ -41,10 +41,12 @@
 
 <script lang="ts">
 import { Project, Skill } from '@models';
+import { isExperience, isProject, isSkill } from '@utils';
+import { Experience } from 'models/xp.model';
 import { Component, Prop, Vue } from 'nuxt-property-decorator';
-import Carrousel from './Display/Carousel.vue';
-import ProjectPlaceholder from './ProjectPlaceholder.vue';
-import SkillPlaceholder from './SkillPlaceholder.vue';
+import Carrousel from '../Display/Carousel.vue';
+import ProjectPlaceholder from '../ProjectPlaceholder/ProjectPlaceholder.vue';
+import SkillPlaceholder from '../SkillPlaceholder/SkillPlaceholder.vue';
 
 @Component({
   components: {
@@ -54,11 +56,18 @@ import SkillPlaceholder from './SkillPlaceholder.vue';
   },
 })
 export default class ProjectList extends Vue {
-  @Prop({ required: true }) projects!: Project[] | Skill[];
+  @Prop({ required: true }) projects!: Project[] | Skill[] | Experience[];
   @Prop({ default: false, type: Boolean }) showProgress!: boolean;
-  @Prop({ default: 'project' }) type!: 'project' | 'skill';
 
   public currentIndex = 0;
   public totalSlides = 0;
+
+  get componentType() {
+    return (data: Project | Skill | Experience) => {
+      if (isProject(data)) return 'ProjectPlaceholder';
+      if (isSkill(data)) return 'SkillPlaceholder';
+      if (isExperience(data)) return 'ExperiencePlaceholder';
+    };
+  }
 }
 </script>

@@ -18,6 +18,7 @@ export default {
     Projects: 'Projects',
     Experience: 'Experience',
     Skills: 'Skills',
+    Disconnect: 'Disconnect',
     Darkmode: 'Dark mode',
     AutoDescription: 'The app will activate dark/light mode depending on your OS setting',
   },
@@ -57,6 +58,9 @@ export default {
     Director: 'Director',
     Context: 'Context',
     Duration: 'Duration',
+    Links: 'Links',
+    InfoWarning: `No links or acces to admin applications will be provided.
+    All videos are made based on fake data and dot not correspond to real client data.`,
   },
   ProjectDescriptions: {
     Milinus: {

@@ -24,11 +24,7 @@
     <component :is="isDesktop ? 'ProjectList' : 'MobileProjectList'" :projects="featuredProjects">
       {{ $t($messages.Home.Featured) }}
     </component>
-    <component
-      :is="isDesktop ? 'ProjectList' : 'MobileProjectList'"
-      :projects="skills"
-      type="skill"
-    >
+    <component :is="isDesktop ? 'ProjectList' : 'MobileProjectList'" :projects="skills">
       {{ $t($messages.Home.Skills) }}
     </component>
   </div>

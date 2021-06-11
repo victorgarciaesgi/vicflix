@@ -86,12 +86,12 @@ import { ProgressList, Project, routerPagesNames } from '@models';
 import { Component, Vue, Prop, Ref } from 'nuxt-property-decorator';
 import anime from 'animejs';
 import { Location } from 'vue-router';
-import Techno from './Techno.vue';
+import Techno from '../Techno.vue';
 import { VideoProgressModule } from '@store';
-import ProjectVideoProgress from './ProjectVideoProgress.vue';
+import ProjectVideoProgress from '../ProjectVideoProgress.vue';
 import { EventBus, Events } from '@services';
 import { cubicTransition } from '@constants';
-import PlaceholderAnimatedItem from './PlaceholderAnimatedItem.vue';
+import PlaceholderAnimatedItem from '../PlaceholderAnimatedItem.vue';
 
 @Component({
   components: {

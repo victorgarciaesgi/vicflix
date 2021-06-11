@@ -33,9 +33,7 @@ export const bigupProject: Project = {
     },
   ],
   type: [ProjectType.App, ProjectType.Site, ProjectType.Mobile],
-  info: `Aucun lien ou accès d'application administrateur ne sera fourni.
-    Toutes les vidéos sont issues de fausses données de test et ne correspondent pas à des vraies données client.
-  `,
+  info: AppTrads.Projects.InfoWarning,
   technos: [TechnosList.Vue, TechnosList.Typescript, TechnosList.GraphQL, TechnosList.Stripe],
   context: ProjectContext.Totem,
 };

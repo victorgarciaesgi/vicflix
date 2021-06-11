@@ -59,9 +59,9 @@
         <div class="bg-bg4 w-full h-px"></div>
 
         <div class="p-3">
-          <button type="button" class="hover:underline py-1" @click="disconnect"
-            >Se déconnecter</button
-          >
+          <button type="button" class="hover:underline py-1" @click="disconnect">{{
+            $t($messages.Nav.Disconnect)
+          }}</button>
         </div>
       </div>
     </template>
@@ -70,7 +70,7 @@
         <div class="Picture / relative w-8 h-8">
           <img
             :src="picture"
-            class="group-hover:ring-2 group-hover:ring-white absolute top-0 left-0 object-cover w-full h-full rounded"
+            class=" group-hover:ring-2 group-hover:ring-white absolute top-0 left-0 object-cover w-full h-full rounded"
           />
         </div>
         <SvgIcon src="popup/arrow_top" class="ml-2" :size="10" />

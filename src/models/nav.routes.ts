@@ -15,15 +15,15 @@ export const navRoutes: NavLink[] = [
     },
   },
   {
-    label: AppTrads.Nav.Experience,
-    link: {
-      name: routerPagesNames.index.experience,
-    },
-  },
-  {
     label: AppTrads.Nav.Skills,
     link: {
       name: routerPagesNames.index.skills,
+    },
+  },
+  {
+    label: AppTrads.Nav.Experience,
+    link: {
+      name: routerPagesNames.index.experience,
     },
   },
 ];

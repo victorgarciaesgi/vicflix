@@ -19,7 +19,7 @@
           :src="logo"
           :size="110"
           color="w230"
-          class="left-1/2 top-1/2 absolute overflow-hidden transform -translate-x-1/2 -translate-y-1/2"
+          class=" left-1/2 top-1/2 absolute overflow-hidden transform -translate-x-1/2 -translate-y-1/2"
         />
       </div>
     </template>
@@ -28,18 +28,18 @@
         <div class="flex flex-col flex-1">
           <h4 class="leading-5">{{ skill.title }}</h4>
           <span class="text-w160 text-xs">{{
-            $tc($messages.Skills.Project, projectConcerned, { count: projectConcerned })
+            $tc($messages.Skills.Project, projectConcerned)
           }}</span>
         </div>
         <div class="flex-nowrap flex-0 flex flex-row items-center ml-1">
-          <Popin mode="hover" :offset="2" theme="white">
+          <Popin mode="hover" :offset="2" theme="text1">
             <template #content>
-              <span class="px-3 py-1 text-black">Rechercher</span>
+              <span class="text-bg1 px-3 py-1">Rechercher</span>
             </template>
             <template #button>
               <div
                 @click.stop="toSearchLocation"
-                class="center flex p-1 text-black bg-white border-2 border-white rounded-full"
+                class="center text-bg1 bg-text1 border-text1 flex p-1 border-2 rounded-full"
               >
                 <SvgIcon src="actions/search" :size="20" />
               </div>
@@ -55,7 +55,7 @@
 import { allProjects } from '@data';
 import { routerPagesNames, Skill } from '@models';
 import { Component, Vue, Prop } from 'nuxt-property-decorator';
-import PlaceholderAnimatedItem from './PlaceholderAnimatedItem.vue';
+import PlaceholderAnimatedItem from '../PlaceholderAnimatedItem.vue';
 
 @Component({
   components: {

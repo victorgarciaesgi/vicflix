@@ -17,6 +17,8 @@ export enum TechnosList {
   Jest = 'Jest',
   Animejs = 'Animejs',
   VuePress = 'VuePress',
+  Chartjs = 'Chartjs',
+  Angular = 'Angular',
 }
 
 export const TechnosConstant: Skill[] = [
@@ -32,7 +34,9 @@ export const TechnosConstant: Skill[] = [
   { title: TechnosList.Stripe, logo: 'technos/Stripe', color: '#635bff', id: nanoid(4) },
   { title: TechnosList.MapBox, logo: 'technos/Mapbox', color: '#4264fb', id: nanoid(4) },
   { title: TechnosList.Leaflet, logo: 'technos/Leaflet', color: '#199900', id: nanoid(4) },
+  { title: TechnosList.Chartjs, logo: 'technos/Chartjs', color: '#FF6384', id: nanoid(4) },
   { title: TechnosList.Animejs, logo: 'technos/Animejs', color: '#F64E4D', id: nanoid(4) },
   { title: TechnosList.Jest, logo: 'technos/Jest', color: '#99424f', id: nanoid(4) },
   { title: TechnosList.VuePress, logo: 'technos/VuePress', color: '#4fc08d', id: nanoid(4) },
+  { title: TechnosList.Angular, logo: 'technos/Angular', color: '#dd1b16', id: nanoid(4) },
 ];

@@ -1,5 +1,5 @@
 import { TechnosList } from '@constants';
-import { Project, ProjectContext, ProjectType } from '@models';
+import { AppTrads, Project, ProjectContext, ProjectType } from '@models';
 
 export const peppyProject: Project = {
   title: 'Peppy Pro',
@@ -20,9 +20,7 @@ export const peppyProject: Project = {
     },
   ],
   type: [ProjectType.App, ProjectType.Mobile],
-  info: `Aucun lien ou accès d'application administrateur ne sera fourni.
-    Toutes les vidéos sont issues de fausses données de test et ne correspondent pas à des vraies données client.
-  `,
+  info: AppTrads.Projects.InfoWarning,
   technos: [
     TechnosList.Vue,
     TechnosList.Typescript,

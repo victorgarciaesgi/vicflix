@@ -1,4 +1,17 @@
-import { ObjectLiteral } from '@models';
+import { ObjectLiteral, Project, Skill } from '@models';
+import { Experience } from 'models/xp.model';
+
+export const isSkill = (data: Skill | Project | Experience): data is Skill => {
+  return 'color' in data;
+};
+
+export const isProject = (data: Skill | Project | Experience): data is Project => {
+  return 'videos' in data;
+};
+
+export const isExperience = (data: Skill | Project | Experience): data is Experience => {
+  return 'role' in data;
+};
 
 export function timeout(duration: number): Promise<void> {
   return new Promise((resolve, reject) => {

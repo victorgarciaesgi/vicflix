@@ -3,14 +3,27 @@
     :baseInfo="data"
     :picture="picture"
     :inCarrousel="inCarrousel"
-    :videoProgress="false"
+    :showProgress="false"
+    :previewLink="toPreviewLink"
     class="max-w-[250px]"
   >
     <template #card>
       <VImg background="bg3" type="default" :src="picture" class="rounded" />
+      <SvgIcon
+        src="social/school"
+        class="left-3 bottom-3 absolute w-8 h-8 overflow-hidden"
+        style="filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6))"
+      />
+    </template>
+    <template #preview>
+      <SvgIcon
+        src="social/school"
+        class="left-3 bottom-3 absolute w-8 h-8 overflow-hidden"
+        style="filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6))"
+      />
     </template>
     <template #picture>
-      <VImg background="bg3" type="default" :src="picture" class="rounded" />
+      <img :src="picture" class="object-cover w-full h-full rounded-tl rounded-tr" />
     </template>
     <template #previewBlock>
       <div class="Block / flex-nowrap flex flex-col">
@@ -33,7 +46,7 @@
             </Popin>
           </div>
         </div>
-        <div class="flex flex-col flex-1">
+        <div class="c-row-y flex flex-1">
           <div class="text-text9 text-xxs flex flex-row items-center">
             <span>{{ data.year }}</span>
             <span class="px-1">•</span>
@@ -53,7 +66,6 @@ import { ProgressList } from '@models';
 import { Component, Vue, Prop, Ref } from 'nuxt-property-decorator';
 import { Location } from 'vue-router';
 import Techno from '../Techno.vue';
-import { VideoProgressModule } from '@store';
 import PlaceholderAnimatedItem from '../PlaceholderAnimatedItem.vue';
 import { Experience } from 'models/xp.model';
 import { monthsToYearsAndMonths } from '@utils';
@@ -79,7 +91,7 @@ export default class ExperiencePlaceholder extends Vue {
       path: this.$route.path,
       query: {
         ...this.$route.query,
-        jbv: this.data.id,
+        xp: this.data.id,
       },
     };
   }
@@ -89,28 +101,3 @@ export default class ExperiencePlaceholder extends Vue {
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-.Preview {
-  &:after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    z-index: -1;
-    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.4);
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    background-color: transparent;
-    @apply rounded;
-  }
-
-  &.hasShadow {
-    &::after {
-      opacity: 1;
-    }
-  }
-}
-</style>

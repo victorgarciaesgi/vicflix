@@ -19,7 +19,7 @@
           @mouseleave="handleMouseLeave"
           @mousemove.stop
           @click="navigateToPreview"
-          :class="{ 'cursor-pointer': navigate }"
+          :class="{ 'cursor-pointer': previewLink }"
         >
           <div
             class="relative overflow-hidden"
@@ -73,7 +73,7 @@ export default class PlaceholderAnimatedItem extends Vue {
   @Prop({ required: false }) videoProgress?: ProgressList;
   @Prop({ default: false, type: Boolean }) showProgress!: boolean;
   @Prop({ default: true }) inCarrousel!: boolean;
-  @Prop({ default: true }) navigate!: boolean;
+  @Prop({ required: false }) previewLink?: Location;
 
   @Ref() root!: HTMLDivElement;
   @Ref() preview?: HTMLDivElement;
@@ -87,19 +87,9 @@ export default class PlaceholderAnimatedItem extends Vue {
   public scaleZoom = 1.5;
 
   navigateToPreview() {
-    if (this.navigate) {
-      this.$router.push(this.toPreviewLink);
+    if (this.previewLink) {
+      this.$router.push(this.previewLink);
     }
-  }
-
-  get toPreviewLink(): Location {
-    return {
-      path: this.$route.path,
-      query: {
-        ...this.$route.query,
-        jbv: this.baseInfo.id,
-      },
-    };
   }
 
   //! Animations

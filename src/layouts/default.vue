@@ -18,7 +18,10 @@
     <transition name="fade">
       <ProfileSelect v-if="!loggedIn" />
     </transition>
-    <ProjectPreview :id="projectId" :show="showPreview" />
+    <ModalPreview :show="showPreview">
+      <ProjectPreviewContent v-if="projectId" :id="projectId" />
+      <ExperiencePreviewContent v-else :id="experienceId" />
+    </ModalPreview>
   </div>
 </template>
 
@@ -29,7 +32,9 @@ import {
   ToastContainer,
   HeaderComponent,
   ProfileSelect,
-  ProjectPreview,
+  ProjectPreviewContent,
+  ModalPreview,
+  ExperiencePreviewContent,
 } from '@components';
 import { AuthModule, DarkModeModule, DisplayTheme } from '@store';
 
@@ -39,7 +44,9 @@ import { AuthModule, DarkModeModule, DisplayTheme } from '@store';
     ToastContainer,
     HeaderComponent,
     ProfileSelect,
-    ProjectPreview,
+    ProjectPreviewContent,
+    ModalPreview,
+    ExperiencePreviewContent,
   },
 })
 export default class App extends Vue {
@@ -49,16 +56,22 @@ export default class App extends Vue {
 
   public showPreview = false;
   public projectId = '';
+  public experienceId = '';
 
   get routeParam() {
     return this.$route.query;
   }
 
   @Watch('routeParam', { deep: true, immediate: true }) routeChanged() {
-    const jbv = this.$route.query.jbv;
+    const { jbv, xp } = this.$route.query;
     if (jbv && typeof jbv === 'string') {
       this.showPreview = true;
       this.projectId = jbv;
+      this.experienceId = '';
+    } else if (xp && typeof xp === 'string') {
+      this.showPreview = true;
+      this.experienceId = xp;
+      this.projectId = '';
     } else {
       this.showPreview = false;
       this.projectId = '';

@@ -1,5 +1,5 @@
 import { TechnosList } from '@constants';
-import { BaseItemInterface } from './project.model';
+import { BaseItemInterface, ProjectLink } from './project.model';
 
 export interface Experience extends BaseItemInterface {
   description: string;
@@ -8,4 +8,5 @@ export interface Experience extends BaseItemInterface {
   title: string;
   technos: TechnosList[];
   role: string;
+  links?: ProjectLink[];
 }

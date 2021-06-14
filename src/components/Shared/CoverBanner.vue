@@ -37,7 +37,7 @@
           <Action icon="actions/play" theme="white" @click="playFirstVideo">{{
             $t($messages.Actions.Play)
           }}</Action>
-          <Action class="sm:hidden" icon="alerts/info" theme="gray" :to="toPreviewLink">{{
+          <Action icon="alerts/info" theme="gray" :to="toPreviewLink">{{
             $t($messages.Actions.MoreInfo)
           }}</Action>
         </div>

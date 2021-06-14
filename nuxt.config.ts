@@ -29,7 +29,7 @@ const config: NuxtConfig = {
     height: '4px',
   },
   tailwindcss: {
-    cssPath: '~/styles/tailwind.pcss',
+    cssPath: '~/styles/tailwind.css',
     configPath: '~~/tailwind.config.js',
   },
   server: {
@@ -48,7 +48,7 @@ const config: NuxtConfig = {
   router: {
     middleware: ['router.middleware'],
   },
-  css: ['~/styles/root.pcss'],
+  css: ['~/styles/root.css'],
   buildModules: [
     '@nuxt/typescript-build',
     '@nuxt/postcss8',

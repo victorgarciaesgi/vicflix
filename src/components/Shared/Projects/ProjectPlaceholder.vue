@@ -5,6 +5,7 @@
     :picture="picture"
     :showProgress="showProgress"
     :videoProgress="videoProgress"
+    :previewLink="toPreviewLink"
   >
     <template #card>
       <VImg background="bg3" :src="picture" class="rounded" />
@@ -65,7 +66,7 @@
             </Popin>
           </div>
         </div>
-        <div class="flex flex-col flex-1">
+        <div class="c-row-y flex flex-1">
           <div class="text-text9 text-xxs flex flex-row items-center">
             <span>{{ data.type.join(', ') }}</span>
             <span class="px-1">•</span>
@@ -160,28 +161,3 @@ export default class ProjectPlaceholder extends Vue {
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-.Preview {
-  &:after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    z-index: -1;
-    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.4);
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    background-color: transparent;
-    @apply rounded;
-  }
-
-  &.hasShadow {
-    &::after {
-      opacity: 1;
-    }
-  }
-}
-</style>

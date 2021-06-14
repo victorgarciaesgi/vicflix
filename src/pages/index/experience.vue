@@ -42,15 +42,15 @@ export default class Experience extends BreakpointMixin {
 <style lang="postcss" scoped>
 div.ProjectGrid {
   gap: 8px;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 230px));
   grid-auto-flow: row dense;
 
   /* @screen md {
-    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 230px));
   } */
   @screen sm {
     gap: 4px;
-    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 9rem));
   }
 }
 </style>

@@ -1,54 +1,38 @@
 <template>
   <Modal v-if="!isMobile" :width="800" :show="show" @close="goBack">
     <template #content>
-      <PreviewContent v-if="project" :project="project" />
+      <div class="ModalContent / overflow-y-auto">
+        <slot />
+      </div>
     </template>
   </Modal>
   <div v-else>
     <transition :name="'slide-left'" mode="out-in">
       <div
         v-if="show"
-        class="h-screen-ios bg-g20 fixed top-0 left-0 z-40 flex flex-col w-screen h-screen overflow-y-auto"
+        class=" h-screen-ios bg-g20 fixed top-0 left-0 z-40 flex flex-col w-screen h-screen overflow-y-auto"
         @scroll.stop
       >
-        <PreviewContent v-if="project" :project="project" />
+        <slot />
       </div>
     </transition>
   </div>
 </template>
 
 <script lang="ts">
-import { allProjects } from '@data';
 import { BreakpointMixin } from '@mixins';
-import { BreakPointsValues, Project } from '@models';
+import { BreakPointsValues } from '@models';
 import { AuthModule } from '@store';
-import { Component, Vue, Prop, Watch } from 'nuxt-property-decorator';
-import PreviewContent from './PreviewContent.vue';
+import { Component, Prop, Watch } from 'nuxt-property-decorator';
 
-@Component({
-  components: {
-    PreviewContent,
-  },
-})
+@Component({})
 export default class ProjectPreview extends BreakpointMixin {
-  @Prop({ type: String }) id!: string;
   @Prop({ type: Boolean }) show!: boolean;
-
-  public project: Project | null = null;
 
   public transitionName = 'slide-left';
 
-  @Watch('id', { immediate: true }) idChanged() {
-    const project = allProjects.find((f) => f.id === this.id);
-    if (project) {
-      this.project = project;
-    } else {
-      this.$router.push(this.$route.fullPath);
-    }
-  }
-
   goBack() {
-    const { jbv, ...rest } = this.$route.query;
+    const { jbv, xp, ...rest } = this.$route.query;
     this.$router.push({
       path: this.$route.path,
       query: rest,
@@ -81,3 +65,23 @@ export default class ProjectPreview extends BreakpointMixin {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+div.ModalContent {
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    height: 50px;
+    width: 100%;
+    left: 0;
+
+    @mixin dark {
+      background: linear-gradient(to bottom, rgba(10, 10, 10, 0) 0%, rgba(10, 10, 10, 1) 90%);
+    }
+    @mixin light {
+      background: linear-gradient(to bottom, rgba(250, 250, 250, 0) 0%, rgba(250, 250, 250, 1) 90%);
+    }
+  }
+}
+</style>

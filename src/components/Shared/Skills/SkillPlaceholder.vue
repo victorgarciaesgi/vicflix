@@ -1,10 +1,5 @@
 <template>
-  <PlaceholderAnimatedItem
-    :baseInfo="data"
-    :showProgress="false"
-    :inCarrousel="inCarrousel"
-    :navigate="false"
-  >
+  <PlaceholderAnimatedItem :baseInfo="data" :showProgress="false" :inCarrousel="inCarrousel">
     <template #card>
       <div class="center flex w-full h-full rounded" :style="{ backgroundColor: data.color }">
         <SvgIcon :src="logo" color="w230" :size="110" />

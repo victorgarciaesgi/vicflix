@@ -1,7 +1,7 @@
-@import './colors.pcss';
-@import './transitions.pcss';
-@import './animations.pcss';
-@import './global.pcss';
+@import './colors.css';
+@import './transitions.css';
+@import './animations.css';
+@import './global.css';
 
 :root {
   --headerHeight: 70px;

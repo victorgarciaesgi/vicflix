@@ -7,7 +7,7 @@ export default {
     Welcome: 'Welcome to Vicflix!',
     WelcomeDesc: `I'm Victor Garcia, front-end developer working primarely with Vue.js/Nuxt, Typescript and GraphQL.
     
-    Vicflix is one of my project that act as my portfolio and it lets you discover my projects, my skills and my experience thought a familiar UI inspired by a popular streaming video website I will not quote the name`,
+    Vicflix is one of my project that acts as my portfolio and it lets you discover my projects, my skills and my experience thought a familiar UI inspired by a popular streaming video website I will not quote the name`,
   },
   Dates: {
     months: '{count} month | {count} months',

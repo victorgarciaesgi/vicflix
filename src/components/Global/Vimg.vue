@@ -5,24 +5,27 @@
     :style="getContainerStyle"
   >
     <ClientOnly>
-      <div
-        v-if="loading"
-        class="client-rendered flex justify-center p-1"
-        style="width: 10%; min-width: 20px; max-width: 40px"
-      >
-        <Spinner color="red" />
-      </div>
+      <Observer @visible="initLoad" class="center flex w-full h-full">
+        <transition name="fade" mode="out-in">
+          <div
+            v-if="loading"
+            class="client-rendered flex justify-center p-1"
+            style="width: 10%; min-width: 20px; max-width: 40px"
+          >
+            <Spinner color="red" />
+          </div>
 
-      <template v-else-if="imageLoaded || error">
-        <img
-          :class="getImageClass"
-          loading="lazy"
-          :alt="alt"
-          :src="loadedSrc"
-          :width="width"
-          :height="height"
-        />
-      </template>
+          <template v-else-if="imageLoaded || error">
+            <img
+              :class="getImageClass"
+              :alt="alt"
+              :src="loadedSrc"
+              :width="width"
+              :height="height"
+            />
+          </template>
+        </transition>
+      </Observer>
 
       <template #placeholder>
         <img
@@ -41,11 +44,17 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'nuxt-property-decorator';
+import Observer from '../Shared/Display/Observer.vue';
+
 enum ImageType {
   Background = 'background',
   Default = 'default',
 }
-@Component({})
+@Component({
+  components: {
+    Observer,
+  },
+})
 export default class VImg extends Vue {
   @Prop({ required: true }) src!: string;
   @Prop({ default: ImageType.Background }) type!: ImageType;
@@ -139,8 +148,8 @@ export default class VImg extends Vue {
     this.initLoad();
   }
 
-  created() {
-    this.initLoad();
-  }
+  // created() {
+  //   this.initLoad();
+  // }
 }
 </script>

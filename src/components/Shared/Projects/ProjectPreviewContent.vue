@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-nowrap bg-bg2 flex flex-col overflow-y-auto">
+  <div v-if="project" class="flex-nowrap bg-bg2 flex flex-col">
     <div class="Picture-Wrapper / h-96 flex-0 flex">
       <VImg class="Cover" :src="picture" type="default" />
       <div class="bottom-8 sm:bottom-8 left-8 absolute flex flex-col items-start">
@@ -107,7 +107,9 @@
               }}</div
             >
           </div>
-          <span class="text-red2 mt-6 mb-1 font-normal">{{ $t($messages.Projects.Links) }}</span>
+          <span v-if="project.links" class="text-red2 mt-6 mb-1 font-normal">{{
+            $t($messages.Projects.Links)
+          }}</span>
           <div v-if="project.links" class="flex flex-row">
             <a
               v-for="link of project.links"
@@ -169,13 +171,14 @@
 
 <script lang="ts">
 import { ProgressList, Project, routerPagesNames } from '@models';
-import { Component, Vue, Prop, Ref } from 'nuxt-property-decorator';
+import { Component, Vue, Prop, Ref, Watch } from 'nuxt-property-decorator';
 import VideoPreviewBanner from '../VideoPreviewBanner.vue';
 import Techno from '../Techno.vue';
 import { VideoProgressModule } from '@store';
 import ProjectVideoProgress from '../ProjectVideoProgress.vue';
 import { BreakpointMixin } from '@mixins';
 import { monthsToYearsAndMonths } from '@utils';
+import { allProjects } from '@data';
 
 @Component({
   components: {
@@ -184,17 +187,32 @@ import { monthsToYearsAndMonths } from '@utils';
     ProjectVideoProgress,
   },
 })
-export default class PreviewContent extends BreakpointMixin {
-  @Prop({ required: true }) project!: Project;
+export default class ProjectPreviewContent extends BreakpointMixin {
+  @Prop({ type: String }) id!: string;
 
   @Ref() descriptionRef!: HTMLDivElement;
+
+  public project: Project | null = null;
+
+  @Watch('id', { immediate: true }) async idChanged() {
+    const project = allProjects.find((f) => f.id === this.id);
+    if (project) {
+      this.project = project;
+      const video = await VideoProgressModule.actions.getProjectProgress(project.id);
+      if (video) {
+        this.videoProgress = video;
+      }
+    } else {
+      this.$router.push(this.$route.path);
+    }
+  }
 
   public videoProgress: ProgressList | null = null;
   public collapseDescription = false;
   public needCollapase = true;
 
   get picture() {
-    return this.project.picture;
+    return this.project?.picture;
   }
 
   get logo() {
@@ -202,7 +220,7 @@ export default class PreviewContent extends BreakpointMixin {
   }
 
   get isInWishList() {
-    return !!VideoProgressModule.state.wishList.find((f) => f.id === this.project.id);
+    return !!VideoProgressModule.state.wishList.find((f) => f.id === this.project?.id);
   }
 
   addToWishList() {
@@ -214,18 +232,18 @@ export default class PreviewContent extends BreakpointMixin {
   }
 
   get projectDuration() {
-    if (this.project.duration) {
+    if (this.project?.duration) {
       return monthsToYearsAndMonths(this.project.duration);
     }
     return null;
   }
 
   get hasProjectVideos(): boolean {
-    return !!this.project.videos.length;
+    return !!this.project?.videos.length;
   }
 
   async playFirstVideo() {
-    if (this.project.videos.length) {
+    if (this.project?.videos.length) {
       const progress = await VideoProgressModule.actions.getProjectProgress(this.project.id);
       if (progress) {
         this.$router.push({ name: routerPagesNames.watch.id, params: { id: progress.video.id } });
@@ -235,7 +253,7 @@ export default class PreviewContent extends BreakpointMixin {
           params: { id: this.project.videos[0].id },
         });
       }
-    } else if (this.project.links) {
+    } else if (this.project?.links) {
       Object.assign(document.createElement('a'), {
         target: '_blank',
         href: this.project.links[0].link,
@@ -252,13 +270,6 @@ export default class PreviewContent extends BreakpointMixin {
     } else {
       this.needCollapase = false;
       this.collapseDescription = true;
-    }
-  }
-
-  async created() {
-    const video = await VideoProgressModule.actions.getProjectProgress(this.project.id);
-    if (video) {
-      this.videoProgress = video;
     }
   }
 }

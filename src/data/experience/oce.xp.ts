@@ -1,4 +1,5 @@
 import { TechnosList } from '@constants';
+import { ExperienceType } from '@models';
 import { differenceInMonths } from 'date-fns';
 import { Experience } from 'models/xp.model';
 
@@ -16,7 +17,8 @@ export const oceXp: Experience = {
   title: 'Océ Printing Technologies',
   technos: [TechnosList.Typescript, TechnosList.Angular],
   year: 2015,
-  duration: differenceInMonths(new Date(2015, 7, 1), new Date(2018, 7, 1)),
+  type: ExperienceType.Job,
+  duration: differenceInMonths(new Date(2018, 7, 1), new Date(2015, 7, 1)),
   role: 'Développeur web',
   links: [{ link: 'https://cpp.canon/', title: 'Océ site (now Canon Production Printing)' }],
 };

@@ -263,25 +263,17 @@ export default class Popin extends Vue {
     const popupTarget = this.$refs.popup;
 
     if (popupTarget && buttonOrigin) {
-      const {
-        placement,
-        alignement,
-        left,
-        top,
-        minWidth,
-        maxHeight,
-        maxWidth,
-        arrowPosition,
-      } = getPopupComputedOutputMesures({
-        buttonOrigin,
-        popupTarget,
-        full: this.full,
-        arrow: this.arrow,
-        container: this.container,
-        offset: this.offset,
-        placement: this.placement,
-        alignement: this.alignement,
-      });
+      const { placement, alignement, left, top, minWidth, maxHeight, maxWidth, arrowPosition } =
+        getPopupComputedOutputMesures({
+          buttonOrigin,
+          popupTarget,
+          full: this.full,
+          arrow: this.arrow,
+          container: this.container,
+          offset: this.offset,
+          placement: this.placement,
+          alignement: this.alignement,
+        });
       this.PopupPlacement = placement;
       this.PopupAlignement = alignement;
       this.arrowPosition = arrowPosition;
@@ -408,7 +400,7 @@ div.Popup-Box {
     filter: drop-shadow(0 0 20px var(--shadow));
     &.Bottom {
       /* stylelint-disable-next-line */
-      top: calc(var(--arrowHeight) * -1 + 1px);
+      top: -9px;
     }
     &.Top {
       top: calc(100% - 0.8px);

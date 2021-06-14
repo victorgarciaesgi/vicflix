@@ -10,14 +10,14 @@
     <template #card>
       <VImg background="bg3" type="default" :src="picture" class="rounded" />
       <SvgIcon
-        src="social/school"
+        :src="data.type === ExperienceType.Job ? 'social/job' : 'social/school'"
         class="left-3 bottom-3 absolute w-8 h-8 overflow-hidden"
         style="filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6))"
       />
     </template>
     <template #preview>
       <SvgIcon
-        src="social/school"
+        :src="data.type === ExperienceType.Job ? 'social/job' : 'social/school'"
         class="left-3 bottom-3 absolute w-8 h-8 overflow-hidden"
         style="filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6))"
       />
@@ -62,7 +62,7 @@
 </template>
 
 <script lang="ts">
-import { ProgressList } from '@models';
+import { ExperienceType, ProgressList } from '@models';
 import { Component, Vue, Prop, Ref } from 'nuxt-property-decorator';
 import { Location } from 'vue-router';
 import Techno from '../Techno.vue';
@@ -81,6 +81,7 @@ export default class ExperiencePlaceholder extends Vue {
   @Prop({ default: true }) inCarrousel!: boolean;
 
   public videoProgress: ProgressList | null = null;
+  public ExperienceType = ExperienceType;
 
   get picture() {
     return this.data.logo;

@@ -1,10 +1,10 @@
 <template>
-  <div v-if="experience" class="flex-nowrap bg-bg2 flex flex-col">
+  <div v-if="experience" class="flex-nowrap bg-bg2 flex flex-col pb-10">
     <div class="Picture-Wrapper / h-96 flex-0 flex">
       <VImg class="Cover" :src="picture" type="default" />
       <div class="bottom-8 sm:bottom-8 left-8 absolute flex flex-col items-start">
         <SvgIcon
-          src="social/school"
+          :src="experience.type === ExperienceType.Job ? 'social/job' : 'social/school'"
           class="sm:h-24 sm:w-24 w-32 h-32"
           style="filter: drop-shadow(3px 2px 3px rgba(0, 0, 0, 0.4))"
         />
@@ -14,11 +14,15 @@
       <div class="-sm:hidden flex flex-col mb-5"> </div>
       <div class="sm:flex-col flex flex-row items-start py-3">
         <div class="flex flex-col flex-1">
-          <h1 class="">{{ experience.title }}</h1>
+          <span>
+            <h1 class="">{{ experience.title }}</h1>
+            <span class="bg-green px-3 py-1 text-white rounded-full">
+              {{ $t($messages.Experience.CurrentPosition) }}
+            </span>
+          </span>
           <div class="flex flex-row items-center mt-3">
             <span class="text-green font-bold">{{ $t($messages.Projects.Recommended) }}</span>
             <span class="ml-2">{{ experience.year }}</span>
-            <span class="border-bg9 px-1 py-px ml-2 text-sm border">12+</span>
           </div>
           <div
             ref="descriptionRef"
@@ -71,7 +75,7 @@
 </template>
 
 <script lang="ts">
-import { Experience, ProgressList, Project, routerPagesNames } from '@models';
+import { Experience, ExperienceType, ProgressList, Project, routerPagesNames } from '@models';
 import { Component, Vue, Prop, Ref, Watch } from 'nuxt-property-decorator';
 import VideoPreviewBanner from '../VideoPreviewBanner.vue';
 import Techno from '../Techno.vue';
@@ -91,6 +95,7 @@ export default class ProjectPreviewContent extends BreakpointMixin {
   @Prop({ type: String }) id!: string;
 
   public experience: Experience | null = null;
+  public ExperienceType = ExperienceType;
 
   @Watch('id', { immediate: true }) async idChanged() {
     const experience = allExperiences.find((f) => f.id === this.id);

@@ -68,3 +68,10 @@ export interface Skill extends BaseItemInterface {
   color: string;
   title: TechnosList;
 }
+
+//! Experience
+
+export enum ExperienceType {
+  'Job' = 'Job',
+  'Studies' = 'Studies',
+}

@@ -52,6 +52,9 @@ export const locale: LanguageConfig = {
     Project: 'Aucun projet | {count} projet | {count} projets',
     Title: 'Principales technologies utilisées',
   },
+  Experience: {
+    CurrentPosition: 'Position actuelle',
+  },
   Projects: {
     Info: `Aucun lien ou accès d'application administrateur ne sera fourni.
     Toutes les vidéos sont issues de fausses données de test et ne correspondent pas à des vraies données client.`,

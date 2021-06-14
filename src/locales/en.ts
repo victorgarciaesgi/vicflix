@@ -42,6 +42,9 @@ export default {
     Project: 'No project | {count} project | {count} projects',
     Title: 'Most used technologies',
   },
+  Experience: {
+    CurrentPosition: 'Current position',
+  },
   Actions: {
     Play: 'Play',
     MoreInfo: 'More info',

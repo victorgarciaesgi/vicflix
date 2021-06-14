@@ -37,4 +37,5 @@ export const totemXp: Experience = {
   currentPosition: true,
   role: 'Développeur front / Lead développeur',
   links: [{ link: 'https://totem.paris', title: 'Site de Totem' }],
+  location: 'Paris, France',
 };

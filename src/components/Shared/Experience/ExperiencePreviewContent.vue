@@ -14,12 +14,15 @@
       <div class="-sm:hidden flex flex-col mb-5"> </div>
       <div class="sm:flex-col flex flex-row items-start py-3">
         <div class="flex flex-col flex-1">
-          <span>
-            <h1 class="">{{ experience.title }}</h1>
-            <span class="bg-green px-3 py-1 text-white rounded-full">
+          <div class="flex items-center">
+            <h1>{{ experience.title }}</h1>
+            <span
+              v-if="experience.currentPosition"
+              class="bg-green px-3 py-1 ml-2 text-sm text-white rounded-full"
+            >
               {{ $t($messages.Experience.CurrentPosition) }}
             </span>
-          </span>
+          </div>
           <div class="flex flex-row items-center mt-3">
             <span class="text-green font-bold">{{ $t($messages.Projects.Recommended) }}</span>
             <span class="ml-2">{{ experience.year }}</span>
@@ -57,7 +60,14 @@
             <span class="text-bg10">{{ $t($messages.Projects.Duration) }}: </span>
             <span>{{ experienceDuration }}</span>
           </div>
-          <div class="sm:flex-row sm:items-center relative flex flex-row items-center mb-4">
+          <div v-if="experienceDuration" class="relative mb-4 mr-2">
+            <span class="text-bg10">{{ $t($messages.Experience.Location) }}: </span>
+            <span>{{ experience.location }}</span>
+          </div>
+          <div
+            v-if="experience.technos.length"
+            class="sm:flex-row sm:items-center relative flex flex-row items-center mb-4"
+          >
             <span class="text-bg10">Technologies: </span>
             <div class="flex flex-row items-center">
               <Techno

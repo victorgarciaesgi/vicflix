@@ -12,5 +12,11 @@ export const btsXp: Experience = {
   type: ExperienceType.Studies,
   duration: 12,
   role: 'Étudiant développeur',
-  links: [{ link: 'https://www.esgi.fr/', title: `Site de l'ESGI` }],
+  links: [
+    {
+      link: 'https://www.onisep.fr/Ressources/Univers-Formation/Formations/Post-bac/bts-services-informatiques-aux-organisations-option-b-solutions-logicielles-et-applications-metiers',
+      title: `Site BTS SIO`,
+    },
+  ],
+  location: 'Chennevières, France',
 };

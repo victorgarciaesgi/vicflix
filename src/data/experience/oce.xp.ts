@@ -21,4 +21,5 @@ export const oceXp: Experience = {
   duration: differenceInMonths(new Date(2018, 7, 1), new Date(2015, 7, 1)),
   role: 'Développeur web',
   links: [{ link: 'https://cpp.canon/', title: 'Océ site (now Canon Production Printing)' }],
+  location: 'Créteil, France',
 };

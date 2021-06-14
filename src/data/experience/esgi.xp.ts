@@ -13,4 +13,5 @@ export const esgiXp: Experience = {
   duration: differenceInMonths(new Date(2018, 7, 1), new Date(2015, 7, 1)),
   role: 'Étudiant développeur',
   links: [{ link: 'https://www.esgi.fr/', title: `Site de l'ESGI` }],
+  location: 'Paris, France',
 };

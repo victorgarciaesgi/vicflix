@@ -5,7 +5,6 @@
     :inCarrousel="inCarrousel"
     :showProgress="false"
     :previewLink="toPreviewLink"
-    class="max-w-[250px]"
   >
     <template #card>
       <VImg background="bg3" type="default" :src="picture" class="rounded" />

@@ -11,4 +11,5 @@ export interface Experience extends BaseItemInterface {
   links?: ProjectLink[];
   type: ExperienceType;
   currentPosition?: true;
+  location: string;
 }

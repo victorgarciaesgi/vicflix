@@ -19,6 +19,7 @@
             <img
               :class="getImageClass"
               :alt="alt"
+              loading="lazy"
               :src="loadedSrc"
               :width="width"
               :height="height"
@@ -128,7 +129,7 @@ export default class VImg extends Vue {
             resolve();
           };
           imgBackground.onerror = (e: any) => {
-            reject();
+            resolve();
           };
           imgBackground.src = this.src;
         });

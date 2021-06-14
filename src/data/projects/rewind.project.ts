@@ -5,9 +5,9 @@ export const rewindProject: Project = {
   title: 'Rewind Admin app',
   id: 'iojzpfjp',
   picture:
-    'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Frewind%2Frewinnnd.png?alt=media&token=14f63c10-8db2-4431-b5d2-8f7b1de9e363',
+    'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Frewind%2FHomepage-1.jpg?alt=media&token=1ee64457-5db4-4973-aba1-43fc4b664a31',
   placeholder:
-    'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Frewind%2FHomepage-1.jpg?alt=media&token=08024aeb-8a66-4e84-a36e-c04091e319cd',
+    'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Frewind%2FHomepage-1.jpg?alt=media&token=1ee64457-5db4-4973-aba1-43fc4b664a31',
   logo: 'rewind.png',
   slogan: 'Visites audio-guidées pour voyageurs & locaux',
   description: '',

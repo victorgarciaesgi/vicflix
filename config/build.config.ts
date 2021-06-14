@@ -35,6 +35,7 @@ export const build: NuxtOptionsBuild = {
   postcss: {
     plugins: {
       autoprefixer: {},
+      'postcss-nested': {},
       'postcss-mixins': {
         mixins: {
           light: {
@@ -54,20 +55,11 @@ export const build: NuxtOptionsBuild = {
       'postcss-extend': {},
       'postcss-atroot': {},
       'postcss-current-selector': {},
-      'postcss-nested': {},
     },
   },
   extend(config, { isDev, isClient }) {
     if (config.performance) config.performance.hints = 'warning';
     if (config.resolve) config.resolve.symlinks = false;
-    // if (isDev && isClient && config.module) {
-    //   config.module.rules.push({
-    //     enforce: 'pre',
-    //     test: /\.(js|ts|vue)$/,
-    //     loader: 'eslint-loader',
-    //     exclude: /(node_modules)/,
-    //   });
-    // }
 
     if (config.resolve) {
       config.resolve.alias = {
@@ -112,13 +104,6 @@ export const build: NuxtOptionsBuild = {
       });
     }
   },
-  // Remove moment locales dependencies from chartjs
-  plugins: [
-    new IgnorePlugin({
-      resourceRegExp: /^\.\/locale$/,
-      contextRegExp: /moment$/,
-    }) as any,
-  ],
   babel: {
     // presets({ isServer }) {
     //   return [

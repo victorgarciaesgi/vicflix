@@ -11,7 +11,7 @@ export const crecheslibVideos: ProjectVideo[] = [
     episode: 1,
     projectId,
     videoUrl:
-      'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Videos%2FMilinus.mp4?alt=media&token=affd1815-e3af-4799-b66f-8f191566f426',
+      'https://content-eu.drive.amazonaws.com/cdproxy/templink/SUsRb775oiFe2nuCizigKp3EZ7GP3bhs-eJOmtCqUfweJxFPc?ownerId=A3CSDWI74AKVOE',
     preview:
       'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Video%20previews%2Fcrecheslib.png?alt=media&token=98449464-8faf-43b6-9515-f7a2aad2ebfc',
   },

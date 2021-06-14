@@ -12,7 +12,7 @@ export const milinusVideos: ProjectVideo[] = [
     episode: 1,
     projectId,
     videoUrl:
-      'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Videos%2FMilinus.mp4?alt=media&token=affd1815-e3af-4799-b66f-8f191566f426',
+      'https://content-eu.drive.amazonaws.com/cdproxy/templink/SUsRb775oiFe2nuCizigKp3EZ7GP3bhs-eJOmtCqUfweJxFPc?ownerId=A3CSDWI74AKVOE',
     preview:
       'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Video%20previews%2Fmilinus.png?alt=media&token=43b008f7-e36f-4493-8b32-e22df115aa92',
   },

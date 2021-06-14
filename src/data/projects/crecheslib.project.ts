@@ -7,7 +7,7 @@ export const crecheslibProject: Project = {
   picture:
     'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fcrecheslib%2Fcrecheslib.png?alt=media&token=faefa9a9-6133-40a0-a1d8-287c3e2fac65',
   placeholder:
-    'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fcrecheslib%2Fcrecheslib_placeholder.png?alt=media&token=62be2d22-7dfd-4be2-8ea2-47c77e2c1637',
+    'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fcrecheslib%2Fcrecheslib_placeholder.png?alt=media&token=17c04bb7-264b-4267-baa1-d32d57a741cc',
   slogan: 'Des places en crèche en toute liberté !',
   description: `Crèches Lib' est un projet comprenait un site d'achat ainsi qu'un back office administrateur et directeur.
   Le site d'achat permet aux client de s'inscrire, d'ajouter leurs enfants et de réserver des places en crèche dans toute la France.

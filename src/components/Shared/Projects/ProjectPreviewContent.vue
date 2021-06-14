@@ -21,7 +21,11 @@
             theme="inverted"
             @click="playFirstVideo"
             >{{
-              hasProjectVideos ? $t($messages.Actions.Play) : $t($messages.Actions.Consult)
+              hasProjectVideos
+                ? videoProgress
+                  ? $t($messages.Actions.Continue)
+                  : $t($messages.Actions.Play)
+                : $t($messages.Actions.Consult)
             }}</Action
           >
           <Popin mode="hover" theme="text1">
@@ -53,7 +57,11 @@
           size="md"
           @click="playFirstVideo"
           >{{
-            hasProjectVideos ? $t($messages.Actions.Play) : $t($messages.Actions.Consult)
+            hasProjectVideos
+              ? videoProgress
+                ? $t($messages.Actions.Continue)
+                : $t($messages.Actions.Play)
+              : $t($messages.Actions.Consult)
           }}</Action
         >
         <Action

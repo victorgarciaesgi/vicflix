@@ -43,6 +43,7 @@ export const locale: LanguageConfig = {
   },
   Actions: {
     Play: 'Lecture',
+    Continue: 'Reprendre',
     MoreInfo: "Plus d'infos",
     LetsGo: "C'est parti!",
     AddToList: 'Ajouter à ma liste',

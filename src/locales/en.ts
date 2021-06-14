@@ -48,6 +48,7 @@ export default {
   },
   Actions: {
     Play: 'Play',
+    Continue: 'Continue',
     MoreInfo: 'More info',
     LetsGo: "Let's go!",
     AddToList: 'Add to my list',

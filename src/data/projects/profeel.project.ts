@@ -5,9 +5,9 @@ import { profeelVideos } from '../videos/profeel.videos';
 export const profeelProject: Project = {
   title: 'Profeel App & Admin',
   picture:
-    'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fprofeel%2Fprofeel.png?alt=media&token=8b1bf32f-66fd-4557-b28d-516a796ad996',
+    'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fprofeel%2Fprofeel.png?alt=media&token=394ffa85-6ea8-4c70-9d85-4650edbc82d5',
   placeholder:
-    'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fprofeel%2Fprofeel_placeholder.png?alt=media&token=b57f1349-cce1-479e-9ef1-3a3c90a955f1',
+    'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fprofeel%2Fprofeel_placeholder.png?alt=media&token=7cff975f-1c9b-4d19-b74f-e692a3c366de',
   slogan: AppTrads.ProjectDescriptions.Profeel.Slogan,
   description: `Profeel est un programme CheckReno permettant de gérer les fiches d'autocontrôles de chantiers.
   Il consistait à realiser une API, un back-office administrateur, une app web client, une application mobile et un site vitrine.

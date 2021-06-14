@@ -11,7 +11,7 @@ export const profeelVideos: ProjectVideo[] = [
     episode: 1,
     projectId,
     videoUrl:
-      'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Videos%2FProfeel_video.mp4?alt=media&token=759f2a7c-22b3-4af8-b165-050f754fa042',
+      'https://content-eu.drive.amazonaws.com/cdproxy/templink/_HT2T3UT8wUcArmZ3jrQP2m41_rAZCcQ-bFPmWy-ksAeJxFPc?ownerId=A3CSDWI74AKVOE',
     preview:
       'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Video%20previews%2Fprofeel-placeholder.png?alt=media&token=ea0a84c8-c69d-4d64-9ec1-11b961a6ed84',
   },
@@ -23,7 +23,7 @@ export const profeelVideos: ProjectVideo[] = [
     episode: 2,
     projectId,
     videoUrl:
-      'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Videos%2FProfeel_video.mp4?alt=media&token=759f2a7c-22b3-4af8-b165-050f754fa042',
+      'https://content-eu.drive.amazonaws.com/cdproxy/templink/_HT2T3UT8wUcArmZ3jrQP2m41_rAZCcQ-bFPmWy-ksAeJxFPc?ownerId=A3CSDWI74AKVOE',
     preview:
       'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Video%20previews%2Fprofeel-placeholder.png?alt=media&token=ea0a84c8-c69d-4d64-9ec1-11b961a6ed84',
   },

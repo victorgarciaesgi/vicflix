@@ -19,10 +19,17 @@
         @focus="handleFocus"
         class="text-md flex-1 text-white bg-transparent"
         :placeholder="$t($messages.Search.Placeholder)"
-        type="search"
+        type="text"
         @input="handleInput($event.target.value)"
         :value="searchValue"
         @keydown.enter="handleInput(searchValue)"
+      />
+      <SvgIcon
+        v-if="searchValue.length"
+        @click.native.prevent.stop="clearInput"
+        class="top-2 right-1 absolute"
+        :size="18"
+        src="actions/cancel"
       />
     </div>
   </div>
@@ -75,6 +82,11 @@ export default class SearchBar extends BreakpointMixin {
     this.isFocused = true;
   }
 
+  clearInput() {
+    this.handleInput('');
+    this.inputRef?.focus();
+  }
+
   handleInput(value: string) {
     this.searchValue = value;
     const currentQ = this.$route.query.q;
@@ -93,18 +105,18 @@ export default class SearchBar extends BreakpointMixin {
     });
   }
 
-  displayInput() {
-    if (!this.isMobile) {
-      this.showInput = true;
-      this.$nextTick(() => {
-        if (this.inputContainerRef) {
-          // this.inputContainerRef.style.display = 'flex';
-          this.inputContainerRef.style.transform = 'scaleX(1)';
-          this.inputContainerRef.style.opacity = '1';
+  displayInput(intent?: boolean) {
+    this.showInput = true;
+    this.$nextTick(() => {
+      if (this.inputContainerRef) {
+        // this.inputContainerRef.style.display = 'flex';
+        this.inputContainerRef.style.transform = 'scaleX(1)';
+        this.inputContainerRef.style.opacity = '1';
+        if (intent) {
           this.inputRef?.focus();
         }
-      });
-    }
+      }
+    });
   }
 
   hideInput() {
@@ -122,7 +134,7 @@ export default class SearchBar extends BreakpointMixin {
   toggleShowInput() {
     this.isFocused = false;
     if (!this.showInput) {
-      this.displayInput();
+      this.displayInput(true);
     } else {
       this.hideInput();
     }

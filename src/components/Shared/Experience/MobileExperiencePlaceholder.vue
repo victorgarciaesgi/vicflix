@@ -5,7 +5,7 @@
   >
     <VImg :src="picture" class="rounded" />
     <SvgIcon
-      src="social/school"
+      :src="data.type === ExperienceType.Job ? 'social/job' : 'social/school'"
       style="filter: drop-shadow(3px 2px 2px rgba(0, 0, 0, 0.6))"
       class="left-1/2 bottom-3 absolute w-8 h-8 transform -translate-x-1/2"
     />
@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { Experience } from '@models';
+import { Experience, ExperienceType } from '@models';
 import { Component, Vue, Prop } from 'nuxt-property-decorator';
 import { Location } from 'vue-router';
 
@@ -25,6 +25,7 @@ export default class MobileExperiencePlaceholder extends Vue {
   @Prop() data!: Experience;
 
   public progress = 0;
+  public ExperienceType = ExperienceType;
 
   get picture() {
     return this.data.logo;
@@ -34,7 +35,7 @@ export default class MobileExperiencePlaceholder extends Vue {
     return {
       path: this.$route.path,
       query: {
-        jbv: this.data.id,
+        xp: this.data.id,
         ...this.$route.query,
       },
     };

@@ -121,7 +121,7 @@ export default class HeaderComponent extends BreakpointMixin {
 
   get previousLink(): RawLocation {
     const route = this.$route;
-    const { jbv, ...rest } = this.$route.query;
+    const { jbv, xp, ...rest } = this.$route.query;
     return {
       path: route.path,
       params: route.params,

@@ -27,7 +27,12 @@
     <template #previewBlock>
       <div class="Block / flex-nowrap flex flex-col">
         <div class="flex-nowrap flex flex-row">
-          <h4 class="flex-1 leading-5">{{ data.title }}</h4>
+          <div class="flex items-center flex-1">
+            <h4 class="leading-5">
+              {{ data.title }}
+              <span class="bg-red2 text-xxs px-1 py-px ml-1 align-middle rounded-full">XP</span>
+            </h4>
+          </div>
 
           <div class="flex-nowrap flex-0 flex flex-row items-center ml-2">
             <Popin mode="hover" :offset="2" theme="text1">

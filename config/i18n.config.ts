@@ -1,6 +1,8 @@
 import { Options, LocaleObject } from 'nuxt-i18n';
 import * as LocaleFiles from '../src/locales';
 
+const isProd = process.env.NODE_ENV === 'production';
+
 const locales = Object.entries(LocaleFiles).map<LocaleObject>(
   ([
     key,
@@ -23,7 +25,7 @@ export const i18n: Options = {
     fallbackLocale: process.env.NUXT_ENV_I18N_FALLBACK_LOCALE,
   },
   strategy: 'no_prefix',
-  lazy: true,
+  lazy: isProd,
   langDir: 'locales/',
   seo: false,
   vuex: {

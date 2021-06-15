@@ -31,6 +31,7 @@ const config: NuxtConfig = {
   tailwindcss: {
     cssPath: '~/styles/tailwind.css',
     configPath: '~~/tailwind.config.js',
+    viewer: false,
   },
   server: {
     port: process.env.NUXT_ENV_PORT,

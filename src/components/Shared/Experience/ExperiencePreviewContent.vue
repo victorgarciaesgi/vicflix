@@ -5,7 +5,7 @@
       <div class="bottom-8 sm:bottom-8 left-8 absolute flex flex-col items-start">
         <SvgIcon
           :src="experience.type === ExperienceType.Job ? 'social/job' : 'social/school'"
-          class="sm:h-24 sm:w-24 w-32 h-32"
+          class="sm:h-16 sm:w-16 w-24 h-24"
           style="filter: drop-shadow(3px 2px 3px rgba(0, 0, 0, 0.4))"
         />
       </div>

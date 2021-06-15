@@ -5,16 +5,7 @@ module.exports = {
   important: false,
   darkMode: 'class',
   mode: 'jit',
-  future: {
-    removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true,
-  },
   purge: {
-    mode: 'layers',
-    layers: ['utilities'],
-    enabled: process.env.NODE_ENV === 'production',
-    defaultExtractor: (content) => content.match(/[^<>"'`\s]*[^<>"'`\s:!]/g) || [],
-
     content: [
       './src/components/**/*.vue',
       './src/layouts/**/*.vue',

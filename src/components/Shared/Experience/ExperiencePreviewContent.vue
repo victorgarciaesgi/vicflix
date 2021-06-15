@@ -18,14 +18,13 @@
             <h1>{{ experience.title }}</h1>
             <span
               v-if="experience.currentPosition"
-              class="bg-green px-3 py-1 ml-2 text-sm text-white rounded-full"
+              class="bg-blue px-3 py-1 ml-2 text-xs text-white rounded-full"
             >
               {{ $t($messages.Experience.CurrentPosition) }}
             </span>
           </div>
           <div class="flex flex-row items-center mt-3">
             <span class="text-green font-bold">{{ $t($messages.Projects.Recommended) }}</span>
-            <span class="ml-2">{{ experience.year }}</span>
           </div>
           <div
             ref="descriptionRef"
@@ -55,6 +54,10 @@
           <div class="sm:mr-2 relative mb-4 mr-2">
             <span class="text-bg10">Role: </span>
             <span>{{ experience.role }}</span>
+          </div>
+          <div class="relative mb-4 mr-2">
+            <span class="text-bg10">{{ $t($messages.Experience.Year) }}: </span>
+            <span>{{ experience.year }}</span>
           </div>
           <div v-if="experienceDuration" class="relative mb-4 mr-2">
             <span class="text-bg10">{{ $t($messages.Projects.Duration) }}: </span>

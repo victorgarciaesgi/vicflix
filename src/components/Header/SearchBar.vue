@@ -10,7 +10,7 @@
     />
     <div
       ref="inputContainerRef"
-      class="InputContainer / w-72 sm:w-full max-w-none bg-opacity-95 -top-px flex-nowrap absolute z-0 flex flex-row p-1 mr-2 overflow-hidden text-white bg-black border border-white"
+      class=" InputContainer / w-72 sm:w-full max-w-none bg-opacity-95 -top-px flex-nowrap absolute z-0 flex flex-row p-1 mr-2 overflow-hidden text-white bg-black border border-white"
     >
       <SvgIcon class="IconSearch / sm:ml-1 mr-1" src="actions/search" :size="26" />
       <input
@@ -29,12 +29,13 @@
 </template>
 
 <script lang="ts">
+import { BreakpointMixin } from '@mixins';
 import { routerPagesNames } from '@models';
 import { Component, Vue, Ref, Watch } from 'nuxt-property-decorator';
 import { Route } from 'vue-router';
 
 @Component({})
-export default class SearchBar extends Vue {
+export default class SearchBar extends BreakpointMixin {
   @Ref() inputContainerRef?: HTMLDivElement;
   @Ref() inputRef?: HTMLInputElement;
 
@@ -93,16 +94,17 @@ export default class SearchBar extends Vue {
   }
 
   displayInput() {
-    this.showInput = true;
-    this.$nextTick(() => {
-      if (this.inputContainerRef) {
-        // this.inputContainerRef.style.display = 'flex';
-        this.inputContainerRef.style.transform = 'scaleX(1)';
-        this.inputContainerRef.style.opacity = '1';
-
-        this.inputRef?.focus();
-      }
-    });
+    if (!this.isMobile) {
+      this.showInput = true;
+      this.$nextTick(() => {
+        if (this.inputContainerRef) {
+          // this.inputContainerRef.style.display = 'flex';
+          this.inputContainerRef.style.transform = 'scaleX(1)';
+          this.inputContainerRef.style.opacity = '1';
+          this.inputRef?.focus();
+        }
+      });
+    }
   }
 
   hideInput() {

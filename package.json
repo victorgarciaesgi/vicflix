@@ -36,7 +36,7 @@
     "node-fetch": "^2.6.0",
     "nuxt": "^2.15.7",
     "nuxt-client-init-module": "^0.3.0",
-    "nuxt-i18n": "^6.27.0",
+    "nuxt-i18n": "^6.27.1",
     "nuxt-property-decorator": "^2.9.1",
     "portal-vue": "^2.1.7",
     "tailwindcss": "^2.1.4",

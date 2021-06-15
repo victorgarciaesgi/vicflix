@@ -56,6 +56,7 @@ export const locale: LanguageConfig = {
   Experience: {
     CurrentPosition: 'Position actuelle',
     Location: 'Localisation',
+    Year: 'Année',
   },
   Projects: {
     Info: `Aucun lien ou accès d'application administrateur ne sera fourni.

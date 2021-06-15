@@ -45,6 +45,7 @@ export default {
   Experience: {
     CurrentPosition: 'Current position',
     Location: 'Location',
+    Year: 'Year',
   },
   Actions: {
     Play: 'Play',

@@ -51,7 +51,7 @@ const pwa = {
     lang: 'fr',
     orientation: 'portrait',
     display: 'standalone',
-    theme_color: '#fff',
+    theme_color: '#000',
   },
 };
 

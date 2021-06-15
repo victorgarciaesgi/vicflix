@@ -44,6 +44,7 @@ export default {
   },
   Experience: {
     CurrentPosition: 'Current position',
+    CurrentPositionLight: 'Current',
     Location: 'Location',
     Year: 'Year',
   },
@@ -88,10 +89,5 @@ export default {
     Totem: {
       Slogan: 'Web et mobile development digital agency',
     },
-  },
-  config: {
-    code: 'en',
-    iso: 'en-US',
-    name: 'English',
   },
 };

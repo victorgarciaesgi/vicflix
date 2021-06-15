@@ -48,7 +48,7 @@
           <div class="flex flex-col w-full">
             <div
               class=" flex-nowrap hover:bg-bg5 text-text10 first:pt-3 last:pb-3 flex flex-row items-center justify-between px-3 py-2 cursor-pointer"
-              v-for="locale of allLocales"
+              v-for="locale of $i18n.locales"
               :key="locale.code"
               @click="setLanguage(locale.code)"
               :class="{ '!text-text1': $i18n.locale === locale.code }"
@@ -80,7 +80,7 @@
 
 <script lang="ts">
 import { BreakpointMixin } from '@mixins';
-import { AllLocalesArray, navRoutes } from '@models';
+import { navRoutes } from '@models';
 import { AuthModule, RouterModule } from '@store';
 import { Component } from 'nuxt-property-decorator';
 import { RawLocation } from 'vue-router';
@@ -96,8 +96,6 @@ export default class HeaderComponent extends BreakpointMixin {
   public showBurger = false;
   public navRoutes = navRoutes;
   public opaque = false;
-
-  public allLocales = AllLocalesArray;
 
   get isLoggedIn() {
     return AuthModule.state.loggedIn;

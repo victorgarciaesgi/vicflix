@@ -55,6 +55,7 @@ export const locale: LanguageConfig = {
   },
   Experience: {
     CurrentPosition: 'Position actuelle',
+    CurrentPositionLight: 'En cours',
     Location: 'Localisation',
     Year: 'Année',
   },
@@ -92,11 +93,6 @@ export const locale: LanguageConfig = {
     Totem: {
       Slogan: `Agence de développement web et mobile`,
     },
-  },
-  config: {
-    code: 'fr',
-    iso: 'fr-FR',
-    name: 'Français',
   },
 };
 

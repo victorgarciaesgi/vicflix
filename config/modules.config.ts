@@ -9,7 +9,6 @@ export const modules: NuxtOptionsModule[] = [
   'portal-vue/nuxt',
   'nuxt-i18n',
   '@nuxtjs/robots',
-  // '~/plugins/custom/iconPaths.generator.ts',
   '@nuxtjs/sitemap',
   ...(isProd
     ? ([

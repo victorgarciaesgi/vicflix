@@ -1,25 +1,12 @@
-import { Options, LocaleObject } from 'nuxt-i18n';
-import * as LocaleFiles from '../src/locales';
+import { Options } from 'nuxt-i18n';
 
 const isProd = process.env.NODE_ENV === 'production';
 
-const locales = Object.entries(LocaleFiles).map<LocaleObject>(
-  ([
-    key,
-    {
-      config: { code, iso },
-    },
-  ]) => {
-    return {
-      code,
-      iso,
-      file: `${key}.ts`,
-    };
-  }
-);
-
 export const i18n: Options = {
-  locales,
+  locales: [
+    { code: 'en', iso: 'en-US', name: 'English', file: 'en.ts' },
+    { code: 'fr', iso: 'fr-FR', name: 'Français', file: 'fr.ts' },
+  ],
   defaultLocale: process.env.NUXT_ENV_I18N_LOCALE,
   vueI18n: {
     fallbackLocale: process.env.NUXT_ENV_I18N_FALLBACK_LOCALE,
@@ -34,5 +21,8 @@ export const i18n: Options = {
   },
   detectBrowserLanguage: {
     onlyOnRoot: true,
+    useCookie: true,
+    cookieKey: 'site_language',
+    fallbackLocale: 'fr',
   },
 };

@@ -3,10 +3,10 @@ import { LocaleObject } from 'nuxt-i18n';
 import { IConstant, ObjectLiteral } from './shared.model';
 
 const defaultLocale = process.env.NUXT_ENV_I18N_LOCALE as AvailableLocales;
-const { config, ...defaultMessages } = Locales.en;
+const { ...defaultMessages } = Locales.en;
 
 function formatMessages(language: LanguageConfig, parent: string): LocalesMessages {
-  const { config, ...messages } = language;
+  const { ...messages } = language;
   return Object.entries(messages).reduce((acc, [key, value]) => {
     const newParent = `${parent ? `${parent}.` : ''}${key}`;
     if (typeof value === 'object' && value != null) {
@@ -32,7 +32,7 @@ type FormatMessages<T> = {
     : FormatMessages<T[K]>;
 };
 export type LocalesMessages = FormatMessages<DefaultMessages>;
-export type LanguageConfig = FormatMessages<DefaultMessages> & { config: IsoConfig };
+export type LanguageConfig = FormatMessages<DefaultMessages>;
 
 export interface IsoConfig {
   code: string;
@@ -43,13 +43,6 @@ export interface IsoConfig {
 export const AppTrads: LocalesMessages = formatMessages(Locales.fr, '');
 
 export type AvailableLocales = keyof typeof Locales;
-
-export const AllLocalesArray = Object.entries(Locales).map<LocaleObject>(([key, { config }]) => {
-  return {
-    ...config,
-    file: `${key}.ts`,
-  };
-});
 
 export const LocalesConstant: IConstant<keyof typeof Locales> = {
   en: 'en',

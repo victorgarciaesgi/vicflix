@@ -13,9 +13,9 @@ export const aheraProject: Project = {
   description: `Ahera Admin est une application permettant d'administrer le contenu et les utilisateurs des montre connectées Ahera.
   Elle consistait à réaliser une API et un back office administrateur
 
-  Rôle: Lead developpeur front
+  Rôle: Lead développeur front
 
-  Équipe: 1 developpeurs back, 1 developpeurs front, 1 developpeurs mobile
+  Équipe: 1 développeur back, 1 développeur front, 1 développeur mobile
   `,
   duration: 2,
   videos: [],

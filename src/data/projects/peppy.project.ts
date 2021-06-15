@@ -10,8 +10,14 @@ export const peppyProject: Project = {
     'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fpeppy%2Fpeppy.png?alt=media&token=ed22b74d-4b7a-41ee-961f-d7329201c904',
   logo: 'peppy.png',
   slogan: 'Simplement plus facile !',
-  description: '',
+  description: `Peppy est une application destinées à des propriétaires de salle de sport et leur permet de personnaliser leur entrainements ainsi que gérer le paiements de leurs abonnées.
+  Elle consistait à réaliser une API ,un back office entraineur et une application mobile
+
+  Rôle: Développeur front
+
+  Équipe: 1 développeur back, 1 développeur front, 1 développeur mobile`,
   videos: [],
+  duration: 3,
   year: 2018,
   links: [
     {

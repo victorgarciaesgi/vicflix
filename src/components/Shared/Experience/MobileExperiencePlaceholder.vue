@@ -9,9 +9,6 @@
       style="filter: drop-shadow(3px 2px 2px rgba(0, 0, 0, 0.6))"
       class="left-1/2 bottom-3 absolute w-8 h-8 transform -translate-x-1/2"
     />
-    <div class="bg-w120 absolute bottom-0 left-0 w-full h-1">
-      <div class="bg-red absolute top-0 left-0 h-full" :style="{ width: `${progress}%` }"></div>
-    </div>
   </NuxtLink>
 </template>
 

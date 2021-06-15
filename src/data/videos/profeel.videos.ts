@@ -5,25 +5,25 @@ const projectId = 'LAtFkd';
 export const profeelVideos: ProjectVideo[] = [
   {
     id: 'INiu876',
-    title: "Présentation de l'application",
-    description: "Petit tour du propriétaire de l'application Profeel Admin",
-    duration: 73,
+    title: 'Inscription',
+    description: "Démo de l'inscription à Profeel",
+    duration: 79,
     episode: 1,
     projectId,
     videoUrl:
-      'https://firebasestorage.googleapis.com/v0/b/vicflix-videos.appspot.com/o/Profeel_video.mp4?alt=media&token=780d7a57-0ee1-4e50-8a76-ccf616b79f18',
+      'https://firebasestorage.googleapis.com/v0/b/vicflix-videos.appspot.com/o/Profeel%2FInscription.mp4?alt=media&token=f1872cfc-5a3a-4c00-8780-79e8de6a69ba',
     preview:
       'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Video%20previews%2Fprofeel-placeholder.png?alt=media&token=ea0a84c8-c69d-4d64-9ec1-11b961a6ed84',
   },
   {
     id: 'NLz6HLH',
-    title: 'Test second episode',
-    description: 'Lorem ipsum blab bla bla',
-    duration: 73,
+    title: 'Front office client',
+    description: "Petit tour de l'application client",
+    duration: 41,
     episode: 2,
     projectId,
     videoUrl:
-      'https://firebasestorage.googleapis.com/v0/b/vicflix-videos.appspot.com/o/Profeel_video.mp4?alt=media&token=780d7a57-0ee1-4e50-8a76-ccf616b79f18',
+      'https://firebasestorage.googleapis.com/v0/b/vicflix-videos.appspot.com/o/Profeel%2FPresentation%20FO.mp4?alt=media&token=e62eb4bb-6ea2-44fb-9205-195a90e9bed9',
     preview:
       'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Video%20previews%2Fprofeel-placeholder.png?alt=media&token=ea0a84c8-c69d-4d64-9ec1-11b961a6ed84',
   },

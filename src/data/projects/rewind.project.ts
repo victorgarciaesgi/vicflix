@@ -13,6 +13,7 @@ export const rewindProject: Project = {
   description: '',
   videos: [],
   year: 2019,
+  duration: 2,
   links: [
     {
       title: 'Site marketing Rewind',

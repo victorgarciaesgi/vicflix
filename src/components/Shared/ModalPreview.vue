@@ -10,7 +10,7 @@
     <transition :name="'slide-left'" mode="out-in">
       <div
         v-if="show"
-        class=" h-screen-ios bg-g20 fixed top-0 left-0 z-40 flex flex-col w-screen h-screen overflow-y-auto"
+        class=" h-screen-ios bg-bg2 fixed top-0 left-0 z-40 flex flex-col w-screen h-screen overflow-y-auto"
         @scroll.stop
       >
         <slot />

@@ -105,7 +105,7 @@
 
             <div
               v-if="needCollapase"
-              class=" DescriptionBlock / text-text5 hover:underline absolute bottom-0 left-0 w-full pt-6 pl-6 text-center cursor-pointer"
+              class=" DescriptionBlock / text-text5 hover:underline absolute bottom-0 left-0 w-full pt-6 text-center cursor-pointer"
               :class="{ '!pt-0': collapseDescription }"
               @click="collapseDescription = !collapseDescription"
               >{{

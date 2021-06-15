@@ -18,6 +18,7 @@ export const totemProject: Project = {
   
   Équipe: 1 développeur front`,
   year: 2020,
+  duration: 3,
   links: [
     {
       title: 'Site client Totem Paris',

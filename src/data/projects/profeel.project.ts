@@ -24,6 +24,7 @@ export const profeelProject: Project = {
   `,
   logo: 'profeel.png',
   videos: Object.values(profeelVideos).flat(),
+  duration: 6,
   year: 2021,
   links: [
     {

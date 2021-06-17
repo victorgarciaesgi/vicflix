@@ -10,7 +10,7 @@
     <transition :name="'slide-left'" mode="out-in">
       <div
         v-if="show"
-        class=" h-screen-ios bg-bg2 fixed top-0 left-0 z-40 flex flex-col w-screen h-screen overflow-y-auto"
+        class=" h-screen-ios bg-bg3 fixed top-0 left-0 z-40 flex flex-col w-screen h-screen overflow-y-auto"
         @scroll.stop
       >
         <slot />
@@ -77,7 +77,7 @@ div.ModalContent {
     left: 0;
 
     @mixin dark {
-      background: linear-gradient(to bottom, rgba(10, 10, 10, 0) 0%, rgba(10, 10, 10, 1) 90%);
+      background: linear-gradient(to bottom, rgba(10, 10, 10, 0) 0%, rgba(20, 20, 20, 1) 90%);
     }
     @mixin light {
       background: linear-gradient(to bottom, rgba(250, 250, 250, 0) 0%, rgba(250, 250, 250, 1) 90%);

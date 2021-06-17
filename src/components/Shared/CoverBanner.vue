@@ -30,11 +30,11 @@
           style="text-shadow: 1px 2px 1px rgba(0, 0, 0, 0.2)"
           >{{ $t(data.slogan) }}</span
         >
-        <div class="text-w230 flex flex-row mt-2">
+        <div class="text-text4 flex flex-row mt-2">
           <TechnoItem v-for="tech of data.technos" :key="tech" :techno="tech" />
         </div>
         <div class="sm:justify-center flex flex-row py-4">
-          <Action icon="actions/play" theme="white" @click="playFirstVideo">{{
+          <Action icon="actions/play" theme="inverted" @click="playFirstVideo">{{
             $t($messages.Actions.Play)
           }}</Action>
           <Action icon="alerts/info" theme="gray" :to="toPreviewLink">{{

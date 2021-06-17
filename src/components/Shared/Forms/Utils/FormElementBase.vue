@@ -91,12 +91,12 @@ div.input-box {
     display: flex;
     position: relative;
     flex-flow: row nowrap;
-    border-radius: 5px;
+    border-radius: 2px;
     min-width: 0;
     min-height: 0;
     max-width: 100%;
-    border: 2px solid transparent;
-    background-color: var(--bg4);
+    border: 1px solid var(--bg10);
+    background-color: var(--bg5);
     font-size: 14px;
     padding: 0 5px;
     outline: none;
@@ -106,11 +106,11 @@ div.input-box {
     }
 
     @mixin dark {
-      background-color: var(--bg4);
+      background-color: var(--bg5);
     }
 
     &.select .DisplayText {
-      height: 36px;
+      height: 40px;
     }
 
     &.upload .display-result {
@@ -255,7 +255,7 @@ div.input-box {
   &.focus {
     &:not(.noBorder) {
       div.input-container {
-        border-color: var(--blue);
+        /* border-color: var(--blue); */
       }
     }
 

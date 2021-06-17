@@ -1,7 +1,7 @@
 <template>
   <div v-if="progress" class="flex flex-col py-1">
     <span class="text-w120 sm:text-w160 sm:text-md mb-1 text-xs"
-      >S1: Episode {{ progress.video.episode }}</span
+      >S{{ progress.video.season }}: Episode {{ progress.video.episode }}</span
     >
     <div class="flex-nowrap flex flex-row items-center">
       <div class="bg-g90 flex flex-1 w-full rounded" style="height: 3px">

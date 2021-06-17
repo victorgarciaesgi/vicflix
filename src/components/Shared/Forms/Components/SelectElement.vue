@@ -1,11 +1,13 @@
 <template>
-  <FormElementBase v-bind="baseProps">
+  <FormElementBase ref="formElementRef" v-bind="baseProps">
     <Popin
       ref="popin"
       :disabled="data.disabled"
       :full="true"
       :arrow="false"
-      :offset="2"
+      :rounded="false"
+      :offset="3"
+      :container="container"
       :nested="data.nested"
       @open="handleFocus"
       @close="handleBlur"
@@ -29,29 +31,27 @@
                   :key="option.value"
                   :title="option.text"
                   :class="{
-                    selected: option.value === value,
                     focused: resultSelected === index,
                     selecting,
                   }"
-                  class="OptionItem / flex"
+                  class="OptionItem / flex pr-8"
                   @mouseenter="selecting = false"
                   @click.stop="selectOption(option)"
                 >
                   <div class="flex flex-row items-center">
-                    <div
-                      v-if="atLeastOneIcon"
-                      class="image bg-center bg-no-repeat bg-cover"
-                      :class="{
-                        'border-bg4 border': data.userDisplay,
-                      }"
-                    >
+                    <div v-if="atLeastOneIcon" class="image bg-center bg-no-repeat bg-cover">
                       <VImg :src="option.icon" class="rounded" />
                     </div>
-                    <span class="value ellipsis">{{ option.text }}</span>
+                    <span class="value ellipsis">
+                      {{ option.text }}
+                      <span v-if="option.additional" class="ml-1 text-base font-semibold">{{
+                        option.additional
+                      }}</span>
+                    </span>
                   </div>
-                  <div v-if="option.value === value" class="icon">
+                  <!-- <div v-if="option.value === value" class="icon">
                     <SvgIcon :size="22" src="forms/done" color="green" />
-                  </div>
+                  </div> -->
                 </li>
               </ul>
 
@@ -83,10 +83,7 @@
             <div v-if="data.style && data.style.icon" class="icon">
               <SvgIcon :src="data.style.icon" :size="22" :color="iconColorProps" />
             </div>
-            <div :class="{ top: !!getDisplayValue }" class="Infos / flex-nowrap flex flex-col">
-              <span class="placeholder text-bg10 ellipsis">
-                {{ placeholder }}
-              </span>
+            <div class="Infos / flex-nowrap flex flex-col">
               <div v-if="getDisplayValue" class="ellipsis flex-nowrap flex items-center">
                 <div
                   v-if="getDisplayValue.icon"
@@ -97,11 +94,12 @@
                 >
                   <VImg :src="getDisplayValue.icon" class="rounded" />
                 </div>
-                <span class="value ellipsis">{{ getDisplayValue.text }}</span>
+                <span class="value ellipsis text-lg">{{ getDisplayValue.text }}</span>
               </div>
             </div>
             <div v-if="value && !data.disabled" class="center flex-0 flex">
               <SvgIcon
+                v-if="data.nullable"
                 :size="14"
                 class="bg-text2 p-px rounded-full"
                 src="actions/close"
@@ -134,6 +132,8 @@ import Popin from '../../../Global/Popin/Popin.vue';
   },
 })
 export default class SelectElement extends FormMixin {
+  @Prop() container!: HTMLElement;
+
   data!: UnPackField<SelectField>;
 
   @Ref() popin!: Popin;
@@ -257,26 +257,30 @@ export default class SelectElement extends FormMixin {
 ul.OptionsList {
   flex-flow: column wrap;
   width: 100%;
+  border: 1px solid var(--bg10);
+  padding: 10px 0;
+  background-color: var(--bg5);
 
   li.OptionItem {
     flex-flow: row nowrap;
-    height: 36px;
+    height: 40px;
     align-items: center;
     cursor: pointer;
     transition: background-color 0.1s;
     text-align: left;
     justify-content: space-between;
-
-    &:not(:last-child) {
+    background-color: var(--bg5);
+    /* &:not(:last-child) {
       border-bottom: 1px solid var(--bg3);
-    }
-
+    } */
     span.value {
       padding: 0 10px;
-      font-size: 14px;
-      line-height: 32px;
+      padding-left: 15px;
+      font-size: 18px;
+      line-height: 40px;
       color: var(--text1);
       transition: color 0.1s;
+      font-weight: bold;
     }
 
     div.image {
@@ -294,7 +298,7 @@ ul.OptionsList {
     }
 
     &.selecting.focused {
-      background-color: var(--bg3);
+      background-color: var(--bg8);
     }
 
     &.selected {
@@ -303,7 +307,7 @@ ul.OptionsList {
     }
 
     &:not(.selecting):hover {
-      background-color: var(--bg2);
+      background-color: var(--bg8);
     }
   }
 }
@@ -317,7 +321,7 @@ div.DisplayText {
   div.Infos {
     flex: 1 1 auto;
     justify-content: center;
-    padding-left: 5px;
+    padding-left: 15px;
     font-weight: 500;
 
     span.placeholder {
@@ -325,7 +329,8 @@ div.DisplayText {
     }
 
     span.value {
-      font-size: 14px;
+      font-size: 18px;
+      font-weight: bold;
     }
 
     &.top {

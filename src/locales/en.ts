@@ -66,6 +66,7 @@ export default {
     Director: 'Director',
     Context: 'Context',
     Duration: 'Duration',
+    Season: 'Season',
     Links: 'Links',
     InfoWarning: `No links or acces to admin applications will be provided.
     All videos are made based on fake data and dot not correspond to real client data.`,

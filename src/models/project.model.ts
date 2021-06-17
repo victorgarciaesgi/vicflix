@@ -46,6 +46,7 @@ export interface ProjectVideo {
   episode: number;
   preview: string;
   id: string;
+  season: number;
   projectId: string;
   videoUrl: string;
 }

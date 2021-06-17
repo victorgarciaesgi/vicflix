@@ -16,6 +16,7 @@ const _state: VideoProgress = {
 
 export const VideoProgressModule = new VuexModule({
   name: 'VideoProgressModule',
+  logger: false,
   state: _state,
   mutations: {
     updateVideoProgress(

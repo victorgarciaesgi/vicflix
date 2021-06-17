@@ -49,8 +49,8 @@ div.ProjectGrid {
     grid-template-columns: repeat(auto-fit, minmax(9rem, 230px));
   } */
   @screen sm {
-    gap: 4px;
-    grid-template-columns: repeat(auto-fit, minmax(8rem, 9rem));
+    gap: 6px;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 8rem));
   }
 }
 </style>

@@ -191,7 +191,9 @@
           class=" ellipsis flex-nowrap -sm:hidden flex flex-row items-center flex-shrink ml-10 leading-5"
         >
           <span class="sm:text-md text-xl font-semibold">{{ projectRelated.title }}</span>
-          <span class="text-w160 sm:text-sm mt-px ml-2 text-lg">S1:E{{ video.episode }}</span>
+          <span class="text-w160 sm:text-sm mt-px ml-2 text-lg"
+            >S{{ video.season }}:E{{ video.episode }}</span
+          >
           <span class="text-w180 sm:text-sm mt-px ml-2 text-lg">{{ video.title }}</span>
         </div>
       </div>

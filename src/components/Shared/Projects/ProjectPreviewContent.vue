@@ -1,5 +1,5 @@
 <template>
-  <div v-if="project" class="flex-nowrap bg-bg2 flex flex-col pb-10">
+  <div ref="containerRef" v-if="project" class="flex-nowrap bg-bg3 flex flex-col pb-10">
     <div class="Picture-Wrapper / h-96 flex-0 flex">
       <VImg class="Cover" :src="picture" type="default" />
       <div class="bottom-8 sm:bottom-8 left-8 absolute flex flex-col items-start">
@@ -163,10 +163,20 @@
       </div>
       <div v-if="project.videos.length" class="flex flex-col">
         <div class="flex flex-col justify-between">
-          <h2 class="border-g80 py-2 mb-2 border-b">{{ $t($messages.Projects.Episode) }}</h2>
-          <div class="flex flex-col">
+          <div class="border-g80 flex flex-row items-center justify-between border-b">
+            <h2 class="py-2 mb-2">{{ $t($messages.Projects.Episode) }}</h2>
+            <SelectElement
+              v-if="selectSeasonForm"
+              class="w-44"
+              v-model="selectSeasonForm.value"
+              :data="selectSeasonForm.data"
+              @input="handleSeasonChange"
+              :container="$refs.containerRef"
+            />
+          </div>
+          <div v-if="seasonVideos" class="flex flex-col">
             <VideoPreviewBanner
-              v-for="(video, index) of project.videos"
+              v-for="(video, index) of seasonVideos"
               :key="index"
               :video="video"
             />
@@ -187,12 +197,16 @@ import ProjectVideoProgress from '../ProjectVideoProgress.vue';
 import { BreakpointMixin } from '@mixins';
 import { monthsToYearsAndMonths } from '@utils';
 import { allProjects } from '@data';
+import { FormShape, SelectField } from '@constructors';
+import { lowerCase, range } from 'lodash';
+import { SelectElement } from '../Forms';
 
 @Component({
   components: {
     Techno,
     VideoPreviewBanner,
     ProjectVideoProgress,
+    SelectElement,
   },
 })
 export default class ProjectPreviewContent extends BreakpointMixin {
@@ -218,6 +232,33 @@ export default class ProjectPreviewContent extends BreakpointMixin {
   public videoProgress: ProgressList | null = null;
   public collapseDescription = false;
   public needCollapase = true;
+  public selectedSeason = 1;
+
+  get seasonVideos() {
+    return this.project?.videos.filter((f) => f.season === this.selectedSeason);
+  }
+
+  get availableSeasons() {
+    return [...new Set(this.project?.videos.map((m) => m.season))].length;
+  }
+
+  get selectSeasonForm() {
+    return new SelectField({
+      nullable: false,
+      options: range(0, this.availableSeasons).map((m) => ({
+        value: m + 1,
+        text: `${this.$t(this.$messages.Projects.Season)} ${m + 1}`,
+        additional: `(${this.project?.videos.filter((f) => f.season === m + 1).length} ${lowerCase(
+          this.$t(this.$messages.Projects.Episode) as string
+        )})`,
+      })),
+      value: this.selectedSeason,
+    }).extract();
+  }
+
+  handleSeasonChange(value: number) {
+    this.selectedSeason = value;
+  }
 
   get picture() {
     return this.project?.picture;
@@ -286,13 +327,13 @@ export default class ProjectPreviewContent extends BreakpointMixin {
 <style lang="postcss" scoped>
 div.Picture-Wrapper {
   .Cover >>> img {
-    mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(10, 10, 10, 1) 40%);
+    mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(20, 20, 20, 1) 40%);
   }
 }
 
 div.DescriptionBlock {
   @mixin dark {
-    background: linear-gradient(to bottom, rgba(10, 10, 10, 0) 0%, rgba(10, 10, 10, 1) 90%);
+    background: linear-gradient(to bottom, rgba(20, 20, 20, 0) 0%, rgba(20, 20, 20, 1) 90%);
   }
   @mixin light {
     background: linear-gradient(to bottom, rgba(250, 250, 250, 0) 0%, rgba(250, 250, 250, 1) 90%);

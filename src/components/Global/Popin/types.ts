@@ -9,6 +9,9 @@ export enum PopupAlignement {
   ContainerFull = 'ContainerFull',
   ContainerStart = 'ContainerStart',
   ContainerEnd = 'ContainerEnd',
+  OriginStart = 'OriginStart',
+  OriginEnd = 'OriginEnd',
+  OriginFull = 'OriginFull',
   End = 'End',
   Full = 'Full',
 }

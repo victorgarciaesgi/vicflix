@@ -8,6 +8,7 @@ export type SelectOption<TValue extends any = any> = {
   value: TValue;
   text: string;
   icon?: Maybe<string>;
+  additional?: string;
 };
 
 export type ISelectPayload<TValue = string> = {
@@ -16,6 +17,7 @@ export type ISelectPayload<TValue = string> = {
   alignement?: 'column' | 'row';
   allOption?: boolean;
   nested?: boolean;
+  nullable?: boolean;
 };
 
 /**
@@ -34,6 +36,7 @@ export class SelectField<
   allOption?: boolean;
   userDisplay?: boolean;
   nested?: boolean;
+  nullable?: boolean;
 
   constructor({
     options,
@@ -41,6 +44,7 @@ export class SelectField<
     alignement,
     allOption,
     nested,
+    nullable = true,
     ...fields
   }: FormFieldArgs<TValue, TInitial> & ISelectPayload<TValue>) {
     super(fields);
@@ -60,6 +64,7 @@ export class SelectField<
     this.allOption = allOption;
     this.innerSearch = innerSearch;
     this.nested = nested;
+    this.nullable = nullable;
   }
 }
 
@@ -127,7 +132,8 @@ export interface ISearchResult {
 
 export class PlaceField<TValue extends ObjectLiteral | string = any, TInitial = TValue>
   extends DefaultFieldStruture<TValue, TInitial>
-  implements IPlaceSearchPayload<TValue> {
+  implements IPlaceSearchPayload<TValue>
+{
   public formater?: (result: ISearchResult) => SelectOption<TValue>;
 
   constructor({

@@ -35,7 +35,7 @@ export default {
   },
   Search: {
     Title: 'Search',
-    Placeholder: 'Projects, languages, genre...',
+    Placeholder: 'Projects, technos, genre...',
     NoResults: 'No results for your search:',
   },
   Skills: {

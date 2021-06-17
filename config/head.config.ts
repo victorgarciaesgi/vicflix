@@ -38,6 +38,11 @@ const head: MetaInfo = {
       content: process.env.npm_package_description || '',
     },
     {
+      hid: 'og:site_name',
+      property: 'og:site_name',
+      content: process.env.NUXT_ENV_NAME,
+    },
+    {
       hid: 'og:url',
       property: 'og:url',
       content: process.env.NUXT_ENV_URL,

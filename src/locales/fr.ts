@@ -38,7 +38,7 @@ export const locale: LanguageConfig = {
   },
   Search: {
     Title: 'Recherche',
-    Placeholder: 'Projets, langages, genre...',
+    Placeholder: 'Projets, technos, genre...',
     NoResults: 'Aucun résultat pour votre recherche:',
   },
   Actions: {

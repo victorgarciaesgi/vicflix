@@ -31,6 +31,11 @@
             <h4 class="leading-5">
               {{ data.title }}
               <span class="bg-red2 text-xxs px-1 py-px ml-1 align-middle rounded-full">XP</span>
+              <span
+                v-if="data.currentPosition"
+                class="bg-blue3 text-xxs px-1 py-px ml-1 align-middle rounded-full"
+                >{{ $t($messages.Experience.CurrentPositionLight) }}</span
+              >
             </h4>
           </div>
 

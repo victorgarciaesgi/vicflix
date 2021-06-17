@@ -56,7 +56,7 @@ const pwa = {
 };
 
 const sitemap = {
-  hostname: process.env.NUXT_ENV_CLIENT_URL,
+  hostname: process.env.NUXT_ENV_URL,
   exclude: ['/watch/**'],
   path: '/sitemap.xml',
 };

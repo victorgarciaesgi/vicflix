@@ -28,6 +28,21 @@ const head: MetaInfo = {
       content: 'fr_FR',
     },
     {
+      hid: 'og:type',
+      property: 'og:type',
+      content: 'website',
+    },
+    {
+      hid: 'og:description',
+      property: 'og:description',
+      content: process.env.npm_package_description || '',
+    },
+    {
+      hid: 'og:url',
+      property: 'og:url',
+      content: process.env.NUXT_ENV_URL,
+    },
+    {
       hid: 'og:image',
       property: 'og:image',
       content: `${process.env.NUXT_ENV_URL}/logo.png`,

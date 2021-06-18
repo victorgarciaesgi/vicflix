@@ -1,5 +1,5 @@
 <template>
-  <div ref="containerRef" v-if="project" class="flex-nowrap bg-bg3 flex flex-col pb-10">
+  <div ref="containerRef" v-if="project" class="flex-nowrap bg-bg3 flex flex-col">
     <div class="Picture-Wrapper / h-96 flex-0 flex">
       <VImg class="Cover" :src="picture" type="default" />
       <div class="bottom-8 sm:bottom-8 left-8 absolute flex flex-col items-start">
@@ -188,18 +188,18 @@
 </template>
 
 <script lang="ts">
-import { ProgressList, Project, routerPagesNames } from '@models';
-import { Component, Vue, Prop, Ref, Watch } from 'nuxt-property-decorator';
-import VideoPreviewBanner from '../VideoPreviewBanner.vue';
-import Techno from '../Techno.vue';
-import { VideoProgressModule } from '@store';
-import ProjectVideoProgress from '../ProjectVideoProgress.vue';
-import { BreakpointMixin } from '@mixins';
-import { monthsToYearsAndMonths } from '@utils';
+import { SelectField } from '@constructors';
 import { allProjects } from '@data';
-import { FormShape, SelectField } from '@constructors';
+import { BreakpointMixin } from '@mixins';
+import { ProgressList, Project, routerPagesNames } from '@models';
+import { VideoProgressModule } from '@store';
+import { monthsToYearsAndMonths } from '@utils';
 import { lowerCase, range } from 'lodash';
+import { Component, Prop, Ref, Watch } from 'nuxt-property-decorator';
 import { SelectElement } from '../Forms';
+import ProjectVideoProgress from '../ProjectVideoProgress.vue';
+import Techno from '../Techno.vue';
+import VideoPreviewBanner from '../VideoPreviewBanner.vue';
 
 @Component({
   components: {

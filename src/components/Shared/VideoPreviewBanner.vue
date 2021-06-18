@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     :to="toVideoLink"
-    class="VideoPreviewBanner / group flex-nowrap sm:px-0 flex flex-row items-center w-full h-32 px-5 py-3 rounded"
+    class=" VideoPreviewBanner / group flex-nowrap sm:px-0 flex flex-row items-center w-full h-32 px-5 py-3 rounded"
     :class="{ '!px-3 !h-24': sm }"
   >
     <div class="text-text1 w-6 pr-3 text-2xl">{{ video.episode }}</div>
@@ -9,9 +9,17 @@
       class="flex-0 sm:w-20 sm:h-12 relative w-40 h-20 overflow-hidden rounded-md shadow"
       :class="{ '!w-20 !h-12': sm }"
     >
-      <VImg :src="video.preview" />
+      <video
+        ref="videoPlayer"
+        class="VideoElement / object-cover w-full h-full"
+        style="transform-origin: top left"
+        preload="metadata"
+        type="video/mp4"
+        playsinline
+        :src="`${video.videoUrl}#t=0.001`"
+      />
       <div
-        class="-sm:group-hover:flex center bg-opacity-30 absolute top-0 left-0 hidden w-full h-full bg-black"
+        class=" -sm:group-hover:flex center bg-opacity-30 absolute top-0 left-0 hidden w-full h-full bg-black"
       >
         <div class="p-1 text-white border border-white rounded-full">
           <SvgIcon class="w-9 h-9 sm:w-7 sm:h-7" :class="{ '!h-7 !w-7': sm }" src="actions/play" />
@@ -44,7 +52,7 @@
 import { ProjectVideo, routerPagesNames } from '@models';
 import { VideoProgressModule } from '@store';
 import { secondsToHoursAndMinutes } from '@utils';
-import { Component, Vue, Prop } from 'nuxt-property-decorator';
+import { Component, Vue, Prop, Ref } from 'nuxt-property-decorator';
 import { Location } from 'vue-router';
 
 @Component({})
@@ -52,7 +60,11 @@ export default class VideoPreviewBanner extends Vue {
   @Prop() video!: ProjectVideo;
   @Prop({ type: Boolean, required: false }) sm?: boolean;
 
+  @Ref() videoPlayer!: HTMLVideoElement;
+
   public progress = 0;
+  public loading = false;
+  public thumbnailSrc: string | null = null;
 
   get toVideoLink(): Location {
     return {

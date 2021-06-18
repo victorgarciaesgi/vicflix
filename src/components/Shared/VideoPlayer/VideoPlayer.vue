@@ -12,6 +12,7 @@
       ref="videoPlayer"
       class="VideoElement / w-full h-full"
       style="transform-origin: top left"
+      type="video/mp4"
       playsinline
       preload="metadata"
       :class="{
@@ -487,7 +488,7 @@ export default class VideoPlayer extends BreakpointMixin {
           translateY: 150 / scale,
           translateX: 50,
           duration: 300,
-          easing: 'linear',
+          easing: 'easeInOutQuad',
         });
       } else {
         anime({
@@ -497,7 +498,7 @@ export default class VideoPlayer extends BreakpointMixin {
           translateY: 0,
           translateX: 0,
           duration: 300,
-          easing: 'linear',
+          easing: 'easeInOutQuad',
         });
       }
     }
@@ -597,6 +598,11 @@ export default class VideoPlayer extends BreakpointMixin {
       this.videoPlayer.addEventListener('fullscreenchange', this.handleFullScreenChange);
       this.volume = this.videoPlayer.volume;
       window.addEventListener('keydown', this.handleKeyUp);
+
+      if (this.isVideoEnding) {
+        this.replayVideo();
+      }
+
       const userAgent = window.navigator.userAgent;
       this.handlePlayerUpdateTime = debounce((time: number) => {
         this.videoPlayer.currentTime = time;

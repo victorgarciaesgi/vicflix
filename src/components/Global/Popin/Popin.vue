@@ -321,7 +321,7 @@ export default class Popin extends Vue {
     this.$refs.popup.addEventListener('touchstart', (e) => e.stopPropagation());
     this.addResizeObserver();
 
-    const parentScrollNode = getScrollParent(this.$refs.popup);
+    const parentScrollNode = getScrollParent(this.button);
     if (parentScrollNode && !parentScrollNode.isEqualNode(document.body)) {
       parentScrollNode.addEventListener('scroll', this.processPopupPlacement);
     }

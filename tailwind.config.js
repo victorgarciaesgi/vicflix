@@ -88,6 +88,13 @@ module.exports = {
         96: '24rem',
         104: '26rem',
       },
+      lineClamp: {
+        6: '6',
+        7: '7',
+        8: '8',
+        9: '9',
+        10: '10',
+      },
       boxShadow: {
         default: '0 0 10px var(--shadowColor)',
         top: '0 -8px 10px var(--shadowColor)',

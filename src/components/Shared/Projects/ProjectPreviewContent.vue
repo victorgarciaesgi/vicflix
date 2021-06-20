@@ -100,7 +100,7 @@
             ref="descriptionRef"
             v-if="project.description"
             class="relative mt-4 whitespace-pre-line"
-            :class="{ 'line-clamp-4': !collapseDescription, 'pb-6': collapseDescription }"
+            :class="{ 'line-clamp-8': !collapseDescription, 'pb-6': collapseDescription }"
             >{{ project.description }}
 
             <div

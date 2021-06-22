@@ -2,7 +2,7 @@
   <div
     ref="containerRef"
     class="VideoPlayer / absolute flex w-full h-full text-white"
-    @mousemove="debounceHideToolbar"
+    @mousemove="showToolBar"
   >
     <VImg
       v-if="isVideoEndingHasNextProject && nextProject && !isVideoEndingHasNextEspisode"
@@ -22,6 +22,7 @@
       @progress="handleVideoProgress"
       @dblclick="toggleFullScreen"
       @click="toggleVideoPlay(false)"
+      @mousemove="debounceHideToolbar"
     >
       <source :src="video.videoUrl" type="video/mp4" />
     </video>
@@ -33,6 +34,7 @@
         v-if="showToolbar || isVideoEnding"
         class="ToolBar / absolute bottom-0 left-0 z-10 flex flex-col w-full px-5 py-8"
         :class="{ playing: videoPlaying }"
+        @mouseenter="disableHideToolBar"
       >
         <transition name="fade" mode="out-in">
           <div v-if="isVideoEnding && nextEpisode" class="flex flex-row justify-end pb-4">
@@ -138,6 +140,9 @@
               :debounce="true"
               :offset="2"
               :width="400"
+              @open="disableHideToolBar"
+              @close="debounceHideToolbar"
+              theme="g30"
             >
               <template #content>
                 <div class="flex flex-col w-full">
@@ -361,6 +366,7 @@ export default class VideoPlayer extends BreakpointMixin {
   playVideo() {
     try {
       this.videoPlayer?.play();
+      this.debounceHideToolbar();
     } catch (e) {
       console.log(e);
     }
@@ -569,6 +575,12 @@ export default class VideoPlayer extends BreakpointMixin {
 
   //! Toolbar
 
+  showToolBar() {
+    if (!this.isVideoEnding) {
+      this.showToolbar = true;
+    }
+  }
+
   hideToolBar() {
     if (!this.isVideoEnding) {
       this.showToolbar = false;
@@ -579,6 +591,10 @@ export default class VideoPlayer extends BreakpointMixin {
     this.showToolbar = true;
     if (this.toolBarTimeOut) clearTimeout(this.toolBarTimeOut);
     this.toolBarTimeOut = setTimeout(this.hideToolBar, 3000);
+  }
+
+  disableHideToolBar() {
+    if (this.toolBarTimeOut) clearTimeout(this.toolBarTimeOut);
   }
 
   //! LifeCycle

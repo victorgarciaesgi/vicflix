@@ -60,7 +60,7 @@ export const profeelVideos: ProjectVideo[] = [
   },
   {
     id: 'psoknzuhf',
-    title: 'Création de chantier',
+    title: 'Réceptions',
     description: 'Mais aussi des réceptions!',
     duration: 129,
     episode: 6,

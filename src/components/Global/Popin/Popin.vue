@@ -322,7 +322,7 @@ export default class Popin extends Vue {
     this.addResizeObserver();
 
     const parentScrollNode = getScrollParent(this.button);
-    if (parentScrollNode && !parentScrollNode.isEqualNode(document.body)) {
+    if (parentScrollNode && !parentScrollNode.isEqualNode(document.documentElement)) {
       parentScrollNode.addEventListener('scroll', this.processPopupPlacement);
     }
 

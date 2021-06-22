@@ -12,6 +12,7 @@ html {
   height: 100%;
   width: 100%;
   background-color: var(--bg1);
+  font-size: 16px;
 
   @screen md {
     font-size: 14px;
@@ -25,7 +26,6 @@ body {
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  font-size: 16px;
   line-height: 1.5;
   color: var(--text1);
 }
@@ -56,7 +56,7 @@ html.dark {
   --text11: var(--w160);
   --text12: var(--w150);
   --textLink: var(--rose);
-  --shadowColor: rgba(150, 150, 150, 0.1);
+  --shadowColor: rgba(200, 200, 200, 0.2);
   color-scheme: dark;
 }
 
@@ -87,6 +87,7 @@ html.light {
   --text12: var(--w130);
   --textLink: var(--mint);
   --shadowColor: rgba(149, 157, 165, 0.2);
+  color-scheme: light;
 }
 
 @screen md {

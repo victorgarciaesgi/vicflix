@@ -21,7 +21,6 @@ export const bigupProject: Project = {
   - Administrer les artistes ainsi que les demandes de vidéos effectuées (admin)
   - Lier les comptes Stripe des artistes (admin)
   - Les artistes pouvaient recevoir les demandes de clients et enregistrer les vidéos (mobile)
-
   `,
   duration: 3,
   videos: Object.values(bigupVideos).flat(),

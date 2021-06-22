@@ -62,6 +62,8 @@ export default {
     SeeMore: 'See more',
     SeeLess: 'See less',
     Recommended: '99.9% recommended',
+    AddToList: 'Add to my list',
+    RemoveFromList: 'Remove from my list',
     Episode: 'Episodes',
     Director: 'Director',
     Context: 'Context',

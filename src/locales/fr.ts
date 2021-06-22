@@ -65,6 +65,8 @@ export const locale: LanguageConfig = {
     SeeMore: 'Voir plus',
     SeeLess: 'Voir moins',
     Recommended: 'Recommandé à 99.9%',
+    AddToList: 'Ajouter à ma liste',
+    RemoveFromList: 'Supprimer de ma liste',
     Episode: 'Épisodes',
     Director: 'Réalisateur',
     Context: 'Contexte',

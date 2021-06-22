@@ -1,5 +1,5 @@
 <template>
-  <div ref="containerRef" v-if="project" class="flex-nowrap bg-bg3 flex flex-col">
+  <div ref="containerRef" v-if="project" class="flex-nowrap flex flex-col">
     <div class="Picture-Wrapper / h-96 flex-0 flex">
       <VImg class="Cover" :src="picture" type="default" />
       <div class="bottom-8 sm:bottom-8 left-8 absolute flex flex-col items-start">
@@ -31,7 +31,11 @@
           <Popin mode="hover" theme="text1">
             <template #content>
               <span class="text-bg1 px-3 py-1">
-                {{ isInWishList ? 'Supprimer de ma liste' : 'Ajouter à ma liste' }}
+                {{
+                  isInWishList
+                    ? $t($messages.Projects.RemoveFromList)
+                    : $t($messages.Projects.AddToList)
+                }}
               </span>
             </template>
             <template #button>
@@ -71,10 +75,10 @@
           :w-full="true"
           size="md"
         >
-          Supprimer de ma liste
+          {{ $t($messages.Projects.RemoveFromList) }}
         </Action>
         <Action v-else @click="addToWishList" icon="actions/add" :w-full="true" size="md">
-          Ajouter à ma liste
+          {{ $t($messages.Projects.AddToList) }}
         </Action>
       </div>
       <div class="sm:flex-col flex flex-row items-start py-3">

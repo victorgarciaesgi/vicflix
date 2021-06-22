@@ -23,7 +23,7 @@
     </div>
 
     <div
-      class=" Menus / sm:flex-grow sm:justify-end flex flex-row items-center flex-shrink-0 ml-5 text-white"
+      class=" Menus / sm:flex-grow sm:justify-end text-text1 flex flex-row items-center flex-shrink-0 ml-5"
     >
       <SearchBar />
       <a href="https://github.com/victorgarciaesgi" target="_blank" class="sm:hidden">
@@ -171,8 +171,15 @@ header {
     left: 0;
     width: 100%;
     height: calc(100% + 30px);
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
     transition: opacity 0.3s;
+
+    @mixin dark {
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+    }
+
+    @mixin light {
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
+    }
 
     @screen sm {
       height: 100%;
@@ -180,7 +187,7 @@ header {
   }
 
   &.opaque {
-    background-color: black;
+    background-color: var(--bg1);
     &::before {
       opacity: 0;
     }

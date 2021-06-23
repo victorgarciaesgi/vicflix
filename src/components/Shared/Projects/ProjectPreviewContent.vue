@@ -246,13 +246,14 @@ export default class ProjectPreviewContent extends BreakpointMixin {
   get selectSeasonForm() {
     return new SelectField({
       nullable: false,
-      options: range(0, this.availableSeasons).map((m) => ({
-        value: m + 1,
-        text: `${this.$t(this.$messages.Projects.Season)} ${m + 1}`,
-        additional: `(${this.project?.videos.filter((f) => f.season === m + 1).length} ${lowerCase(
-          this.$t(this.$messages.Projects.Episode) as string
-        )})`,
-      })),
+      options: range(0, this.availableSeasons).map((m) => {
+        const countEpisodes = this.project?.videos.filter((f) => f.season === m + 1).length;
+        return {
+          value: m + 1,
+          text: `${this.$t(this.$messages.Projects.Season)} ${m + 1}`,
+          additional: `(${this.$tc(this.$messages.Projects.EpisodesCount, countEpisodes)})`,
+        };
+      }),
       value: this.selectedSeason,
     }).extract();
   }

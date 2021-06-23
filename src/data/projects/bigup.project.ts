@@ -1,6 +1,5 @@
 import { TechnosList } from '@constants';
 import { AppTrads, Project, ProjectContext, ProjectType } from '@models';
-import { bigupVideos } from '../videos';
 
 export const bigupProject: Project = {
   title: 'Big Up website & Admin',
@@ -23,7 +22,7 @@ export const bigupProject: Project = {
   - Les artistes pouvaient recevoir les demandes de clients et enregistrer les vidéos (mobile)
   `,
   duration: 3,
-  videos: Object.values(bigupVideos).flat(),
+  videos: [],
   year: 2018,
   links: [
     {

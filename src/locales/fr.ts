@@ -68,6 +68,7 @@ export const locale: LanguageConfig = {
     AddToList: 'Ajouter à ma liste',
     RemoveFromList: 'Supprimer de ma liste',
     Episode: 'Épisodes',
+    EpisodesCount: '0 épisodes | 1 épisode | {count} épisodes',
     Director: 'Réalisateur',
     Context: 'Contexte',
     Duration: 'Durée',

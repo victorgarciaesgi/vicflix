@@ -9,7 +9,7 @@
       class="flex-0 sm:w-20 sm:h-12 relative w-40 h-20 overflow-hidden rounded-md shadow"
       :class="{ '!w-20 !h-12': sm }"
     >
-      <video
+      <!-- <video
         ref="videoPlayer"
         class="VideoElement / relative z-0 object-cover w-full h-full"
         style="transform-origin: top left"
@@ -18,10 +18,8 @@
         playsinline
         :src="`${video.videoUrl}#t=0.001`"
         @loadedmetadata="handleLoadedMetadata"
-      />
-      <div v-if="loading" class="center !absolute top-0 left-0 z-20 flex w-full h-full">
-        <Spinner color="red" :size="20" />
-      </div>
+      /> -->
+      <VImg :src="video.thumbnail" />
       <div
         class="
           -sm:group-hover:flex
@@ -91,16 +89,11 @@ export default class VideoPreviewBanner extends Vue {
     };
   }
 
-  handleLoadedMetadata() {
-    this.loading = false;
-  }
-
   get duration() {
     return secondsToHoursAndMinutes(this.video.duration);
   }
 
   async created() {
-    this.loading = true;
     const video = await VideoProgressModule.actions.getVideoProgress(this.video.id);
     if (video) {
       this.progress = video.percentage;

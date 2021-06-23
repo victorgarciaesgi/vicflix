@@ -1,6 +1,5 @@
 import { TechnosList } from '@constants';
 import { AppTrads, Project, ProjectContext, ProjectType } from '@models';
-import { crecheslibVideos } from '../videos/crecheslib.videos';
 
 export const crecheslibProject: Project = {
   title: "Crèches Lib'",
@@ -23,11 +22,10 @@ export const crecheslibProject: Project = {
 
   Rôle: Développeur front
 
-  Équipe: 1 développeur back, 1 développeur front
-  `,
+  Équipe: 1 développeur back, 1 développeur front`,
   duration: 12,
   logo: 'crecheslib.svg',
-  videos: Object.values(crecheslibVideos).flat(),
+  videos: [],
   year: 2019,
   links: [
     {

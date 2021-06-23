@@ -48,6 +48,7 @@ export interface ProjectVideo {
   season: number;
   projectId: string;
   videoUrl: string;
+  thumbnail: string;
 }
 
 export enum ProjectContext {

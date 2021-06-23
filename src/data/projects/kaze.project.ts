@@ -1,5 +1,6 @@
 import { TechnosList } from '@constants';
 import { AppTrads, Project, ProjectContext, ProjectType } from '@models';
+import { kazeVideos } from '../videos/kaze.videos';
 
 export const kazeProject: Project = {
   title: 'Kazé France',
@@ -24,7 +25,7 @@ export const kazeProject: Project = {
 
   Équipe: 1 developpeur back, 1 developpeur front`,
   duration: 2,
-  videos: [],
+  videos: Object.values(kazeVideos).flat(),
   year: 2020,
   links: [
     {

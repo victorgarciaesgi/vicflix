@@ -65,6 +65,7 @@ export default {
     AddToList: 'Add to my list',
     RemoveFromList: 'Remove from my list',
     Episode: 'Episodes',
+    EpisodesCount: '0 episodes | 1 episode | {count} episodes',
     Director: 'Director',
     Context: 'Context',
     Duration: 'Duration',

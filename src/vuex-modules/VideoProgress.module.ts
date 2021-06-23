@@ -58,7 +58,12 @@ export const VideoProgressModule = new VuexModule({
       if (project) {
         const videos = progressList
           .filter(({ video }) => project.videos.find((f) => f.id === video.id))
-          .sort((a, b) => b.video.episode - a.video.episode);
+          .sort((a, b) => {
+            if (a.video.season === b.video.season) {
+              return b.video.episode - a.video.episode;
+            }
+            return b.video.season - a.video.season;
+          });
         const pendingVideo = videos.find(({ percentage, duration, timestamp }) => {
           return timestamp < duration - 5;
         });
@@ -67,14 +72,22 @@ export const VideoProgressModule = new VuexModule({
         } else {
           const lastVideo = videos[0];
           if (lastVideo) {
-            const nextVideo = project.videos.find((f) => f.episode === lastVideo.video.episode + 1);
-            if (nextVideo) {
+            let sameSeasonNextVideo = project?.videos.find(
+              (f) =>
+                f.episode === lastVideo.video.episode + 1 && f.season === lastVideo.video.season
+            );
+            if (!sameSeasonNextVideo) {
+              sameSeasonNextVideo = project?.videos.find(
+                (video) => video.episode === 1 && video.season === lastVideo.video.season + 1
+              );
+            }
+            if (sameSeasonNextVideo) {
               VideoProgressModule.mutations.updateVideoProgress({
-                video: nextVideo,
-                duration: nextVideo.duration,
+                video: sameSeasonNextVideo,
+                duration: sameSeasonNextVideo.duration,
                 timestamp: 0,
               });
-              return progressList.find((f) => f.video.id === nextVideo.id);
+              return progressList.find((f) => f.video.id === sameSeasonNextVideo?.id);
             }
           }
         }

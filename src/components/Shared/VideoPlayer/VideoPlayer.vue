@@ -291,7 +291,14 @@ export default class VideoPlayer extends BreakpointMixin {
 
   get nextEpisode(): ProjectVideo | undefined {
     const project = this.projectRelated;
-    return project?.videos.find((video) => video.episode === this.video.episode + 1);
+    const sameSeasonVideo = project?.videos.find(
+      (video) => video.episode === this.video.episode + 1 && video.season === this.video.season
+    );
+    if (!sameSeasonVideo) {
+      return project?.videos.find(
+        (video) => video.episode === 1 && video.season === this.video.season + 1
+      );
+    } else return sameSeasonVideo;
   }
 
   get nextEpisodeLink(): Location | undefined {

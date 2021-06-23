@@ -32,12 +32,12 @@ export default defineNuxtMiddleware(({ route, app, from }) => {
   }
   if (route.fullPath !== RouterModule.state.currentRoute?.fullPath) {
     if (route.fullPath === from.fullPath) {
-      if (!route.meta.some((m: MetaOptions) => m.indexable === false)) {
+      if (!route.meta?.some((m: MetaOptions) => m.indexable === false)) {
         RouterModule.mutations.updateCurrentRoute(route);
       }
     } else if (app.router) {
       const afterEachHook = app.router.afterEach(() => {
-        if (!route.meta.some((m: MetaOptions) => m.indexable === false)) {
+        if (!route.meta?.some((m: MetaOptions) => m.indexable === false)) {
           RouterModule.mutations.updateCurrentRoute(route);
         }
         afterEachHook();

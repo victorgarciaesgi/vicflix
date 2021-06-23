@@ -22,7 +22,7 @@ export const RouterModule = new VuexModule({
   getters: {
     previousRouteTitle({ previousRoute }): string | null {
       if (previousRoute) {
-        const [meta] = previousRoute.meta.filter((m: ObjectLiteral) => !!m.title);
+        const [meta] = previousRoute.meta?.filter((m: ObjectLiteral) => !!m.title);
         return meta?.title;
       }
       return '';
@@ -31,7 +31,7 @@ export const RouterModule = new VuexModule({
   mutations: {
     updateCurrentRoute(state, route: Route) {
       const previousRoute = state.currentRoute;
-      const [meta] = route.meta.filter((m: ObjectLiteral) => !!m.title);
+      const [meta] = route.meta?.filter((m: ObjectLiteral) => !!m.title);
       state.currentRoute = route;
       state.previousRoute = previousRoute;
       if (meta?.title) {

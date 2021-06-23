@@ -11,15 +11,31 @@
     >
       <video
         ref="videoPlayer"
-        class="VideoElement / object-cover w-full h-full"
+        class="VideoElement / relative z-0 object-cover w-full h-full"
         style="transform-origin: top left"
         preload="metadata"
         type="video/mp4"
         playsinline
         :src="`${video.videoUrl}#t=0.001`"
+        @loadedmetadata="handleLoadedMetadata"
       />
+      <div v-if="loading" class="center !absolute top-0 left-0 z-20 flex w-full h-full">
+        <Spinner color="red" :size="20" />
+      </div>
       <div
-        class=" -sm:group-hover:flex center bg-opacity-30 absolute top-0 left-0 hidden w-full h-full bg-black"
+        class="
+          -sm:group-hover:flex
+          center
+          bg-opacity-30
+          !absolute
+          top-0
+          left-0
+          z-10
+          hidden
+          w-full
+          h-full
+          bg-black
+        "
       >
         <div class="p-1 text-white border border-white rounded-full">
           <SvgIcon class="w-9 h-9 sm:w-7 sm:h-7" :class="{ '!h-7 !w-7': sm }" src="actions/play" />
@@ -75,11 +91,16 @@ export default class VideoPreviewBanner extends Vue {
     };
   }
 
+  handleLoadedMetadata() {
+    this.loading = false;
+  }
+
   get duration() {
     return secondsToHoursAndMinutes(this.video.duration);
   }
 
   async created() {
+    this.loading = true;
     const video = await VideoProgressModule.actions.getVideoProgress(this.video.id);
     if (video) {
       this.progress = video.percentage;

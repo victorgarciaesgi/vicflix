@@ -179,11 +179,7 @@
             />
           </div>
           <div v-if="seasonVideos" class="flex flex-col">
-            <VideoPreviewBanner
-              v-for="(video, index) of seasonVideos"
-              :key="index"
-              :video="video"
-            />
+            <VideoPreviewBanner v-for="video of seasonVideos" :key="video.id" :video="video" />
           </div>
         </div>
       </div>
@@ -227,6 +223,7 @@ export default class ProjectPreviewContent extends BreakpointMixin {
       const video = await VideoProgressModule.actions.getProjectProgress(project.id);
       if (video) {
         this.videoProgress = video;
+        this.selectedSeason = video.video.season;
       }
     } else {
       this.$router.push(this.$route.path);

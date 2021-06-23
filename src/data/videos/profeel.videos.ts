@@ -12,7 +12,7 @@ export const profeelVideos: ProjectVideo[] = [
     season: 1,
     projectId,
     videoUrl:
-      'https://firebasestorage.googleapis.com/v0/b/vicflix-videos.appspot.com/o/Profeel%2FInscription.mp4?alt=media&token=f1872cfc-5a3a-4c00-8780-79e8de6a69ba',
+      'https://firebasestorage.googleapis.com/v0/b/vicflix-videos.appspot.com/o/Profeel%2FInscription.mp4?alt=media&token=7098b4e9-4bbf-48ce-baa5-177f53ef46ba',
   },
   {
     id: 'NLz6HLH',
@@ -34,7 +34,7 @@ export const profeelVideos: ProjectVideo[] = [
     season: 1,
     projectId,
     videoUrl:
-      'https://firebasestorage.googleapis.com/v0/b/vicflix-videos.appspot.com/o/Profeel%2FCreation%20chantier.mp4?alt=media&token=5d0eac88-d823-41d4-8524-9991861bfe2b',
+      'https://firebasestorage.googleapis.com/v0/b/vicflix-videos.appspot.com/o/Profeel%2FCreation%20chantier.mp4?alt=media&token=430e3683-ff0c-45c7-bc26-5adec3e49a22',
   },
   {
     id: 'lzhdefeiz',
@@ -56,7 +56,7 @@ export const profeelVideos: ProjectVideo[] = [
     season: 1,
     projectId,
     videoUrl:
-      'https://firebasestorage.googleapis.com/v0/b/vicflix-videos.appspot.com/o/Profeel%2FAutocontroles.mp4?alt=media&token=1b10e778-f91c-4f28-b65b-85ef3029eac8',
+      'https://firebasestorage.googleapis.com/v0/b/vicflix-videos.appspot.com/o/Profeel%2FAutocontroles.mp4?alt=media&token=2a791f22-8bc1-4018-bdca-90b104303d99',
   },
   {
     id: 'psoknzuhf',
@@ -67,6 +67,40 @@ export const profeelVideos: ProjectVideo[] = [
     season: 1,
     projectId,
     videoUrl:
-      'https://firebasestorage.googleapis.com/v0/b/vicflix-videos.appspot.com/o/Profeel%2FReceptions.mp4?alt=media&token=6cb250b8-cc40-4814-a883-37475fa3c193',
+      'https://firebasestorage.googleapis.com/v0/b/vicflix-videos.appspot.com/o/Profeel%2FReceptions.mp4?alt=media&token=6a3d8306-65b1-4dd3-8536-b6b949e89003',
+  },
+  //- Season 2
+  {
+    id: 'MEOJKMjnl',
+    title: 'Listes de contrôles',
+    description: 'Accéder et modifiez vos listes de contrôles',
+    duration: 133,
+    episode: 1,
+    season: 2,
+    projectId,
+    videoUrl:
+      'https://firebasestorage.googleapis.com/v0/b/vicflix-videos.appspot.com/o/Profeel%2FListes%20de%20contro%CC%82les%20FO.mp4?alt=media&token=bb14968b-475b-4ac8-af7a-fa931cdb4df6',
+  },
+  {
+    id: 'lVKLDMkmok',
+    title: 'Bibliothèque de la société',
+    description: 'Un bon moyen de partager et stocket les documents avec la société',
+    duration: 63,
+    episode: 2,
+    season: 2,
+    projectId,
+    videoUrl:
+      'https://firebasestorage.googleapis.com/v0/b/vicflix-videos.appspot.com/o/Profeel%2FBibliothe%CC%80que.mp4?alt=media&token=9586ca45-8430-4c07-8703-f5cfdcd6c2a5',
+  },
+  {
+    id: 'xEKPOHkhk',
+    title: 'Réglages Société',
+    description: 'Mais aussi des réceptions!',
+    duration: 95,
+    episode: 3,
+    season: 2,
+    projectId,
+    videoUrl:
+      'https://firebasestorage.googleapis.com/v0/b/vicflix-videos.appspot.com/o/Profeel%2FRe%CC%81glages%20FO.mp4?alt=media&token=d21a26c2-95d0-43a9-b90b-6bf26c203667',
   },
 ];

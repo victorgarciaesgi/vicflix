@@ -8,7 +8,7 @@ export const kazeProject: Project = {
   picture:
     'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fkaze%2Fchez_kaze_guide_book_artbook_et_roman_pour_blue_exorcist_2378%201.png?alt=media&token=2acaa120-0f57-4091-8ca6-d0166fe12ba0',
   placeholder:
-    'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fkaze%2F5633-Header_KazeHikaru_2000x800%201.png?alt=media&token=2dc67deb-6bd0-4d40-9f3d-1ac5a19ee5a0',
+    'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fkaze%2Fchainsaw.jpg?alt=media&token=f1a01c8b-2112-4c20-9b45-345839664573',
   logo: 'kaze.png',
   slogan: AppTrads.ProjectDescriptions.Kaze.Slogan,
   description: `Kazé est la refonte du site client et de l'application admin d'éditeur de Manga et Anime Kazé France.

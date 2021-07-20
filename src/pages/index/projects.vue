@@ -37,7 +37,7 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator';
 import { CoverBanner, MobileProjectList, ProjectList } from '@components';
-import { allProjects, bigupProject } from '@data';
+import { allProjects, bigupProject, kazeProject } from '@data';
 import { BreakpointMixin } from '@mixins';
 import { BreakPointsValues, Project, ProjectType } from '@models';
 import { VideoProgressModule } from '@store';
@@ -57,7 +57,7 @@ export default class Home extends BreakpointMixin {
     };
   }
 
-  public coverProject = bigupProject;
+  public coverProject = kazeProject;
 
   get continueProjects() {
     const progressList = VideoProgressModule.state.progressList;

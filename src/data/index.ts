@@ -16,10 +16,11 @@ export const featuredProjects = [
   projects.profeelProject,
   projects.milinusProject,
   projects.crecheslibProject,
+  projects.vueChart3Project,
   projects.kazeProject,
   projects.bigupProject,
-  projects.sgtsProject,
   projects.totemProject,
+  projects.sgtsProject,
 ];
 
 export const coverProject = milinusProject;

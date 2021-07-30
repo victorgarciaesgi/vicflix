@@ -47,6 +47,7 @@ export const milinusProject: Project = {
     TechnosList.Typescript,
     TechnosList.GraphQL,
     TechnosList.Tailwind,
+    TechnosList.Gridsome,
     TechnosList.Gitlab,
   ],
   context: ProjectContext.Totem,

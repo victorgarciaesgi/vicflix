@@ -6,7 +6,7 @@ export const kazeProject: Project = {
   title: 'Kazé France',
   id: 'CNXqpj',
   picture:
-    'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fkaze%2Fchez_kaze_guide_book_artbook_et_roman_pour_blue_exorcist_2378%201.png?alt=media&token=2acaa120-0f57-4091-8ca6-d0166fe12ba0',
+    'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fkaze%2Fcover.png?alt=media&token=aa1c8070-4682-46fb-aaa6-dc23ad9e4bad',
   placeholder:
     'https://firebasestorage.googleapis.com/v0/b/vicflix-2fbe0.appspot.com/o/Pictures%2FProjects%2Fkaze%2Fchainsaw.jpg?alt=media&token=f1a01c8b-2112-4c20-9b45-345839664573',
   logo: 'kaze.png',

@@ -19,6 +19,9 @@ export enum TechnosList {
   VuePress = 'VuePress',
   Chartjs = 'Chartjs',
   Angular = 'Angular',
+  Karma = 'Karma',
+  Jasmine = 'Jasmine',
+  Gridsome = 'Gridsome',
 }
 
 export const TechnosConstant: Skill[] = [
@@ -29,6 +32,7 @@ export const TechnosConstant: Skill[] = [
   { title: TechnosList.Tailwind, logo: 'technos/Tailwind', color: '#06B6D4', id: nanoid(4) },
   { title: TechnosList.React, logo: 'technos/ReactJs', color: '#61dafb', id: nanoid(4) },
   { title: TechnosList.Gatsby, logo: 'technos/Gatsby', color: '#663399', id: nanoid(4) },
+  { title: TechnosList.Gridsome, logo: 'technos/Gridsome', color: '#00A672', id: nanoid(4) },
   { title: TechnosList.Gitlab, logo: 'technos/GitLab', color: '#fa7035', id: nanoid(4) },
   { title: TechnosList.Netlify, logo: 'technos/Netlify', color: '#00AD9F', id: nanoid(4) },
   { title: TechnosList.Stripe, logo: 'technos/Stripe', color: '#635bff', id: nanoid(4) },
@@ -39,4 +43,6 @@ export const TechnosConstant: Skill[] = [
   { title: TechnosList.Jest, logo: 'technos/Jest', color: '#99424f', id: nanoid(4) },
   { title: TechnosList.VuePress, logo: 'technos/VuePress', color: '#4fc08d', id: nanoid(4) },
   { title: TechnosList.Angular, logo: 'technos/Angular', color: '#dd1b16', id: nanoid(4) },
+  { title: TechnosList.Karma, logo: 'technos/Karma', color: '#429F87', id: nanoid(4) },
+  { title: TechnosList.Jasmine, logo: 'technos/Jasmine', color: '#8A4182', id: nanoid(4) },
 ];

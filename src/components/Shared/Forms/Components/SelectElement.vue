@@ -32,6 +32,7 @@
                   :title="option.text"
                   :class="{
                     focused: resultSelected === index,
+                    selected: option.value === value,
                     selecting,
                   }"
                   class="OptionItem / flex pr-8"
@@ -302,7 +303,7 @@ ul.OptionsList {
     }
 
     &.selected {
-      font-weight: 600;
+      background-color: var(--bg7);
       cursor: default;
     }
 

@@ -56,7 +56,11 @@ const config: NuxtConfig = {
     '@nuxtjs/tailwindcss',
     '@nuxtjs/pwa',
     '@nuxtjs/composition-api/module',
+    '@nuxtjs/google-analytics',
   ],
+  googleAnalytics: {
+    id: 'G-52KXLQ02QZ',
+  },
   render: {
     static: {
       setHeaders(res) {

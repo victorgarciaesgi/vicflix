@@ -45,7 +45,14 @@
       "@models": ["models/index.ts"],
       "@locales": ["locales/index.ts"]
     },
-    "types": ["@nuxt/types", "nuxt-typed-router", "node", "webpack-env", "nuxt-i18n"]
+    "types": [
+      "@nuxt/types",
+      "nuxt-typed-router",
+      "node",
+      "webpack-env",
+      "nuxt-i18n",
+      "@nuxtjs/google-analytics"
+    ]
   },
   "include": [
     "./src/**/*.ts",

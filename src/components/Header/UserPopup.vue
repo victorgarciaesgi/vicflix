@@ -1,5 +1,6 @@
 <template>
   <Popin
+    ref="popinRef"
     :width="200"
     :mode="popinMode"
     :debounce="true"
@@ -33,6 +34,9 @@
         </div>
         <div class="bg-bg4 w-full h-px"></div>
         <div class="flex flex-col p-3">
+          <span class="hover:underline py-1 cursor-pointer" @click="activateAboutMe">{{
+            $t($messages.Nav.AboutMe)
+          }}</span>
           <a href="mailto:victorgarciaparis13@gmail.com" class="hover:underline py-1"> Contact </a>
           <a
             href="https://github.com/victorgarciaesgi"
@@ -80,11 +84,13 @@
 </template>
 
 <script lang="ts">
+import { Popin } from '@components/Global';
 import { usersConstant } from '@constants';
+import { AlertType, createAlert } from '@constructors';
 import { BreakpointMixin } from '@mixins';
-import { BreakPointsValues, User } from '@models';
+import { BreakPointsValues, ButtonTheme, User } from '@models';
 import { AuthModule } from '@store';
-import { Component } from 'nuxt-property-decorator';
+import { Component, Ref } from 'nuxt-property-decorator';
 import AutoDarkModeButton from './AutoDarkModeButton.vue';
 import DarkModeButton from './DarkModeButton.vue';
 
@@ -92,6 +98,8 @@ import DarkModeButton from './DarkModeButton.vue';
   components: { DarkModeButton, AutoDarkModeButton },
 })
 export default class UserPopup extends BreakpointMixin {
+  @Ref() popinRef!: Popin;
+
   get user() {
     return AuthModule.state.user!;
   }
@@ -118,6 +126,21 @@ export default class UserPopup extends BreakpointMixin {
 
   disconnect() {
     AuthModule.actions.disconnectUser();
+  }
+
+  activateAboutMe() {
+    this.popinRef.closePopup();
+    createAlert({
+      type: AlertType.Info,
+      title: this.$t(this.$messages.Login.Welcome) as string,
+      description: this.$t(this.$messages.Login.WelcomeDesc) as string,
+      actions: ({ confirm }) => [
+        confirm({
+          theme: ButtonTheme.Red,
+          content: this.$t(this.$messages.Actions.LetsGo) as string,
+        }),
+      ],
+    });
   }
 }
 </script>

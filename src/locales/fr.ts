@@ -20,6 +20,7 @@ export const locale: LanguageConfig = {
     Projects: 'Projets',
     Experience: 'Expérience',
     Skills: 'Compétences',
+    AboutMe: 'À propos de moi',
     Disconnect: 'Se déconnecter',
     Darkmode: 'Mode sombre',
     AutoDescription:

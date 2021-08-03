@@ -145,25 +145,27 @@ export default class PlaceholderAnimatedItem extends Vue {
 
   async displayPreview() {
     if (this.timeout) clearTimeout(this.timeout);
-    const rootPosition = this.root.getBoundingClientRect();
-    await Promise.all([this.awaitImageLoad(this.picture), this.awaitImageLoad(this.logo)]);
-    this.init = true;
-    this.showPreview = true;
-    EventBus.$emit(Events.ClosePreviews);
-    EventBus.$on(Events.ClosePreviews, this.closePreview);
-    window.addEventListener('mousemove', this.closePreview);
+    if (this.root) {
+      const rootPosition = this.root.getBoundingClientRect();
+      await Promise.all([this.awaitImageLoad(this.picture), this.awaitImageLoad(this.logo)]);
+      this.init = true;
+      this.showPreview = true;
+      EventBus.$emit(Events.ClosePreviews);
+      EventBus.$on(Events.ClosePreviews, this.closePreview);
+      window.addEventListener('mousemove', this.closePreview);
 
-    await Promise.all([this.$nextTick, Vue.nextTick]);
-    if (this.preview && this.pictureRef && this.previewBlock) {
-      Object.assign(this.preview.style, {
-        width: `${rootPosition.width}px`,
-        transform: `translateX(${rootPosition.left}px) translateY(${rootPosition.top}px)`,
-      });
-      Object.assign(this.pictureRef.style, {
-        height: `${rootPosition.height}px`,
-      });
+      await Promise.all([this.$nextTick, Vue.nextTick]);
+      if (this.preview && this.pictureRef && this.previewBlock) {
+        Object.assign(this.preview.style, {
+          width: `${rootPosition.width}px`,
+          transform: `translateX(${rootPosition.left}px) translateY(${rootPosition.top}px)`,
+        });
+        Object.assign(this.pictureRef.style, {
+          height: `${rootPosition.height}px`,
+        });
+      }
+      this.animateOpenPreview();
     }
-    this.animateOpenPreview();
   }
 
   async awaitImageLoad(src?: string) {

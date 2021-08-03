@@ -18,6 +18,7 @@ export default {
     Projects: 'Projects',
     Experience: 'Experience',
     Skills: 'Skills',
+    AboutMe: 'About me',
     Disconnect: 'Log out',
     Darkmode: 'Dark mode',
     AutoDescription: 'The app will activate dark/light mode depending on your OS setting',

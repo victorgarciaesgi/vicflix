@@ -59,7 +59,7 @@ const config: NuxtConfig = {
     '@nuxtjs/google-analytics',
   ],
   googleAnalytics: {
-    id: 'G-52KXLQ02QZ',
+    id: 'UA-57021034-1',
   },
   render: {
     static: {

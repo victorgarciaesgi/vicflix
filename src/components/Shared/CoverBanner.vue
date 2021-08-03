@@ -9,7 +9,16 @@
       />
     </div>
     <div
-      class="pt-28 sm:ml-0 sm:mt-20 sm:w-full flex flex-col items-start max-w-md pb-10 mt-10 ml-10"
+      class="
+        pt-28
+        sm:ml-0 sm:mt-20 sm:w-full
+        flex flex-col
+        items-start
+        max-w-md
+        pb-10
+        mt-10
+        ml-[53px]
+      "
     >
       <div
         class="sm:hidden flex flex-row items-center"

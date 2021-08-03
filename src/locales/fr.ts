@@ -7,7 +7,7 @@ export const locale: LanguageConfig = {
     Welcome: 'Bienvenue sur Vicflix!',
     WelcomeDesc: `Je suis Victor Garcia, développeur Front-end travaillant principalement avec Vue.js/Nuxt, Typescript et GraphQL.
         
-    Vicflix est un de mes projets faisant office de portfolio et il permet de découvrir mes projets réalisés, mes compétences ainsi que ainsi que mes expériences dans une interface familière inspirée d'un grand site de streaming video dont je ne citerai pas le nom.
+    Vicflix est un de mes projets faisant office de portfolio. Il permet de découvrir mes projets réalisés, mes compétences ainsi que mes expériences dans une interface familière inspirée d'un grand site de streaming video dont je ne citerai pas le nom.
     
     Bonne visite!`,
   },

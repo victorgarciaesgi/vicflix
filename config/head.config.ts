@@ -50,7 +50,7 @@ const head: MetaInfo = {
     {
       hid: 'og:image',
       property: 'og:image',
-      content: `${process.env.NUXT_ENV_URL}/logo.png`,
+      content: `${process.env.NUXT_ENV_URL}/vicflix.png`,
     },
   ],
   link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],

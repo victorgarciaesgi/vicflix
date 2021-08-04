@@ -17,7 +17,7 @@ export const totemXp: Experience = {
   Au fur et à mesure des mois, mon panel de connaissances s'étandait et j'ai pu expérimenter le lead de projet, de travailler avec d'autres développeurs sur le même projet, faire les décisions techniques et donner des instructions.
   
   J'ai pu découvrir et m'améliorer sur beaucoup de technologies, notemment GraphQL, Nuxt, Vue et Typescript.
-  Cela m'a permet aussi d'aller plus loin de créer des outils me permettant de travailler plus rapidement et plus surement tout en améliorant l'expérience de développement.`,
+  Cela m'a permi aussi d'aller plus loin de créer des outils me permettant de travailler plus rapidement et plus surement tout en améliorant l'expérience de développement.`,
   title: 'Totem',
   technos: [
     TechnosList.Nuxt,

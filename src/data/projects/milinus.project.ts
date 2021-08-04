@@ -12,7 +12,7 @@ export const milinusProject: Project = {
   description: `Milinus Admin est l'application back office administrateur permettant de gérer et de contrôler le contenu de l'application mobile Milinus.
   Le projet entier comprennait une API, une application mobile et une application web admin.
   
-  Cette application suit la charte graphqique donnée par le client pour se rapprocher au plus de l'application mobile.
+  Cette application suit la charte graphique donnée par le client pour se rapprocher au plus de l'application mobile.
   Elle permet entre autre à: 
   - Créer et personnaliser les programmes
   - Créer et personnaliser des mouvements et exercices

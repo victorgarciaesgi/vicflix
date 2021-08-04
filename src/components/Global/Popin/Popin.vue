@@ -10,6 +10,7 @@
           :style="getPopupStyle"
           class="Popup-Box / absolute"
           @click.stop
+          :class="{ shadow }"
           @mouseenter.stop="handlePopupMouseEnter"
           @mouseleave="handlePopupMouseLeave"
         >
@@ -397,7 +398,7 @@ div.Popup-Box {
     left: 0;
     position: absolute;
     z-index: 10;
-    filter: drop-shadow(0 0 20px var(--shadow));
+    filter: drop-shadow(0 0 20px var(--text1));
     &.Bottom {
       /* stylelint-disable-next-line */
       top: -9px;

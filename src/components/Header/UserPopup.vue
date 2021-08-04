@@ -70,7 +70,7 @@
       </div>
     </template>
     <template #button>
-      <button type="button" class="flex flex-row items-center text-white">
+      <button type="button" class="text-text1 flex flex-row items-center">
         <div class="Picture / relative w-8 h-8">
           <img
             :src="picture"

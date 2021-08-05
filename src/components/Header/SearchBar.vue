@@ -51,6 +51,8 @@ export default class SearchBar extends BreakpointMixin {
   public previousRoute: Route | null = null;
   public isFocused = false;
 
+  public timeoutClose: NodeJS.Timeout | null = null;
+
   get isInSearchRoute() {
     return this.$route.name === routerPagesNames.search;
   }
@@ -107,6 +109,7 @@ export default class SearchBar extends BreakpointMixin {
 
   displayInput(intent?: boolean) {
     this.showInput = true;
+    if (this.timeoutClose) clearTimeout(this.timeoutClose);
     this.$nextTick(() => {
       if (this.inputContainerRef) {
         // this.inputContainerRef.style.display = 'flex';
@@ -124,7 +127,7 @@ export default class SearchBar extends BreakpointMixin {
       this.inputContainerRef.style.transform = 'scaleX(0.15)';
       this.inputContainerRef.style.opacity = '0';
       this.inputRef?.blur();
-      setTimeout(() => {
+      this.timeoutClose = setTimeout(() => {
         // if (this.inputContainerRef) this.inputContainerRef.style.display = 'none';
         this.showInput = false;
       }, 290);

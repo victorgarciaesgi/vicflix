@@ -14,6 +14,7 @@
         sm:ml-0 sm:mt-20 sm:w-full
         flex flex-col
         items-start
+        sm:max-w-none
         max-w-md
         pb-10
         mt-10

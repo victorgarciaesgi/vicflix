@@ -83,7 +83,8 @@ export default class PlaceholderAnimatedItem extends Vue {
   public init = false;
   public rendered = false;
   public showPreview = false;
-  public timeout: NodeJS.Timeout | null = null;
+  public openTimeout: NodeJS.Timeout | null = null;
+  public closeTimeout: NodeJS.Timeout | null = null;
   public scaleZoom = 1.5;
 
   navigateToPreview() {
@@ -104,17 +105,19 @@ export default class PlaceholderAnimatedItem extends Vue {
     }
   }
   cancelMouseEnter() {
-    if (this.timeout) clearTimeout(this.timeout);
+    if (this.openTimeout) clearTimeout(this.openTimeout);
   }
 
   debounceDisplayPreview() {
-    this.timeout = setTimeout(() => {
+    if (this.openTimeout) clearTimeout(this.openTimeout);
+    this.openTimeout = setTimeout(() => {
       this.displayPreview();
     }, 300);
   }
 
   debounceClosePreview() {
-    this.timeout = setTimeout(() => {
+    if (this.closeTimeout) clearTimeout(this.closeTimeout);
+    this.closeTimeout = setTimeout(() => {
       this.closePreview();
     }, 100);
   }
@@ -144,7 +147,7 @@ export default class PlaceholderAnimatedItem extends Vue {
   }
 
   async displayPreview() {
-    if (this.timeout) clearTimeout(this.timeout);
+    if (this.openTimeout) clearTimeout(this.openTimeout);
     if (this.root) {
       const rootPosition = this.root.getBoundingClientRect();
       await Promise.all([this.awaitImageLoad(this.picture), this.awaitImageLoad(this.logo)]);

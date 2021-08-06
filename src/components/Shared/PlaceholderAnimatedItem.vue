@@ -106,10 +106,12 @@ export default class PlaceholderAnimatedItem extends Vue {
   }
   cancelMouseEnter() {
     if (this.openTimeout) clearTimeout(this.openTimeout);
+    if (this.closeTimeout) clearTimeout(this.closeTimeout);
   }
 
   debounceDisplayPreview() {
     if (this.openTimeout) clearTimeout(this.openTimeout);
+    if (this.closeTimeout) clearTimeout(this.closeTimeout);
     this.openTimeout = setTimeout(() => {
       this.displayPreview();
     }, 300);
@@ -117,6 +119,7 @@ export default class PlaceholderAnimatedItem extends Vue {
 
   debounceClosePreview() {
     if (this.closeTimeout) clearTimeout(this.closeTimeout);
+    if (this.openTimeout) clearTimeout(this.openTimeout);
     this.closeTimeout = setTimeout(() => {
       this.closePreview();
     }, 100);

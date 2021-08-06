@@ -196,8 +196,8 @@ export default class PlaceholderAnimatedItem extends Vue {
           scale: this.scaleZoom,
           translateY: finalTranslateY,
           translateX: finalTranslateX,
-          duration: 200,
-          easing: cubicTransition,
+          duration: 250,
+          easing: 'easeOutQuad',
           complete: () => {
             if (this.root) {
               this.root.style.opacity = '0';
@@ -208,7 +208,7 @@ export default class PlaceholderAnimatedItem extends Vue {
           targets: this.previewBlock,
           duration: 50,
           opacity: 1,
-          easing: cubicTransition,
+          easing: 'easeOutQuad',
         });
       }
     }
@@ -244,8 +244,8 @@ export default class PlaceholderAnimatedItem extends Vue {
         scale: 1,
         translateY: top,
         translateX: left,
-        duration: 200,
-        easing: cubicTransition,
+        duration: 250,
+        easing: 'easeOutQuad',
         complete: () => {
           this.root.style.opacity = '1';
           this.showPreview = false;
@@ -255,7 +255,7 @@ export default class PlaceholderAnimatedItem extends Vue {
         targets: this.previewBlock,
         duration: 200,
         opacity: 0,
-        easing: cubicTransition,
+        easing: 'easeOutQuad',
       });
     }
   }

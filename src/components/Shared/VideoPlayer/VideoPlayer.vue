@@ -146,12 +146,21 @@
             >
               <template #content>
                 <div class="flex flex-col w-full">
-                  <VideoPreviewBanner
-                    v-for="video of projectRelated.videos"
-                    :key="video.id"
-                    :video="video"
-                    :sm="true"
-                  />
+                  <div
+                    v-for="(videos, season) of otherProjectVideos"
+                    :key="season"
+                    class="flex flex-col"
+                  >
+                    <div class="bg-g70 sticky top-0 z-50 px-3 py-1">
+                      {{ $t($messages.Projects.Season) }} {{ season }}
+                    </div>
+                    <VideoPreviewBanner
+                      v-for="video of videos"
+                      :key="video.id"
+                      :video="video"
+                      :sm="true"
+                    />
+                  </div>
                 </div>
               </template>
               <template #button>
@@ -224,7 +233,7 @@ import { RouterModule, VideoProgressModule } from '@store';
 import VideoPreviewBanner from '../VideoPreviewBanner.vue';
 import VolumeSlider from './VolumeSlider.vue';
 import PlayerTrackBar from './PlayerTrackBar.vue';
-import { debounce, DebouncedFunc, sample } from 'lodash';
+import { debounce, DebouncedFunc, groupBy, sample } from 'lodash';
 import { Location } from 'vue-router';
 import anime from 'animejs';
 import { cubicTransition } from '@constants';
@@ -287,6 +296,10 @@ export default class VideoPlayer extends BreakpointMixin {
 
   get isVideoEndingHasNextProject() {
     return this.isVideoEnding && this.nextProject;
+  }
+
+  get otherProjectVideos() {
+    return groupBy(this.projectRelated?.videos, (video) => video.season);
   }
 
   get nextEpisode(): ProjectVideo | undefined {

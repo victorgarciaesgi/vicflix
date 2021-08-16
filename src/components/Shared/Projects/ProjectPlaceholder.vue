@@ -33,7 +33,6 @@
       <div class="Block / flex-nowrap flex flex-col">
         <div class="flex-nowrap flex flex-row">
           <h4 class="flex-1 leading-5">{{ data.title }}</h4>
-
           <div class="flex-nowrap flex-0 flex flex-row items-center ml-2">
             <Popin mode="hover" :offset="2" theme="text1">
               <template #content>

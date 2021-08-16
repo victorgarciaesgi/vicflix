@@ -9,7 +9,7 @@ export function formatHoursAndMinutes(date: Date): Date {
 export function secondsToHoursAndMinutes(timestamp: number): string {
   const hours = Math.floor(timestamp / 60 / 60);
   const minutes = Math.floor(timestamp / 60) - hours * 60;
-  var seconds = Math.round(timestamp % 60);
+  var seconds = Math.floor(timestamp % 60);
   const formatted = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
   return formatted;
 }

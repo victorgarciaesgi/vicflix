@@ -269,7 +269,11 @@ export default class VideoPlayer extends BreakpointMixin {
   public toolBarTimeOut: NodeJS.Timeout | null = null;
 
   get remainingTime(): string {
-    return secondsToHoursAndMinutes(this.totalTime - this.currentTime);
+    if (this.loading) {
+      return secondsToHoursAndMinutes(this.video.duration);
+    } else {
+      return secondsToHoursAndMinutes(this.totalTime - this.currentTime);
+    }
   }
 
   get projectRelated(): Project | undefined {

@@ -56,6 +56,7 @@ const config: NuxtConfig = {
     '@nuxtjs/tailwindcss',
     '@nuxtjs/pwa',
     '@nuxtjs/composition-api/module',
+    '@nuxtjs/web-vitals',
     '@nuxtjs/google-analytics',
   ],
   googleAnalytics: {

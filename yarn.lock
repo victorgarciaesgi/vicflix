@@ -2015,6 +2015,15 @@
     tailwindcss "^2.2.2"
     ufo "^0.7.5"
 
+"@nuxtjs/web-vitals@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/web-vitals/-/web-vitals-0.1.7.tgz#66b3b16e68dfccca7054f57f7a6f806da7d2e32a"
+  integrity sha512-KCMAUIhud8pOf52/3K57osacrOk3ZUuwUd/I+crB5cEpOxz36PJaeNhDGGrc9PzwGlMWHSzcjnzUa0AI0CNDbg==
+  dependencies:
+    defu "^5.0.0"
+    ufo "^0.7.7"
+    web-vitals "^2.1.0"
+
 "@nuxtjs/youch@^4.2.3":
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/@nuxtjs/youch/-/youch-4.2.3.tgz#36f8b22df5a0efaa81373109851e1d857aca6bed"
@@ -13480,6 +13489,11 @@ watchpack@^2.0.0:
   dependencies:
     glob-to-regexp "^0.4.1"
     graceful-fs "^4.1.2"
+
+web-vitals@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-2.1.0.tgz#ebf5428875ab5bfc1056c2e80cd177001287de7b"
+  integrity sha512-npEyJP8jHf3J71t1tRTEtz9FeKp8H2udWJUUq5ykfPhhstr//TUxiYhIEzLNwk4zv2ybAilMn7v7N6Mxmuitmg==
 
 webpack-bundle-analyzer@^4.4.1:
   version "4.4.1"

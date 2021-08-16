@@ -62,7 +62,7 @@
     "@nuxtjs/robots": "^2.5.0",
     "@nuxtjs/sitemap": "^2.4.0",
     "@nuxtjs/tailwindcss": "^4.2.1",
-    "@nuxtjs/web-vitals": "^0.1.7",
+    "@nuxtjs/web-vitals": "^0.1.4",
     "@types/animejs": "^3.1.4",
     "@types/cleave.js": "^1.4.5",
     "@types/lodash-es": "^4.17.4",

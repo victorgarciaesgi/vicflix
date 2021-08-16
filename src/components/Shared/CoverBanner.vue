@@ -45,7 +45,7 @@
         </div>
         <div class="sm:justify-center flex flex-row py-4">
           <Action icon="actions/play" theme="inverted" @click="playFirstVideo">{{
-            $t($messages.Actions.Play)
+            videoProgress ? $t($messages.Actions.Continue) : $t($messages.Actions.Play)
           }}</Action>
           <Action icon="alerts/info" theme="gray" :to="toPreviewLink">{{
             $t($messages.Actions.MoreInfo)
@@ -58,7 +58,7 @@
 
 <script lang="ts">
 import { BreakpointMixin } from '@mixins';
-import { Project, routerPagesNames } from '@models';
+import { ProgressList, Project, routerPagesNames } from '@models';
 import { VideoProgressModule } from '@store';
 import { Component, Vue, Prop } from 'nuxt-property-decorator';
 import { Location } from 'vue-router';
@@ -71,6 +71,15 @@ import TechnoItem from './Techno.vue';
 })
 export default class CoverBanner extends BreakpointMixin {
   @Prop({ required: true }) data!: Project;
+
+  async fetch() {
+    const video = await VideoProgressModule.actions.getProjectProgress(this.data.id);
+    if (video) {
+      this.videoProgress = video;
+    }
+  }
+
+  public videoProgress: ProgressList | null = null;
 
   get picture() {
     return this.data.picture;

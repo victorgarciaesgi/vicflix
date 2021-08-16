@@ -44,6 +44,7 @@ export const vueChart3Project: Project = {
   id: 'PuNNEkbnLo',
   technos: [
     TechnosList.Typescript,
+    TechnosList.Vue,
     TechnosList.Chartjs,
     TechnosList.VuePress,
     TechnosList.Karma,

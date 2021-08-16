@@ -38,7 +38,11 @@
             <Popin mode="hover" :offset="2" theme="text1">
               <template #content>
                 <span class="text-bg1 px-3 py-1">{{
-                  hasProjectVideos ? $t($messages.Actions.Play) : $t($messages.Actions.Consult)
+                  hasProjectVideos
+                    ? videoProgress
+                      ? $t($messages.Actions.Continue)
+                      : $t($messages.Actions.Play)
+                    : $t($messages.Actions.Consult)
                 }}</span>
               </template>
               <template #button>

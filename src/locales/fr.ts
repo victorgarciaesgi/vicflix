@@ -12,8 +12,8 @@ export const locale: LanguageConfig = {
     Bonne visite!`,
   },
   Dates: {
-    months: '| {count} mois | {count} mois',
-    year: '| {count} an | {count} ans',
+    months: '0 mois | {count} mois | {count} mois',
+    year: '0 ans | {count} an | {count} ans',
   },
   Nav: {
     Home: 'Accueil',

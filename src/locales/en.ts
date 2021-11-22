@@ -10,8 +10,8 @@ export default {
     Vicflix is one of my project that acts as my portfolio and it lets you discover my projects, my skills and my experience thought a familiar UI inspired by a popular streaming video website I will not quote the name`,
   },
   Dates: {
-    months: '{count} month | {count} months',
-    year: '{count} year | {count} years',
+    months: '0 months | {count} month | {count} months',
+    year: '0 year | {count} year | {count} years',
   },
   Nav: {
     Home: 'Home',

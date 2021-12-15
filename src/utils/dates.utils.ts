@@ -15,10 +15,14 @@ export function secondsToHoursAndMinutes(timestamp: number): string {
 }
 
 export function monthsToYearsAndMonths(value: number) {
-  const years = Math.floor(value / 12);
-  const months = Math.floor(value - years * 12);
+  if (value === 0) {
+    return `${window.$nuxt.$tc(AppTrads.Dates.months, 0)}`;
+  } else {
+    const years = Math.floor(value / 12);
+    const months = Math.floor(value - years * 12);
 
-  return `${years > 0 ? `${window.$nuxt.$tc(AppTrads.Dates.year, years)} ` : ''}${
-    months > 0 ? `${window.$nuxt.$tc(AppTrads.Dates.months, months)} ` : ''
-  }`;
+    return `${years > 0 ? `${window.$nuxt.$tc(AppTrads.Dates.year, years)} ` : ''}${
+      months > 0 ? `${window.$nuxt.$tc(AppTrads.Dates.months, months)} ` : ''
+    }`;
+  }
 }

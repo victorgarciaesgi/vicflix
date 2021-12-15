@@ -1,6 +1,6 @@
 # Vicflix
 
-
+![Vicflix](https://github.com/victorgarciaesgi/vicflix/blob/master/media/vicflix.jpeg?raw=true)
 
 # Stack
 

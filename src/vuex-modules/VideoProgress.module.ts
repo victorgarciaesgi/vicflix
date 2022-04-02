@@ -32,13 +32,13 @@ export const VideoProgressModule = new VuexModule({
         progressList.push({ timestamp, video, percentage, duration });
       }
     },
-    addProjectToWishList({ wishList }, project) {
-      if (!wishList.find((f) => f.id === project.id)) {
+    addProjectToWishList({ wishList }, project: Project | null) {
+      if (project && !wishList.find((f) => f.id === project?.id)) {
         wishList.push(project);
       }
     },
-    removeProjectFromWishList({ wishList }, project) {
-      const index = wishList.findIndex((f) => f.id === project.id);
+    removeProjectFromWishList({ wishList }, project: Project | null) {
+      const index = wishList.findIndex((f) => f.id === project?.id);
       wishList.splice(index, 1);
     },
   },

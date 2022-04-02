@@ -33,7 +33,7 @@ export const totemXp: Experience = {
   ],
   year: 2018,
   type: ExperienceType.Job,
-  duration: differenceInMonths(new Date(), new Date(2018, 9, 3)),
+  duration: differenceInMonths(new Date(2021, 11, 5), new Date(2018, 9, 3)),
   role: 'Développeur front / Lead développeur',
   links: [{ link: 'https://totem.paris', title: 'Site de Totem' }],
   location: 'Paris, France',

@@ -29,11 +29,15 @@ export const profeelProject: Project = {
   links: [
     {
       title: 'Site client Profeel',
-      link: 'https://client.profeel-testing.devtotem.team/',
+      link: 'https://compte.checkreno.fr/',
     },
     {
       title: 'Application Profeel iOS',
-      link: 'https://apps.apple.com/us/app/milinus/id1506570411',
+      link: 'https://apps.apple.com/fr/app/checkr%C3%A9no/id1538147023',
+    },
+    {
+      title: 'Application Profeel iOS',
+      link: 'https://play.google.com/store/apps/details?id=com.qualiteconstruction.checkreno&hl=fr&gl=US',
     },
   ],
   type: [ProjectType.App, ProjectType.Mobile],

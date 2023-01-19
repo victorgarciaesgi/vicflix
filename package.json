@@ -5,7 +5,7 @@
   "author": "Victor GARCIA",
   "private": true,
   "engines": {
-    "node": ">= 14"
+    "node": ">= 14 < 17"
   },
   "repository": {
     "url": "https://gitlab.com/victorgarciaesgi/vicflix.git"

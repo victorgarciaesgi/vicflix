@@ -16,7 +16,7 @@ export const nuxtTypeRouterProject: Project = {
   - Infer route params based on route name
   - Supports routes defined in config.extendRoutes
   `,
-  logo: 'typed-router.png',
+  logo: 'github.png',
   videos: [],
   year: 2019,
   links: [

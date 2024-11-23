@@ -26,12 +26,6 @@ export const totemProject: Project = {
     },
   ],
   type: [ProjectType.Site],
-  technos: [
-    TechnosList.React,
-    TechnosList.Gatsby,
-    TechnosList.Tailwind,
-    TechnosList.GraphQL,
-    TechnosList.Netlify,
-  ],
+  technos: [TechnosList.React, TechnosList.Gatsby, TechnosList.Tailwind, TechnosList.GraphQL],
   context: ProjectContext.Totem,
 };

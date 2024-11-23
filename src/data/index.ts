@@ -13,6 +13,7 @@ export const allProjects = Object.values(projects);
 export const allExperiences = Object.values(experiences).sort((a, b) => b.year - a.year);
 
 export const featuredProjects = [
+  projects.regleProject,
   projects.profeelProject,
   projects.milinusProject,
   projects.crecheslibProject,

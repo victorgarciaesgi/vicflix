@@ -13,3 +13,4 @@ export * from './totem.project';
 export * from './vue-chart-3.project';
 export * from './nuxtassetspaths.project';
 export * from './vicflix.project';
+export * from './regle.project';

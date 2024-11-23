@@ -2,9 +2,9 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "vetur.trace.server": "verbose",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.fixAll": false,
-    "source.organizeImports": false
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll": "never",
+    "source.organizeImports": "never"
   },
   "typescript.suggest.includeAutomaticOptionalChainCompletions": true,
   "typescript.check.npmIsInstalled": false,

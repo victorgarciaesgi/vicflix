@@ -31,7 +31,7 @@
     "cleave.js": "^1.6.0",
     "date-fns": "^2.23.0",
     "lodash-es": "^4.17.21",
-    "nanoid": "^3.1.23",
+    "nanoid": "^3.1.31",
     "node-fetch": "^2.6.0",
     "nuxt": "^2.15.7",
     "nuxt-client-init-module": "^0.3.0",
